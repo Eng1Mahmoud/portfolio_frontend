@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-gray-900 text-white">
       <div className="container mx-auto px-4  z-10 md:text-center ">
-      <Overlay gridColor="#5e81ac" />
+      <Overlay  />
         <TypedName />
         <HomeIntro />
         <SocialLinks />

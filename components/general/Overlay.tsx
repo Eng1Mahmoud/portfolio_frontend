@@ -1,10 +1,11 @@
 "use client";
-import { motion, Transition } from "framer-motion";
+import { motion } from "framer-motion";
+import { JSX, useMemo } from "react";
 
 // Configuration for grid and animation
 const GRID_CONFIG = {
-  horizontalLines: 6,
-  verticalLines: 5,
+  horizontalLines: 50, // Reduced from 60
+  verticalLines: 50, // Reduced from 60
   defaultColor: "#3f4a5e",
 };
 
@@ -20,52 +21,84 @@ export const Overlay: React.FC<OverlayProps> = ({
   className = "",
   gridColor = GRID_CONFIG.defaultColor,
 }) => {
-  // Synchronized animation configuration
-  const lineVariants = {
-    initial: { 
-      opacity: 0.4,
-      scale: 0.8,
-    },
-    animate: { 
-      opacity: [0.4, 0.5, 0.4],
-      scale: [0.8, 1.05, 0.8],
-    },
-  };
+  // Memoize grid lines to prevent unnecessary re-renders
+  const gridLines = useMemo(() => {
+    const lines: JSX.Element[] = [];
 
-  // Shared transition configuration for all lines
-  const sharedTransition: Transition = {
-    duration: 4,
-    repeat: Infinity,
-    repeatType: "loop",
-    ease: "easeInOut",
-  };
-
-  // Render grid lines with synchronized animation
-  const renderGridLines = (type: 'horizontal' | 'vertical') => {
-    const lineCount = type === 'horizontal' ? GRID_CONFIG.horizontalLines : GRID_CONFIG.verticalLines;
-
-    return [...Array(lineCount)].map((_, index) => {
-      const position = `${(index + 1) * (100 / (lineCount + 1))}%`;
-
-      return (
+    // Generate horizontal lines
+    for (let i = 0; i < GRID_CONFIG.horizontalLines; i++) {
+      const position = `${
+        (i + 1) * (100 / (GRID_CONFIG.horizontalLines + 1))
+      }%`;
+      lines.push(
         <motion.div
-          key={`${type}-${index}`}
-          initial={lineVariants.initial}
-          animate={lineVariants.animate}
-          transition={sharedTransition}
+          key={`h-${i}`}
+          initial={{
+            opacity: 0.2,
+            scale: 0.7,
+            backgroundColor: gridColor,
+          }}
+          animate={{
+            opacity: [0.2, 0.5, 0.2],
+            scale: [0.7, 1.1, 0.7],
+          }}
+          transition={{
+            duration: 3 + Math.random(),
+            repeat: Infinity,
+            repeatType: "loop",
+            ease: "easeInOut",
+            delay: i * 0.05,
+          }}
           style={{
             position: "absolute",
-            ...(type === 'horizontal' 
-              ? { top: position, width: "100%", height: "1px" }
-              : { left: position, width: "1px", height: "100%" }),
+            top: position,
+            width: "100%",
+            height: "1px",
             backgroundColor: gridColor,
-            transformOrigin: 'center',
+            transformOrigin: "center",
           }}
           className="opacity-50"
         />
       );
-    });
-  };
+    }
+
+    // Generate vertical lines
+    for (let j = 0; j < GRID_CONFIG.verticalLines; j++) {
+      const position = `${(j + 1) * (100 / (GRID_CONFIG.verticalLines + 1))}%`;
+      lines.push(
+        <motion.div
+          key={`v-${j}`}
+          initial={{
+            opacity: 0.2,
+            scale: 0.7,
+            backgroundColor: gridColor,
+          }}
+          animate={{
+            opacity: [0.2, 0.5, 0.2],
+            scale: [0.7, 1.1, 0.7],
+          }}
+          transition={{
+            duration: 3 + Math.random(),
+            repeat: Infinity,
+            repeatType: "loop",
+            ease: "easeInOut",
+            delay: j * 0.05,
+          }}
+          style={{
+            position: "absolute",
+            left: position,
+            height: "100%",
+            width: "1px",
+            backgroundColor: gridColor,
+            transformOrigin: "center",
+          }}
+          className="opacity-50"
+        />
+      );
+    }
+
+    return lines;
+  }, [gridColor]);
 
   return (
     <div
@@ -75,15 +108,7 @@ export const Overlay: React.FC<OverlayProps> = ({
         ${className}
       `}
     >
-      {/* Horizontal Grid Lines */}
-      <div className="absolute inset-0">
-        {renderGridLines('horizontal')}
-      </div>
-
-      {/* Vertical Grid Lines */}
-      <div className="absolute inset-0">
-        {renderGridLines('vertical')}
-      </div>
+      <div className="absolute inset-0">{gridLines}</div>
     </div>
   );
 };
