@@ -1,5 +1,4 @@
 import { Aside } from "@/components/general/Aside";
-import { Overlay } from "@/components/general/Overlay";
 import { MobileAsideToggle } from "@/components/general/MobileAside";
 import "../globals.css";
 
@@ -22,7 +21,6 @@ export default function RootLayout({
           <div className="hidden md:grid md:grid-cols-[20%_80%] h-full overflow-hidden">
             <Aside />
             <main className="overflow-y-auto relative">
-              <Overlay gridColor="#5e81ac" />
               {children}
             </main>
           </div>
@@ -35,7 +33,6 @@ export default function RootLayout({
             bg-gray-900
           ">
             <div className="relative h-full">
-              <Overlay gridColor="#5e81ac" />
               {children}
             </div>
           </div>
