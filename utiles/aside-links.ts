@@ -17,6 +17,6 @@ export const asideLinks = [
   },
   {
     label: "Contact",
-    path: "/contact",
+    path: "/contac-us",
   },
 ];
