@@ -1,6 +1,7 @@
 import { Aside } from "@/components/general/Aside";
 import { MobileAsideToggle } from "@/components/general/MobileAside";
 import "../globals.css";
+import { ToastContainer } from "react-toastify";
 
 export default function RootLayout({
   children,
@@ -9,10 +10,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body 
-        suppressHydrationWarning={true} 
-        className="bg-gray-900 text-white"
-      >
+      <body suppressHydrationWarning={true} className="bg-gray-900 text-white">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+
         <div className="relative h-screen overflow-hidden">
           {/* Mobile Aside Toggle */}
           <MobileAsideToggle />
@@ -20,21 +31,19 @@ export default function RootLayout({
           {/* Desktop Layout */}
           <div className="hidden md:grid md:grid-cols-[20%_80%] h-full overflow-hidden">
             <Aside />
-            <main className="overflow-y-auto relative">
-              {children}
-            </main>
+            <main className="overflow-y-auto relative">{children}</main>
           </div>
 
           {/* Mobile Main Content */}
-          <div className="
+          <div
+            className="
             md:hidden 
             absolute inset-0 
             pt-5 overflow-y-auto 
             bg-gray-900
-          ">
-            <div className="relative h-full">
-              {children}
-            </div>
+          "
+          >
+            <div className="relative h-full">{children}</div>
           </div>
         </div>
       </body>
