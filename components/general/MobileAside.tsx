@@ -18,7 +18,7 @@ export const MobileAsideToggle = () => {
       <button 
         onClick={toggleAside}
         className={`
-          md:hidden fixed top-4 left-4 z-50 
+          lg:hidden fixed top-4 left-4 z-50 
           bg-blue-600 text-white p-2 rounded-md
           transition-all duration-300
         `}
@@ -37,12 +37,12 @@ export const MobileAsideToggle = () => {
             transition={{ type: 'tween' }}
             className="
               fixed inset-0 z-50 
-              md:hidden bg-gray-800 
+              lg:hidden
               w-[80%] max-w-[300px]
-              
+              rounded-r-xl
             "
           >
-            <div className="h-full overflow-y-auto">
+            <div className="h-full overflow-y-auto ">
               <Aside />
             </div>
             <button 

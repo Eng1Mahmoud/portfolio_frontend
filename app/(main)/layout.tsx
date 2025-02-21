@@ -10,7 +10,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true} className="bg-gray-900 text-white">
+      <body suppressHydrationWarning={true} className="bg-primary-light text-white">
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -29,22 +29,22 @@ export default function RootLayout({
           <MobileAsideToggle />
 
           {/* Desktop Layout */}
-          <div className="hidden md:grid md:grid-cols-[20%_80%] h-full overflow-hidden">
+          <div className="hidden lg:grid lg:grid-cols-[20%_80%] h-full overflow-hidden ">
             <Aside />
-            <main className="overflow-y-auto relative">{children}</main>
+            <main className="overflow-y-auto relative p-6">{children}</main>
           </div>
 
           {/* Mobile Main Content */}
-          <div
+          <main
             className="
-            md:hidden 
+            lg:hidden 
             absolute inset-0 
             pt-5 overflow-y-auto 
-            bg-gray-900
+            bg-primary-light
           "
           >
-            <div className="relative h-full">{children}</div>
-          </div>
+            <div className="relative h-full p-6">{children}</div>
+          </main>
         </div>
       </body>
     </html>

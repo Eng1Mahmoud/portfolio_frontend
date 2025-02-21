@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { asideLinks } from "@/utiles/aside-links";
+import Divider from "@/components/general/Divider";
 // import image
 import myAvatar from "@/public/unnamed.jpg";
 
@@ -11,7 +12,7 @@ export const Aside = () => {
     const isActive = (path: string) => pathname === path;
 
     return (
-        <aside className="h-full w-full bg-gray-800 text-white p-6 flex flex-col items-center">
+        <aside className="h-full w-full bg-primary-dark text-white p-6 flex flex-col items-center border-r-[6px] border-slate-600 rounded-r-xl">
             <div className="avatar mb-8">
                 <Image
                     src={myAvatar}
@@ -42,21 +43,22 @@ export const Aside = () => {
                         </li>
                     ))}
                 </ul>
-                <div className="cv mt-8 text-center">
+                <Divider />
+                <div className="cv mt-4 text-center">
                     <a
                         href={""}
                         download
-                        className="inline-block bg-green-600 text-white 
-                            py-2 px-4 rounded-md hover:bg-green-700 
-                            transition-colors duration-300
-                        "
-                    >
+                        className="block w-full py-2 px-4 rounded-md text-center 
+                            bg-green-600 text-white 
+                            hover:bg-green-700 
+                            transition-colors duration-300">
                         Download CV
                     </a>
                 </div>
+                <Divider />
             </div>
             {/** divider */}
-            <div className="w-full h-0.5 bg-gray-700 my-4"></div>
+
             {/** copyright */}
             <div className="mt-auto mb-4 text-center">
                 <p className="text-[13px] text-gray-400  ">

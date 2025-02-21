@@ -4,14 +4,16 @@ interface SubmitButtonProps {
   name: string;
 }
 const SubmitButton = ({ name }: SubmitButtonProps) => {
-  const { formState: { isSubmitting } } = useFormContext();
+  const {
+    formState: { isSubmitSuccessful },
+  } = useFormContext();
   return (
     <button
-      disabled={isSubmitting}
+      disabled={isSubmitSuccessful}
       type="submit"
       className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors duration-300"
     >
-      {isSubmitting ? "Loading..." : name}
+      {isSubmitSuccessful ? "Loading..." : name}
     </button>
   );
 };
