@@ -6,9 +6,9 @@ import {
   FieldValues,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "react-toastify";
 import { useActionState, useTransition } from "react";
 import { FormProps } from "@/types/types";
+import { showToast } from "@/utiles/showToast";
 export const Form = <T extends FieldValues>({
   defaultValues,
   schema,
@@ -30,7 +30,7 @@ export const Form = <T extends FieldValues>({
   useEffect(() => {
     if (state.message) {
       // show toast if ther is message return from action
-      toast.success(state.message);
+      showToast({ type: "success", message: state.message });
     }
     // reset the form after any submit
     if (state.success) {

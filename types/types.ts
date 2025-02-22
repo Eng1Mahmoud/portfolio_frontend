@@ -1,7 +1,11 @@
 import { ReactNode } from "react";
 import { DefaultValues, FieldValues } from "react-hook-form";
 import { ZodSchema } from "zod";
-
+// Interface for toast options  
+export interface ToastOptions {
+  type: "success" | "error" | "warning" | "info";
+  message: string;
+}
 // Interface for form state
 export interface IactionState {
     message: string;
