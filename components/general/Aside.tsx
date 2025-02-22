@@ -33,7 +33,7 @@ export const Aside = () => {
                                 className={`
                                     block w-full py-2 px-4 rounded-md text-center transition-colors duration-300
                                     ${isActive(item.path)
-                                        ? "bg-blue-600 text-white hover:bg-blue-700"
+                                        ? "bg-secondary-light text-white hover:bg-secondary-dark"
                                         : "text-gray-300 hover:bg-gray-700 hover:text-white"
                                     }
                                 `}

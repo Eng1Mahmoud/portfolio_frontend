@@ -24,3 +24,19 @@ export interface FormProps<T extends FieldValues> {
     className?: string;
   }
   
+  // input filed props
+  export interface InputFieldProps {
+    name: string;
+    label: string;
+    type?: string;
+  }
+  // text area props
+  export interface TextAreaProps {
+    name: string;
+    label: string;
+    rows?: number;
+  }
+  // submit button props
+  export interface SubmitButtonProps {
+    name: string;
+  }

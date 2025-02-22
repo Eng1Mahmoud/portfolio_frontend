@@ -1,8 +1,6 @@
 "use client";
 import { useFormContext } from "react-hook-form";
-interface SubmitButtonProps {
-  name: string;
-}
+import { SubmitButtonProps } from "@/types/types";
 const SubmitButton = ({ name }: SubmitButtonProps) => {
   const {
     formState: { isSubmitSuccessful },
@@ -11,7 +9,7 @@ const SubmitButton = ({ name }: SubmitButtonProps) => {
     <button
       disabled={isSubmitSuccessful}
       type="submit"
-      className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors duration-300"
+      className="w-full bg-secondary-light text-white p-2 rounded-md hover:bg-secondary-dark transition-colors duration-300"
     >
       {isSubmitSuccessful ? "Loading..." : name}
     </button>

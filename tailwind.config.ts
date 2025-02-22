@@ -13,6 +13,19 @@ export default {
           dark: "#182131",
           light: "#0a1326",
         },
+        secondary: {
+          dark: "#496edd", // Updated dark color
+          light: "#3B82F6", // Updated light color
+        },
+        text: {
+          primary: "#ffffff",
+          secondary: "#e9ecef",
+        },
+      },
+
+      // add new shadows
+      boxShadow: {
+        "custom-shadow": "0px 0px 4px #e9ecef, 0px 0px 4px #e9ecef",
       },
     },
   },

@@ -1,5 +1,3 @@
-"use client";
-
 import { TypedName } from "@/components/Home/TypedName";
 import { SocialLinks } from "@/components/Home/SocialLinks";
 import { HomeIntro } from "@/components/Home/HomeIntro";
