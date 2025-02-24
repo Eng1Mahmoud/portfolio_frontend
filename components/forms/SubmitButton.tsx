@@ -1,7 +1,8 @@
 "use client";
 import { useFormContext } from "react-hook-form";
 import { SubmitButtonProps } from "@/types/types";
-const SubmitButton = ({ name }: SubmitButtonProps) => {
+import clsx from "clsx";
+const SubmitButton = ({ name , className}: SubmitButtonProps) => {
   const {
     formState: { isSubmitSuccessful },
   } = useFormContext();
@@ -9,7 +10,11 @@ const SubmitButton = ({ name }: SubmitButtonProps) => {
     <button
       disabled={isSubmitSuccessful}
       type="submit"
-      className="w-full bg-secondary-light text-white p-2 rounded-md hover:bg-secondary-dark transition-colors duration-300"
+      className={clsx(
+        "w-full bg-secondary-light text-white p-2 rounded-md hover:bg-secondary-dark transition-colors duration-300",
+        isSubmitSuccessful && "opacity-50 cursor-not-allowed",
+        className
+      )}
     >
       {isSubmitSuccessful ? "Loading..." : name}
     </button>

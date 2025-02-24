@@ -2,7 +2,7 @@
 import { useFormContext } from "react-hook-form";
 import { InputFieldProps } from "@/types/types";
 import clsx from "clsx";
-const InputField = ({ name, label, className, type = "text" }: InputFieldProps) => {
+const File = ({ name, label, className }: InputFieldProps) => {
   const {
     register,
     formState: { errors },
@@ -12,7 +12,7 @@ const InputField = ({ name, label, className, type = "text" }: InputFieldProps) 
     <div className="flex flex-col gap-2">
       <input
         {...register(name)}
-        type={type}
+        type="file"
         className={clsx(
           "border border-text-secondary p-2 rounded-md outline-none bg-primary-dark w-full",
           errors[name] && "border-red-500 " , className
@@ -27,5 +27,4 @@ const InputField = ({ name, label, className, type = "text" }: InputFieldProps) 
     </div>
   );
 };
-
-export default InputField;
+export default File;

@@ -8,6 +8,15 @@ export default {
   ],
   theme: {
     extend: {
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: ".5rem",
+          sm: "1rem",
+          lg: "4rem",
+          xl: "5rem",
+        },
+      },
       colors: {
         primary: {
           dark: "#182131",
