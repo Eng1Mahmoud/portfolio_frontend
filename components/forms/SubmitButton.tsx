@@ -2,7 +2,7 @@
 import { useFormContext } from "react-hook-form";
 import { SubmitButtonProps } from "@/types/types";
 import clsx from "clsx";
-const SubmitButton = ({ name , className}: SubmitButtonProps) => {
+const SubmitButton = ({ name, className }: SubmitButtonProps) => {
   const {
     formState: { isSubmitSuccessful },
   } = useFormContext();

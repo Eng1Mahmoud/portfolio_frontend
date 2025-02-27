@@ -1,6 +1,6 @@
 "use client";
 import { Form } from "@/components/forms/Form";
-import { contactUsSchema } from "@/zod/userInfoSchema";
+import { contactUsSchema } from "@/zod/contactUsSchema";
 import InputField from "@/components/forms/InputField";
 import { contactUs } from "@/actions/contactUs";
 import SubmitButton from "../forms/SubmitButton";

@@ -1,4 +1,4 @@
-import {useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useForm,
   FormProvider,
@@ -15,6 +15,8 @@ export const Form = <T extends FieldValues>({
   action,
   children,
   className,
+  onSuccess,
+  onError,
 }: FormProps<T>) => {
   const methods = useForm<T>({
     defaultValues,
@@ -22,21 +24,37 @@ export const Form = <T extends FieldValues>({
     mode: "onTouched",
   });
 
-  const [state, formAction] = useActionState(action, { message: "", success: false });
+  const [state, formAction] = useActionState(action, {
+    message: "",
+    success: false,
+  });
   const [, startTransition] = useTransition();
   const [toastTrigger, setToastTrigger] = useState(true);
 
   // Show toast and reset form when state changes
   useEffect(() => {
     if (state.message) {
+      console.log(state.message);
       // show toast if ther is message return from action
-      showToast({ type: "success", message: state.message });
+      showToast({
+        type: state.success ? "success" : "error",
+        message: state.message,
+      });
+    }
+    // Only call onSuccess when form submission is successful
+    if (state.success && onSuccess) {
+      onSuccess();
+    }
+
+    // Only call onError when form submission fails
+    if (!state.success && onError) {
+      onError();
     }
     // reset the form after any submit
     if (state.success) {
       methods.reset();
     }
-  }, [state.message, state.success, methods, toastTrigger]);
+  }, [state.message, state.success, methods, toastTrigger, onSuccess, onError]);
 
   // handle form submission
   const onSubmit: SubmitHandler<T> = (data) => {

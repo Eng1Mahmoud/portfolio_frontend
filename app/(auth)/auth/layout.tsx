@@ -1,4 +1,5 @@
-import "../../globals.css"
+import { ToastContainer } from "react-toastify";
+import "../../globals.css";
 
 export default function RootLayout({
   children,
@@ -7,9 +8,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-       suppressHydrationWarning={true}
-      >
+      <body suppressHydrationWarning={true} className="bg-gray-100">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         {children}
       </body>
     </html>
