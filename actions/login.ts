@@ -1,6 +1,6 @@
 "use server";
 import { LoginSchema } from "@/zod/loginSchema";
-import { IactionState } from "@/types/types";
+import { IactionState } from "@/types/general";
 import { cookies } from "next/headers";
 export async function loginAction(_state: IactionState, data: LoginSchema) {
   try {

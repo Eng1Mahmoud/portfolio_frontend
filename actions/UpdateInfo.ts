@@ -1,11 +1,11 @@
 "use server";
 import { IuserInfo } from "../zod/userInfoSchema";
-import { IactionState } from "./../types/types";
+import { IactionState } from "../types/general";
 
 export async function updateUser(_state: IactionState, data: IuserInfo) {
   try {
     const res = fetch("http://localhost:10000/api/profile", {
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",

@@ -1,6 +1,6 @@
 "use client";
 import { useFormContext } from "react-hook-form";
-import { InputFieldProps } from "@/types/types";
+import { InputFieldProps } from "@/types/forms";
 import clsx from "clsx";
 const InputField = ({ name, label, className, type = "text" }: InputFieldProps) => {
   const {

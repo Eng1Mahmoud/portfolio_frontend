@@ -1,6 +1,6 @@
 "use server";
 import { IcontactUs } from "@/zod/contactUsSchema";
-import { IactionState } from "./../types/types";
+import { IactionState } from "../types/general";
 import emailjs from "@emailjs/nodejs";
 
 export async function contactUs(_state: IactionState, data: IcontactUs) {

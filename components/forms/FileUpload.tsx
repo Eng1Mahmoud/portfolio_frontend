@@ -1,6 +1,6 @@
 "use client";
 import { useFormContext } from "react-hook-form";
-import { InputFieldProps } from "@/types/types";
+import { InputFieldProps } from "@/types/forms";
 import Image from "next/image";
 import { useImageUpload } from "@/hooks/useImageUpload";
 import clsx from "clsx";

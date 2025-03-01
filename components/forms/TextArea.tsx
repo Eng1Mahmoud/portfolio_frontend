@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { TextAreaProps } from "@/types/types";
+import { TextAreaProps } from "@/types/forms";
 import clsx from "clsx";
 const TextArea = ({ name, label,rows=4, className="" }: TextAreaProps) => {
   const {

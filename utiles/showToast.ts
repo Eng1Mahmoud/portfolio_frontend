@@ -1,4 +1,4 @@
-import { ToastOptions } from "@/types/types";
+import { ToastOptions } from "@/types/general";
 import { toast } from "react-toastify";
 export const showToast = ({ type, message }: ToastOptions) => {
   switch (type) {

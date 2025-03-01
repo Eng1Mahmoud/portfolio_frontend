@@ -7,7 +7,7 @@ import {
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionState, useTransition } from "react";
-import { FormProps } from "@/types/types";
+import { FormProps } from "@/types/forms";
 import { showToast } from "@/utiles/showToast";
 export const Form = <T extends FieldValues>({
   defaultValues,

@@ -12,8 +12,7 @@ const LoginForm = () => {
     password: "",
   };
   const onSuccess = () => {
-    router.push("/");
-    console.log("Form submitted successfully");
+    router.push("/dashboard");
   };
   return (
     <main className="min-h-screen flex items-center justify-center bg-gray-100">

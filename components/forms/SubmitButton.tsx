@@ -1,6 +1,6 @@
 "use client";
 import { useFormContext } from "react-hook-form";
-import { SubmitButtonProps } from "@/types/types";
+import { SubmitButtonProps } from "@/types/forms";
 import clsx from "clsx";
 const SubmitButton = ({ name, className }: SubmitButtonProps) => {
   const {
