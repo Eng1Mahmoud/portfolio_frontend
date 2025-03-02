@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 export async function Fetch<R, I>({ endpoint, method, body, tags }: IFetch<I>): Promise<ApiResponse<R>> {
   try {
     const token = (await cookies()).get("token")?.value;
-    const baseUrl = process.env.API_URL || 'http://localhost:10000/api';
+    const baseUrl = process.env.API_URL ;
     
     const res = await fetch(`${baseUrl}/${endpoint}`, {
       method: method,
