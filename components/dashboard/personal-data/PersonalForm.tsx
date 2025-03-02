@@ -1,24 +1,14 @@
 "use client";
 import { Form } from "@/components/forms/Form";
-import { userInfoSchema } from "@/zod/userInfoSchema";
+import { IuserInfo, userInfoSchema } from "@/zod/userInfoSchema";
 import InputField from "@/components/forms/InputField";
 import { updateUser } from "@/actions/UpdateInfo";
 import SubmitButton from "@/components/forms/SubmitButton";
+import ImageUploadInput from "@/components/forms/ImageUploadInput";
 import TextArea from "@/components/forms/TextArea";
-import FileUpload from "@/components/forms/FileUpload";
-const PersonalForm = () => {
-  const initialValues = {
-    userName: "",
-    title: "",
-    email: "",
-    phone1: "",
-    phone2: "",
-    bio: "",
-    avatar: "",
-    aboutImage: "",
-    cv: "",
-  };
-
+import FileUploadInput from "@/components/forms/FileUploadInput";
+const PersonalForm = ({ initialValues }: { initialValues: IuserInfo }) => {
+  console.log(initialValues);
   return (
     <Form
       defaultValues={initialValues}
@@ -63,9 +53,17 @@ const PersonalForm = () => {
           className="bg-text-primary text-primary-dark "
         />
 
-        <FileUpload name="avatar" label="Upload avatar Image" type="image" />
-        <FileUpload name="aboutImage" label="Upload About Image" type="image" />
-        <FileUpload name="cv" label="Upload Document" type="file" />
+        <ImageUploadInput
+          name="avatar"
+          label="Upload avatar Image"
+          type="image"
+        />
+        <ImageUploadInput name="aboutImage" label="Upload About Image" />
+        <FileUploadInput
+          name="cv"
+          label="Upload PDF Document"
+          accept="application/pdf"
+        />
         <SubmitButton name="Save" className="w-[300px]" />
       </div>
     </Form>

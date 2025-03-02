@@ -14,11 +14,10 @@ export async function Fetch<R, I>({ endpoint, method, body, tags }: IFetch<I>): 
       body: JSON.stringify(body),
       cache: method === "GET" ? "force-cache" : "no-store",
       next: {
-        revalidate: 0,
         tags: tags,
       },
     });
-
+    console.log("Fetching:", endpoint, "with tags:", tags);
     if (!res.ok) {
       try {
         const errorData = await res.json();
