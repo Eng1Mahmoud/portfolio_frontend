@@ -4,15 +4,10 @@ import InputField from "@/components/forms/InputField";
 import { loginSchema } from "@/zod/loginSchema";
 import { loginAction } from "@/actions/login";
 import SubmitButton from "@/components/forms/SubmitButton";
-import { useRouter } from "next/navigation";
 const LoginForm = () => {
-  const router = useRouter();
   const initialValues = {
     email: "",
     password: "",
-  };
-  const onSuccess = () => {
-    router.push("/dashboard");
   };
   return (
     <main className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -25,7 +20,6 @@ const LoginForm = () => {
           schema={loginSchema}
           action={loginAction}
           className="space-y-6"
-          onSuccess={onSuccess}
         >
           <InputField
             name="email"

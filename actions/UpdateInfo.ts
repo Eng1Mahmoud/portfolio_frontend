@@ -12,7 +12,7 @@ export async function updateUser(_state: IactionState, data: IuserInfo) {
   });
   if (response.success) {
     console.log("Profile updated successfully. Revalidating tag...");
-    revalidateTag("user-info");
+    revalidateTag("user-info")
   }
   
   return response;

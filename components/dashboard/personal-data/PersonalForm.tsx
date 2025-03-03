@@ -8,7 +8,6 @@ import ImageUploadInput from "@/components/forms/ImageUploadInput";
 import TextArea from "@/components/forms/TextArea";
 import FileUploadInput from "@/components/forms/FileUploadInput";
 const PersonalForm = ({ initialValues }: { initialValues: IuserInfo }) => {
-  console.log(initialValues);
   return (
     <Form
       defaultValues={initialValues}
