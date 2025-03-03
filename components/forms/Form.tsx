@@ -53,14 +53,14 @@ export const Form = <T extends FieldValues>({
     if (!state.success && onError) {
       onError();
     }
-    // reset the form after any submit
     if (state.success) {
-      methods.reset();
       // redirect to path if provided
       if(redirectPath){
         router.push(redirectPath)
       }
     }
+    // reset form 
+     methods.reset();
   }, [state.message, state.success, methods, toastTrigger, onSuccess, onError, redirectPath, router]);
 
   // handle form submission
