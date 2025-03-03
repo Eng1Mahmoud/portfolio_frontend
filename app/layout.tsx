@@ -21,6 +21,7 @@ export default function RootLayout({
           draggable
           pauseOnHover
           theme="light"
+          className='z[1000]'
         />
         {children}
       </body>

@@ -22,4 +22,5 @@ export async function loginAction(_state: IactionState, data: ILogin) {
     });
     redirect("/dashboard");
   }
+  return response;
 }
