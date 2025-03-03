@@ -6,4 +6,4 @@ export const contactUsSchema = z.object({
   message: z.string().min(1, "Message is required"),
 });
 
-export type IcontactUs = z.infer<typeof contactUsSchema>;
+export type TcontactUsSchema = z.infer<typeof contactUsSchema>;

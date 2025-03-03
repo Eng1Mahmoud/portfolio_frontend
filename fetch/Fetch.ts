@@ -3,9 +3,7 @@ import { cookies } from "next/headers";
 export async function Fetch<R, I>({ endpoint, method, body, tags }: IFetch<I>): Promise<ApiResponse<R>> {
   try {
     const token = (await cookies()).get("token")?.value;
-    const baseUrl = process.env.API_URL  ;
-    console.log(baseUrl);
-    
+    const baseUrl = process.env.API_URL;
     const res = await fetch(`${baseUrl}/${endpoint}`, {
       method: method,
       headers: {
@@ -14,11 +12,8 @@ export async function Fetch<R, I>({ endpoint, method, body, tags }: IFetch<I>): 
       },
       body: JSON.stringify(body),
       cache: method === "GET" ? "force-cache" : "no-store",
-      next: {
-        tags: tags,
-      },
+      ...(tags && { next: { tags } })
     });
-    console.log("Fetching:", endpoint, "with tags:", tags);
     if (!res.ok) {
       try {
         const errorData = await res.json();

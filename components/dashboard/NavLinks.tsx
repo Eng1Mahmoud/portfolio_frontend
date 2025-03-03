@@ -12,11 +12,18 @@ const NavLinks = () => {
     { href: "/dashboard/skills", label: "Skills", icon: <Lightbulb size={20} /> },
   ];
 
+  const isLinkActive = (href: string) => {
+    if (href === '/dashboard') {
+      return pathname === href;
+    }
+    return pathname.startsWith(href);
+  };
+
   return (
     <nav className="flex-1 px-2 space-y-1" aria-label="Sidebar">
       <ul className="space-y-2">
         {links.map((link) => {
-          const isActive = pathname === link.href;
+          const isActive = isLinkActive(link.href);
           return (
             <li key={link.href}>
               <Link

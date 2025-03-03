@@ -14,4 +14,4 @@ export const userInfoSchema = z.object({
   cv: z.string().min(1, "CV is required").url("Invalid cv url"),
 });
 
-export type IuserInfo = z.infer<typeof userInfoSchema>;
+export type TuserInfoSchema = z.infer<typeof userInfoSchema>;

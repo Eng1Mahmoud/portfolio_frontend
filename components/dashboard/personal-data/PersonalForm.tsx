@@ -1,13 +1,13 @@
 "use client";
 import { Form } from "@/components/forms/Form";
-import { IuserInfo, userInfoSchema } from "@/zod/userInfoSchema";
+import { TuserInfoSchema, userInfoSchema } from "@/zod/userInfoSchema";
 import InputField from "@/components/forms/InputField";
 import { updateUser } from "@/actions/UpdateInfo";
 import SubmitButton from "@/components/forms/SubmitButton";
 import ImageUploadInput from "@/components/forms/ImageUploadInput";
 import TextArea from "@/components/forms/TextArea";
 import FileUploadInput from "@/components/forms/FileUploadInput";
-const PersonalForm = ({ initialValues }: { initialValues: IuserInfo }) => {
+const PersonalForm = ({ initialValues }: { initialValues: TuserInfoSchema }) => {
   return (
     <Form
       defaultValues={initialValues}

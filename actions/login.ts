@@ -1,13 +1,13 @@
 "use server";
-import { ILogin } from "@/zod/loginSchema";
+import { ILoginSchema } from "@/zod/loginSchema";
 import { IactionState } from "@/types/general";
 import { cookies } from "next/headers";
 import { Fetch } from "@/fetch/Fetch";
 import type { LoginResponse } from "@/types/apiResponses";
 import { redirect } from "next/navigation";
 
-export async function loginAction(_state: IactionState, data: ILogin) {
-  const response = await Fetch<LoginResponse, ILogin>({
+export async function loginAction(_state: IactionState, data: ILoginSchema) {
+  const response = await Fetch<LoginResponse, ILoginSchema>({
     endpoint: "auth/login",
     method: "POST",
     body: data,

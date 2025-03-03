@@ -39,7 +39,7 @@ const ImageUploadInput = ({ name, label, className }: InputFieldProps) => {
               src={fileUrl}
               alt="Uploaded Image"
               fill
-              className="rounded-md object-cover"
+              className="rounded-md object-contain"
             />
             <button
               onClick={handleDelete}

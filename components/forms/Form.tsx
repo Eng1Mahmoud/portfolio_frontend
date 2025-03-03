@@ -5,6 +5,7 @@ import {
   SubmitHandler,
   FieldValues,
 } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionState, useTransition } from "react";
 import { FormProps } from "@/types/forms";
@@ -17,7 +18,9 @@ export const Form = <T extends FieldValues>({
   className,
   onSuccess,
   onError,
+  redirectPath
 }: FormProps<T>) => {
+  const router = useRouter();
   const methods = useForm<T>({
     defaultValues,
     resolver: zodResolver(schema),
@@ -53,8 +56,12 @@ export const Form = <T extends FieldValues>({
     // reset the form after any submit
     if (state.success) {
       methods.reset();
+      // redirect to path if provided
+      if(redirectPath){
+        router.push(redirectPath)
+      }
     }
-  }, [state.message, state.success, methods, toastTrigger, onSuccess, onError]);
+  }, [state.message, state.success, methods, toastTrigger, onSuccess, onError, redirectPath, router]);
 
   // handle form submission
   const onSubmit: SubmitHandler<T> = (data) => {

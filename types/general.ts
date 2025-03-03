@@ -1,3 +1,5 @@
+import { TskillsSchema } from '@/zod/skillsSchema';
+import { TuserInfoSchema } from '@/zod/userInfoSchema';
 // Interface for toast options
 export interface ToastOptions {
   type: "success" | "error" | "warning" | "info";
@@ -9,4 +11,12 @@ export interface IactionState {
   success: boolean;
 }
 
-// Interface for form props
+// skill interface
+export interface ISkill extends TskillsSchema {
+  _id: string;
+}
+
+// user info interface
+export interface IuserInfo extends TuserInfoSchema {
+  _id: string;
+}

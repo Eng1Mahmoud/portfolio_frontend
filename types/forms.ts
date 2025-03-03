@@ -11,6 +11,7 @@ export interface FormProps<T extends FieldValues> {
     className?: string;
     onSuccess?: () => void;
     onError?: () => void;
+    redirectPath?: string;
   }
   
   // input filed props
