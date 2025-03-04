@@ -1,8 +1,9 @@
 "use client";
-import { Edit2, Trash2 } from "lucide-react";
+import { Edit2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { ISkill } from "@/types/general";
+import DeleteSkillButton from "./DeleteSkillButton";
 
 const SkillCard = ({ skill }: { skill: ISkill }) => {
   return (
@@ -30,15 +31,7 @@ const SkillCard = ({ skill }: { skill: ISkill }) => {
             <Edit2 className="w-4 h-4 mr-1" />
             Edit
           </Link>
-          <button
-            className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded-md transition duration-150 flex items-center"
-            onClick={() => {
-              // Add delete handler here
-            }}
-          >
-            <Trash2 className="w-4 h-4 mr-1" />
-            Delete
-          </button>
+          <DeleteSkillButton skillId={skill._id as string} />
         </div>
       </div>
     </div>
