@@ -18,7 +18,7 @@ export const Form = <T extends FieldValues>({
   className,
   onSuccess,
   onError,
-  redirectPath
+  redirectPath,
 }: FormProps<T>) => {
   const router = useRouter();
   const methods = useForm<T>({
@@ -48,7 +48,6 @@ export const Form = <T extends FieldValues>({
     if (state.success && onSuccess) {
       onSuccess();
     }
-
     // Only call onError when form submission fails
     if (!state.success && onError) {
       onError();

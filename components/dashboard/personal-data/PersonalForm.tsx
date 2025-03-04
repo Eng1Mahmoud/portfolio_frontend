@@ -13,6 +13,7 @@ const PersonalForm = ({ initialValues }: { initialValues: TuserInfoSchema }) => 
       defaultValues={initialValues}
       schema={userInfoSchema}
       action={updateUser}
+      redirectPath="/dashboard"
     >
       <div className="grid grid-cols-1 gap-6">
         <InputField
