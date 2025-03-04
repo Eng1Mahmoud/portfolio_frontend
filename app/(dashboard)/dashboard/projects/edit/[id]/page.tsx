@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 export default async function EditProject({ params }:{params:Promise<{id:string}>}) {
-  const{id} = await params
-  console.log(id)
+console.log(params)
   return (
     <div className="space-y-6">
       {/* Navigation Buttons */}

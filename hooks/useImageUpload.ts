@@ -21,7 +21,6 @@ export const useImageUpload = () => {
       const data = await response.json();
       return data.url;
     } catch (error) {
-      console.error("Upload error:", error);
       throw error;
     } finally {
       setLoading(false);

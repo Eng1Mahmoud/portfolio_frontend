@@ -2,7 +2,7 @@
 import { useFormContext } from "react-hook-form";
 import { InputFieldProps } from "@/types/forms";
 import clsx from "clsx";
-const InputField = ({ name, label, className, type = "text" }: InputFieldProps) => {
+const InputField = ({ name, label, className, type = "text",value }: InputFieldProps) => {
   const {
     register,
     formState: { errors },
@@ -18,6 +18,7 @@ const InputField = ({ name, label, className, type = "text" }: InputFieldProps) 
           errors[name] && "border-red-500 " , className
         )}
         placeholder={label}
+        value={value}
       />
       {errors[name] && (
         <p className="text-red-500 text-sm">

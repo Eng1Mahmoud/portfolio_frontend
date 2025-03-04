@@ -5,8 +5,6 @@ import clsx from "clsx";
 
 const SubmitButton = ({ name, className }: SubmitButtonProps) => {
   const { formState: { isSubmitting } } = useFormContext();
-
-console.log(isSubmitting)
   return (
     <button
       disabled={isSubmitting}

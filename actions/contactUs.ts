@@ -28,7 +28,6 @@ export async function contactUs(_state: IactionState, data: TcontactUsSchema) {
       message: "Message sent successfully",
     };
   } catch (error) {
-    console.log("Error:", error);
     return {
       success: false,
       message:

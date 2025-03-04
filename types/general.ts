@@ -13,10 +13,10 @@ export interface IactionState {
 
 // skill interface
 export interface ISkill extends TskillsSchema {
-  _id: string;
+  _id?: string;
 }
 
 // user info interface
 export interface IuserInfo extends TuserInfoSchema {
-  _id: string;
+  _id?: string;
 }

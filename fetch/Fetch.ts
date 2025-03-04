@@ -5,11 +5,15 @@ export async function Fetch<R, I>({
   method,
   body,
   tags,
+  param,
 }: IFetch<I>): Promise<ApiResponse<R>> {
   try {
     const token = (await cookies()).get("token")?.value;
     const baseUrl = process.env.API_URL;
-    const res = await fetch(`${baseUrl}/${endpoint}`, {
+    const apiUrl = param
+      ? `${baseUrl}/${endpoint}/${param}`
+      : `${baseUrl}/${endpoint}`;
+    const res = await fetch(`${apiUrl}`, {
       method: method,
       headers: {
         "Content-Type": "application/json",

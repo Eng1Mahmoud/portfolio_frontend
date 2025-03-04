@@ -37,7 +37,6 @@ export const Form = <T extends FieldValues>({
   // Show toast and reset form when state changes
   useEffect(() => {
     if (state.message) {
-      console.log(state.message);
       // show toast if ther is message return from action
       showToast({
         type: state.success ? "success" : "error",
@@ -54,13 +53,23 @@ export const Form = <T extends FieldValues>({
     }
     if (state.success) {
       // redirect to path if provided
-      if(redirectPath){
-        router.push(redirectPath)
+      if (redirectPath) {
+        router.push(redirectPath);
       }
     }
-    // reset form 
-     methods.reset();
-  }, [state.message, state.success, methods, toastTrigger, onSuccess, onError, redirectPath, router]);
+
+    // reset form
+    methods.reset();
+  }, [
+    state.message,
+    state.success,
+    methods,
+    toastTrigger,
+    onSuccess,
+    onError,
+    redirectPath,
+    router,
+  ]);
 
   // handle form submission
   const onSubmit: SubmitHandler<T> = (data) => {

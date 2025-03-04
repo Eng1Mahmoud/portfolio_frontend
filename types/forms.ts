@@ -20,6 +20,7 @@ export interface FormProps<T extends FieldValues> {
     label: string;
     type?: string;
     className?: string;
+    value?: string;
   }
   // text area props
   export interface TextAreaProps {

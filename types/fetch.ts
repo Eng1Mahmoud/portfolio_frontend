@@ -8,4 +8,5 @@ export interface IFetch<I> {
     method: string;
     body?: I;
     tags?: string[];
+    param?: string;
   }
