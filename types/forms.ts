@@ -12,6 +12,10 @@ export interface FormProps<T extends FieldValues> {
     onSuccess?: () => void;
     onError?: () => void;
     redirectPath?: string;
+    buttonProps: {
+      name: string;
+      className?: string;
+    };
   }
   
   // input filed props
@@ -34,5 +38,6 @@ export interface FormProps<T extends FieldValues> {
   export interface SubmitButtonProps {
     name: string;
     className?: string;
+    isPending: boolean;
   }
   

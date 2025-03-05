@@ -3,7 +3,6 @@ import { Form } from "@/components/forms/Form";
 import { contactUsSchema } from "@/zod/contactUsSchema";
 import InputField from "@/components/forms/InputField";
 import { contactUs } from "@/actions/contactUs";
-import SubmitButton from "../forms/SubmitButton";
 import TextArea from "../forms/TextArea";
 
 const ContactUsForm = () => {
@@ -14,6 +13,9 @@ const ContactUsForm = () => {
       defaultValues={initialValues}
       schema={contactUsSchema}
       action={contactUs}
+      buttonProps={{
+        name: "Send Message",
+      }}
       
     >
       <div className="grid grid-cols-1 gap-6">
@@ -21,7 +23,6 @@ const ContactUsForm = () => {
       <InputField name="email" label="Enter your email" type="email" />
       <InputField name="phone" label="Enter your phone number" type="text" />
       <TextArea name="message" label="Enter your message" rows={6} />
-      <SubmitButton name="Send Message" />
       </div>
     </Form>
 

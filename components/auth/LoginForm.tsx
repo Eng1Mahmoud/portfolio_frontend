@@ -3,7 +3,6 @@ import { Form } from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
 import { loginSchema } from "@/zod/loginSchema";
 import { loginAction } from "@/actions/login";
-import SubmitButton from "@/components/forms/SubmitButton";
 const LoginForm = () => {
   const initialValues = {
     email: "",
@@ -20,6 +19,10 @@ const LoginForm = () => {
           schema={loginSchema}
           action={loginAction}
           className="space-y-6"
+          buttonProps={{
+            name: "Sign In",
+  
+          }}
         >
           <InputField
             name="email"
@@ -33,7 +36,6 @@ const LoginForm = () => {
             type="password"
             className="bg-text-primary"
           />
-          <SubmitButton name="Sign In" />
         </Form>
       </div>
     </main>

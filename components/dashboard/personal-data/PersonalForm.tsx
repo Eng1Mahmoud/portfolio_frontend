@@ -3,17 +3,20 @@ import { Form } from "@/components/forms/Form";
 import { TuserInfoSchema, userInfoSchema } from "@/zod/userInfoSchema";
 import InputField from "@/components/forms/InputField";
 import { updateUser } from "@/actions/UpdateInfo";
-import SubmitButton from "@/components/forms/SubmitButton";
 import ImageUploadInput from "@/components/forms/ImageUploadInput";
 import TextArea from "@/components/forms/TextArea";
 import FileUploadInput from "@/components/forms/FileUploadInput";
 const PersonalForm = ({ initialValues }: { initialValues: TuserInfoSchema }) => {
+  console.log("from form ",initialValues);
   return (
     <Form
       defaultValues={initialValues}
       schema={userInfoSchema}
       action={updateUser}
       redirectPath="/dashboard"
+      buttonProps={{
+        name: "Save"
+      }}
     >
       <div className="grid grid-cols-1 gap-6">
         <InputField
@@ -64,7 +67,6 @@ const PersonalForm = ({ initialValues }: { initialValues: TuserInfoSchema }) => 
           label="Upload PDF Document"
           accept="application/pdf"
         />
-        <SubmitButton name="Save" className="w-[300px]" />
       </div>
     </Form>
   );

@@ -1,14 +1,13 @@
 import PersonalForm from "@/components/dashboard/personal-data/PersonalForm";
 import { Fetch } from "@/fetch/Fetch";
 import { IuserInfoResponse } from "@/types/apiResponses";
-
-// Define the type for user data
 export default async function PersonalData() {
   const response = await Fetch<IuserInfoResponse, null>({
     endpoint: "profile",
     method: "GET",
-    tags: ["user-info"],
+    tags: ["info"],
   });
+  console.log("update",response)
   return (
     <div className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
       <h2 className="text-2xl font-semibold mb-6 text-gray-800">
