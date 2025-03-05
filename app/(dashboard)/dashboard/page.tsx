@@ -13,12 +13,15 @@ export default async function PersonalData() {
             userName: "",
             title: "",
             email: "",
+            address: "",
             phone1: "",
             phone2: "",
             bio: "",
             avatar: "",
             aboutImage: "",
             cv: "",
+            github: "",
+            linkedin:""
           }
         }
       />

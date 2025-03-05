@@ -6,7 +6,11 @@ import { updateUser } from "@/actions/UpdateInfo";
 import ImageUploadInput from "@/components/forms/ImageUploadInput";
 import TextArea from "@/components/forms/TextArea";
 import FileUploadInput from "@/components/forms/FileUploadInput";
-const PersonalForm = ({ initialValues }: { initialValues: TuserInfoSchema }) => {
+const PersonalForm = ({
+  initialValues,
+}: {
+  initialValues: TuserInfoSchema;
+}) => {
   return (
     <Form
       defaultValues={initialValues}
@@ -14,7 +18,7 @@ const PersonalForm = ({ initialValues }: { initialValues: TuserInfoSchema }) => 
       action={updateUser}
       redirectPath="/dashboard"
       buttonProps={{
-        name: "Save"
+        name: "Save",
       }}
     >
       <div className="grid grid-cols-1 gap-6">
@@ -37,6 +41,12 @@ const PersonalForm = ({ initialValues }: { initialValues: TuserInfoSchema }) => 
           className="bg-text-primary text-primary-dark "
         />
         <InputField
+          name="address"
+          label="Address"
+          type="text"
+          className="bg-text-primary text-primary-dark "
+        />
+        <InputField
           name="phone1"
           label="Phone number 1"
           type="text"
@@ -54,7 +64,18 @@ const PersonalForm = ({ initialValues }: { initialValues: TuserInfoSchema }) => 
           rows={6}
           className="bg-text-primary text-primary-dark "
         />
-
+        <InputField
+          name="github"
+          label="Github"
+          type="text"
+          className="bg-text-primary text-primary-dark "
+        />
+        <InputField
+          name="linkedin"
+          label="LinkedIn"
+          type="text"
+          className="bg-text-primary text-primary-dark "
+        />
         <ImageUploadInput
           name="avatar"
           label="Upload avatar Image"
