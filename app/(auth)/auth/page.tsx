@@ -1,8 +1,10 @@
-import LoginForm from '@/components/auth/LoginForm'
+import LoginForm from "@/components/auth/LoginForm";
 const page = () => {
   return (
-    <LoginForm/>
-  )
-}
+    <div className="container">
+      <LoginForm />
+    </div>
+  );
+};
 
-export default page
+export default page;
