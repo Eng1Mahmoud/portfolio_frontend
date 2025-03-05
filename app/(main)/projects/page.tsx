@@ -2,7 +2,7 @@ import { Title } from "@/components/general/Title";
 export default function ProjectsPage() {
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div>
       <Title title="Projects" />
       
       <div className="

@@ -1,18 +1,21 @@
+import { getProfileInfo } from "@/actions/getProfileInfo";
 import { PersonalInfo } from "@/components/about/PersonalInfo";
 import { ProfileImage } from "@/components/about/ProfileImage";
 import { Title } from "@/components/general/Title";
+import { IuserInfo } from "@/types/general";
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const profileInfo = await getProfileInfo() ;
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div >
      <Title title="About Me" />
       <div className="grid md:grid-cols-2 gap-8 items-center">
         {/* Profile Image */}
-        <ProfileImage />
+        <ProfileImage profileInfo={profileInfo as IuserInfo}/>
 
         {/* Personal Information */}
         <PersonalInfo 
-          resumeLink={""}
+          profileInfo={profileInfo as IuserInfo}
         />
       </div>
     </div>

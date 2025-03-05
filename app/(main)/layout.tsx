@@ -1,20 +1,22 @@
+import { getProfileInfo } from "@/actions/getProfileInfo";
 import { Aside } from "@/components/general/Aside";
 import { MobileAsideToggle } from "@/components/general/MobileAside";
-
-export default function MainLayout({
+import { IuserInfo } from "@/types/general";
+export default async function MainLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const profileInfo = await getProfileInfo();
   return (
     <div className="bg-primary-light text-white relative h-screen overflow-hidden">
-      <MobileAsideToggle />
+      <MobileAsideToggle profileInfo={profileInfo as IuserInfo} />
       <div className="hidden lg:grid lg:grid-cols-[20%_80%] h-full overflow-hidden">
-        <Aside />
-        <main className="overflow-y-auto relative p-6">{children}</main>
+        <Aside profileInfo={profileInfo as IuserInfo} />
+        <main className="overflow-y-auto relative container py-10">{children}</main>
       </div>
-      <main className="lg:hidden absolute inset-0 pt-5 overflow-y-auto bg-primary-light">
-        <div className="relative h-full p-6">{children}</div>
+      <main className="lg:hidden absolute inset-0  overflow-y-auto bg-primary-light">
+        <div className="relative h-full container py-16">{children}</div>
       </main>
     </div>
   );

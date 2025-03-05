@@ -1,10 +1,9 @@
 "use client";
-
+import { IuserInfo } from "@/types/general";
 import { useState, useEffect } from "react";
-
-export const TypedName = () => {
+export const TypedName = ({ profileInfo }: { profileInfo: IuserInfo }) => {
   const [name, setName] = useState("");
-  const typedName = "Mahmoud Mohamed";
+  const typedName = profileInfo?.userName || "";
 
   useEffect(() => {
     let currentIndex = 0;

@@ -1,23 +1,17 @@
 "use client";
-
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-
-interface PersonalInfoProps {
-  resumeLink: string;
-}
-
-export const PersonalInfo: React.FC<PersonalInfoProps> = ({ resumeLink }) => {
-  const [name, setName] = useState('');
-  const typedName = 'Mahmoud Mohamed';
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { IuserInfo } from "@/types/general";
+export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
+  const [name, setName] = useState("");
+  const typedName = profileInfo?.userName || "";
 
   // Calculate age
   const calculateAge = (birthDate: string) => {
-    const dob = new Date(birthDate);
-    const diff_ms = Date.now() - dob.getTime();
-    const age_dt = new Date(diff_ms);
-    return Math.abs(age_dt.getUTCFullYear() - 1970);
+    const dateOfBirth = new Date(birthDate);
+    const timeDifference = Date.now() - dateOfBirth.getTime();
+    const ageDate = new Date(timeDifference);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
   };
 
   useEffect(() => {
@@ -35,12 +29,12 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({ resumeLink }) => {
   }, []);
 
   const personalDetails = [
-    { label: 'Full Name', value: 'Mahmoud Mohamed' },
-    { label: 'Age', value: `${calculateAge('2001-03-26')} Years` },
-    { label: 'Nationality', value: 'Egyptian' },
-    { label: 'Languages', value: 'Arabic, English' },
-    { label: 'Address', value: 'Egypt, 6th of October City' },
-    { label: 'Freelance', value: 'Available' }
+    { label: "Full Name", value: profileInfo?.userName },
+    { label: "Age", value: `${calculateAge("2001-03-26")} Years` },
+    { label: "Nationality", value: "Egyptian" },
+    { label: "Languages", value: "Arabic, English" },
+    { label: "Address", value: profileInfo?.address },
+    { label: "Freelance", value: "Available" },
   ];
 
   return (
@@ -49,20 +43,18 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({ resumeLink }) => {
         Hi, I am <span className="text-blue-500">{name}</span>
       </h2>
 
-      <motion.p 
+      <motion.p
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="mb-6 text-gray-300"
       >
-        I am a Frontend Engineer with a degree in Computers and AI, specializing
-        in React and Next.js. I build scalable, high-performance web applications
-        that enhance user engagement and business growth.
+        {profileInfo?.bio}
       </motion.p>
 
       <ul className="space-y-2 mb-6">
         {personalDetails.map((detail, index) => (
-          <motion.li 
+          <motion.li
             key={index}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -73,13 +65,14 @@ export const PersonalInfo: React.FC<PersonalInfoProps> = ({ resumeLink }) => {
         ))}
       </ul>
 
-      <Link 
-        href={resumeLink} 
+      <a
+        href={profileInfo?.cv}
+        target="_blank"
         download
         className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
       >
         Download CV
-      </Link>
+      </a>
     </div>
   );
 };

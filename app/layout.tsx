@@ -1,8 +1,7 @@
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -21,7 +20,7 @@ export default function RootLayout({
           draggable
           pauseOnHover
           theme="light"
-          className='z[1000]'
+          className="z[1000]"
         />
         {children}
       </body>
