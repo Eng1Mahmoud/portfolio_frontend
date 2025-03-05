@@ -3,8 +3,8 @@ import { Edit2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { ISkill } from "@/types/general";
-import DeleteSkillButton from "./DeleteSkillButton";
-
+import DeleteButton from "@/components/general/DeleteButton";
+import { deleteSkillById } from "@/actions/deleteSkill";
 const SkillCard = ({ skill }: { skill: ISkill }) => {
   return (
     <div className="bg-white rounded-xl shadow-2xl p-2">
@@ -31,7 +31,10 @@ const SkillCard = ({ skill }: { skill: ISkill }) => {
             <Edit2 className="w-4 h-4 mr-1" />
             Edit
           </Link>
-          <DeleteSkillButton skillId={skill._id as string} />
+          <DeleteButton
+            itemId={skill._id as string}
+            deleteAction={deleteSkillById}
+          />
         </div>
       </div>
     </div>

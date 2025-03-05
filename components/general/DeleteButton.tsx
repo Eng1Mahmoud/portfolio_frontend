@@ -1,16 +1,17 @@
 "use client";
 import { Trash2 } from "lucide-react";
 import { useActionState, useEffect, useTransition } from "react";
-import { deleteSkillById } from "@/actions/deleteSkill";
 import { showToast } from "@/utiles/showToast";
+import { IactionState } from "@/types/general";
 
-interface DeleteSkillButtonProps {
-  skillId: string;
+interface DeleteButtonProps {
+  itemId: string;
+  deleteAction: (state:IactionState , id: string) => Promise<{ message: string; success: boolean }>;
 }
 
-const DeleteSkillButton = ({ skillId }: DeleteSkillButtonProps) => {
+const DeleteButton = ({ itemId, deleteAction }: DeleteButtonProps) => {
   const [isPending, StartTransition] = useTransition();
-  const [state, formAction] = useActionState(deleteSkillById, {
+  const [state, formAction] = useActionState(deleteAction, {
     message: "",
     success: false,
   });
@@ -28,7 +29,7 @@ const DeleteSkillButton = ({ skillId }: DeleteSkillButtonProps) => {
     <button
       className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded-md transition duration-150 flex items-center"
       onClick={() => {
-        StartTransition(() => formAction(skillId));
+        StartTransition(() => formAction(itemId));
       }}
     >
       <Trash2 className="w-4 h-4 mr-1" />
@@ -37,4 +38,4 @@ const DeleteSkillButton = ({ skillId }: DeleteSkillButtonProps) => {
   );
 };
 
-export default DeleteSkillButton;
+export default DeleteButton;

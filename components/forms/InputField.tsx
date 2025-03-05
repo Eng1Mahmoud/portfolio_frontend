@@ -2,7 +2,7 @@
 import { useFormContext } from "react-hook-form";
 import { InputFieldProps } from "@/types/forms";
 import clsx from "clsx";
-const InputField = ({ name, label, className, type = "text",value }: InputFieldProps) => {
+const InputField = ({ name, label, className, type= "text",value }: InputFieldProps) => {
   const {
     register,
     formState: { errors },

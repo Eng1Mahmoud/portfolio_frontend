@@ -1,4 +1,4 @@
-import { ISkill,IuserInfo } from "./general";
+import { Iproject, ISkill,IuserInfo } from "@/types/general";
 export interface GeneralResponse {
   message: string;
 }
@@ -14,12 +14,17 @@ export interface IuserInfoResponse {
 }
 // skills response
 export interface SkillsResponse {
-  message: string;
   skills: ISkill[];
 }
 
 // skill by id response
 export interface SkillByIdResponse {
-  message: string;
   skill: ISkill;
+}
+
+export interface ProjectsResponse {
+  projects:Iproject[]
+}
+export interface ProjectByIdResponse {
+  project:Iproject
 }

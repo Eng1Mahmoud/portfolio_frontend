@@ -4,18 +4,12 @@ import NavLinks from "@/components/dashboard/NavLinks";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <div>
+    <div className="min-h-[100vh]">
       <HeaderContainer />
       <div className="flex flex-col bg-gray-100">
         <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
-          <div className="flex flex-col flex-grow pt-5 bg-white overflow-y-auto">
-            <div className="flex items-center flex-shrink-0 px-4">
-              <span className="text-2xl font-semibold text-gray-800">
-                Menu
-              </span>
-            </div>
-            <div className="mt-5 flex-1 flex flex-col">
-              <NavLinks />
+          <div className="flex flex-col flex-1 border-r border-gray-200 mt-[80px]">
+            <NavLinks />
             </div>
           </div>
         </div>
@@ -25,6 +19,6 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           </div>
         </main>
       </div>
-    </div>
+
   );
 }
