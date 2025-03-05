@@ -7,8 +7,8 @@ import { IuserInfo } from "@/types/general";
 export default async function Home() {
   const profileInfo = await getProfileInfo();
   return (
-    <section className="min-h-screen flex items-center justify-center bg-primary-light text-white">
-      <div className="container mx-auto px-4  z-10 md:text-center ">
+    <section className="h-full flex items-center justify-center bg-primary-light text-white">
+      <div className="z-10 md:text-center ">
         <Overlay />
         <TypedName profileInfo={profileInfo as IuserInfo} />
         <HomeIntro profileInfo={profileInfo as IuserInfo} />

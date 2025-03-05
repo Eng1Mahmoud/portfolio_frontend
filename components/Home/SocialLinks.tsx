@@ -3,7 +3,7 @@
 import { IuserInfo } from "@/types/general";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaWhatsapp } from "react-icons/fa";
 
 const socialVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -22,6 +22,11 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
       href: profileInfo?.github,
       color: "text-gray-200 hover:text-white",
     },
+    {
+      icon: FaWhatsapp,
+      href: `https://wa.me/${profileInfo?.phone1}`,
+      color: "text-green-600 hover:text-green-400",
+    },
   ];
 
   return (
@@ -33,16 +38,16 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
       className="flex space-x-6 justify-center"
     >
       {socialLinks.map((social, index) => (
-        <li key={index}>
+        <motion.li key={index} whileHover={{ scale: 1.1 }}>
           <Link
             href={social.href}
             target="_blank"
             rel="noopener noreferrer"
-            className={`text-3xl transition-colors duration-300 ${social.color}`}
+            className={`text-4xl transition-colors duration-300 ${social.color}`}
           >
             <social.icon />
           </Link>
-        </li>
+        </motion.li>
       ))}
     </motion.ul>
   );
