@@ -26,7 +26,7 @@ export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
     }, 300);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [typedName]);
 
   const personalDetails = [
     { label: "Full Name", value: profileInfo?.userName },

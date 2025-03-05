@@ -8,5 +8,18 @@ export async function getProfileInfo(): Promise<IuserInfo | undefined>{
         method: "GET",
         tags: ["info"],
       });
-  return response?.data?.info ;
+  return response?.data?.info ||  {
+    userName: "",
+    title: "",
+    bio: "",
+    github: "",
+    linkedin: "",
+    phone1: "",
+    phone2: "",
+    email: "",
+    address: "",
+    avatar: "",
+    aboutImage: "",
+    cv: "",
+  } ;
 }

@@ -1,5 +1,4 @@
 "use client";
-
 import { IuserInfo } from "@/types/general";
 import { motion } from "framer-motion";
 import Link from "next/link";

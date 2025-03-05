@@ -5,7 +5,8 @@ import { Overlay } from "@/components/general/Overlay";
 import { getProfileInfo } from "@/actions/getProfileInfo";
 import { IuserInfo } from "@/types/general";
 export default async function Home() {
-  const profileInfo = await getProfileInfo();
+  const profileInfo = (await getProfileInfo()) 
+   
   return (
     <section className="h-full flex items-center justify-center bg-primary-light text-white">
       <div className="z-10 md:text-center ">
