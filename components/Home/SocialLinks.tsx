@@ -3,33 +3,47 @@ import { IuserInfo } from "@/types/general";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { FaLinkedin, FaGithub, FaWhatsapp } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.3,
+const getVariants = (isMobile: boolean) => ({
+  container: {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: isMobile ? 0.1 : 0.2,
+        delayChildren: isMobile ? 0.1 : 0.3,
+      },
     },
   },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, scale: 0.5, y: 20 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 200,
-      damping: 10,
+  item: {
+    hidden: { opacity: 0, scale: 0.8, y: 10 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: isMobile ? 150 : 200,
+        damping: isMobile ? 15 : 10,
+        duration: isMobile ? 0.3 : 0.5,
+      },
     },
   },
-};
+});
 
 export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const variants = getVariants(isMobile);
+  
   const socialLinks = [
     {
       icon: FaLinkedin,
@@ -55,41 +69,42 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
+      transition={{ duration: isMobile ? 0.3 : 0.5 }}
       className="relative p-4"
     >
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 rounded-xl blur-xl"
-        animate={{
+        animate={isMobile ? { opacity: [0.2, 0.3, 0.2] } : {
           scale: [1, 1.2, 1],
           opacity: [0.3, 0.5, 0.3],
         }}
         transition={{
-          duration: 4,
+          duration: isMobile ? 2 : 4,
           repeat: Infinity,
           ease: "easeInOut",
         }}
       />
       <motion.ul
-        variants={containerVariants}
+        variants={variants.container}
         initial="hidden"
         animate="visible"
-        className="flex items-center justify-center space-x-8 relative"
+        className="flex items-center justify-center space-x-4 md:space-x-8 relative"
       >
         {socialLinks.map((social, index) => (
           <motion.li
             key={index}
-            variants={itemVariants}
-            whileHover={{
+            variants={variants.item}
+            whileHover={isMobile ? {} : {
               scale: 1.1,
               rotate: [0, -10, 10, 0],
               transition: { duration: 0.5 },
             }}
-            whileTap={{ scale: 0.9 }}
+            whileTap={{ scale: 0.95 }}
             className="relative group"
           >
             <motion.div
               className="absolute -inset-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              animate={{
+              animate={isMobile ? {} : {
                 boxShadow: [
                   "0 0 0px rgba(59, 130, 246, 0)",
                   "0 0 20px rgba(59, 130, 246, 0.5)",
@@ -106,9 +121,9 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`block p-4 rounded-xl ${social.bgColor} transform transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20`}
+              className={`block p-3 md:p-4 rounded-xl ${social.bgColor} transform transition-all duration-300`}
             >
-              <social.icon className={`text-3xl ${social.iconColor}`} />
+              <social.icon className={`text-2xl md:text-3xl ${social.iconColor}`} />
             </Link>
           </motion.li>
         ))}
