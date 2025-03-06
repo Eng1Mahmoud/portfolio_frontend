@@ -13,7 +13,7 @@ export const HomeIntro = ({profileInfo}:{profileInfo:IuserInfo}) => {
       animate="visible"
       variants={textVariants}
       transition={{ duration: 1.5 }}
-      className="text-lg md:text-xl mb-8 leading-relaxed w-full md:w-[80%] mx-auto "
+      className="text-lg md:text-xl leading-relaxed w-full "
     >
       {profileInfo?.bio}
     </motion.p>

@@ -34,7 +34,7 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
       animate="visible"
       variants={socialVariants}
       transition={{ duration: 1.5 }}
-      className="flex space-x-6 justify-center"
+      className="flex space-x-6 mt-4"
     >
       {socialLinks.map((social, index) => (
         <motion.li key={index} whileHover={{ scale: 1.1 }}>
