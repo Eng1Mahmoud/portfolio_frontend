@@ -68,7 +68,7 @@ export const Aside = ({
         <Divider />
       </div>
       {/** copyright */}
-      <div className="mt-auto mb-4 text-center">
+      <div className="text-center">
         <p className="text-[13px] text-gray-400  ">
           All rights reserved &copy; {new Date().getFullYear()} Mahmoud Mohamed
         </p>
