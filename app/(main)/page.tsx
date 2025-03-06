@@ -12,7 +12,7 @@ export default async function Home() {
 
   return (
     <section className="h-full flex items-center justify-center bg-primary-light text-white">
-      <div className="flex flex-col md:flex-row gap-2 md:gap-8 items-center justify-between">
+      <div className="flex flex-col md:flex-row md:gap-8 items-center justify-between">
         <div className="z-10 w-full md:w-1/2 text-left md:text-left">
           <Overlay />
           <TypedName profileInfo={profileInfo as IuserInfo} />
