@@ -26,66 +26,72 @@ const PersonalForm = ({
           name="userName"
           label="Name"
           type="text"
-          className="bg-text-primary text-primary-dark "
+          className="input-light"
         />
         <InputField
           name="title"
           label="Title"
           type="text"
-          className="bg-text-primary text-primary-dark "
+          className="input-light"
         />
         <InputField
           name="email"
           label="Email"
           type="email"
-          className="bg-text-primary text-primary-dark "
+           className="input-light"
         />
         <InputField
           name="address"
           label="Address"
           type="text"
-          className="bg-text-primary text-primary-dark "
+        className="input-light"
         />
         <InputField
           name="phone1"
           label="Phone number 1"
           type="text"
-          className="bg-text-primary text-primary-dark "
+         className="input-light"
         />
         <InputField
           name="phone2"
           label="Phone number 2"
           type="text"
-          className="bg-text-primary text-primary-dark "
+          className="input-light"
         />
         <TextArea
           name="bio"
           label="Bio"
           rows={6}
-          className="bg-text-primary text-primary-dark "
+           className="input-light"
         />
         <InputField
           name="github"
           label="Github"
           type="text"
-          className="bg-text-primary text-primary-dark "
+          className="input-light"
         />
         <InputField
           name="linkedin"
           label="LinkedIn"
           type="text"
-          className="bg-text-primary text-primary-dark "
+          className="input-light"
         />
         <ImageUploadInput
           name="avatar"
           label="Upload avatar Image"
           type="image"
+         className="input-light"
         />
-        <ImageUploadInput name="aboutImage" label="Upload About Image" />
+        <ImageUploadInput 
+          name="aboutImage" 
+          label="Upload About Image"
+          className="bg-white text-gray-800 border-gray-300"
+        />
         <FileUploadInput
           name="cv"
           label="Upload PDF Document"
           accept="application/pdf"
+          className="bg-white text-gray-800 border-gray-300"
         />
       </div>
     </Form>

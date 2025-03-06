@@ -8,7 +8,7 @@ const SubmitButton = ({ name, className, isPending }: SubmitButtonProps) => {
       disabled={isPending}
       type="submit"
       className={clsx(
-        "w-full bg-secondary-light text-white p-2 rounded-md hover:bg-secondary-dark transition-colors duration-300 flex items-center justify-center",
+        "w-full bg-secondary-light text-white p-2 rounded-md hover:bg-secondary-dark transition-colors duration-300 flex items-center justify-center shadow-md shadow-secondary-dark",
         isPending && "opacity-50 cursor-not-allowed",
         className
       )}

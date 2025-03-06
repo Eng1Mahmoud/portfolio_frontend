@@ -1,21 +1,25 @@
 "use client";
-
 import { Iproject } from "@/types/general";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  FaGithub,
-  FaExternalLinkAlt,
-  FaTimes,
-  FaChevronDown,
-} from "react-icons/fa";
+import { FaGithub, FaExternalLinkAlt, FaChevronDown } from "react-icons/fa";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ProjectDescriptionModal } from "@/components/Projects/ProjectDescriptionModal";
 
 export const ProjectCard = ({ project }: { project: Iproject }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
 
   return (
-    <div className="relative bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="group relative overflow-hidden bg-gradient-to-br from-[#0D1127] to-[#1a1f3c] rounded-xl border-2 border-blue-500/50 shadow-xl shadow-blue-900/20"
+    >
+      <motion.div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
       <div className="relative h-[200px] overflow-hidden">
         <Image
           src={project.imageUrl}
@@ -27,90 +31,96 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
         />
       </div>
 
-      <div className="p-4">
-        <h3 className="text-xl font-bold mb-2 text-white">{project.title}</h3>
+      <motion.div
+        className="p-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+        <motion.h3
+          className="text-xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+          whileHover={{ scale: 1.02 }}
+        >
+          {project.title}
+        </motion.h3>
         <div className="relative">
           <p className="text-gray-300 text-sm mb-4 line-clamp-3">
             {project.description}
           </p>
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setShowFullDescription(true)}
-            className="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm flex items-center gap-1 transition-colors"
+            className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-2 transition-colors group"
           >
             Read More
-            <FaChevronDown className="h-4 w-4" />
-          </button>
-        </div>
-        <div className="flex gap-4 mt-2">
-          {project.githubLink && (
-            <Link
-              href={project.githubLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md text-sm flex items-center"
+            <motion.div
+              animate={{ y: [0, 2, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+              className="group-hover:translate-x-1 transition-transform"
             >
-              <FaGithub className="mr-2" />
-              GitHub
-            </Link>
+              <FaChevronDown className="h-4 w-4" />
+            </motion.div>
+          </motion.button>
+        </div>
+        <motion.div
+          className="flex gap-4 mt-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          {project.githubLink && (
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                href={project.githubLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm flex items-center group/link"
+              >
+                <motion.div
+                  animate={{ rotate: [0, 360] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                  className="mr-2 opacity-70 group-hover/link:opacity-100"
+                >
+                  <FaGithub />
+                </motion.div>
+                GitHub
+              </Link>
+            </motion.div>
           )}
           {project.demoLink && (
-            <Link
-              href={project.demoLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm flex items-center"
-            >
-              <FaExternalLinkAlt className="mr-2" />
-              Live
-            </Link>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                href={project.demoLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-4 py-2 rounded-md text-sm flex items-center group/link"
+              >
+                <motion.div
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                  className="mr-2 opacity-70 group-hover/link:opacity-100"
+                >
+                  <FaExternalLinkAlt />
+                </motion.div>
+                Live
+              </Link>
+            </motion.div>
           )}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
-      {/* Full description overlay */}
-      {showFullDescription && (
-        <div className="absolute inset-0 bg-gray-900/95 p-6 flex flex-col z-10">
-          <div className="flex justify-between items-start mb-4">
-            <h3 className="text-xl font-bold text-white">{project.title}</h3>
-            <button
-              onClick={() => setShowFullDescription(false)}
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              <FaTimes size={20} />
-            </button>
-          </div>
-          <div className="overflow-y-auto flex-grow">
-            <p className="text-gray-300 text-sm whitespace-pre-wrap mb-6">
-              {project.description}
-            </p>
-
-            <div className="flex gap-4">
-              {project.githubLink && (
-                <Link
-                  href={project.githubLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md text-sm flex items-center"
-                >
-                  <FaGithub className="mr-2" />
-                  GitHub
-                </Link>
-              )}
-              {project.demoLink && (
-                <Link
-                  href={project.demoLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm flex items-center"
-                >
-                  <FaExternalLinkAlt className="mr-2" />
-                  Live
-                </Link>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+      <AnimatePresence>
+        {showFullDescription && (
+          <ProjectDescriptionModal
+            title={project.title}
+            description={project.description}
+            githubLink={project.githubLink}
+            demoLink={project.demoLink}
+            onClose={() => setShowFullDescription(false)}
+          />
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 };

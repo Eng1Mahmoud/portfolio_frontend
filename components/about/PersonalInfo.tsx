@@ -69,7 +69,7 @@ export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
         href={profileInfo?.cv}
         target="_blank"
         download
-        className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+        className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md shadow-blue-500"
       >
         Download CV
       </a>

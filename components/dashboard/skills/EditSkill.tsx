@@ -21,7 +21,7 @@ const EditSkillForm = ({ initialValues }: { initialValues: ISkill }) => {
           name="name"
           label="Name of skill"
           type="text"
-          className="bg-text-primary text-primary-dark "
+          className="input-light"
         />
         <ImageUploadInput name="imageUrl" label="Upload skill image" />
       </div>

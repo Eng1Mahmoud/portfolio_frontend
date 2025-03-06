@@ -17,6 +17,8 @@ export default {
           xl: "5rem",
         },
       },
+     
+
       colors: {
         primary: {
           dark: "#182131",

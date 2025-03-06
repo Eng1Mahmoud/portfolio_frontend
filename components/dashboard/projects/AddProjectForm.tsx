@@ -28,25 +28,25 @@ const AddProjectForm = () => {
           name="title"
           label="Title of Project"
           type="text"
-          className="bg-text-primary text-primary-dark "
+          className="input-light"
         />
         <TextArea
           name="description"
           label="Description of Project"
           rows={8}  
-          className="bg-text-primary text-primary-dark "
+           className="input-light"
         />
         <InputField
           name="demoLink"
           label="Demo Link"
           type="text"
-          className="bg-text-primary text-primary-dark "
+          className="input-light"
         />
         <InputField
           name="githubLink"
           label="Github Link"
           type="text"
-          className="bg-text-primary text-primary-dark "
+           className="input-light"
         />        
         <ImageUploadInput name="imageUrl" label="Upload project image" />
       </div>
