@@ -18,7 +18,7 @@ export const Aside = ({
   const isActive = (path: string) => pathname === path;
 
   return (
-    <aside className="min-h-[100vh] max-h-[auto] w-full bg-primary-dark text-white p-6 flex flex-col items-center border-r-[6px] border-slate-600 rounded-r-xl">
+    <aside className="h-auto w-full bg-primary-dark text-white p-6 flex flex-col items-center border-r-[6px] border-slate-600 rounded-r-xl">
       <div className="avatar mb-8 border-[6px] border-secondary-dark rounded-full ">
         <Image
           src={profileInfo?.avatar as string}
