@@ -1,16 +1,18 @@
 import { Title } from "@/components/general/Title";
-export default function ProjectsPage() {
+import { getAllProjects } from "@/actions/getAllProjects";
+import { ProjectCard } from "@/components/Projects/ProjectCard";
+
+export default async function ProjectsPage() {
+  const projects = (await getAllProjects()) || [];
 
   return (
-    <div>
+    <div className="container mx-auto px-4 py-8">
       <Title title="Projects" />
-      
-      <div className="
-        grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 
-        gap-4 md:gap-6 
-        justify-center items-center
-      ">
 
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {projects.map((project) => (
+          <ProjectCard key={project._id} project={project} />
+        ))}
       </div>
     </div>
   );
