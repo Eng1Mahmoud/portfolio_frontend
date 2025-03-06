@@ -13,10 +13,14 @@ export default async function MainLayout({
       <MobileAsideToggle profileInfo={profileInfo as IuserInfo} />
       <div className="hidden lg:grid lg:grid-cols-[20%_80%] h-full overflow-hidden">
         <Aside profileInfo={profileInfo as IuserInfo} />
-        <main className="overflow-y-auto relative container py-10">{children}</main>
+        <main className="overflow-y-auto relative container py-10">
+          {children}
+        </main>
       </div>
       <main className="lg:hidden absolute inset-0 overflow-y-auto bg-primary-light ">
-        <div className="relative min-h-[100vh] max-h-[auto] container py-16">{children}</div>
+        <div className="relative min-h-[100vh] max-h-[auto] container pt-16 pb-4">
+          {children}
+        </div>
       </main>
     </div>
   );

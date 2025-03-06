@@ -20,7 +20,7 @@ export default async function Home() {
           <SocialLinks profileInfo={profileInfo as IuserInfo} />
         </div>
         <div className="w-full md:w-1/2 flex justify-center mt-6 md:mt-0">
-          <div className="relative w-full max-w-md aspect-square rounded-lg overflow-hidden shadow-xl transition-transform hover:scale-105 duration-300">
+          <div className="relative w-full max-w-md aspect-square rounded-lg overflow-hidden -top-10 md:top-0 z-[12]">
             <Image
               src={animation}
               alt="Developer Animation"

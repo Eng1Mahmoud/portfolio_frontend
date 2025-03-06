@@ -104,7 +104,7 @@ export const Overlay: React.FC<OverlayProps> = ({
     <div
       className={`
         absolute inset-0 bg-transparent 
-        pointer-events-none overflow-hidden z-[1]
+        pointer-events-none overflow-hidden z-[-1]
         ${className}
       `}
     >
