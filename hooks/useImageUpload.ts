@@ -1,32 +1,23 @@
 import { useState } from "react";
-
+import { uploadFileAction } from "@/actions/uploadFile";
+import { showToast } from "@/utiles/showToast";
 export const useImageUpload = () => {
   const [loading, setLoading] = useState(false);
-
-  const uploadImage = async (file: File): Promise<string> => {
+  const uploadImage = async (file: File): Promise<string | undefined> => {
     if (!file) throw new Error("No file provided");
     setLoading(true);
-    const formData = new FormData();
-    formData.append("image", file);
     try {
-      const response = await fetch("http://localhost:10000/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Image upload failed");
-      }
-
-      const data = await response.json();
-      return data.url;
-    } catch (error) {
-      throw error;
+      const formData = new FormData();
+      formData.append("image", file);
+      const result = await uploadFileAction(formData);
+      showToast({ type: "success", message: "File uploaded successfully!" });
+      return result.url as string;
+    } catch {
+      showToast({ type: "error", message: "Something went wrong" });
     } finally {
       setLoading(false);
     }
   };
-
   return {
     uploadImage,
     loading,

@@ -4,7 +4,12 @@ import { InputFieldProps } from "@/types/forms";
 import { useImageUpload } from "@/hooks/useImageUpload";
 import { useState } from "react";
 
-const FileUploadInput = ({ name, label, className, accept = "application/pdf" }: InputFieldProps & { accept?: string }) => {
+const FileUploadInput = ({
+  name,
+  label,
+  className,
+  accept = "application/pdf",
+}: InputFieldProps & { accept?: string }) => {
   const { loading, uploadImage } = useImageUpload();
   const {
     register,
@@ -13,21 +18,25 @@ const FileUploadInput = ({ name, label, className, accept = "application/pdf" }:
     formState: { errors },
   } = useFormContext();
 
-  const fileUrl = getValues(name);
+  const [url, setUrl] = useState<string | undefined>(getValues(name));
   const [fileName, setFileName] = useState("");
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
     if (file) {
       setFileName(file.name);
       const fileUrl = await uploadImage(file);
       setValue(name, fileUrl);
+      setUrl(fileUrl);
     }
   };
 
   const handleDelete = () => {
     setValue(name, "");
     setFileName("");
+    setUrl("");
   };
 
   return (
@@ -36,11 +45,11 @@ const FileUploadInput = ({ name, label, className, accept = "application/pdf" }:
       <div
         className={`border border-dashed border-gray-400 rounded-md p-4 h-[200px] flex items-center justify-center ${className}`}
       >
-        {fileUrl && fileUrl !== "" ? (
+        {url && url !== "" ? (
           <div className="relative w-full h-full flex items-center justify-center">
             <div className="flex flex-col items-center gap-2">
               <a
-                href={fileUrl}
+                href={url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 underline hover:text-blue-800"
@@ -65,7 +74,7 @@ const FileUploadInput = ({ name, label, className, accept = "application/pdf" }:
             onChange={handleFileChange}
           />
         )}
-        {!fileUrl && (
+        {!url && (
           <label htmlFor={name} className="cursor-pointer text-center">
             <span className="text-gray-500">
               {loading ? "Uploading..." : "Click or Drag to upload a file"}
@@ -74,7 +83,9 @@ const FileUploadInput = ({ name, label, className, accept = "application/pdf" }:
         )}
       </div>
       {errors[name] && (
-        <p className="text-red-500 text-sm">{errors[name]?.message as string}</p>
+        <p className="text-red-500 text-sm">
+          {errors[name]?.message as string}
+        </p>
       )}
     </div>
   );

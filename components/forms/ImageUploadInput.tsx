@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { InputFieldProps } from "@/types/forms";
 import { useImageUpload } from "@/hooks/useImageUpload";
 import Image from "next/image";
-
+import { useState } from "react";
 const ImageUploadInput = ({ name, label, className }: InputFieldProps) => {
   const { loading, uploadImage } = useImageUpload();
   const {
@@ -12,19 +12,21 @@ const ImageUploadInput = ({ name, label, className }: InputFieldProps) => {
     getValues,
     formState: { errors },
   } = useFormContext();
-
-  const fileUrl = getValues(name);
-
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const [url, setUrl] = useState<string | undefined>(getValues(name));
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
     if (file) {
       const fileUrl = await uploadImage(file);
       setValue(name, fileUrl);
+      setUrl(fileUrl);
     }
   };
 
   const handleDelete = () => {
     setValue(name, "");
+    setUrl("");
   };
 
   return (
@@ -33,10 +35,10 @@ const ImageUploadInput = ({ name, label, className }: InputFieldProps) => {
       <div
         className={`border border-dashed border-gray-400 rounded-md p-4 h-[200px] flex items-center justify-center ${className}`}
       >
-        {fileUrl && fileUrl !== "" ? (
+        {url && url !== "" ? (
           <div className="relative w-full h-full">
             <Image
-              src={fileUrl}
+              src={url}
               alt="Uploaded Image"
               fill
               className="rounded-md object-contain"
@@ -58,7 +60,7 @@ const ImageUploadInput = ({ name, label, className }: InputFieldProps) => {
             onChange={handleFileChange}
           />
         )}
-        {!fileUrl && (
+        {!url && (
           <label htmlFor={name} className="cursor-pointer text-center">
             <span className="text-gray-500">
               {loading ? "Uploading..." : "Click or Drag to upload an image"}
@@ -67,7 +69,9 @@ const ImageUploadInput = ({ name, label, className }: InputFieldProps) => {
         )}
       </div>
       {errors[name] && (
-        <p className="text-red-500 text-sm">{errors[name]?.message as string}</p>
+        <p className="text-red-500 text-sm">
+          {errors[name]?.message as string}
+        </p>
       )}
     </div>
   );
