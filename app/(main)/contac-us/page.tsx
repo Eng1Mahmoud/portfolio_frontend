@@ -7,7 +7,7 @@ import { IuserInfo } from "@/types/general";
 const ContactUsPage = async () => {
   const profileInfo = await getProfileInfo();
   return (
-    <div >
+    <div>
       <Title title="Contact Us" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
         <ContactUsForm />

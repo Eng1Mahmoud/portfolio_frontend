@@ -58,7 +58,7 @@ export const Overlay: React.FC<OverlayProps> = ({
             transformOrigin: "center",
           }}
           className="opacity-50"
-        />
+        />,
       );
     }
 
@@ -93,7 +93,7 @@ export const Overlay: React.FC<OverlayProps> = ({
             transformOrigin: "center",
           }}
           className="opacity-50"
-        />
+        />,
       );
     }
 

@@ -94,12 +94,12 @@ export const Form = <T extends FieldValues>({
       >
         {children}
         {/**render button here in all forms only pass props of it  */}
-       <div className="mt-4">
-        <SubmitButton
-          name={buttonProps.name}
-          isPending={isPending}
-          className={buttonProps.className}
-        />
+        <div className="mt-4">
+          <SubmitButton
+            name={buttonProps.name}
+            isPending={isPending}
+            className={buttonProps.className}
+          />
         </div>
       </form>
     </FormProvider>

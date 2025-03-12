@@ -20,7 +20,7 @@ export async function contactUs(_state: IactionState, data: TcontactUsSchema) {
       {
         publicKey: process.env.EMAILJS_PUBLIC_KEY!,
         privateKey: process.env.EMAILJS_PRIVATE_KEY!,
-      }
+      },
     );
 
     return {

@@ -38,12 +38,12 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
   useEffect(() => {
     setIsMobile(window.innerWidth < 768);
     const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const variants = getVariants(isMobile);
-  
+
   const socialLinks = [
     {
       icon: FaLinkedin,
@@ -74,10 +74,14 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
     >
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 rounded-xl blur-xl"
-        animate={isMobile ? { opacity: [0.2, 0.3, 0.2] } : {
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
+        animate={
+          isMobile
+            ? { opacity: [0.2, 0.3, 0.2] }
+            : {
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.5, 0.3],
+              }
+        }
         transition={{
           duration: isMobile ? 2 : 4,
           repeat: Infinity,
@@ -94,23 +98,31 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
           <motion.li
             key={index}
             variants={variants.item}
-            whileHover={isMobile ? {} : {
-              scale: 1.1,
-              rotate: [0, -10, 10, 0],
-              transition: { duration: 0.5 },
-            }}
+            whileHover={
+              isMobile
+                ? {}
+                : {
+                    scale: 1.1,
+                    rotate: [0, -10, 10, 0],
+                    transition: { duration: 0.5 },
+                  }
+            }
             whileTap={{ scale: 0.95 }}
             className="relative group"
           >
             <motion.div
               className="absolute -inset-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              animate={isMobile ? {} : {
-                boxShadow: [
-                  "0 0 0px rgba(59, 130, 246, 0)",
-                  "0 0 20px rgba(59, 130, 246, 0.5)",
-                  "0 0 0px rgba(59, 130, 246, 0)",
-                ],
-              }}
+              animate={
+                isMobile
+                  ? {}
+                  : {
+                      boxShadow: [
+                        "0 0 0px rgba(59, 130, 246, 0)",
+                        "0 0 20px rgba(59, 130, 246, 0.5)",
+                        "0 0 0px rgba(59, 130, 246, 0)",
+                      ],
+                    }
+              }
               transition={{
                 duration: 2,
                 repeat: Infinity,
@@ -123,7 +135,9 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
               rel="noopener noreferrer"
               className={`block p-3 md:p-4 rounded-xl ${social.bgColor} transform transition-all duration-300`}
             >
-              <social.icon className={`text-2xl md:text-3xl ${social.iconColor}`} />
+              <social.icon
+                className={`text-2xl md:text-3xl ${social.iconColor}`}
+              />
             </Link>
           </motion.li>
         ))}

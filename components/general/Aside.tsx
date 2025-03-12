@@ -22,8 +22,8 @@ export const Aside = ({
   useEffect(() => {
     setIsMobile(window.innerWidth < 768);
     const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const mobileConfig = {
@@ -46,10 +46,10 @@ export const Aside = ({
       <motion.div
         initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}
-        transition={{ 
-          delay: isMobile ? 0.1 : 0.3, 
-          type: "spring", 
-          stiffness: isMobile ? 150 : 200 
+        transition={{
+          delay: isMobile ? 0.1 : 0.3,
+          type: "spring",
+          stiffness: isMobile ? 150 : 200,
         }}
         className="avatar mb-8 relative group"
       >
@@ -75,7 +75,7 @@ export const Aside = ({
         </div>
       </motion.div>
 
-      <motion.div 
+      <motion.div
         className="w-full"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -90,8 +90,8 @@ export const Aside = ({
               transition={{ delay: isMobile ? 0.1 * index : 0.2 * index }}
               className="w-full"
             >
-              <motion.div 
-                whileHover={isMobile ? {} : { scale: 1.02 }} 
+              <motion.div
+                whileHover={isMobile ? {} : { scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
                 <Link
@@ -113,7 +113,7 @@ export const Aside = ({
           ))}
         </ul>
         <Divider />
-        <motion.div 
+        <motion.div
           className="cv mt-4 text-center"
           whileHover={isMobile ? {} : { scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
@@ -133,7 +133,7 @@ export const Aside = ({
         <Divider />
       </motion.div>
 
-      <motion.div 
+      <motion.div
         className="text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

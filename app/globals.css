@@ -2,12 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 @layer base {
- 
-.input-light {
-  @apply !bg-white !text-gray-800 !border-gray-300 !placeholder-gray-500;
-}
+  .input-light {
+    @apply !bg-white !text-gray-800 !border-gray-300 !placeholder-gray-500;
+  }
 
-.input-dark {
-  @apply !bg-gray-800/30 !text-gray-200 !border-gray-700/50 !placeholder-gray-400;
-}
+  .input-dark {
+    @apply !bg-gray-800/30 !text-gray-200 !border-gray-700/50 !placeholder-gray-400;
+  }
 }

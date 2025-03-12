@@ -6,7 +6,7 @@ import type { Role } from "@/types/authRoute";
 
 export async function authMiddleware(
   request: NextRequest,
-  response: NextResponse | null
+  response: NextResponse | null,
 ): Promise<NextResponse | null> {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get("token")?.value;

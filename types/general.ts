@@ -1,6 +1,6 @@
-import { TskillsSchema } from '@/zod/skillsSchema';
-import { TuserInfoSchema } from '@/zod/userInfoSchema';
-import { TprojectsSchema } from '@/zod/projectsSchema';
+import { TskillsSchema } from "@/zod/skillsSchema";
+import { TuserInfoSchema } from "@/zod/userInfoSchema";
+import { TprojectsSchema } from "@/zod/projectsSchema";
 // Interface for toast options
 export interface ToastOptions {
   type: "success" | "error" | "warning" | "info";
@@ -21,5 +21,5 @@ export interface IuserInfo extends TuserInfoSchema {
 }
 
 export interface Iproject extends TprojectsSchema {
-  _id?: string
+  _id?: string;
 }

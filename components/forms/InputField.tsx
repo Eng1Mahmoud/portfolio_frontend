@@ -5,7 +5,13 @@ import clsx from "clsx";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
-const InputField = ({ name, label, className, type = "text", value }: InputFieldProps) => {
+const InputField = ({
+  name,
+  label,
+  className,
+  type = "text",
+  value,
+}: InputFieldProps) => {
   const {
     register,
     formState: { errors },
@@ -13,7 +19,7 @@ const InputField = ({ name, label, className, type = "text", value }: InputField
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <motion.div 
+    <motion.div
       className="flex flex-col gap-2"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -23,7 +29,7 @@ const InputField = ({ name, label, className, type = "text", value }: InputField
         whileTap={{ scale: 0.98 }}
         animate={{
           scale: isHovered ? 1.01 : 1,
-          boxShadow: isHovered ? "0 4px 12px rgba(59, 130, 246, 0.15)" : "none"
+          boxShadow: isHovered ? "0 4px 12px rgba(59, 130, 246, 0.15)" : "none",
         }}
         transition={{ duration: 0.2 }}
         className="relative overflow-hidden rounded-lg"
@@ -49,8 +55,9 @@ const InputField = ({ name, label, className, type = "text", value }: InputField
             "focus:outline-none focus:border-blue-500",
             "focus:ring-2 focus:ring-blue-500/20",
             "hover:border-gray-600",
-            errors[name] && "border-red-500 focus:border-red-500 focus:ring-red-500/20",
-            className
+            errors[name] &&
+              "border-red-500 focus:border-red-500 focus:ring-red-500/20",
+            className,
           )}
           placeholder={label}
           value={value}
@@ -58,7 +65,7 @@ const InputField = ({ name, label, className, type = "text", value }: InputField
       </motion.div>
 
       {errors[name] && (
-        <motion.p 
+        <motion.p
           className="text-red-500 text-sm pl-2 flex items-center gap-2"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}

@@ -4,40 +4,39 @@ import { ZodSchema } from "zod";
 import { IactionState } from "./general";
 
 export interface FormProps<T extends FieldValues> {
-    defaultValues?: DefaultValues<T>;
-    schema: ZodSchema<T>;
-    action: (prevState: IactionState, data: T) => Promise<IactionState>;
-    children: ReactNode;
-    className?: string;
-    onSuccess?: () => void;
-    onError?: () => void;
-    redirectPath?: string;
-    buttonProps: {
-      name: string;
-      className?: string;
-    };
-  }
-  
-  // input filed props
-  export interface InputFieldProps {
-    name: string;
-    label: string;
-    type?: string;
-    className?: string;
-    value?: string;
-  }
-  // text area props
-  export interface TextAreaProps {
-    name: string;
-    label: string;
-    rows?: number;
-    className?: string;
-  }
-  
-  // submit button props
-  export interface SubmitButtonProps {
+  defaultValues?: DefaultValues<T>;
+  schema: ZodSchema<T>;
+  action: (prevState: IactionState, data: T) => Promise<IactionState>;
+  children: ReactNode;
+  className?: string;
+  onSuccess?: () => void;
+  onError?: () => void;
+  redirectPath?: string;
+  buttonProps: {
     name: string;
     className?: string;
-    isPending: boolean;
-  }
-  
+  };
+}
+
+// input filed props
+export interface InputFieldProps {
+  name: string;
+  label: string;
+  type?: string;
+  className?: string;
+  value?: string;
+}
+// text area props
+export interface TextAreaProps {
+  name: string;
+  label: string;
+  rows?: number;
+  className?: string;
+}
+
+// submit button props
+export interface SubmitButtonProps {
+  name: string;
+  className?: string;
+  isPending: boolean;
+}

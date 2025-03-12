@@ -1,10 +1,11 @@
 "use client";
-import { Edit2 } from "lucide-react";
+import { FaEdit } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import { ISkill } from "@/types/general";
 import DeleteButton from "@/components/general/DeleteButton";
 import { deleteSkillById } from "@/actions/deleteSkill";
+
 const SkillCard = ({ skill }: { skill: ISkill }) => {
   return (
     <div className="bg-white rounded-xl shadow-2xl p-2">
@@ -28,7 +29,7 @@ const SkillCard = ({ skill }: { skill: ISkill }) => {
             href={`/dashboard/skills/edit/${skill._id}`}
             className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-2 rounded-md transition duration-150 flex items-center"
           >
-            <Edit2 className="w-4 h-4 mr-1" />
+            <FaEdit className="w-4 h-4 mr-1" />
             Edit
           </Link>
           <DeleteButton

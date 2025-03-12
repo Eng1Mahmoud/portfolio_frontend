@@ -3,7 +3,9 @@ import type { NextRequest } from "next/server";
 
 export default async function runMiddlewares(
   request: NextRequest,
-  middlewares: Array<(req: NextRequest, res: NextResponse | null) => Promise<NextResponse | null>>,
+  middlewares: Array<
+    (req: NextRequest, res: NextResponse | null) => Promise<NextResponse | null>
+  >,
 ) {
   let response: NextResponse | null = null;
   for (const middleware of middlewares) {

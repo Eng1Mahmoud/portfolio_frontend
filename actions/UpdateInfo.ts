@@ -11,8 +11,8 @@ export async function updateUser(_state: IactionState, data: TuserInfoSchema) {
     body: data,
   });
   if (response.success) {
-    revalidateTag("info")
+    revalidateTag("info");
   }
-  
+
   return response;
 }
