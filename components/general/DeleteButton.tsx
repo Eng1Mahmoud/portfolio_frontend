@@ -6,7 +6,10 @@ import { IactionState } from "@/types/general";
 
 interface DeleteButtonProps {
   itemId: string;
-  deleteAction: (state:IactionState , id: string) => Promise<{ message: string; success: boolean }>;
+  deleteAction: (
+    state: IactionState,
+    id: string,
+  ) => Promise<{ message: string; success: boolean }>;
 }
 
 const DeleteButton = ({ itemId, deleteAction }: DeleteButtonProps) => {

@@ -14,7 +14,7 @@ const ImageUploadInput = ({ name, label, className }: InputFieldProps) => {
   } = useFormContext();
   const [url, setUrl] = useState<string | undefined>(getValues(name));
   const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = event.target.files?.[0];
     if (file) {

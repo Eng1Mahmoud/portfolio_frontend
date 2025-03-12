@@ -21,7 +21,6 @@ const LoginForm = () => {
           className="space-y-6"
           buttonProps={{
             name: "Sign In",
-  
           }}
         >
           <InputField

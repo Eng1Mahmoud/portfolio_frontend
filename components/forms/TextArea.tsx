@@ -50,8 +50,9 @@ const TextArea = ({ name, label, rows = 4, className = "" }: TextAreaProps) => {
             "focus:ring-2 focus:ring-blue-500/20",
             "hover:border-gray-600",
             "resize-none",
-            errors[name] && "border-red-500 focus:border-red-500 focus:ring-red-500/20",
-            className
+            errors[name] &&
+              "border-red-500 focus:border-red-500 focus:ring-red-500/20",
+            className,
           )}
           placeholder={label}
         />

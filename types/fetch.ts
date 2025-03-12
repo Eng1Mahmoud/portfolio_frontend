@@ -4,9 +4,9 @@ export interface ApiResponse<T> {
   data?: T;
 }
 export interface IFetch<I> {
-    endpoint: string;
-    method: string;
-    body?: I;
-    tags?: string[];
-    param?: string;
-  }
+  endpoint: string;
+  method: string;
+  body?: I;
+  tags?: string[];
+  param?: string;
+}

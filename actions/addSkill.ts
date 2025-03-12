@@ -4,7 +4,10 @@ import { IactionState } from "@/types/general";
 import { Fetch } from "@/fetch/Fetch";
 import { revalidateTag } from "next/cache";
 import type { GeneralResponse } from "@/types/apiResponses";
-export async function addSkillAction(_state: IactionState, data: TskillsSchema) {
+export async function addSkillAction(
+  _state: IactionState,
+  data: TskillsSchema,
+) {
   const response = await Fetch<GeneralResponse, TskillsSchema>({
     endpoint: "skills",
     method: "POST",

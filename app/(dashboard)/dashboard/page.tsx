@@ -21,7 +21,7 @@ export default async function PersonalData() {
             aboutImage: "",
             cv: "",
             github: "",
-            linkedin:""
+            linkedin: "",
           }
         }
       />

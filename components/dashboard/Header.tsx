@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { Menu } from "lucide-react"
-import { type Dispatch, type SetStateAction } from "react"
+import { Menu } from "lucide-react";
+import { type Dispatch, type SetStateAction } from "react";
 
 export default function Header({
-  setSidebarOpen
+  setSidebarOpen,
 }: {
-  setSidebarOpen: Dispatch<SetStateAction<boolean>>
+  setSidebarOpen: Dispatch<SetStateAction<boolean>>;
 }) {
   return (
     <header className="bg-white shadow-sm top-0 z-10 sticky">
@@ -20,5 +20,5 @@ export default function Header({
         </button>
       </div>
     </header>
-  )
+  );
 }

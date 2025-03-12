@@ -38,19 +38,19 @@ const PersonalForm = ({
           name="email"
           label="Email"
           type="email"
-           className="input-light"
+          className="input-light"
         />
         <InputField
           name="address"
           label="Address"
           type="text"
-        className="input-light"
+          className="input-light"
         />
         <InputField
           name="phone1"
           label="Phone number 1"
           type="text"
-         className="input-light"
+          className="input-light"
         />
         <InputField
           name="phone2"
@@ -58,12 +58,7 @@ const PersonalForm = ({
           type="text"
           className="input-light"
         />
-        <TextArea
-          name="bio"
-          label="Bio"
-          rows={6}
-           className="input-light"
-        />
+        <TextArea name="bio" label="Bio" rows={6} className="input-light" />
         <InputField
           name="github"
           label="Github"
@@ -80,10 +75,10 @@ const PersonalForm = ({
           name="avatar"
           label="Upload avatar Image"
           type="image"
-         className="input-light"
+          className="input-light"
         />
-        <ImageUploadInput 
-          name="aboutImage" 
+        <ImageUploadInput
+          name="aboutImage"
           label="Upload About Image"
           className="bg-white text-gray-800 border-gray-300"
         />

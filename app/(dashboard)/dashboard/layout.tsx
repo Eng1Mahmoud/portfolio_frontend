@@ -10,15 +10,14 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
           <div className="flex flex-col flex-1 border-r border-gray-200 mt-[80px]">
             <NavLinks />
-            </div>
           </div>
         </div>
-        <main className="md:pl-64 flex-1">
-          <div className="py-6">
-            <div className="container">{children}</div>
-          </div>
-        </main>
       </div>
-
+      <main className="md:pl-64 flex-1">
+        <div className="py-6">
+          <div className="container">{children}</div>
+        </div>
+      </main>
+    </div>
   );
 }

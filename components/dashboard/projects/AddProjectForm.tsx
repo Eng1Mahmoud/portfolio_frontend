@@ -33,8 +33,8 @@ const AddProjectForm = () => {
         <TextArea
           name="description"
           label="Description of Project"
-          rows={8}  
-           className="input-light"
+          rows={8}
+          className="input-light"
         />
         <InputField
           name="demoLink"
@@ -46,8 +46,8 @@ const AddProjectForm = () => {
           name="githubLink"
           label="Github Link"
           type="text"
-           className="input-light"
-        />        
+          className="input-light"
+        />
         <ImageUploadInput name="imageUrl" label="Upload project image" />
       </div>
     </Form>
