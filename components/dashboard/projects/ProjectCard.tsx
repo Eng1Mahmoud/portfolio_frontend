@@ -1,10 +1,11 @@
 import React from "react";
-import { Edit2 } from "lucide-react";
+import { FaEdit } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import { Iproject } from "@/types/general";
 import DeleteButton from "@/components/general/DeleteButton";
 import { deleteProjectId } from "@/actions/deleteProject";
+
 const ProjectCard = ({ project }: { project: Iproject }) => {
   return (
     <div className="bg-white rounded-xl shadow-2xl p-4 hover:shadow-xl transition-shadow duration-300">
@@ -45,7 +46,7 @@ const ProjectCard = ({ project }: { project: Iproject }) => {
               href={`/dashboard/projects/edit/${project._id}`}
               className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center w-full max-w-[200px]"
             >
-              <Edit2 className="w-4 h-4 mr-2" />
+              <FaEdit className="w-4 h-4 mr-2" />
               Edit
             </Link>
             <DeleteButton

@@ -1,7 +1,8 @@
 "use client";
-import { X } from "lucide-react";
+import { FaTimes } from "react-icons/fa";
 import { type Dispatch, type SetStateAction } from "react";
 import NavLinks from "./NavLinks";
+
 export default function MobileSidebar({
   sidebarOpen,
   setSidebarOpen,
@@ -30,7 +31,7 @@ export default function MobileSidebar({
             className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
             onClick={() => setSidebarOpen(false)}
           >
-            <X className="h-6 w-6 text-white" aria-hidden="true" />
+            <FaTimes className="h-6 w-6 text-white" aria-hidden="true" />
           </button>
         </div>
 

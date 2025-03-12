@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FolderKanban, Lightbulb } from "lucide-react";
+import { FaUserCog, FaProjectDiagram, FaLightbulb } from "react-icons/fa";
 
 const NavLinks = () => {
   const pathname = usePathname();
@@ -10,17 +10,17 @@ const NavLinks = () => {
     {
       href: "/dashboard",
       label: "Personal Data",
-      icon: <LayoutDashboard size={20} />,
+      icon: <FaUserCog size={20} />,
     },
     {
       href: "/dashboard/projects",
       label: "Projects",
-      icon: <FolderKanban size={20} />,
+      icon: <FaProjectDiagram size={20} />,
     },
     {
       href: "/dashboard/skills",
       label: "Skills",
-      icon: <Lightbulb size={20} />,
+      icon: <FaLightbulb size={20} />,
     },
   ];
 

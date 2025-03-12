@@ -1,4 +1,4 @@
-import { Plus, List } from "lucide-react";
+import { FaList, FaPlus } from "react-icons/fa";
 import Link from "next/link";
 
 export default function SkillsLayout({
@@ -14,14 +14,14 @@ export default function SkillsLayout({
           href="/dashboard/skills"
           className="flex items-center px-4 py-2 rounded-lg transition-all bg-secondary-light text-white shadow-md"
         >
-          <List className="w-5 h-5 mr-2" />
+          <FaList className="w-5 h-5 mr-2" />
           Current Skills
         </Link>
         <Link
           href="/dashboard/skills/add"
           className="flex items-center px-4 py-2 rounded-lg transition-all bg-white text-gray-600 hover:bg-gray-50"
         >
-          <Plus className="w-5 h-5 mr-2" />
+          <FaPlus className="w-5 h-5 mr-2" />
           Add New Skill
         </Link>
       </div>

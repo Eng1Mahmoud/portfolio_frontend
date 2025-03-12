@@ -1,5 +1,5 @@
 "use client";
-import { Trash2 } from "lucide-react";
+import { FaTrash } from "react-icons/fa";
 import { useActionState, useEffect, useTransition } from "react";
 import { showToast } from "@/utiles/showToast";
 import { IactionState } from "@/types/general";
@@ -35,7 +35,7 @@ const DeleteButton = ({ itemId, deleteAction }: DeleteButtonProps) => {
         StartTransition(() => formAction(itemId));
       }}
     >
-      <Trash2 className="w-4 h-4 mr-1" />
+      <FaTrash className="w-4 h-4 mr-1" />
       {isPending ? "Deleting" : "Delete"}
     </button>
   );
