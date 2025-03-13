@@ -9,19 +9,17 @@ export default async function MainLayout({
 }) {
   const profileInfo = await getProfileInfo();
   return (
-    <div className="bg-primary-light text-white relative h-screen overflow-hidden">
+    <div className="bg-primary-light text-white h-screen flex flex-col lg:flex-row ">
       <MobileAsideToggle profileInfo={profileInfo as IuserInfo} />
-      <div className="hidden lg:grid lg:grid-cols-[20%_80%] h-full overflow-hidden">
+      <div className="hidden lg:block lg:w-[20%] h-screen">
         <Aside profileInfo={profileInfo as IuserInfo} />
-        <main className="overflow-y-auto relative container py-10">
-          {children}
-        </main>
       </div>
-      <main className="lg:hidden absolute inset-0 overflow-y-auto bg-primary-light ">
-        <div className="relative min-h-[100vh] max-h-[auto] container pt-16 pb-4">
-          {children}
-        </div>
-      </main>
+      <div className="hidden lg:block lg:w-[80%] overflow-y-auto h-screen scrollBar">
+        <main className="container py-10">{children}</main>
+      </div>
+      <div className="lg:hidden pt-16 pb-4 flex-1 overflow-y-auto scrollBar">
+        <main className="container">{children}</main>
+      </div>
     </div>
   );
 }

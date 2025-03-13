@@ -27,21 +27,21 @@ export const Aside = ({
   }, []);
 
   const mobileConfig = {
-    initial: { x: -50, opacity: 0 },
-    animate: { x: 0, opacity: 1 },
-    transition: { duration: 0.3 },
+    initial: { x: -50, opacity: 1 },
+    animate: { x: 0 },
+    transition: { duration: 0.2 },
   };
 
   const desktopConfig = {
-    initial: { x: -100, opacity: 0 },
-    animate: { x: 0, opacity: 1 },
-    transition: { duration: 0.5 },
+    initial: { x: -100, opacity: 1 },
+    animate: { x: 0 },
+    transition: { duration: 0.3 },
   };
 
   return (
     <motion.aside
       {...(isMobile ? mobileConfig : desktopConfig)}
-      className="min-h-[100vh] max-h-[auto] w-full bg-gradient-to-b from-primary-dark to-[#1a1f3c] text-white p-6 flex flex-col items-center border-r-[6px] border-blue-500 rounded-r-xl shadow-blue-600 shadow-xl relative"
+      className="h-screen overflow-y-auto w-full bg-gradient-to-b from-primary-dark to-[#1a1f3c] text-white flex flex-col items-center relative z-[100] scrollBar py-10"
     >
       <motion.div
         initial={{ scale: 0.8 }}
@@ -81,7 +81,7 @@ export const Aside = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: isMobile ? 0.2 : 0.5 }}
       >
-        <ul className="space-y-4">
+        <ul className="space-y-4 px-4">
           {asideLinks.map((item, index) => (
             <motion.li
               key={index}
@@ -114,7 +114,7 @@ export const Aside = ({
         </ul>
         <Divider />
         <motion.div
-          className="cv mt-4 text-center"
+          className="cv mt-4 text-center px-4"
           whileHover={isMobile ? {} : { scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >

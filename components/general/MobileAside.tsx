@@ -23,7 +23,7 @@ export const MobileAsideToggle = ({
         <button
           onClick={toggleAside}
           className={`
-          lg:hidden fixed top-4 left-4 z-50 
+          lg:hidden fixed top-4 left-4 z-[1000] 
           bg-blue-600 text-white p-2 rounded-md
           transition-all duration-300
         `}
@@ -56,7 +56,7 @@ export const MobileAsideToggle = ({
             <button
               onClick={toggleAside}
               className="
-                absolute top-4 right-4 
+                absolute top-4 right-5 z-[1000]
                 bg-red-600 text-white p-2 rounded-md
               "
             >
