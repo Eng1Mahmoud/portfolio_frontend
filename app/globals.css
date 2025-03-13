@@ -7,7 +7,7 @@ html,body,main{
 }
 /* Main App Scrollbar */
 .scrollBar::-webkit-scrollbar {
-  width: 13px;
+  width: 10px;
 }
 
 .scrollBar::-webkit-scrollbar-track {
@@ -17,9 +17,13 @@ html,body,main{
 
 .scrollBar::-webkit-scrollbar-thumb {
   background: linear-gradient(to bottom, #3b82f6, #1d4ed8);
-  border-radius: 10px;
+  border-radius: 11px;
   border: 2px solid transparent;
   background-clip: content-box;
+  -webkit-border-radius: 11px;
+  -moz-border-radius: 11px;
+  -ms-border-radius: 11px;
+  -o-border-radius: 11px;
 }
 
 .scrollBar::-webkit-scrollbar-thumb:hover {

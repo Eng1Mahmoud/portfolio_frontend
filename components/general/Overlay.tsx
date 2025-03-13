@@ -21,7 +21,6 @@ export const Overlay: React.FC<OverlayProps> = ({
   className = "",
   gridColor = GRID_CONFIG.defaultColor,
 }) => {
-  // Memoize grid lines to prevent unnecessary re-renders
   const gridLines = useMemo(() => {
     const lines: JSX.Element[] = [];
 
@@ -103,10 +102,16 @@ export const Overlay: React.FC<OverlayProps> = ({
   return (
     <div
       className={`
-        absolute inset-0 bg-transparent 
+        fixed inset-0 bg-transparent 
         pointer-events-none overflow-hidden z-[-1]
+        w-screen h-screen
         ${className}
       `}
+      style={{
+        clipPath: "inset(0)",
+        WebkitMaskImage:
+          "linear-gradient(to right, black calc(100% - 13px), transparent calc(100% - 13px))",
+      }}
     >
       <div className="absolute inset-0">{gridLines}</div>
     </div>
