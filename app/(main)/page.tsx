@@ -5,7 +5,6 @@ import { Overlay } from "@/components/general/Overlay";
 import { getProfileInfo } from "@/actions/getProfileInfo";
 import { IuserInfo } from "@/types/general";
 import { AnimatedImage } from "@/components/Home/AnimatedImage";
-
 export default async function Home() {
   const profileInfo = await getProfileInfo();
 

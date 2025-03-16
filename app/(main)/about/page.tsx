@@ -3,7 +3,11 @@ import { PersonalInfo } from "@/components/about/PersonalInfo";
 import { ProfileImage } from "@/components/about/ProfileImage";
 import { Title } from "@/components/general/Title";
 import { IuserInfo } from "@/types/general";
-
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "About Me",
+  description: "About Mahmoud Mohamed",
+};
 export default async function AboutPage() {
   const profileInfo = await getProfileInfo();
   return (

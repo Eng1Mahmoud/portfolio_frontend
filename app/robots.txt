@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Allow: /about
+Allow: /projects
+Allow: /contact
+Allow: /skills
+
+Disallow: /dashboard/*
+Disallow: /api/*
+
+Sitemap: https://https://dev-mahmoud-portfolio.vercel.app/sitemap.xml

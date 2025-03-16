@@ -3,7 +3,11 @@ import ContactUsForm from "@/components/contact-us/ContactUsForm";
 import ContactUsInfo from "@/components/contact-us/ContactUsInfo";
 import { Title } from "@/components/general/Title";
 import { IuserInfo } from "@/types/general";
-
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Contact Us",
+  description: "Contact Mahmoud Mohamed",
+};
 const ContactUsPage = async () => {
   const profileInfo = await getProfileInfo();
   return (

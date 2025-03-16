@@ -1,7 +1,11 @@
 import { Title } from "@/components/general/Title";
 import { getAllProjects } from "@/actions/getAllProjects";
 import { ProjectCard } from "@/components/Projects/ProjectCard";
-
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Projects",
+  description: "Projects Mahmoud Mohamed",
+};
 export default async function ProjectsPage() {
   const projects = (await getAllProjects()) || [];
 

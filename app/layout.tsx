@@ -2,6 +2,24 @@ import { ToastContainer } from "react-toastify";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { mainFont } from "@/fonts";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    default: "Mahmoud Mohamed | Portfolio",
+    template: "%s | Mahmoud Mohamed",
+  },
+  description:
+    "Professional portfolio showcasing my work and skills in web development",
+  keywords: [
+    "portfolio",
+    "web developer",
+    "frontend developer",
+    "react",
+    "next.js",
+  ],
+};
+
 export default async function RootLayout({
   children,
 }: {

@@ -1,7 +1,11 @@
 import { Title } from "@/components/general/Title";
 import { getAllSkills } from "@/actions/getAllSkills";
 import { SkillCard } from "@/components/skills/SkillCard";
-
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Skills",
+  description: "Skills Mahmoud Mohamed",
+};
 export default async function SkillsPage() {
   const skills = (await getAllSkills()) || [];
   return (
