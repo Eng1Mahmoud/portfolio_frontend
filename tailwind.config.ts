@@ -7,6 +7,9 @@ export default {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily: {
+      main: ["var(--main-font)", "sans-serif"],
+    },
     extend: {
       container: {
         center: true,

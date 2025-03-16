@@ -1,6 +1,7 @@
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
+import { mainFont } from "@/fonts";
 export default async function RootLayout({
   children,
 }: {
@@ -8,7 +9,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true}>
+      <body suppressHydrationWarning={true} className={`${mainFont.variable}`}>
         <ToastContainer
           position="top-right"
           autoClose={5000}

@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  font-family: var(--main-font);;
+}
 html,body,main{
   overflow-x: hidden;
 }
