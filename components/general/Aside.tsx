@@ -139,7 +139,7 @@ export const Aside = ({
         animate={{ opacity: 1 }}
         transition={{ delay: isMobile ? 0.3 : 1 }}
       >
-        <p className="text-[13px] text-gray-400">
+        <p className="text-[13px] text-gray-400 px-3">
           All rights reserved &copy; {new Date().getFullYear()} Mahmoud Mohamed
         </p>
       </motion.div>
