@@ -39,7 +39,7 @@ export const Aside = ({
   };
   // add click event to the download cv link
   const handleDownloadCV = () => {
-    sendGAEvent("event", "dounload_cv", {
+    sendGAEvent("event", "download_cv", {
       event_category: "download_cv",
       event_label: "download_cv_link",
       event_action: "click",
