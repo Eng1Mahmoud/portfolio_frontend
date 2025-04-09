@@ -19,11 +19,12 @@
   "dependencies": {
     "@emailjs/nodejs": "^5.0.2",
     "@hookform/resolvers": "^4.1.0",
+    "@next/third-parties": "^15.2.5",
     "@sentry/nextjs": "^9.5.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.4.5",
     "jsonwebtoken": "^9.0.2",
-    "next": "15.2.3",
+    "next": "^15.2.5",
     "npm": "^11.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

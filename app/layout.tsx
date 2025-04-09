@@ -1,4 +1,5 @@
 import { ToastContainer } from "react-toastify";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { mainFont } from "@/fonts";
@@ -28,6 +29,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning={true} className={`${mainFont.variable}`}>
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_GTAG as string} />
         <ToastContainer
           position="top-right"
           autoClose={5000}

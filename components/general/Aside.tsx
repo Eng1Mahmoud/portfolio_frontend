@@ -7,7 +7,7 @@ import Divider from "@/components/general/Divider";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { IuserInfo } from "@/types/general";
 import { motion } from "framer-motion";
-
+import { sendGAEvent } from "@next/third-parties/google";
 export const Aside = ({
   setIsAsideOpen,
   profileInfo,
@@ -37,7 +37,15 @@ export const Aside = ({
     animate: { x: 0 },
     transition: { duration: 0.3 },
   };
-
+  // add click event to the download cv link
+  const handleDownloadCV = () => {
+    sendGAEvent("event", "dounload_cv", {
+      event_category: "download_cv",
+      event_label: "download_cv_link",
+      event_action: "click",
+      app_name: "devMahmoud_portfolio", // Your app name
+    });
+  };
   return (
     <motion.aside
       {...(isMobile ? mobileConfig : desktopConfig)}
@@ -126,6 +134,7 @@ export const Aside = ({
               bg-gradient-to-r from-green-600 to-emerald-500
               hover:from-green-500 hover:to-emerald-400 
               transition-all duration-300 shadow-lg shadow-green-700/30"
+            onClick={handleDownloadCV}
           >
             Download CV
           </a>
