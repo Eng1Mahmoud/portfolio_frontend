@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { IuserInfo } from "@/types/general";
+import { handleDownloadCV } from "@/utiles/analytics-events/events";
 export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
   const [name, setName] = useState("");
   const typedName = profileInfo?.userName || "";
@@ -70,6 +71,7 @@ export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
         target="_blank"
         download
         className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md shadow-blue-500"
+        onClick={handleDownloadCV}
       >
         Download CV
       </a>
