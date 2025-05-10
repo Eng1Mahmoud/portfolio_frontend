@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "res.cloudinary.com",
       },
+      {
+        protocol: "https",
+        hostname: "dev-mahmoud.sirv.com",
+        pathname: "**",
+      },
     ],
   },
 };
