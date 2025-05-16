@@ -38,7 +38,7 @@ export default function EducationTimeline() {
           transition={{ duration: 0.5, delay: index * 0.2 }}
         >
           {/* Timeline point - positioned directly over the line */}
-          <div className="absolute left-[-38] top-0 w-6 h-6 rounded-full bg-primary-dark border-4 border-blue-500 z-10 -translate-x-1/2 shadow-md shadow-blue-500/50"></div>
+          <div className="absolute left-[-38px] top-0 w-6 h-6 rounded-full bg-primary-dark border-4 border-blue-500 z-10 -translate-x-1/2 shadow-md shadow-blue-500/50"></div>
 
           {/* Time period */}
           <div className="mb-4">
