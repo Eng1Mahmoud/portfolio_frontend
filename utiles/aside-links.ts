@@ -19,4 +19,8 @@ export const asideLinks = [
     label: "Contact",
     path: "/contac-us",
   },
+  {
+    label: "Education",
+    path: "/education",
+  },
 ];
