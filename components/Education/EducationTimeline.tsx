@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { FaGraduationCap, FaUniversity } from "react-icons/fa";
 
 // Timeline data - replace with your own education info
 const educationData = [
@@ -25,9 +26,9 @@ const educationData = [
 
 export default function EducationTimeline() {
   return (
-    <div className="relative pl-12">
-      {/* Vertical line - now positioned on the left with spacing */}
-      <div className="absolute left-2 h-full w-1 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full shadow-lg shadow-blue-500/30"></div>
+    <div className="relative pl-8 md:pl-12">
+      {/* Vertical line */}
+      <div className="absolute left-2 md:left-2 h-full w-1 bg-gradient-to-b from-cyan-500 to-purple-500 rounded-full shadow-lg shadow-cyan-500/30"></div>
 
       {educationData.map((item, index) => (
         <motion.div
@@ -37,49 +38,65 @@ export default function EducationTimeline() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: index * 0.2 }}
         >
-          {/* Timeline point - positioned directly over the line */}
-          <div className="absolute left-[-38px] top-0 w-6 h-6 rounded-full bg-primary-dark border-4 border-blue-500 z-10 -translate-x-1/2 shadow-md shadow-blue-500/50"></div>
+          {/* Timeline point with glow */}
+          <div className="absolute left-[-38px] md:left-[-38px] top-0 w-6 h-6 rounded-full bg-[#0D1127] border-4 border-cyan-500 z-10 -translate-x-1/2 shadow-[0_0_15px_rgba(6,182,212,0.5)] hidden md:block"></div>
+
+          {/* Mobile Timeline point with glow */}
+          <div className="absolute left-[-22px] top-0 w-5 h-5 rounded-full bg-[#0D1127] border-2 border-cyan-500 z-10 -translate-x-1/2 shadow-[0_0_10px_rgba(6,182,212,0.5)] md:hidden block"></div>
 
           {/* Time period */}
           <div className="mb-4">
-            <span className="text-sm font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-white py-1 px-3 rounded-full shadow-sm">
+            <span className="text-sm font-bold bg-gradient-to-r from-cyan-500 to-blue-600 text-white py-1.5 px-4 rounded-full shadow-lg shadow-cyan-500/20 border border-cyan-500/20 backdrop-blur-sm">
               {item.period}
             </span>
           </div>
 
           {/* Content card */}
-          <motion.div
-            className="bg-gradient-to-br from-[#0D1127]/90 to-[#1a1f3c]/90 p-6 rounded-lg shadow-xl shadow-blue-900/20 border border-blue-500/30 backdrop-blur-sm"
-            whileHover={{
-              scale: 1.02,
-              boxShadow: "0 15px 30px -5px rgba(59, 130, 246, 0.3)",
-            }}
-            transition={{ duration: 0.2 }}
-          >
-            <h3 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-1">
-              {item.degree}
-            </h3>
-            <h4 className="text-md text-blue-400 font-medium mb-3">
-              {item.institution}
-            </h4>
-            <p className="text-gray-300 text-sm">{item.description}</p>
-            <div className="mt-4">
-              {/* Skills list */}
-              <h5 className="text-sm font-semibold text-blue-400 mb-2">
-                Skills Acquired:
-              </h5>
-              <div className="flex flex-wrap gap-2">
-                {item.skills.map((skill, skillIndex) => (
-                  <span
-                    key={skillIndex}
-                    className="bg-blue-500/20 text-blue-400 text-xs font-medium px-3 py-1 rounded-full shadow-sm"
-                  >
-                    {skill}
-                  </span>
-                ))}
+          <div className="group relative rounded-xl p-[1px] bg-gradient-to-br from-cyan-500/50 via-blue-500/30 to-purple-500/50 shadow-xl shadow-blue-900/20">
+            <div className="relative overflow-hidden bg-[#0f172a]/90 backdrop-blur-xl rounded-xl p-4 md:p-6 h-full">
+              {/* Hover Gradient Overlay */}
+              <motion.div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+              <div className="relative z-10">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
+                  <div>
+                    <h3 className="text-lg md:text-2xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent flex items-center gap-2">
+                      <FaGraduationCap className="text-cyan-400" />
+                      {item.degree}
+                    </h3>
+                    <div className="flex items-center gap-2 text-gray-300 mt-2">
+                      <div className="flex items-center gap-2 bg-blue-500/10 px-3 py-1 rounded-lg border border-blue-500/20">
+                        <FaUniversity className="text-cyan-400 text-sm" />
+                        <span className="font-semibold text-sm md:text-base text-gray-200">
+                          {item.institution}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-gray-300 text-sm md:text-base mb-6 leading-relaxed border-l-2 border-cyan-500/30 pl-4">
+                  {item.description}
+                </p>
+
+                <div className="mt-4">
+                  <h5 className="text-sm font-semibold text-cyan-400 mb-3 uppercase tracking-wider">
+                    Skills Acquired
+                  </h5>
+                  <div className="flex flex-wrap gap-2">
+                    {item.skills.map((skill, skillIndex) => (
+                      <span
+                        key={skillIndex}
+                        className="text-[10px] md:text-xs px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-900/40 to-purple-900/40 border border-blue-500/30 text-blue-200 hover:border-cyan-400/50 hover:text-cyan-300 transition-all duration-300 hover:shadow-[0_0_10px_rgba(6,182,212,0.2)] cursor-default"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </motion.div>
       ))}
     </div>

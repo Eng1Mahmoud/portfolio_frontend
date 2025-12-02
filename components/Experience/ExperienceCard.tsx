@@ -1,0 +1,92 @@
+"use client";
+import { IExperience } from "@/types/general";
+import { motion } from "framer-motion";
+import { FaBriefcase, FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
+
+export const ExperienceCard = ({
+  experience,
+  index = 0,
+}: {
+  experience: IExperience;
+  index?: number;
+}) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.2 }}
+      className="mb-12 flex flex-col relative"
+    >
+      {/* Timeline point with glow */}
+      <div className="absolute left-[-38px] md:left-[-38px] top-0 w-6 h-6 rounded-full bg-[#0D1127] border-4 border-cyan-500 z-10 -translate-x-1/2 shadow-[0_0_15px_rgba(6,182,212,0.5)] hidden md:block"></div>
+
+      {/* Mobile Timeline point with glow */}
+      <div className="absolute left-[-22px] top-0 w-5 h-5 rounded-full bg-[#0D1127] border-2 border-cyan-500 z-10 -translate-x-1/2 shadow-[0_0_10px_rgba(6,182,212,0.5)] md:hidden block"></div>
+
+      {/* Time period */}
+      <div className="mb-4">
+        <span className="text-sm font-bold bg-gradient-to-r from-cyan-500 to-blue-600 text-white py-1.5 px-4 rounded-full shadow-lg shadow-cyan-500/20 border border-cyan-500/20 backdrop-blur-sm">
+          {experience.startDate} - {experience.endDate}
+        </span>
+      </div>
+
+      {/* Card Container with Gradient Border */}
+      <div className="group relative rounded-xl p-[1px] bg-gradient-to-br from-cyan-500/50 via-blue-500/30 to-purple-500/50 shadow-xl shadow-blue-900/20">
+        <div className="relative overflow-hidden bg-[#0f172a]/90 backdrop-blur-xl rounded-xl p-4 md:p-6 h-full">
+          {/* Hover Gradient Overlay */}
+          <motion.div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+          <div className="relative z-10">
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
+              <div>
+                <h3 className="text-lg md:text-2xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  {experience.title}
+                </h3>
+                <div className="flex flex-wrap items-center gap-2 text-gray-300 mt-2">
+                  <div className="flex items-center gap-2 bg-blue-500/10 px-3 py-1 rounded-lg border border-blue-500/20">
+                    <FaBriefcase className="text-cyan-400 text-sm" />
+                    <span className="font-semibold text-sm md:text-base text-gray-200">
+                      {experience.company}
+                    </span>
+                  </div>
+                  <span className="text-[10px] md:text-xs px-2 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20 font-medium tracking-wide">
+                    {experience.type}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2 text-xs md:text-sm text-gray-400 bg-black/20 p-3 rounded-lg border border-white/5">
+                <div className="flex items-center gap-2">
+                  <FaCalendarAlt className="text-cyan-400" />
+                  <span className="text-gray-300">
+                    {experience.startDate} - {experience.endDate}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <FaMapMarkerAlt className="text-purple-400" />
+                  <span className="text-gray-300">{experience.location}</span>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-gray-300 text-sm md:text-base mb-6 leading-relaxed border-l-2 border-cyan-500/30 pl-4">
+              {experience.description}
+            </p>
+
+            <div className="flex flex-wrap gap-2">
+              {experience.skills.map((skill, index) => (
+                <span
+                  key={index}
+                  className="text-[10px] md:text-xs px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-900/40 to-purple-900/40 border border-blue-500/30 text-blue-200 hover:border-cyan-400/50 hover:text-cyan-300 transition-all duration-300 hover:shadow-[0_0_10px_rgba(6,182,212,0.2)] cursor-default"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};

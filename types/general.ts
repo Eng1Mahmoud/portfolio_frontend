@@ -23,3 +23,15 @@ export interface IuserInfo extends TuserInfoSchema {
 export interface Iproject extends TprojectsSchema {
   _id?: string;
 }
+
+export interface IExperience {
+  _id?: string;
+  title: string;
+  company: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+  skills: string[];
+  type: "Full-time" | "Part-time" | "Contract" | "Freelance" | "Internship";
+}
