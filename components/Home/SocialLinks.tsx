@@ -48,20 +48,23 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
     {
       icon: FaLinkedin,
       href: profileInfo?.linkedin,
-      bgColor: "bg-gradient-to-br from-blue-600 to-blue-400",
-      iconColor: "text-white",
+      color: "hover:text-cyan-400",
+      borderColor: "group-hover:border-cyan-400/50",
+      shadowColor: "group-hover:shadow-cyan-400/20",
     },
     {
       icon: FaGithub,
       href: profileInfo?.github,
-      bgColor: "bg-gradient-to-br from-gray-800 to-gray-600",
-      iconColor: "text-white",
+      color: "hover:text-purple-400",
+      borderColor: "group-hover:border-purple-400/50",
+      shadowColor: "group-hover:shadow-purple-400/20",
     },
     {
       icon: FaWhatsapp,
       href: `https://wa.me/${profileInfo?.phone1}`,
-      bgColor: "bg-gradient-to-br from-green-600 to-green-400",
-      iconColor: "text-white",
+      color: "hover:text-green-400",
+      borderColor: "group-hover:border-green-400/50",
+      shadowColor: "group-hover:shadow-green-400/20",
     },
   ];
 
@@ -72,71 +75,28 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
       transition={{ duration: isMobile ? 0.3 : 0.5 }}
       className="relative p-4"
     >
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 rounded-xl blur-xl"
-        animate={
-          isMobile
-            ? { opacity: [0.2, 0.3, 0.2] }
-            : {
-                scale: [1, 1.2, 1],
-                opacity: [0.3, 0.5, 0.3],
-              }
-        }
-        transition={{
-          duration: isMobile ? 2 : 4,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
       <motion.ul
         variants={variants.container}
         initial="hidden"
         animate="visible"
-        className="flex items-center justify-center space-x-4 md:space-x-8 relative"
+        className="flex items-center justify-center space-x-6 relative"
       >
         {socialLinks.map((social, index) => (
           <motion.li
             key={index}
             variants={variants.item}
-            whileHover={
-              isMobile
-                ? {}
-                : {
-                    scale: 1.1,
-                    rotate: [0, -10, 10, 0],
-                    transition: { duration: 0.5 },
-                  }
-            }
+            whileHover={{ scale: 1.1, y: -5 }}
             whileTap={{ scale: 0.95 }}
             className="relative group"
           >
-            <motion.div
-              className="absolute -inset-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              animate={
-                isMobile
-                  ? {}
-                  : {
-                      boxShadow: [
-                        "0 0 0px rgba(59, 130, 246, 0)",
-                        "0 0 20px rgba(59, 130, 246, 0.5)",
-                        "0 0 0px rgba(59, 130, 246, 0)",
-                      ],
-                    }
-              }
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
             <Link
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`block p-3 md:p-4 rounded-xl ${social.bgColor} transform transition-all duration-300`}
+              className={`block p-4 rounded-xl bg-[#0f172a]/80 backdrop-blur-md border border-white/10 shadow-lg transition-all duration-300 ${social.borderColor} ${social.shadowColor} hover:shadow-xl`}
             >
               <social.icon
-                className={`text-2xl md:text-3xl ${social.iconColor}`}
+                className={`text-2xl md:text-3xl text-gray-300 transition-colors duration-300 ${social.color}`}
               />
             </Link>
           </motion.li>

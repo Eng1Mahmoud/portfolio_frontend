@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 
 const textVariants = {
-  hidden: { opacity: 0, y: 50 },
+  hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
@@ -21,41 +21,34 @@ export const HomeIntro = ({ profileInfo }: { profileInfo: IuserInfo }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="relative w-full max-w-4xl mx-auto"
+      transition={{ duration: 0.8, delay: 0.2 }}
+      className="relative w-full max-w-5xl mx-auto my-4"
     >
-      <motion.div
-        className="absolute -inset-4 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 rounded-2xl blur-2xl"
-        animate={{
-          scale: [1, 1.05, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 5,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <div className="relative p-6 md:p-8 bg-gradient-to-br from-[#0D1127]/90 to-[#1a1f3c]/90 rounded-xl border-2 border-blue-500/20 shadow-xl shadow-blue-900/20 backdrop-blur-sm">
+      {/* Neon Glow Behind */}
+      <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl blur-xl opacity-30 animate-pulse"></div>
+
+      <div className="relative p-4 md:p-12 bg-[#0f172a]/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl">
         <motion.div
           initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 0.5, scale: 1 }}
-          transition={{ delay: 0.3 }}
-          className="absolute top-4 md:top-6 left-2 md:left-4 text-blue-400/50"
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5 }}
+          className="absolute -top-4 -left-4 bg-[#0f172a] p-2 rounded-full border border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.3)]"
         >
-          <FaQuoteLeft className="w-4 h-4 md:w-6 md:h-6" />
+          <FaQuoteLeft className="w-5 h-5 text-cyan-400" />
         </motion.div>
+
         <motion.div
           initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 0.5, scale: 1 }}
-          transition={{ delay: 0.3 }}
-          className="absolute bottom-4 right-2 md:right-4 text-purple-400/50"
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5 }}
+          className="absolute -bottom-4 -right-4 bg-[#0f172a] p-2 rounded-full border border-purple-500/50 shadow-[0_0_15px_rgba(168,85,247,0.3)]"
         >
-          <FaQuoteRight className="w-4 h-4 md:w-6 md:h-6" />
+          <FaQuoteRight className="w-5 h-5 text-purple-400" />
         </motion.div>
-        <p className="text-lg md:text-xl leading-relaxed w-full px-2 md:px-4">
+
+        <p className="text-md md:text-xl lg:text-2xl leading-relaxed text-start md:text-center font-light text-gray-300">
           {words.map((word, i) => (
             <motion.span
               key={i}
@@ -63,12 +56,14 @@ export const HomeIntro = ({ profileInfo }: { profileInfo: IuserInfo }) => {
               initial="hidden"
               animate="visible"
               variants={textVariants}
-              whileHover={{ scale: 1.05, color: "#60A5FA" }}
-              className="inline-block mr-2"
+              whileHover={{
+                scale: 1.1,
+                color: "#22d3ee",
+                textShadow: "0 0 8px rgba(34,211,238,0.5)",
+              }}
+              className="inline-block mr-2 transition-colors duration-200"
             >
-              <span className="bg-gradient-to-r from-gray-200 to-gray-100 bg-clip-text text-transparent hover:from-blue-400 hover:to-purple-400 transition-all duration-300 cursor-default">
-                {word}
-              </span>
+              {word}
             </motion.span>
           ))}
         </p>
