@@ -32,7 +32,7 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
       </div>
 
       <motion.div
-        className="p-6"
+        className="p-6 relative z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
@@ -75,12 +75,12 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
                 href={project.githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm flex items-center group/link"
+                className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm flex items-center "
               >
                 <motion.div
                   animate={{ rotate: [0, 360] }}
                   transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                  className="mr-2 opacity-70 group-hover/link:opacity-100"
+                  className="mr-2  "
                 >
                   <FaGithub />
                 </motion.div>
@@ -99,7 +99,7 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
                 <motion.div
                   animate={{ x: [0, 5, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
-                  className="mr-2 opacity-70 group-hover/link:opacity-100"
+                  className="mr-2 "
                 >
                   <FaExternalLinkAlt />
                 </motion.div>
