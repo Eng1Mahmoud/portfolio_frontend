@@ -5,6 +5,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { mainFont } from "@/fonts";
 import { Metadata } from "next";
 import { Person, WithContext } from "schema-dts";
+import ChatBot from "@/components/general/chatbot/ChatBot";
+
 // metadata
 export const metadata: Metadata = {
   title: {
@@ -64,6 +66,7 @@ export default async function RootLayout({
           className="z[1000]"
         />
         {children}
+        <ChatBot />
       </body>
     </html>
   );

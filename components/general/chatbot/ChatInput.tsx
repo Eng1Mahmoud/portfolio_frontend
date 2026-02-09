@@ -1,0 +1,36 @@
+import React from "react";
+import { IoSend } from "react-icons/io5";
+
+interface ChatInputProps {
+  input: string;
+  setInput: (value: string) => void;
+  onSend: () => void;
+  isLoading: boolean;
+}
+
+export const ChatInput: React.FC<ChatInputProps> = ({
+  input,
+  setInput,
+  onSend,
+  isLoading,
+}) => {
+  return (
+    <div className="p-4 bg-white border-t border-gray-100 flex gap-2 items-center">
+      <input
+        type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyPress={(e) => e.key === "Enter" && onSend()}
+        placeholder="Type your message..."
+        className="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all border-none"
+      />
+      <button
+        onClick={onSend}
+        disabled={isLoading || !input.trim()}
+        className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition-all shadow-md disabled:bg-gray-300 disabled:shadow-none"
+      >
+        <IoSend size={18} />
+      </button>
+    </div>
+  );
+};
