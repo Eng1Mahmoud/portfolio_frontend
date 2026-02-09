@@ -47,7 +47,7 @@ const ChatBot: React.FC = () => {
         )}
       </AnimatePresence>
 
-      <ChatToggle isOpen={isOpen} onClick={toggleChat} />
+      {!isOpen && <ChatToggle onClick={toggleChat} />}
     </div>
   );
 };

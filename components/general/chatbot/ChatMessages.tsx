@@ -2,6 +2,8 @@ import React from "react";
 import { clsx } from "clsx";
 import { Message } from "@/hooks/useChat";
 
+import ReactMarkdown from "react-markdown";
+
 interface ChatMessagesProps {
   messages: Message[];
   isLoading: boolean;
@@ -14,7 +16,7 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
   messagesEndRef,
 }) => {
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50/50">
+    <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50/50 antialiased font-sans">
       {messages.map((msg) => (
         <div
           key={msg.id}
@@ -31,7 +33,9 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
                 : "bg-white text-gray-800 border border-gray-100 rounded-tl-none",
             )}
           >
-            {msg.text}
+            <div className="prose prose-sm prose-slate max-w-none whitespace-pre-wrap prose-p:leading-relaxed">
+              <ReactMarkdown>{msg.text}</ReactMarkdown>
+            </div>
           </div>
           <span className="text-[10px] text-gray-400 mt-1 px-1">
             {msg.timestamp.toLocaleTimeString([], {
