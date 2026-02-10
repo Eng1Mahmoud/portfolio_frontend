@@ -14,7 +14,7 @@ export const useChat = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      text: "Hello! I'm Mahmoud's AI assistant 🤖. How can I help you today?\nI can answer questions about his projects, skills, or experience!",
+      text: "Hello! I'm Mahmoud's AI assistant 🤖. How can I help you today?\nI can answer questions about his projects, skills, Education, experience, or anything else!",
       sender: "bot",
       timestamp: new Date(),
     },
