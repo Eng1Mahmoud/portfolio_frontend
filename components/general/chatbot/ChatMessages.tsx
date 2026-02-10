@@ -33,7 +33,7 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
                 : "bg-white text-gray-800 border border-gray-100 rounded-tl-none",
             )}
           >
-            <div className="prose prose-sm prose-slate max-w-none whitespace-pre-wrap prose-p:leading-relaxed">
+            <div className="prose prose-sm prose-slate max-w-none prose-p:leading-relaxed">
               <ReactMarkdown>{msg.text}</ReactMarkdown>
             </div>
           </div>
