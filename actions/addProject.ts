@@ -12,6 +12,7 @@ export async function addProjectAction(
     endpoint: "projects",
     method: "POST",
     body: data,
+    requiresAuth: true,
   });
   if (response.success) {
     revalidateTag("projects");

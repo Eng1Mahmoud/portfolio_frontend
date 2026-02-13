@@ -9,6 +9,7 @@ export async function updateUser(_state: IactionState, data: TuserInfoSchema) {
     endpoint: "profile",
     method: "PUT",
     body: data,
+    requiresAuth: true,
   });
   if (response.success) {
     revalidateTag("info");

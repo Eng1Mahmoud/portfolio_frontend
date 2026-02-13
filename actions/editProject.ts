@@ -10,6 +10,7 @@ export async function editProjectAction(_state: IactionState, data: Iproject) {
     method: "PUT",
     body: data,
     param: data._id,
+    requiresAuth: true,
   });
   if (response.success) {
     revalidateTag("projectById");

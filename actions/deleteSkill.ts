@@ -8,6 +8,7 @@ export async function deleteSkillById(_state: IactionState, id: string) {
     endpoint: "skills",
     method: "Delete",
     param: id,
+    requiresAuth: true,
   });
   if (response.success) {
     revalidateTag("skills");

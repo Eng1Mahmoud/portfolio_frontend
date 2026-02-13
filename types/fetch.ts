@@ -9,4 +9,5 @@ export interface IFetch<I> {
   body?: I;
   tags?: string[];
   param?: string;
+  requiresAuth?: boolean;
 }

@@ -6,9 +6,14 @@ export async function Fetch<R, I>({
   body,
   tags,
   param,
+  requiresAuth = false,
 }: IFetch<I>): Promise<ApiResponse<R>> {
   try {
-    const token = (await cookies()).get("token")?.value;
+    // Only call cookies() when auth is needed — calling it unconditionally
+    // opts the entire request out of Next.js caching (makes it dynamic)
+    const token = requiresAuth
+      ? (await cookies()).get("token")?.value
+      : undefined;
     const baseUrl = process.env.API_URL;
     const apiUrl = param
       ? `${baseUrl}/${endpoint}/${param}`

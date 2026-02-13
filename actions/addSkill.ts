@@ -12,6 +12,7 @@ export async function addSkillAction(
     endpoint: "skills",
     method: "POST",
     body: data,
+    requiresAuth: true,
   });
   if (response.success) {
     revalidateTag("skills");

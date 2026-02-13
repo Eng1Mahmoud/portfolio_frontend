@@ -8,6 +8,7 @@ export async function deleteProjectId(_state: IactionState, id: string) {
     endpoint: "projects",
     method: "Delete",
     param: id,
+    requiresAuth: true,
   });
   if (response.success) {
     revalidateTag("projects");

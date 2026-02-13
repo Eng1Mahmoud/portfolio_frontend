@@ -10,6 +10,7 @@ export async function editSkillAction(_state: IactionState, data: ISkill) {
     method: "PUT",
     body: data,
     param: data._id,
+    requiresAuth: true,
   });
   if (response.success) {
     revalidateTag("skillById");
