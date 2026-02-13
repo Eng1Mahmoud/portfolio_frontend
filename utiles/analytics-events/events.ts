@@ -37,16 +37,8 @@ export const handleSocialClick = (platform: string) => {
   });
 };
 
-export const handleChatBotInteraction = (
-  action: "opened" | "closed" | "message_sent",
-) => {
+export const handleChatBotInteraction = (action: "opened" | "message_sent") => {
   posthog.capture(`chatbot_${action}`);
-};
-
-export const handleChatBotError = (errorType: string) => {
-  posthog.capture("chatbot_error", {
-    error_type: errorType,
-  });
 };
 
 export const handleSkillHover = (skillName: string) => {

@@ -1,9 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { sendChatMessage } from "@/actions/chat";
-import {
-  handleChatBotError,
-  handleChatBotInteraction,
-} from "@/utiles/analytics-events/events";
+import { handleChatBotInteraction } from "@/utiles/analytics-events/events";
 
 export interface Message {
   id: string;
@@ -37,13 +34,14 @@ export const useChat = () => {
   const toggleChat = () => {
     setIsOpen((prev) => {
       const newState = !prev;
-      handleChatBotInteraction(newState ? "opened" : "closed");
+      if (newState) {
+        handleChatBotInteraction("opened");
+      }
       return newState;
     });
   };
   const closeChat = () => {
     setIsOpen(false);
-    handleChatBotInteraction("closed");
   };
 
   const handleSend = async () => {
@@ -64,10 +62,6 @@ export const useChat = () => {
     try {
       const response = await sendChatMessage(input);
 
-      if (!response.success) {
-        handleChatBotError("api_error");
-      }
-
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
         text: response.success
@@ -79,7 +73,6 @@ export const useChat = () => {
 
       setMessages((prev) => [...prev, botMessage]);
     } catch {
-      handleChatBotError("network_error");
       setMessages((prev) => [
         ...prev,
         {
