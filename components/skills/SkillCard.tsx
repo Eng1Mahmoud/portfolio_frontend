@@ -3,6 +3,7 @@
 import { ISkill } from "@/types/general";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { handleSkillHover } from "@/utiles/analytics-events/events";
 
 export const SkillCard = ({ skill }: { skill: ISkill }) => {
   return (
@@ -11,6 +12,7 @@ export const SkillCard = ({ skill }: { skill: ISkill }) => {
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
       whileHover={{ scale: 1.05 }}
+      onMouseEnter={() => handleSkillHover(skill.name)}
       className="voltage-card relative group"
     >
       <motion.div

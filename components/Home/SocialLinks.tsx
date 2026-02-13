@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { FaLinkedin, FaGithub, FaWhatsapp } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import { handleSocialClick } from "@/utiles/analytics-events/events";
 
 const getVariants = (isMobile: boolean) => ({
   container: {
@@ -93,6 +94,14 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                const platform = social.href.includes("linkedin")
+                  ? "linkedin"
+                  : social.href.includes("github")
+                    ? "github"
+                    : "whatsapp";
+                handleSocialClick(platform);
+              }}
               className={`block p-4 rounded-xl bg-[#0f172a]/80 backdrop-blur-md border border-white/10 shadow-lg transition-all duration-300 ${social.borderColor} ${social.shadowColor} hover:shadow-xl`}
             >
               <social.icon

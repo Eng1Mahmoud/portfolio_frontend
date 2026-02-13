@@ -6,6 +6,10 @@ import { FaGithub, FaExternalLinkAlt, FaChevronDown } from "react-icons/fa";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProjectDescriptionModal } from "@/components/Projects/ProjectDescriptionModal";
+import {
+  handleProjectExternalClick,
+  handleViewProject,
+} from "@/utiles/analytics-events/events";
 
 export const ProjectCard = ({ project }: { project: Iproject }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
@@ -50,7 +54,10 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => setShowFullDescription(true)}
+            onClick={() => {
+              setShowFullDescription(true);
+              handleViewProject(project.title);
+            }}
             className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-2 transition-colors group"
           >
             Read More
@@ -76,6 +83,9 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm flex items-center "
+                onClick={() =>
+                  handleProjectExternalClick(project.title, "github")
+                }
               >
                 <motion.div
                   animate={{ rotate: [0, 360] }}
@@ -95,6 +105,9 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-4 py-2 rounded-md text-sm flex items-center group/link"
+                onClick={() =>
+                  handleProjectExternalClick(project.title, "live")
+                }
               >
                 <motion.div
                   animate={{ x: [0, 5, 0] }}
