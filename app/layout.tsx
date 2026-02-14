@@ -1,12 +1,13 @@
 import { ToastContainer } from "react-toastify";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import dynamic from "next/dynamic";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { mainFont } from "@/fonts";
 import { Metadata } from "next";
 import { Person, WithContext } from "schema-dts";
-import ChatBot from "@/components/general/chatbot/ChatBot";
 
+const ChatBot = dynamic(() => import("@/components/general/chatbot/ChatBot"));
 // metadata
 export const metadata: Metadata = {
   title: {
