@@ -16,15 +16,15 @@ export const asideLinks = [
     path: "/projects",
   },
   {
-    label: "Contact",
-    path: "/contac-us",
-  },
-  {
     label: "Experience",
     path: "/experience",
   },
   {
     label: "Education",
     path: "/education",
+  },
+  {
+    label: "Contact",
+    path: "/contac-us",
   },
 ];
