@@ -1,13 +1,11 @@
 import { ToastContainer } from "react-toastify";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import dynamic from "next/dynamic";
-import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { mainFont } from "@/fonts";
 import { Metadata } from "next";
 import { Person, WithContext } from "schema-dts";
-
-const ChatBot = dynamic(() => import("@/components/general/chatbot/ChatBot"));
+import ChatBotWraper from "@/components/general/chatbot/ChatBotWraper";
+import "./globals.css";
 // metadata
 export const metadata: Metadata = {
   title: {
@@ -67,7 +65,7 @@ export default async function RootLayout({
           className="z[1000]"
         />
         {children}
-        <ChatBot />
+        <ChatBotWraper />
       </body>
     </html>
   );
