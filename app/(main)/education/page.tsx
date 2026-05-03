@@ -1,10 +1,14 @@
 import { Title } from "@/components/general/Title";
 import EducationTimeline from "@/components/Education/EducationTimeline";
-export default function Education() {
+import { getAllEducations } from "@/actions/getAllEducations";
+
+export default async function Education() {
+  const educations = (await getAllEducations()) || [];
+
   return (
     <div>
       <Title title="Education" />
-      <EducationTimeline />
+      <EducationTimeline educations={educations} />
     </div>
   );
 }

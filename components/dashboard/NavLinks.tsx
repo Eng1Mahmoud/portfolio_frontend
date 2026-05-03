@@ -1,7 +1,13 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaUserCog, FaProjectDiagram, FaLightbulb } from "react-icons/fa";
+import {
+  FaUserCog,
+  FaProjectDiagram,
+  FaLightbulb,
+  FaBriefcase,
+  FaGraduationCap,
+} from "react-icons/fa";
 
 const NavLinks = () => {
   const pathname = usePathname();
@@ -21,6 +27,16 @@ const NavLinks = () => {
       href: "/dashboard/skills",
       label: "Skills",
       icon: <FaLightbulb size={20} />,
+    },
+    {
+      href: "/dashboard/experience",
+      label: "Experience",
+      icon: <FaBriefcase size={20} />,
+    },
+    {
+      href: "/dashboard/education",
+      label: "Education",
+      icon: <FaGraduationCap size={20} />,
     },
   ];
 

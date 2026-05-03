@@ -1,4 +1,10 @@
-import { Iproject, ISkill, IuserInfo } from "@/types/general";
+import {
+  Iproject,
+  ISkill,
+  IuserInfo,
+  IEducation,
+  IExperience,
+} from "@/types/general";
 export interface GeneralResponse {
   message: string;
 }
@@ -27,4 +33,16 @@ export interface ProjectsResponse {
 }
 export interface ProjectByIdResponse {
   project: Iproject;
+}
+export interface EducationResponse {
+  educations: IEducation[];
+}
+export interface EducationByIdResponse {
+  education: IEducation;
+}
+export interface ExperienceResponse {
+  experiences: IExperience[];
+}
+export interface ExperienceByIdResponse {
+  experience: IExperience;
 }

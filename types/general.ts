@@ -1,6 +1,8 @@
 import { TskillsSchema } from "@/zod/skillsSchema";
 import { TuserInfoSchema } from "@/zod/userInfoSchema";
 import { TprojectsSchema } from "@/zod/projectsSchema";
+import { TexperienceSchema } from "@/zod/experienceSchema";
+import { TeducationSchema } from "@/zod/educationSchema";
 // Interface for toast options
 export interface ToastOptions {
   type: "success" | "error" | "warning" | "info";
@@ -24,14 +26,10 @@ export interface Iproject extends TprojectsSchema {
   _id?: string;
 }
 
-export interface IExperience {
+export interface IExperience extends TexperienceSchema {
   _id?: string;
-  title: string;
-  company: string;
-  location: string;
-  startDate: string;
-  endDate: string;
-  description: string;
-  skills: string[];
-  type: "Full-time" | "Part-time" | "Contract" | "Freelance" | "Internship";
+}
+
+export interface IEducation extends TeducationSchema {
+  _id?: string;
 }

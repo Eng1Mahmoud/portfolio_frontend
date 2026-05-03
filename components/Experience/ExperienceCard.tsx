@@ -1,7 +1,8 @@
 "use client";
 import { IExperience } from "@/types/general";
 import { motion } from "framer-motion";
-import { FaBriefcase, FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
+import { FaBriefcase, FaCalendarAlt } from "react-icons/fa";
+import Image from "next/image";
 
 export const ExperienceCard = ({
   experience,
@@ -39,20 +40,33 @@ export const ExperienceCard = ({
 
           <div className="relative z-10">
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
-              <div>
-                <h3 className="text-lg md:text-2xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  {experience.title}
-                </h3>
-                <div className="flex flex-wrap items-center gap-2 text-gray-300 mt-2">
-                  <div className="flex items-center gap-2 bg-blue-500/10 px-3 py-1 rounded-lg border border-blue-500/20">
-                    <FaBriefcase className="text-cyan-400 text-sm" />
-                    <span className="font-semibold text-sm md:text-base text-gray-200">
-                      {experience.company}
-                    </span>
+              <div className="flex items-start gap-4">
+                {experience.image && (
+                  <Image
+                    src={experience.image}
+                    alt={experience.company || experience.role}
+                    width={64}
+                    height={64}
+                    className="w-16 h-16 rounded-full object-cover"
+                  />
+                )}
+                <div>
+                  <h3 className="text-lg md:text-2xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    {experience.role}
+                  </h3>
+                  <div className="flex flex-wrap items-center gap-2 text-gray-300 mt-2">
+                    <div className="flex items-center gap-2 bg-blue-500/10 px-3 py-1 rounded-lg border border-blue-500/20">
+                      <FaBriefcase className="text-cyan-400 text-sm" />
+                      <span className="font-semibold text-sm md:text-base text-gray-200">
+                        {experience.company}
+                      </span>
+                    </div>
+                    {experience.workType && (
+                      <span className="text-[10px] md:text-xs px-2 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20 font-medium tracking-wide">
+                        {experience.workType}
+                      </span>
+                    )}
                   </div>
-                  <span className="text-[10px] md:text-xs px-2 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20 font-medium tracking-wide">
-                    {experience.type}
-                  </span>
                 </div>
               </div>
 
@@ -63,27 +77,27 @@ export const ExperienceCard = ({
                     {experience.startDate} - {experience.endDate}
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <FaMapMarkerAlt className="text-purple-400" />
-                  <span className="text-gray-300">{experience.location}</span>
-                </div>
               </div>
             </div>
 
-            <p className="text-gray-300 text-sm md:text-base mb-6 leading-relaxed border-l-2 border-cyan-500/30 pl-4">
+            <p className="text-gray-300 text-sm md:text-base mb-6 leading-relaxed border-l-2 border-cyan-500/30 pl-4 whitespace-pre-line">
               {experience.description}
             </p>
 
-            <div className="flex flex-wrap gap-2">
-              {experience.skills.map((skill, index) => (
-                <span
-                  key={index}
-                  className="text-[10px] md:text-xs px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-900/40 to-purple-900/40 border border-blue-500/30 text-blue-200 hover:border-cyan-400/50 hover:text-cyan-300 transition-all duration-300 hover:shadow-[0_0_10px_rgba(6,182,212,0.2)] cursor-default"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
+            {experience.skills &&
+              Array.isArray(experience.skills) &&
+              experience.skills.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {experience.skills.map((skill, index) => (
+                    <span
+                      key={index}
+                      className="text-[10px] md:text-xs px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-900/40 to-purple-900/40 border border-blue-500/30 text-blue-200 hover:border-cyan-400/50 hover:text-cyan-300 transition-all duration-300 hover:shadow-[0_0_10px_rgba(6,182,212,0.2)] cursor-default"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              )}
           </div>
         </div>
       </div>
