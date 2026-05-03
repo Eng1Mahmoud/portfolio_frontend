@@ -15,7 +15,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-};
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "100mb",
+    },
+  },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+} as any;
 
 export default withSentryConfig(nextConfig, {
   org: "my-portfolio-70",

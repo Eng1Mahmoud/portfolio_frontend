@@ -12,6 +12,7 @@ const AddProjectForm = () => {
     imageUrl: "",
     demoLink: "",
     githubLink: "",
+    order: 0,
   };
   return (
     <Form
@@ -46,6 +47,12 @@ const AddProjectForm = () => {
           name="githubLink"
           label="Github Link"
           type="text"
+          className="input-light"
+        />
+        <InputField
+          name="order"
+          label="Display Order"
+          type="number"
           className="input-light"
         />
         <ImageUploadInput name="imageUrl" label="Upload project image" />

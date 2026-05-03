@@ -42,6 +42,12 @@ const EditProjectForm = ({ initialValues }: { initialValues: Iproject }) => {
           type="text"
           className="input-light"
         />
+        <InputField
+          name="order"
+          label="Display Order"
+          type="number"
+          className="input-light"
+        />
         <ImageUploadInput name="imageUrl" label="Upload project image" />
       </div>
     </Form>

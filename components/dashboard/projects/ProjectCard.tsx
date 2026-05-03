@@ -26,20 +26,24 @@ const ProjectCard = ({ project }: { project: Iproject }) => {
         </div>
         <div className="flex flex-col space-y-3">
           <div className="flex justify-center space-x-3">
-            <Link
-              href={project.demoLink}
-              target="_blank"
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center min-w-[100px]"
-            >
-              Demo
-            </Link>
-            <Link
-              href={project.githubLink}
-              target="_blank"
-              className="bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center min-w-[100px]"
-            >
-              GitHub
-            </Link>
+            {project.demoLink && (
+              <Link
+                href={project.demoLink}
+                target="_blank"
+                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center min-w-[100px]"
+              >
+                Demo
+              </Link>
+            )}
+            {project.githubLink && (
+              <Link
+                href={project.githubLink}
+                target="_blank"
+                className="bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center min-w-[100px]"
+              >
+                GitHub
+              </Link>
+            )}
           </div>
           <div className="flex justify-center space-x-3">
             <Link

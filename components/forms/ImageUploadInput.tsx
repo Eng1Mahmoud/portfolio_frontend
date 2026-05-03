@@ -13,25 +13,30 @@ const ImageUploadInput = ({ name, label, className }: InputFieldProps) => {
     formState: { errors },
   } = useFormContext();
   const [url, setUrl] = useState<string | undefined>(getValues(name));
+
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = event.target.files?.[0];
     if (file) {
       const fileUrl = await uploadImage(file);
-      setValue(name, fileUrl);
-      setUrl(fileUrl);
+      if (fileUrl) {
+        setValue(name, fileUrl, { shouldValidate: true });
+        setUrl(fileUrl);
+      }
     }
   };
 
   const handleDelete = () => {
-    setValue(name, "");
+    setValue(name, "", { shouldValidate: true });
     setUrl("");
   };
 
   return (
     <div className="flex flex-col gap-2">
       <label className="text-gray-700">{label}</label>
+      {/* Hidden input registered with RHF to hold the URL value */}
+      <input type="hidden" {...register(name)} />
       <div
         className={`border border-dashed border-gray-400 rounded-md p-4 h-[200px] flex items-center justify-center ${className}`}
       >
@@ -44,6 +49,7 @@ const ImageUploadInput = ({ name, label, className }: InputFieldProps) => {
               className="rounded-md object-contain"
             />
             <button
+              type="button"
               onClick={handleDelete}
               className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-md"
             >
@@ -51,21 +57,24 @@ const ImageUploadInput = ({ name, label, className }: InputFieldProps) => {
             </button>
           </div>
         ) : (
-          <input
-            {...register(name)}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            id={name}
-            onChange={handleFileChange}
-          />
-        )}
-        {!url && (
-          <label htmlFor={name} className="cursor-pointer text-center">
-            <span className="text-gray-500">
-              {loading ? "Uploading..." : "Click or Drag to upload an image"}
-            </span>
-          </label>
+          <>
+            {/* Separate unregistered file input — only used to pick files */}
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              id={`file-picker-${name}`}
+              onChange={handleFileChange}
+            />
+            <label
+              htmlFor={`file-picker-${name}`}
+              className="cursor-pointer text-center"
+            >
+              <span className="text-gray-500">
+                {loading ? "Uploading..." : "Click or Drag to upload an image"}
+              </span>
+            </label>
+          </>
         )}
       </div>
       {errors[name] && (
