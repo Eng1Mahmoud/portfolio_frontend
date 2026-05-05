@@ -5,6 +5,7 @@ import { mainFont } from "@/fonts";
 import { Metadata } from "next";
 import { Person, WithContext } from "schema-dts";
 import ChatBotWraper from "@/components/general/chatbot/ChatBotWraper";
+import CanvasCursor from "@/components/general/CanvasCursor";
 import "./globals.css";
 // metadata
 export const metadata: Metadata = {
@@ -65,6 +66,7 @@ export default async function RootLayout({
           className="z[1000]"
         />
         {children}
+        <CanvasCursor />
         <ChatBotWraper />
       </body>
     </html>
