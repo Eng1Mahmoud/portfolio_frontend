@@ -22,9 +22,9 @@
     "paths": {
       "@/*": ["./*"],
       "vanta/dist/vanta.birds.min": ["./types/vanta.d.ts"]
-    }
+    },
+    "types": ["vitest/globals", "node"]
   },
-  "types": ["vitest/globals"],
   "include": [
     "next-env.d.ts",
     "**/*.ts",
