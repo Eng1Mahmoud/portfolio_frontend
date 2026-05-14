@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { expect, test, describe } from "vitest";
-import { Title } from "../Title";
+import { Title } from "@/components/general/Title";
 
 describe("Title Component", () => {
   test("renders the given title text correctly", () => {
