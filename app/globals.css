@@ -2,10 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-  font-family: var(--main-font);;
+* {
+  font-family: var(--main-font);
 }
-html,body,main{
+html,
+body,
+main {
   overflow-x: hidden;
 }
 /* Main App Scrollbar */
@@ -34,7 +36,6 @@ html,body,main{
   background-clip: content-box;
 }
 
-
 @layer base {
   .input-light {
     @apply !bg-white !text-gray-800 !border-gray-300 !placeholder-gray-500;
@@ -42,5 +43,18 @@ html,body,main{
 
   .input-dark {
     @apply !bg-gray-800/30 !text-gray-200 !border-gray-700/50 !placeholder-gray-400;
+  }
+}
+
+/* Honour the OS "reduce motion" setting for CSS-driven animation.
+   framer-motion is handled separately by MotionConfig in MotionProvider. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
