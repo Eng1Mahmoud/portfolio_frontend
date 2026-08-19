@@ -6,9 +6,12 @@ import { Metadata } from "next";
 import { Person, WithContext } from "schema-dts";
 import ChatBotWraper from "@/components/general/chatbot/ChatBotWraper";
 import CanvasCursor from "@/components/general/CanvasCursor";
+import { siteDescription, siteName, siteUrl } from "@/utiles/site";
 import "./globals.css";
 // metadata
 export const metadata: Metadata = {
+  // Required so relative OG/canonical URLs resolve to absolute ones.
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Mahmoud Mohamed | Portfolio",
     template: "%s | Mahmoud Mohamed",
@@ -22,13 +25,35 @@ export const metadata: Metadata = {
     "react",
     "next.js",
   ],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    siteName,
+    title: {
+      default: "Mahmoud Mohamed | Portfolio",
+      template: "%s | Mahmoud Mohamed",
+    },
+    description: siteDescription,
+    url: "/",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: {
+      default: "Mahmoud Mohamed | Portfolio",
+      template: "%s | Mahmoud Mohamed",
+    },
+    description: siteDescription,
+  },
 };
 // JSONLD
 const jsonld: WithContext<Person> = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Mahmoud Mohamed",
-  url: "https://dev-mahmoud-portfolio.vercel.app/",
+  url: siteUrl,
   sameAs: [
     "https://github.com/Eng1Mahmoud",
     "https://www.linkedin.com/in/Mahmoud-Mohamed-Abdel-Aal",

@@ -14,11 +14,10 @@ export default async function MainLayout({
       <div className="hidden lg:block lg:w-[20%] h-screen">
         <Aside profileInfo={profileInfo as IuserInfo} />
       </div>
-      <div className="hidden lg:block lg:w-[80%] overflow-y-auto h-screen scrollBar">
-        <main className="container py-10">{children}</main>
-      </div>
-      <div className="lg:hidden pt-16 pb-4 flex-1 overflow-y-auto scrollBar">
-        <main className="container">{children}</main>
+      {/* Single content region for both breakpoints — rendering `children`
+          twice puts the whole page in the DOM twice (duplicate <main>/<h1>). */}
+      <div className="flex-1 lg:flex-none lg:w-[80%] h-screen overflow-y-auto scrollBar pt-16 pb-4 lg:pt-0 lg:pb-0">
+        <main className="container lg:py-10">{children}</main>
       </div>
     </div>
   );

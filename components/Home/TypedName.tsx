@@ -17,9 +17,10 @@ export const TypedName = ({ profileInfo }: { profileInfo: IuserInfo }) => {
         setName(typedName.slice(0, currentIndex));
         currentIndex++;
       } else {
-        currentIndex = 0;
+        // Type once, then settle — restarting left the name never fully shown.
+        clearInterval(interval);
       }
-    }, 300);
+    }, 150);
 
     return () => clearInterval(interval);
   }, [typedName]);
