@@ -10,6 +10,11 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  // Generated output — linting it reported thousands of errors from files
+  // nobody edits.
+  {
+    ignores: [".next/**", "next-env.d.ts", "node_modules/**"],
+  },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     rules: {
