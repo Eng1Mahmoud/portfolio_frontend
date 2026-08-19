@@ -65,10 +65,10 @@ export const Form = <T extends FieldValues>({
       if (redirectPath) {
         router.push(redirectPath);
       }
+      // Reset only on success — clearing the form after a failed submit threw
+      // away everything the user had typed.
+      methods.reset();
     }
-
-    // reset form
-    methods.reset();
   }, [
     state.message,
     state.success,
