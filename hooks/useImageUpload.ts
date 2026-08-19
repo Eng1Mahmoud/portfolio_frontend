@@ -10,10 +10,22 @@ export const useImageUpload = () => {
       const formData = new FormData();
       formData.append("image", file);
       const result = await uploadFileAction(formData);
+
+      // The action reports failure by returning success:false rather than
+      // throwing, so the catch below never sees it — check the result.
+      if (!result?.success || !result.url) {
+        showToast({
+          type: "error",
+          message: result?.message || "Upload failed",
+        });
+        return undefined;
+      }
+
       showToast({ type: "success", message: "File uploaded successfully!" });
       return result.url as string;
     } catch {
       showToast({ type: "error", message: "Something went wrong" });
+      return undefined;
     } finally {
       setLoading(false);
     }

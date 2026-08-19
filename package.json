@@ -23,7 +23,7 @@
     "@sentry/nextjs": "^9.5.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.4.5",
-    "jsonwebtoken": "^9.0.2",
+    "jose": "^6.2.9",
     "next": "15.5.9",
     "npm": "^11.6.4",
     "posthog-js": "^1.345.5",
@@ -39,7 +39,6 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/typography": "^0.5.20",
-    "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

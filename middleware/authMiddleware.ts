@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { decodeToken } from "@/utiles/decodeToken";
+import { verifyToken } from "@/utiles/verifyToken";
 import { routes } from "@/middleware/helper/RolesAndRoutes";
 import type { Role } from "@/types/authRoute";
 
@@ -11,16 +11,16 @@ export async function authMiddleware(
   const { pathname } = request.nextUrl;
   const token = request.cookies.get("token")?.value;
   let userRole: Role = "guest";
+  let tokenIsInvalid = false;
 
   if (token) {
-    try {
-      const decodedToken = decodeToken(token);
-      if (decodedToken?.role) {
-        userRole = decodedToken.role;
-      }
-    } catch {
-      // if token is invalid, redirect to home
-      return NextResponse.redirect(new URL(`/`, request.url));
+    // Signature and expiry are verified here. Decoding alone would let anyone
+    // hand-craft a cookie claiming `role: "admin"` and reach the dashboard.
+    const payload = await verifyToken(token);
+    if (payload?.role) {
+      userRole = payload.role;
+    } else {
+      tokenIsInvalid = true;
     }
   }
 
@@ -28,7 +28,10 @@ export async function authMiddleware(
   if (!route) return response || NextResponse.next(); // if no route found, continue to next middleware
 
   if (!route.roles.includes(userRole)) {
-    return NextResponse.redirect(new URL(`/`, request.url)); //if route found but user is not authorized, redirect to home
+    const redirect = NextResponse.redirect(new URL(`/`, request.url));
+    // Clear a rejected token so the browser stops replaying it every request.
+    if (tokenIsInvalid) redirect.cookies.delete("token");
+    return redirect;
   }
 
   return response || NextResponse.next();

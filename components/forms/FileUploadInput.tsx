@@ -26,10 +26,13 @@ const FileUploadInput = ({
   ) => {
     const file = event.target.files?.[0];
     if (file) {
-      setFileName(file.name);
       const fileUrl = await uploadImage(file);
-      setValue(name, fileUrl);
-      setUrl(fileUrl);
+      // Keep the previously saved file if the upload failed.
+      if (fileUrl) {
+        setFileName(file.name);
+        setValue(name, fileUrl, { shouldValidate: true });
+        setUrl(fileUrl);
+      }
     }
   };
 
