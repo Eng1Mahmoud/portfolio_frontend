@@ -23,17 +23,12 @@ const LoginForm = () => {
             name: "Sign In",
           }}
         >
-          <InputField
-            name="email"
-            label="Email"
-            type="email"
-            className="bg-text-primary"
-          />
+          <InputField name="email" label="Email" type="email" variant="light" />
           <InputField
             name="password"
             label="Password"
             type="password"
-            className="bg-text-primary"
+            variant="light"
           />
         </Form>
       </div>

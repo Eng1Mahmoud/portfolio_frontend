@@ -18,13 +18,24 @@ export interface FormProps<T extends FieldValues> {
   };
 }
 
+/**
+ * "dark"  — the public site's glass-on-navy fields (default)
+ * "light" — the dashboard's white cards
+ *
+ * Replaces the `.input-light` / `.input-dark` `!important` overrides that
+ * previously fought the component's own hardcoded styling.
+ */
+export type FieldVariant = "dark" | "light";
+
 // input filed props
 export interface InputFieldProps {
   name: string;
   label: string;
   type?: string;
   className?: string;
-  value?: string;
+  variant?: FieldVariant;
+  /** Render the label visually but keep it for screen readers when false. */
+  showLabel?: boolean;
 }
 // text area props
 export interface TextAreaProps {
@@ -32,6 +43,8 @@ export interface TextAreaProps {
   label: string;
   rows?: number;
   className?: string;
+  variant?: FieldVariant;
+  showLabel?: boolean;
 }
 
 // submit button props

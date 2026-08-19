@@ -48,40 +48,40 @@ const EditExperienceForm = ({
             name="role"
             label="Role / Title"
             type="text"
-            className="input-light"
+            variant="light"
           />
           <InputField
             name="workType"
             label="Work Type (e.g. Remote, Hybrid)"
             type="text"
-            className="input-light"
+            variant="light"
           />
         </div>
         <InputField
           name="company"
           label="Company"
           type="text"
-          className="input-light"
+          variant="light"
         />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <InputField
             name="startDate"
             label="Start Date"
             type="text"
-            className="input-light"
+            variant="light"
           />
           <InputField
             name="endDate"
             label="End Date"
             type="text"
-            className="input-light"
+            variant="light"
           />
         </div>
         <InputField
           name="skills"
           label="Skills (comma-separated, e.g. React, Node.js)"
           type="text"
-          className="input-light"
+          variant="light"
         />
         <ImageUploadInput
           name="image"
@@ -92,7 +92,7 @@ const EditExperienceForm = ({
           name="description"
           label="Description"
           rows={6}
-          className="input-light"
+          variant="light"
         />
       </div>
     </Form>

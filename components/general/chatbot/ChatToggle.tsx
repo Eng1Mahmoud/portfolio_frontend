@@ -13,12 +13,13 @@ export const ChatToggle: React.FC<ChatToggleProps> = ({ onClick }) => {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
+      aria-label="Open chat assistant"
       className={clsx(
         "w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300",
         "bg-gradient-to-br from-blue-600 to-indigo-700 text-white",
       )}
     >
-      <IoChatbubbleEllipses size={30} />
+      <IoChatbubbleEllipses size={30} aria-hidden="true" />
     </motion.button>
   );
 };

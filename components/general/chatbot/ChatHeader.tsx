@@ -22,9 +22,10 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ onClose }) => {
       </div>
       <button
         onClick={onClose}
-        className="p-1 hover:bg-white/10 rounded-full transition-colors"
+        aria-label="Close chat"
+        className="p-1 hover:bg-white/10 rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
       >
-        <IoClose size={24} />
+        <IoClose size={24} aria-hidden="true" />
       </button>
     </div>
   );

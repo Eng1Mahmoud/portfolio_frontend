@@ -26,10 +26,11 @@ export const ChatInput: React.FC<ChatInputProps> = ({
       />
       <button
         onClick={onSend}
+        aria-label="Send message"
         disabled={isLoading || !input.trim()}
         className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition-all shadow-md disabled:bg-gray-300 disabled:shadow-none"
       >
-        <IoSend size={18} />
+        <IoSend size={18} aria-hidden="true" />
       </button>
     </div>
   );
