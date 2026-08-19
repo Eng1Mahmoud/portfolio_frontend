@@ -5,7 +5,8 @@ import emailjs from "@emailjs/nodejs";
 export async function contactUs(_state: IactionState, data: TcontactUsSchema) {
   try {
     const templateParams = {
-      to_name: process.env.EMAILJS_TO_NAME!,
+      // Fallback so a missing/renamed env var can't silently send a blank name.
+      to_name: process.env.EMAILJS_TO_NAME ?? "Mahmoud",
       from_name: data.userName,
       from_email: data.email,
       reply_to: data.email,

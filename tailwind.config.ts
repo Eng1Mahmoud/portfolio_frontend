@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import typography from "@tailwindcss/typography";
 
 export default {
   content: [
@@ -42,5 +43,6 @@ export default {
       },
     },
   },
-  plugins: [],
+  // Enables the `prose` classes already used by the chatbot's markdown output.
+  plugins: [typography],
 } satisfies Config;
