@@ -1,34 +1,46 @@
-// Shown while a public page's data is fetched, instead of a blank pause.
+import {
+  SkeletonScreen,
+  SkeletonLine,
+  SkeletonPill,
+} from "@/components/general/skeleton/Skeleton";
+
+/**
+ * Home hero. Traces HomeIntro: the rail, the mono role line, a two-line name,
+ * the bio paragraph, the two figures, then the action row.
+ */
 export default function Loading() {
   return (
-    <div className="animate-pulse" aria-busy="true" aria-live="polite">
-      <span className="sr-only">Loading…</span>
+    <SkeletonScreen label="Loading home">
+      <section className="flex min-h-[calc(100dvh-5rem)] items-center">
+        <div className="relative w-full max-w-4xl pl-6 sm:pl-10">
+          <div className="absolute left-0 top-0 h-full w-px bg-white/10" />
 
-      {/* Mirrors the <Title /> block */}
-      <div className="ml-[20px] mb-8">
-        <div className="h-9 md:h-10 w-56 rounded-md bg-white/10" />
-        <div className="mt-5 h-[5px] w-[150px] rounded-md bg-blue-500/20" />
-      </div>
+          <SkeletonLine w="w-40" h="h-2.5" className="mb-5" />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div
-            key={i}
-            className="rounded-xl border-2 border-blue-500/20 bg-gradient-to-br from-surface-card to-surface-card-to overflow-hidden"
-          >
-            <div className="h-[200px] w-full bg-white/5" />
-            <div className="p-6 space-y-3">
-              <div className="h-5 w-2/3 rounded bg-white/10" />
-              <div className="h-3 w-full rounded bg-white/5" />
-              <div className="h-3 w-5/6 rounded bg-white/5" />
-              <div className="flex gap-3 pt-2">
-                <div className="h-9 w-24 rounded-md bg-white/5" />
-                <div className="h-9 w-24 rounded-md bg-white/5" />
-              </div>
-            </div>
+          <SkeletonLine w="w-64" h="h-12" className="mb-2 max-w-full" />
+          <SkeletonLine w="w-52" h="h-12" className="max-w-full" />
+
+          <div className="mt-7 max-w-[58ch] space-y-3">
+            <SkeletonLine />
+            <SkeletonLine w="w-11/12" />
+            <SkeletonLine w="w-full" />
+            <SkeletonLine w="w-4/5" />
           </div>
-        ))}
-      </div>
-    </div>
+
+          <div className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/10 pt-5">
+            <SkeletonLine w="w-32" h="h-5" />
+            <SkeletonLine w="w-36" h="h-5" />
+          </div>
+
+          <div className="mt-9 flex flex-wrap items-center gap-4">
+            <SkeletonPill className="h-11 w-36" />
+            <SkeletonPill className="h-11 w-36" />
+            <SkeletonPill className="h-10 w-10" />
+            <SkeletonPill className="h-10 w-10" />
+            <SkeletonPill className="h-10 w-10" />
+          </div>
+        </div>
+      </section>
+    </SkeletonScreen>
   );
 }
