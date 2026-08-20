@@ -12,7 +12,9 @@ export default async function EditSkill({
       <h2 className="text-2xl font-semibold mb-6 text-gray-800">Edit Skill</h2>
       <div className="space-y-4">
         <EditSkillForm
-          initialValues={skill ?? { _id: "", name: "", imageUrl: "" }}
+          initialValues={
+            skill ?? { _id: "", name: "", imageUrl: "", category: "" }
+          }
         />
       </div>
     </div>
