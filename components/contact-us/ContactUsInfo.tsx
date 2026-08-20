@@ -84,21 +84,21 @@ const ContactUsInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
   return (
     <div className="grid grid-cols-1 gap-6 md:gap-8">
       <ContactItem
-        icon={<AiFillPhone className="text-2xl text-blue-400" />}
+        icon={<AiFillPhone className="text-xl text-cyan-300" />}
         title="Phone"
         content={[profileInfo?.phone1, profileInfo?.phone2]}
         linkType="phone"
         index={0}
       />
       <ContactItem
-        icon={<AiOutlineMail className="text-2xl text-blue-400" />}
+        icon={<AiOutlineMail className="text-xl text-cyan-300" />}
         title="Email"
         content={[profileInfo?.email]}
         linkType="email"
         index={1}
       />
       <ContactItem
-        icon={<GoLocation className="text-2xl text-blue-400" />}
+        icon={<GoLocation className="text-xl text-cyan-300" />}
         title="Address"
         content={[profileInfo?.address]}
         index={2}

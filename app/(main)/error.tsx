@@ -22,7 +22,7 @@ export default function Error({
         <h1 className="text-2xl md:text-3xl font-bold mb-3 text-ink-strong">
           Something went wrong
         </h1>
-        <p className="text-gray-400 mb-8">
+        <p className="mb-8 text-ink-muted">
           This section failed to load. Trying again usually fixes it.
         </p>
 

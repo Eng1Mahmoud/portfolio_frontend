@@ -58,8 +58,8 @@ export default function EducationTimeline({
                         <FaGraduationCap className="text-cyan-400" />
                         {item.degree}
                       </h3>
-                      <div className="flex items-center gap-2 text-gray-300 mt-2">
-                        <div className="flex items-center gap-2 bg-blue-500/10 px-3 py-1 rounded-lg border border-blue-500/20">
+                      <div className="flex items-center gap-2 text-ink-body mt-2">
+                        <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1">
                           <FaUniversity className="text-cyan-400 text-sm" />
                           <span className="font-semibold text-sm md:text-base text-gray-200">
                             {item.institution}
@@ -70,7 +70,7 @@ export default function EducationTimeline({
                   </div>
                 </div>
 
-                <p className="text-gray-300 text-sm md:text-base mb-6 leading-relaxed border-l-2 border-cyan-500/30 pl-4 whitespace-pre-line">
+                <p className="mb-6 whitespace-pre-line border-l border-cyan-400/40 pl-4 text-sm leading-relaxed text-ink-body md:text-base">
                   {item.description}
                 </p>
                 {item.skills &&

@@ -54,8 +54,8 @@ export const ExperienceCard = ({
                   <h3 className="text-lg md:text-2xl font-bold text-ink-strong">
                     {experience.role}
                   </h3>
-                  <div className="flex flex-wrap items-center gap-2 text-gray-300 mt-2">
-                    <div className="flex items-center gap-2 bg-blue-500/10 px-3 py-1 rounded-lg border border-blue-500/20">
+                  <div className="flex flex-wrap items-center gap-2 text-ink-body mt-2">
+                    <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1">
                       <FaBriefcase className="text-cyan-400 text-sm" />
                       <span className="font-semibold text-sm md:text-base text-gray-200">
                         {experience.company}
@@ -70,17 +70,17 @@ export const ExperienceCard = ({
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2 text-xs md:text-sm text-gray-400 bg-black/20 p-3 rounded-lg border border-white/5">
+              <div className="flex flex-col gap-2 text-xs md:text-sm text-ink-muted bg-white/[0.02] p-3 rounded-lg border border-white/10">
                 <div className="flex items-center gap-2">
                   <FaCalendarAlt className="text-cyan-400" />
-                  <span className="text-gray-300">
+                  <span className="text-ink-body">
                     {experience.startDate} - {experience.endDate}
                   </span>
                 </div>
               </div>
             </div>
 
-            <p className="text-gray-300 text-sm md:text-base mb-6 leading-relaxed border-l-2 border-cyan-500/30 pl-4 whitespace-pre-line">
+            <p className="mb-6 whitespace-pre-line border-l border-cyan-400/40 pl-4 text-sm leading-relaxed text-ink-body md:text-base">
               {experience.description}
             </p>
 
@@ -91,7 +91,7 @@ export const ExperienceCard = ({
                   {experience.skills.map((skill, index) => (
                     <span
                       key={index}
-                      className="text-[10px] md:text-xs px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04] text-ink-muted hover:border-cyan-400/50 hover:text-cyan-300 transition-all duration-300 hover:shadow-[0_0_10px_rgba(6,182,212,0.2)] cursor-default"
+                      className="text-[10px] md:text-xs px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04] text-ink-muted transition-colors hover:border-cyan-400/50 hover:text-cyan-300 cursor-default"
                     >
                       {skill}
                     </span>

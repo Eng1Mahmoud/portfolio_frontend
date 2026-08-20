@@ -36,7 +36,7 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
       transition={{ duration: 0.5 }}
       // h-full + flex column: every card in a row ends up the same height and
       // the action buttons line up along the bottom.
-      className="group relative flex h-full flex-col overflow-hidden bg-gradient-to-br from-surface-card to-surface-card-to rounded-xl border-2 border-blue-500/50 shadow-xl shadow-blue-900/20"
+      className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-white/[0.02] transition-colors hover:border-cyan-400/40"
     >
       <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
@@ -61,7 +61,7 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
             {visible.map((tech) => (
               <li
                 key={tech}
-                className="rounded-full border border-blue-500/30 bg-blue-900/30 px-2.5 py-0.5 text-[11px] font-medium text-blue-200"
+                className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[11px] text-ink-body"
               >
                 {tech}
               </li>
@@ -72,7 +72,7 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
                   type="button"
                   onClick={openDetails}
                   aria-label={`Show all ${technologies.length} technologies for ${project.title.trim()}`}
-                  className="rounded-full border border-white/15 bg-white/5 px-2.5 py-0.5 text-[11px] font-medium text-gray-300 transition-colors hover:border-blue-400/50 hover:text-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[11px] text-ink-muted transition-colors hover:border-cyan-400/50 hover:text-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
                 >
                   +{hiddenCount} more
                 </button>
@@ -81,14 +81,14 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
           </ul>
         )}
 
-        <p className="text-gray-300 text-sm mb-3 line-clamp-2">
+        <p className="mb-3 line-clamp-2 text-sm text-ink-body">
           {project.description}
         </p>
 
         <button
           type="button"
           onClick={openDetails}
-          className="mb-4 flex w-fit items-center gap-1.5 text-sm text-blue-400 transition-colors hover:text-blue-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
+          className="mb-4 flex w-fit items-center gap-1.5 rounded text-sm text-cyan-300 transition-colors hover:text-cyan-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
         >
           Read more
           <FaChevronDown className="h-3 w-3" aria-hidden="true" />
