@@ -11,129 +11,132 @@ import {
   handleViewProject,
 } from "@/utiles/analytics-events/events";
 
+// Projects carry between 6 and 16 technologies. Rendering them all made cards
+// tall and wildly uneven, so the card shows a preview and the modal has the
+// full list.
+const VISIBLE_TECHNOLOGIES = 4;
+
 export const ProjectCard = ({ project }: { project: Iproject }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
 
+  const technologies = project.technologies ?? [];
+  const visible = technologies.slice(0, VISIBLE_TECHNOLOGIES);
+  const hiddenCount = technologies.length - visible.length;
+
+  const openDetails = () => {
+    setShowFullDescription(true);
+    handleViewProject(project.title);
+  };
+
   return (
-    <motion.div
+    <motion.article
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="group relative overflow-hidden bg-gradient-to-br from-[#0D1127] to-[#1a1f3c] rounded-xl border-2 border-blue-500/50 shadow-xl shadow-blue-900/20"
+      // h-full + flex column: every card in a row ends up the same height and
+      // the action buttons line up along the bottom.
+      className="group relative flex h-full flex-col overflow-hidden bg-gradient-to-br from-[#0D1127] to-[#1a1f3c] rounded-xl border-2 border-blue-500/50 shadow-xl shadow-blue-900/20"
     >
-      <motion.div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
-      <div className="relative h-[200px] overflow-hidden">
+      <div className="relative h-[190px] shrink-0 overflow-hidden">
         <Image
           src={project.imageUrl}
           alt={project.title}
-          width={640}
-          height={360}
-          className="w-full absolute top-0 object-cover transition-transform duration-[2s] ease-in-out hover:translate-y-[calc(-100%+300px)]"
-          style={{ height: "auto", minHeight: "100%" }}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
         />
       </div>
 
-      <motion.div
-        className="p-6 relative z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-      >
-        <motion.h3
-          className="text-xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
-          whileHover={{ scale: 1.02 }}
-        >
-          {project.title}
-        </motion.h3>
-        <div className="relative">
-          <p className="text-gray-300 text-sm mb-4 line-clamp-3">
-            {project.description}
-          </p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              setShowFullDescription(true);
-              handleViewProject(project.title);
-            }}
-            className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-2 transition-colors group"
-          >
-            Read More
-            <motion.div
-              animate={{ y: [0, 2, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-              className="group-hover:translate-x-1 transition-transform"
-            >
-              <FaChevronDown className="h-4 w-4" />
-            </motion.div>
-          </motion.button>
-        </div>
-        <motion.div
-          className="flex gap-4 mt-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-        >
-          {project.githubLink && (
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href={project.githubLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm flex items-center "
-                onClick={() =>
-                  handleProjectExternalClick(project.title, "github")
-                }
+      <div className="relative z-10 flex flex-1 flex-col p-5">
+        <h3 className="text-lg font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+          {project.title.trim()}
+        </h3>
+
+        {/* Stack first — it is what a visitor scans for. */}
+        {technologies.length > 0 && (
+          <ul className="flex flex-wrap gap-1.5 mb-3">
+            {visible.map((tech) => (
+              <li
+                key={tech}
+                className="rounded-full border border-blue-500/30 bg-blue-900/30 px-2.5 py-0.5 text-[11px] font-medium text-blue-200"
               >
-                <motion.div
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                  className="mr-2  "
+                {tech}
+              </li>
+            ))}
+            {hiddenCount > 0 && (
+              <li>
+                <button
+                  type="button"
+                  onClick={openDetails}
+                  aria-label={`Show all ${technologies.length} technologies for ${project.title.trim()}`}
+                  className="rounded-full border border-white/15 bg-white/5 px-2.5 py-0.5 text-[11px] font-medium text-gray-300 transition-colors hover:border-blue-400/50 hover:text-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 >
-                  <FaGithub />
-                </motion.div>
-                GitHub
-              </Link>
-            </motion.div>
+                  +{hiddenCount} more
+                </button>
+              </li>
+            )}
+          </ul>
+        )}
+
+        <p className="text-gray-300 text-sm mb-3 line-clamp-2">
+          {project.description}
+        </p>
+
+        <button
+          type="button"
+          onClick={openDetails}
+          className="mb-4 flex w-fit items-center gap-1.5 text-sm text-blue-400 transition-colors hover:text-blue-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
+        >
+          Read more
+          <FaChevronDown className="h-3 w-3" aria-hidden="true" />
+        </button>
+
+        {/* mt-auto pins the actions to the bottom regardless of text length. */}
+        <div className="mt-auto flex flex-wrap gap-3">
+          {project.githubLink && (
+            <Link
+              href={project.githubLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 rounded-md bg-gray-800 px-4 py-2 text-sm text-white transition-colors hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              onClick={() =>
+                handleProjectExternalClick(project.title, "github")
+              }
+            >
+              <FaGithub aria-hidden="true" />
+              GitHub
+            </Link>
           )}
           {project.demoLink && (
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href={project.demoLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-4 py-2 rounded-md text-sm flex items-center group/link"
-                onClick={() =>
-                  handleProjectExternalClick(project.title, "live")
-                }
-              >
-                <motion.div
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                  className="mr-2 "
-                >
-                  <FaExternalLinkAlt />
-                </motion.div>
-                Live
-              </Link>
-            </motion.div>
+            <Link
+              href={project.demoLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 rounded-md bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm text-white transition-colors hover:from-blue-500 hover:to-purple-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              onClick={() => handleProjectExternalClick(project.title, "live")}
+            >
+              <FaExternalLinkAlt aria-hidden="true" />
+              Live
+            </Link>
           )}
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       <AnimatePresence>
         {showFullDescription && (
           <ProjectDescriptionModal
-            title={project.title}
+            title={project.title.trim()}
             description={project.description}
+            technologies={technologies}
             githubLink={project.githubLink}
             demoLink={project.demoLink}
             onClose={() => setShowFullDescription(false)}
           />
         )}
       </AnimatePresence>
-    </motion.div>
+    </motion.article>
   );
 };

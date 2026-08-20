@@ -5,7 +5,6 @@ import { mainFont } from "@/fonts";
 import { Metadata } from "next";
 import { Person, WithContext } from "schema-dts";
 import ChatBotWraper from "@/components/general/chatbot/ChatBotWraper";
-import CanvasCursor from "@/components/general/CanvasCursor";
 import MotionProvider from "@/app/providers/MotionProvider";
 import { siteDescription, siteName, siteUrl } from "@/utiles/site";
 import "./globals.css";
@@ -92,7 +91,6 @@ export default async function RootLayout({
           className="z[1000]"
         />
         <MotionProvider>{children}</MotionProvider>
-        <CanvasCursor />
         <ChatBotWraper />
       </body>
     </html>

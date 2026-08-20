@@ -1,10 +1,13 @@
+"use client";
 import { motion } from "framer-motion";
 import { FaTimes, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 
 interface ProjectDescriptionModalProps {
   title: string;
   description: string;
+  technologies?: string[];
   githubLink?: string;
   demoLink?: string;
   onClose: () => void;
@@ -13,84 +16,119 @@ interface ProjectDescriptionModalProps {
 export const ProjectDescriptionModal = ({
   title,
   description,
+  technologies,
   githubLink,
   demoLink,
   onClose,
 }: ProjectDescriptionModalProps) => {
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  // Escape to close, and lock the page behind the dialog so the background
+  // does not scroll while the description is being read.
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKeyDown);
+    panelRef.current?.focus();
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [onClose]);
+
   return (
     <motion.div
-      initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-      animate={{ opacity: 1, backdropFilter: "blur(8px)" }}
-      exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-      className="fixed inset-0 bg-gray-900/80 z-50 flex items-center justify-center p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+      className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm z-[1000] flex items-center justify-center p-4"
     >
       <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
+        ref={panelRef}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        // Stop clicks inside the panel from reaching the backdrop's close.
+        onClick={(event) => event.stopPropagation()}
+        initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
-        className="bg-gradient-to-br from-[#0D1127] to-[#1a1f3c] p-6 rounded-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto relative border border-blue-500/30"
+        exit={{ scale: 0.95, opacity: 0 }}
+        className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-blue-500/30 bg-gradient-to-br from-[#0D1127] to-[#1a1f3c] outline-none"
       >
-        <div className="flex justify-between items-start mb-4">
-          <motion.h3
-            initial={{ x: -20 }}
-            animate={{ x: 0 }}
-            className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
-          >
+        {/* Header stays put so the close button is always reachable while
+            scrolling a long description. */}
+        <div className="flex shrink-0 items-start justify-between gap-4 border-b border-white/10 px-6 py-4">
+          <h3 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
             {title}
-          </motion.h3>
-          <motion.button
-            whileHover={{ scale: 1.1, rotate: 90 }}
-            whileTap={{ scale: 0.9 }}
+          </h3>
+          <button
+            type="button"
             onClick={onClose}
-            className="text-gray-400 hover:text-white transition-colors"
+            aria-label="Close project details"
+            className="shrink-0 rounded-md p-1 text-gray-400 transition-colors hover:bg-white/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           >
-            <FaTimes size={24} />
-          </motion.button>
+            <FaTimes size={20} aria-hidden="true" />
+          </button>
         </div>
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="space-y-6"
-        >
-          <p className="text-gray-300 text-sm whitespace-pre-wrap leading-relaxed">
+
+        {/* Only this region scrolls. */}
+        <div className="scrollBar min-h-0 flex-1 overflow-y-auto px-6 py-5">
+          {technologies && technologies.length > 0 && (
+            <div className="mb-5">
+              <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                Built with
+              </h4>
+              <ul className="flex flex-wrap gap-2">
+                {technologies.map((tech) => (
+                  <li
+                    key={tech}
+                    className="rounded-full border border-blue-500/30 bg-blue-900/30 px-3 py-1 text-xs font-medium text-blue-200"
+                  >
+                    {tech}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <p className="whitespace-pre-wrap text-sm leading-relaxed text-gray-300">
             {description}
           </p>
-          <div className="flex gap-4">
+        </div>
+
+        {/* Actions stay visible instead of being scrolled past. */}
+        {(githubLink || demoLink) && (
+          <div className="flex shrink-0 flex-wrap gap-3 border-t border-white/10 px-6 py-4">
             {githubLink && (
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <Link
+                href={githubLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 rounded-md bg-gray-800 px-4 py-2 text-sm text-white transition-colors hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               >
-                <Link
-                  href={githubLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm flex items-center"
-                >
-                  <FaGithub className="mr-2" />
-                  GitHub
-                </Link>
-              </motion.div>
+                <FaGithub aria-hidden="true" />
+                GitHub
+              </Link>
             )}
             {demoLink && (
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <Link
+                href={demoLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 rounded-md bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm text-white transition-colors hover:from-blue-500 hover:to-purple-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               >
-                <Link
-                  href={demoLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-4 py-2 rounded-md text-sm flex items-center"
-                >
-                  <FaExternalLinkAlt className="mr-2" />
-                  Live
-                </Link>
-              </motion.div>
+                <FaExternalLinkAlt aria-hidden="true" />
+                Live
+              </Link>
             )}
           </div>
-        </motion.div>
+        )}
       </motion.div>
     </motion.div>
   );

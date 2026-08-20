@@ -24,6 +24,7 @@ export default async function EditProject({
                 imageUrl: "",
                 demoLink: "",
                 githubLink: "",
+                technologies: [],
               }
             }
           />
