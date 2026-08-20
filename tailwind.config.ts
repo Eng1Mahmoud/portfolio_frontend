@@ -10,6 +10,7 @@ export default {
   theme: {
     fontFamily: {
       main: ["var(--main-font)", "sans-serif"],
+      mono: ["var(--mono-font)", "ui-monospace", "monospace"],
     },
     extend: {
       container: {

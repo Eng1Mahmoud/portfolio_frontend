@@ -74,13 +74,13 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: isMobile ? 0.3 : 0.5 }}
-      className="relative p-4"
+      className="relative"
     >
       <motion.ul
         variants={variants.container}
         initial="hidden"
         animate="visible"
-        className="flex items-center justify-center space-x-6 relative"
+        className="flex items-center gap-3 relative"
       >
         {socialLinks.map((social, index) => (
           <motion.li
@@ -102,10 +102,10 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
                     : "whatsapp";
                 handleSocialClick(platform);
               }}
-              className={`block p-4 rounded-xl bg-surface-panel/80 backdrop-blur-md border border-white/10 shadow-lg transition-all duration-300 ${social.borderColor} ${social.shadowColor} hover:shadow-xl`}
+              className={`block rounded-full border border-white/10 p-3 transition-colors duration-300 hover:border-cyan-400/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 ${social.borderColor}`}
             >
               <social.icon
-                className={`text-2xl md:text-3xl text-gray-300 transition-colors duration-300 ${social.color}`}
+                className={`text-lg text-[#93a3bd] transition-colors duration-300 ${social.color}`}
               />
             </Link>
           </motion.li>

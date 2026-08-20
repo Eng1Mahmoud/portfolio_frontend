@@ -1,73 +1,132 @@
 "use client";
 import { IuserInfo } from "@/types/general";
 import { motion } from "framer-motion";
-import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 
-const textVariants = {
-  hidden: { opacity: 0, y: 20 },
+interface HomeIntroProps {
+  profileInfo: IuserInfo;
+  projectCount: number;
+  technologyCount: number;
+}
+
+// One orchestrated load sequence rather than scattered effects: the rail draws
+// down, then each block arrives behind it.
+const rise = {
+  hidden: { opacity: 0, y: 14 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: {
-      delay: i * 0.03,
-      duration: 0.5,
-      ease: "easeOut",
-    },
+    transition: { delay: 0.25 + i * 0.09, duration: 0.5, ease: "easeOut" },
   }),
 };
 
-export const HomeIntro = ({ profileInfo }: { profileInfo: IuserInfo }) => {
-  const words = profileInfo?.bio?.split(" ") || [];
+export const HomeIntro = ({
+  profileInfo,
+  projectCount,
+  technologyCount,
+}: HomeIntroProps) => {
+  const name = profileInfo?.userName?.trim() ?? "";
+  const role = profileInfo?.title?.trim() ?? "";
+  const bio = profileInfo?.bio?.trim() ?? "";
+
+  // The author controls the split: a blank line in the bio field promotes the
+  // first paragraph to a larger lead. Parsing sentences here would break
+  // React.js, Next.js, Vue.js and CI/CD.
+  const [lead, ...rest] = bio.split(/\n\s*\n/);
+  const body = rest.join("\n\n");
+
+  // "Mahmoud Mohamed" sets on two lines; a single-word name keeps one.
+  const nameParts = name.split(" ");
+  const firstName = nameParts[0] ?? "";
+  const lastName = nameParts.slice(1).join(" ");
+
+  const figures = [
+    { value: projectCount, label: "projects shipped" },
+    { value: technologyCount, label: "technologies used" },
+  ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.2 }}
-      className="relative w-full max-w-5xl mx-auto my-4"
-    >
-      {/* Neon Glow Behind */}
-      <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl blur-xl opacity-30"></div>
+    <div className="relative w-full max-w-4xl pl-6 text-start sm:pl-10">
+      {/* The rail. A single hairline anchors the whole column — no panel, no
+          card. Its cyan head marks where the content starts. */}
+      <motion.div
+        aria-hidden="true"
+        initial={{ scaleY: 0 }}
+        animate={{ scaleY: 1 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        style={{ transformOrigin: "top" }}
+        className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-cyan-400 via-white/12 to-transparent"
+      />
 
-      <div className="relative p-4 md:p-12 bg-surface-panel/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl">
-        <motion.div
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5 }}
-          className="absolute -top-4 -left-4 bg-surface-panel p-2 rounded-full border border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.3)]"
+      {role && (
+        <motion.p
+          custom={0}
+          initial="hidden"
+          animate="visible"
+          variants={rise}
+          className="mb-5 font-mono text-[11px] uppercase tracking-[0.28em] text-cyan-300 sm:text-xs"
         >
-          <FaQuoteLeft className="w-5 h-5 text-cyan-400" />
-        </motion.div>
+          {role}
+        </motion.p>
+      )}
 
+      <motion.h1
+        custom={1}
+        initial="hidden"
+        animate="visible"
+        variants={rise}
+        className="font-main text-[clamp(2.5rem,9vw,5rem)] font-semibold leading-[0.95] tracking-[-0.03em] text-[#e8ecf4]"
+      >
+        {firstName}
+        {lastName && (
+          <>
+            {/* A real space before the break, so the name still copies as
+                "Mahmoud Mohamed" rather than running together. */}{" "}
+            <br />
+            <span className="text-[#93a3bd]">{lastName}</span>
+          </>
+        )}
+      </motion.h1>
+
+      {bio && (
         <motion.div
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5 }}
-          className="absolute -bottom-4 -right-4 bg-surface-panel p-2 rounded-full border border-purple-500/50 shadow-[0_0_15px_rgba(168,85,247,0.3)]"
+          custom={2}
+          initial="hidden"
+          animate="visible"
+          variants={rise}
+          className="mt-7 max-w-[58ch] space-y-3"
         >
-          <FaQuoteRight className="w-5 h-5 text-purple-400" />
+          <p className="whitespace-pre-line text-[0.975rem] leading-[1.75] text-[#c3cede] sm:text-[1.0625rem]">
+            {lead}
+          </p>
+          {body && (
+            <p className="whitespace-pre-line text-[0.9rem] leading-[1.75] text-[#93a3bd] sm:text-[0.95rem]">
+              {body}
+            </p>
+          )}
         </motion.div>
+      )}
 
-        <p className="text-md md:text-xl lg:text-2xl leading-relaxed text-start md:text-center font-light text-gray-300">
-          {words.map((word, i) => (
-            <motion.span
-              key={i}
-              custom={i}
-              initial="hidden"
-              animate="visible"
-              variants={textVariants}
-              whileHover={{
-                scale: 1.1,
-                color: "#22d3ee",
-                textShadow: "0 0 8px rgba(34,211,238,0.5)",
-              }}
-              className="inline-block mr-2 transition-colors duration-200"
-            >
-              {word}
-            </motion.span>
-          ))}
-        </p>
-      </div>
-    </motion.div>
+      {/* Real figures, read from the projects the site already loads. */}
+      <motion.dl
+        custom={3}
+        initial="hidden"
+        animate="visible"
+        variants={rise}
+        className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/10 pt-5 font-mono"
+      >
+        {/* dt before dd keeps the list valid; `order` shows the figure first
+            without repeating the label in a second, sr-only copy. */}
+        {figures.map((figure) => (
+          <div key={figure.label} className="flex items-baseline gap-2">
+            <dt className="order-2 text-[11px] uppercase tracking-[0.18em] text-[#93a3bd]">
+              {figure.label}
+            </dt>
+            <dd className="order-1 text-xl text-cyan-300 sm:text-2xl">
+              {figure.value}
+            </dd>
+          </div>
+        ))}
+      </motion.dl>
+    </div>
   );
 };
