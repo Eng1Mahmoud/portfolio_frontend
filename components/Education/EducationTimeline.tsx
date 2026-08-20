@@ -12,7 +12,7 @@ export default function EducationTimeline({
   return (
     <div className="relative pl-8 md:pl-12">
       {/* Vertical line */}
-      <div className="absolute left-2 md:left-2 h-full w-1 bg-gradient-to-b from-cyan-500 to-purple-500 rounded-full shadow-lg shadow-cyan-500/30"></div>
+      <div className="absolute left-2 md:left-2 h-full w-1 bg-gradient-to-b from-cyan-400/70 to-transparent rounded-full shadow-lg shadow-cyan-500/30"></div>
 
       {educations.map((item, index) => (
         <motion.div
@@ -30,16 +30,16 @@ export default function EducationTimeline({
 
           {/* Time period */}
           <div className="mb-4">
-            <span className="text-sm font-bold bg-gradient-to-r from-cyan-500 to-blue-600 text-white py-1.5 px-4 rounded-full shadow-lg shadow-cyan-500/20 border border-cyan-500/20 backdrop-blur-sm">
+            <span className="text-sm font-bold bg-white/[0.06] text-white py-1.5 px-4 rounded-full shadow-lg shadow-cyan-500/20 border border-cyan-500/20 backdrop-blur-sm">
               {item.startDate} - {item.endDate}
             </span>
           </div>
 
           {/* Content card */}
-          <div className="group relative rounded-xl p-[1px] bg-gradient-to-br from-cyan-500/50 via-blue-500/30 to-purple-500/50 shadow-xl shadow-blue-900/20">
+          <div className="group relative rounded-xl p-[1px] bg-white/10 shadow-xl shadow-blue-900/20">
             <div className="relative overflow-hidden bg-surface-panel/90 backdrop-blur-xl rounded-xl p-4 md:p-6 h-full">
               {/* Hover Gradient Overlay */}
-              <motion.div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <motion.div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
               <div className="relative z-10">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
@@ -54,7 +54,7 @@ export default function EducationTimeline({
                       />
                     )}
                     <div>
-                      <h3 className="text-lg md:text-2xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent flex items-center gap-2">
+                      <h3 className="text-lg md:text-2xl font-bold text-ink-strong flex items-center gap-2">
                         <FaGraduationCap className="text-cyan-400" />
                         {item.degree}
                       </h3>
@@ -80,7 +80,7 @@ export default function EducationTimeline({
                       {item.skills.map((skill, idx) => (
                         <span
                           key={idx}
-                          className="text-[10px] md:text-xs px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-900/40 to-purple-900/40 border border-blue-500/30 text-blue-200"
+                          className="text-[10px] md:text-xs px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04] text-ink-muted"
                         >
                           {skill}
                         </span>

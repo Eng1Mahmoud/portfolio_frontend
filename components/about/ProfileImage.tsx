@@ -18,7 +18,7 @@ export const ProfileImage = ({ profileInfo }: { profileInfo: IuserInfo }) => {
           absolute top-0 left-0 
           w-8 h-8 
           border-l-[6px] border-t-[6px] 
-          border-blue-500 
+          border-cyan-400 
           rounded-tl-lg
         "
       />
@@ -28,7 +28,7 @@ export const ProfileImage = ({ profileInfo }: { profileInfo: IuserInfo }) => {
           absolute bottom-0 right-0 
           w-8 h-8 
           border-r-[6px] border-b-[6px] 
-          border-blue-500 
+          border-cyan-400 
           rounded-br-lg
         "
       />
@@ -37,7 +37,7 @@ export const ProfileImage = ({ profileInfo }: { profileInfo: IuserInfo }) => {
         className="
         absolute inset-0 
         border-4 border-transparent 
-        group-hover:border-blue-500/50 
+        group-hover:border-cyan-400/50 
         rounded-lg 
         transition-all 
         duration-300 

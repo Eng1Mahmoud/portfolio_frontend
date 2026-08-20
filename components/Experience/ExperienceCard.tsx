@@ -27,16 +27,16 @@ export const ExperienceCard = ({
 
       {/* Time period */}
       <div className="mb-4">
-        <span className="text-sm font-bold bg-gradient-to-r from-cyan-500 to-blue-600 text-white py-1.5 px-4 rounded-full shadow-lg shadow-cyan-500/20 border border-cyan-500/20 backdrop-blur-sm">
+        <span className="text-sm font-bold bg-white/[0.06] text-white py-1.5 px-4 rounded-full shadow-lg shadow-cyan-500/20 border border-cyan-500/20 backdrop-blur-sm">
           {experience.startDate} - {experience.endDate}
         </span>
       </div>
 
       {/* Card Container with Gradient Border */}
-      <div className="group relative rounded-xl p-[1px] bg-gradient-to-br from-cyan-500/50 via-blue-500/30 to-purple-500/50 shadow-xl shadow-blue-900/20">
+      <div className="group relative rounded-xl p-[1px] bg-white/10 shadow-xl shadow-blue-900/20">
         <div className="relative overflow-hidden bg-surface-panel/90 backdrop-blur-xl rounded-xl p-4 md:p-6 h-full">
           {/* Hover Gradient Overlay */}
-          <motion.div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <motion.div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
           <div className="relative z-10">
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
@@ -51,7 +51,7 @@ export const ExperienceCard = ({
                   />
                 )}
                 <div>
-                  <h3 className="text-lg md:text-2xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  <h3 className="text-lg md:text-2xl font-bold text-ink-strong">
                     {experience.role}
                   </h3>
                   <div className="flex flex-wrap items-center gap-2 text-gray-300 mt-2">
@@ -62,7 +62,7 @@ export const ExperienceCard = ({
                       </span>
                     </div>
                     {experience.workType && (
-                      <span className="text-[10px] md:text-xs px-2 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20 font-medium tracking-wide">
+                      <span className="text-[10px] md:text-xs px-2 py-1 rounded-md border border-white/10 bg-white/[0.04] text-ink-muted font-medium tracking-wide">
                         {experience.workType}
                       </span>
                     )}
@@ -91,7 +91,7 @@ export const ExperienceCard = ({
                   {experience.skills.map((skill, index) => (
                     <span
                       key={index}
-                      className="text-[10px] md:text-xs px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-900/40 to-purple-900/40 border border-blue-500/30 text-blue-200 hover:border-cyan-400/50 hover:text-cyan-300 transition-all duration-300 hover:shadow-[0_0_10px_rgba(6,182,212,0.2)] cursor-default"
+                      className="text-[10px] md:text-xs px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04] text-ink-muted hover:border-cyan-400/50 hover:text-cyan-300 transition-all duration-300 hover:shadow-[0_0_10px_rgba(6,182,212,0.2)] cursor-default"
                     >
                       {skill}
                     </span>

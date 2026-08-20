@@ -35,7 +35,7 @@ export default async function AboutUsPage() {
   const profileInfo = await getProfileInfo();
   return (
     <div>
-      <Title title="About Me" />
+      <Title title="About Me" eyebrow="Who I am" />
       <div className="grid md:grid-cols-2 gap-8 items-center">
         {/* Profile Image */}
         <ProfileImage profileInfo={profileInfo as IuserInfo} />

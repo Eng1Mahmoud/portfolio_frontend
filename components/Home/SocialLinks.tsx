@@ -56,9 +56,9 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
     {
       icon: FaGithub,
       href: profileInfo?.github,
-      color: "hover:text-purple-400",
-      borderColor: "group-hover:border-purple-400/50",
-      shadowColor: "group-hover:shadow-purple-400/20",
+      color: "hover:text-cyan-300",
+      borderColor: "group-hover:border-cyan-400/50",
+      shadowColor: "group-hover:shadow-cyan-400/20",
     },
     {
       icon: FaWhatsapp,

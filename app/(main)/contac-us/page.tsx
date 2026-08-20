@@ -12,7 +12,7 @@ const ContactUsPage = async () => {
   const profileInfo = await getProfileInfo();
   return (
     <div>
-      <Title title="Contact Us" />
+      <Title title="Get in touch" eyebrow="Open to work" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
         <ContactUsForm />
         <ContactUsInfo profileInfo={profileInfo as IuserInfo} />

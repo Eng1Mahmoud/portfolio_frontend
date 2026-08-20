@@ -7,7 +7,7 @@ export default async function Education() {
 
   return (
     <div>
-      <Title title="Education" />
+      <Title title="Education" eyebrow="Where I studied" />
       <EducationTimeline educations={educations} />
     </div>
   );

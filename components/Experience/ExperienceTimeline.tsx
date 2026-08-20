@@ -11,7 +11,7 @@ export default function ExperienceTimeline({
   return (
     <div className="relative pl-8 md:pl-12">
       {/* Vertical line */}
-      <div className="absolute left-2 h-full w-1 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full shadow-lg shadow-blue-500/30"></div>
+      <div className="absolute left-2 h-full w-px bg-gradient-to-b from-cyan-400/70 via-white/10 to-transparent"></div>
 
       {experiences.map((item, index) => (
         <motion.div
