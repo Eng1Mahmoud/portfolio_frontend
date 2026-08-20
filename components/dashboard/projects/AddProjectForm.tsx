@@ -5,6 +5,7 @@ import { Form } from "@/components/forms/Form";
 import InputField from "@/components/forms/InputField";
 import ImageUploadInput from "@/components/forms/ImageUploadInput";
 import TextArea from "@/components/forms/TextArea";
+import TagsInput from "@/components/forms/TagsInput";
 const AddProjectForm = () => {
   const initialValues = {
     title: "",
@@ -12,6 +13,7 @@ const AddProjectForm = () => {
     imageUrl: "",
     demoLink: "",
     githubLink: "",
+    technologies: [] as string[],
     order: 0,
   };
   return (
@@ -49,6 +51,7 @@ const AddProjectForm = () => {
           type="text"
           variant="light"
         />
+        <TagsInput name="technologies" label="Technologies" variant="light" />
         <InputField
           name="order"
           label="Display Order"

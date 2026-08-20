@@ -5,6 +5,7 @@ import Link from "next/link";
 interface ProjectDescriptionModalProps {
   title: string;
   description: string;
+  technologies?: string[];
   githubLink?: string;
   demoLink?: string;
   onClose: () => void;
@@ -13,6 +14,7 @@ interface ProjectDescriptionModalProps {
 export const ProjectDescriptionModal = ({
   title,
   description,
+  technologies,
   githubLink,
   demoLink,
   onClose,
@@ -53,6 +55,18 @@ export const ProjectDescriptionModal = ({
           transition={{ delay: 0.2 }}
           className="space-y-6"
         >
+          {technologies && technologies.length > 0 && (
+            <ul className="flex flex-wrap gap-2">
+              {technologies.map((tech) => (
+                <li
+                  key={tech}
+                  className="rounded-full border border-blue-500/30 bg-blue-900/30 px-3 py-1 text-xs font-medium text-blue-200"
+                >
+                  {tech}
+                </li>
+              ))}
+            </ul>
+          )}
           <p className="text-gray-300 text-sm whitespace-pre-wrap leading-relaxed">
             {description}
           </p>

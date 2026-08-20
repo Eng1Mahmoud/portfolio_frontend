@@ -47,6 +47,20 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
         >
           {project.title}
         </motion.h3>
+        {/* Stack first: it is the thing a visitor scans for. */}
+        {project.technologies && project.technologies.length > 0 && (
+          <ul className="flex flex-wrap gap-1.5 mb-3">
+            {project.technologies.map((tech) => (
+              <li
+                key={tech}
+                className="rounded-full border border-blue-500/30 bg-blue-900/30 px-2.5 py-0.5 text-[11px] font-medium text-blue-200"
+              >
+                {tech}
+              </li>
+            ))}
+          </ul>
+        )}
+
         <div className="relative">
           <p className="text-gray-300 text-sm mb-4 line-clamp-3">
             {project.description}
@@ -128,6 +142,7 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
           <ProjectDescriptionModal
             title={project.title}
             description={project.description}
+            technologies={project.technologies}
             githubLink={project.githubLink}
             demoLink={project.demoLink}
             onClose={() => setShowFullDescription(false)}
