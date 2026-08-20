@@ -11,7 +11,7 @@ export default async function ProjectsPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Title title="Projects" />
+      <Title title="Projects" eyebrow="Selected work" />
 
       {/* Two per row from md up; a third column only at xl, where there is
           enough width for a card to still read comfortably. items-stretch

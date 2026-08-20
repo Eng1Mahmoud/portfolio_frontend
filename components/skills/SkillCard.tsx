@@ -18,16 +18,16 @@ export const SkillCard = ({ skill }: { skill: ISkill }) => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl blur-xl group-hover:opacity-75 transition-opacity"
+        className="absolute inset-0 rounded-xl bg-cyan-500/10 opacity-0 blur-xl transition-opacity group-hover:opacity-100"
       />
       <motion.div
-        className="flex flex-col gap-2 justify-center items-center text-center p-6 bg-gradient-to-br from-surface-card to-surface-card-to rounded-xl border-2 border-blue-500/50 shadow-xl shadow-blue-900/20 relative z-10 backdrop-blur-sm"
+        className="relative z-10 flex flex-col items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-6 text-center transition-colors group-hover:border-cyan-400/40"
         whileHover={{ y: -5 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
         <motion.div
-          whileHover={{ rotate: 360 }}
-          transition={{ duration: 0.7, ease: "easeInOut" }}
+          whileHover={{ y: -3 }}
+          transition={{ type: "spring", stiffness: 300 }}
         >
           <Image
             src={skill.imageUrl}
@@ -38,7 +38,7 @@ export const SkillCard = ({ skill }: { skill: ISkill }) => {
           />
         </motion.div>
         <motion.p
-          className="text-sm md:text-base font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+          className="font-mono text-xs tracking-wide text-ink-body md:text-sm"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}

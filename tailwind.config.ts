@@ -42,6 +42,15 @@ export default {
          * than intent — #0a1326, #0f172a and #0D1127 are close enough to look
          * like the same colour done three different ways.
          */
+        /**
+         * Text roles. The pages previously reached for whichever gray felt
+         * right (gray-200/300/400, white/80), which is why they drifted apart.
+         */
+        ink: {
+          strong: "#e8ecf4", // headings
+          body: "#c3cede", // paragraphs
+          muted: "#93a3bd", // labels, captions, meta
+        },
         surface: {
           base: "#0a1326", // page background
           panel: "#0f172a", // glass panels, hero, timeline cards

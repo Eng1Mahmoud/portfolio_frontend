@@ -38,7 +38,7 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
       // the action buttons line up along the bottom.
       className="group relative flex h-full flex-col overflow-hidden bg-gradient-to-br from-surface-card to-surface-card-to rounded-xl border-2 border-blue-500/50 shadow-xl shadow-blue-900/20"
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
       <div className="relative h-[190px] shrink-0 overflow-hidden">
         <Image
@@ -51,7 +51,7 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
       </div>
 
       <div className="relative z-10 flex flex-1 flex-col p-5">
-        <h3 className="text-lg font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+        <h3 className="text-lg font-bold mb-2 text-ink-strong">
           {project.title.trim()}
         </h3>
 
@@ -115,7 +115,7 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
               href={project.demoLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-md bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm text-white transition-colors hover:from-blue-500 hover:to-purple-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="flex items-center gap-2 rounded-md bg-cyan-400 px-4 py-2 text-sm font-medium text-[#06121f] transition-colors hover:bg-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
               onClick={() => handleProjectExternalClick(project.title, "live")}
             >
               <FaExternalLinkAlt aria-hidden="true" />

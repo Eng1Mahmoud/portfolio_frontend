@@ -4,41 +4,45 @@ import { motion } from "framer-motion";
 
 interface TitleProps {
   title: string;
+  /** Short line under the heading — what this page actually holds. */
+  eyebrow?: string;
 }
 
-export const Title = ({ title }: TitleProps) => {
+/**
+ * Page heading, in the home page's language: a cyan-headed hairline rail on
+ * the left, a mono eyebrow, and the heading set in Outfit.
+ *
+ * The heading is one text node. It used to be split into one <span> per
+ * character, which put 8 elements inside an <h1> and left the space in
+ * "About Me" as an inline-block span of pure whitespace — a shape CSS
+ * collapses to zero width.
+ */
+export const Title = ({ title, eyebrow }: TitleProps) => {
   return (
-    <div className="ml-[20px] mb-8">
-      <motion.h1
-        className="tracking-[3px] text-3xl md:text-4xl font-bold"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        {title.split("").map((char, index) => (
-          <motion.span
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.3,
-              delay: index * 0.05,
-              ease: "easeOut",
-            }}
-            className="inline-block"
-          >
-            {char}
-          </motion.span>
-        ))}
-      </motion.h1>
-      <div className="relative mt-5 w-[150px] h-[5px] bg-blue-500/50 rounded-md">
-        <motion.div
-          className="absolute top-0 left-0 h-full bg-blue-500/90 rounded-md z-10"
-          initial={{ width: 0 }}
-          animate={{ width: "50%" }}
-          transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-        />
-      </div>
-    </div>
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, ease: "easeOut" }}
+      className="relative mb-10 pl-6 sm:pl-10"
+    >
+      <motion.span
+        aria-hidden="true"
+        initial={{ scaleY: 0 }}
+        animate={{ scaleY: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        style={{ transformOrigin: "top" }}
+        className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-cyan-400 via-white/12 to-transparent"
+      />
+
+      {eyebrow && (
+        <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.28em] text-cyan-300">
+          {eyebrow}
+        </p>
+      )}
+
+      <h1 className="text-[clamp(1.9rem,5vw,2.75rem)] font-semibold leading-tight tracking-[-0.02em] text-ink-strong">
+        {title}
+      </h1>
+    </motion.div>
   );
 };

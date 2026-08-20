@@ -25,13 +25,13 @@ const ContactItem = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.1 }}
       whileHover={{ scale: 1.02 }}
-      className="flex gap-3 bg-gradient-to-br from-primary-dark to-primary-dark/80 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow backdrop-blur-sm"
+      className="flex gap-4 rounded-xl border border-white/10 bg-white/[0.03] p-5 text-ink-body transition-colors hover:border-cyan-400/40"
     >
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: index * 0.1 + 0.2, type: "spring" }}
-        className="flex items-center justify-center rounded-xl bg-blue-500/10 border border-blue-400/20 h-[50px] w-[50px] flex-shrink-0"
+        className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-cyan-300"
       >
         <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.5 }}>
           {icon}
@@ -42,7 +42,7 @@ const ContactItem = ({
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: index * 0.1 + 0.3 }}
-          className="text-lg md:text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+          className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted"
         >
           {title}
         </motion.h3>
@@ -51,13 +51,13 @@ const ContactItem = ({
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1 + 0.4 + idx * 0.1 }}
-            className="text-gray-300 text-sm md:text-base break-words text-wrap"
+            className="mt-1 break-words text-sm text-ink-strong md:text-base"
             key={item}
           >
             {linkType === "phone" && item ? (
               <motion.a
                 href={`tel:${item}`}
-                className="hover:text-blue-400 transition-colors inline-block"
+                className="inline-block transition-colors hover:text-cyan-300"
                 whileHover={{ scale: 1.05 }}
               >
                 {item}
@@ -65,7 +65,7 @@ const ContactItem = ({
             ) : linkType === "email" && item ? (
               <motion.a
                 href={`mailto:${item}`}
-                className="hover:text-blue-400 transition-colors inline-block"
+                className="inline-block transition-colors hover:text-cyan-300"
                 whileHover={{ scale: 1.05 }}
               >
                 {item}

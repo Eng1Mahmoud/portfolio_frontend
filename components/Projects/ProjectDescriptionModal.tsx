@@ -64,7 +64,7 @@ export const ProjectDescriptionModal = ({
         {/* Header stays put so the close button is always reachable while
             scrolling a long description. */}
         <div className="flex shrink-0 items-start justify-between gap-4 border-b border-white/10 px-6 py-4">
-          <h3 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+          <h3 className="text-xl md:text-2xl font-bold text-ink-strong">
             {title}
           </h3>
           <button
@@ -121,7 +121,7 @@ export const ProjectDescriptionModal = ({
                 href={demoLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-md bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm text-white transition-colors hover:from-blue-500 hover:to-purple-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                className="flex items-center gap-2 rounded-md bg-cyan-400 px-4 py-2 text-sm font-medium text-[#06121f] transition-colors hover:bg-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
               >
                 <FaExternalLinkAlt aria-hidden="true" />
                 Live

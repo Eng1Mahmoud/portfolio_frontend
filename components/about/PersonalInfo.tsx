@@ -40,15 +40,15 @@ export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-4">
-        Hi, I am <span className="text-blue-500">{name}</span>
+      <h2 className="mb-4 text-2xl font-semibold text-ink-strong">
+        Hi, I am <span className="text-cyan-300">{name}</span>
       </h2>
 
       <motion.p
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="mb-6 text-gray-300"
+        className="mb-6 leading-relaxed text-ink-body"
       >
         {profileInfo?.bio}
       </motion.p>
@@ -61,7 +61,10 @@ export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1, duration: 0.5 }}
           >
-            <strong className="mr-2">{detail.label}:</strong> {detail.value}
+            <strong className="me-2 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+              {detail.label}
+            </strong>
+            <span className="text-ink-strong">{detail.value}</span>
           </motion.li>
         ))}
       </ul>
@@ -70,7 +73,7 @@ export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
         href={profileInfo?.cv}
         target="_blank"
         download
-        className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md shadow-blue-500"
+        className="inline-flex items-center gap-2 rounded-full bg-cyan-400 px-6 py-3 text-sm font-medium text-[#06121f] transition-colors hover:bg-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
         onClick={handleDownloadCV}
       >
         Download CV
