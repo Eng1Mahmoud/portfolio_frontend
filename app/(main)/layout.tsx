@@ -1,5 +1,6 @@
 import { getProfileInfo } from "@/actions/getProfileInfo";
 import { Aside } from "@/components/general/Aside";
+import CanvasCursor from "@/components/general/CanvasCursor";
 import { MobileAsideToggle } from "@/components/general/MobileAside";
 import { IuserInfo } from "@/types/general";
 export default async function MainLayout({
@@ -18,6 +19,7 @@ export default async function MainLayout({
           twice puts the whole page in the DOM twice (duplicate <main>/<h1>). */}
       <div className="flex-1 lg:flex-none lg:w-[80%] h-screen overflow-y-auto scrollBar pt-16 pb-4 lg:pt-0 lg:pb-0">
         <main className="container lg:py-10">{children}</main>
+        <CanvasCursor />
       </div>
     </div>
   );

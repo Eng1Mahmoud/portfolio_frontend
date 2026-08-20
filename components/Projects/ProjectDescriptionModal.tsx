@@ -46,7 +46,7 @@ export const ProjectDescriptionModal = ({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
-      className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm z-[1000] flex items-center justify-center p-4"
     >
       <motion.div
         ref={panelRef}
