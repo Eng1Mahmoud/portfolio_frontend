@@ -101,7 +101,7 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
               href={project.githubLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-md bg-gray-800 px-4 py-2 text-sm text-white transition-colors hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-ink-body transition-colors hover:border-cyan-400/60 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
               onClick={() =>
                 handleProjectExternalClick(project.title, "github")
               }
@@ -115,7 +115,7 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
               href={project.demoLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-md bg-cyan-400 px-4 py-2 text-sm font-medium text-[#06121f] transition-colors hover:bg-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+              className="flex items-center gap-2 rounded-full bg-cyan-400 px-4 py-2 text-sm font-medium text-[#06121f] transition-colors hover:bg-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
               onClick={() => handleProjectExternalClick(project.title, "live")}
             >
               <FaExternalLinkAlt aria-hidden="true" />

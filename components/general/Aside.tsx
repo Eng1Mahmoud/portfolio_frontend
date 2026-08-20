@@ -42,7 +42,7 @@ export const Aside = ({
   return (
     <motion.aside
       {...(isMobile ? mobileConfig : desktopConfig)}
-      className="h-screen overflow-y-auto w-full bg-surface-base text-ink-body flex flex-col items-center relative z-[100] scrollBar border-e border-white/10 py-10"
+      className="h-screen overflow-y-auto overflow-x-hidden w-full bg-surface-base text-ink-body flex flex-col items-center relative z-[100] scrollBar border-e border-white/10 py-10"
     >
       <motion.div
         initial={{ scale: 0.8 }}
@@ -87,10 +87,7 @@ export const Aside = ({
                 transition={{ delay: isMobile ? 0.1 * index : 0.2 * index }}
                 className="w-full"
               >
-                <motion.div
-                  whileHover={isMobile ? {} : { scale: 1.015 }}
-                  whileTap={{ scale: 0.98 }}
-                >
+                <motion.div whileTap={{ scale: 0.98 }}>
                   <Link
                     href={item.path}
                     aria-current={isActive(item.path) ? "page" : undefined}
@@ -116,7 +113,6 @@ export const Aside = ({
         <Divider />
         <motion.div
           className="cv mt-4 text-center px-4"
-          whileHover={isMobile ? {} : { scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
           <a
