@@ -1,6 +1,5 @@
 import { ToastContainer } from "react-toastify";
 import { GoogleAnalytics } from "@next/third-parties/google";
-// @ts-expect-error -- side-effect CSS import is handled by Next.js bundling
 import "react-toastify/dist/ReactToastify.css";
 import { mainFont } from "@/fonts";
 import { Metadata } from "next";
@@ -8,7 +7,6 @@ import { Person, WithContext } from "schema-dts";
 import ChatBotWraper from "@/components/general/chatbot/ChatBotWraper";
 import MotionProvider from "@/app/providers/MotionProvider";
 import { siteDescription, siteName, siteUrl } from "@/utiles/site";
-// @ts-expect-error -- side-effect CSS import is handled by Next.js bundling
 import "./globals.css";
 // metadata
 export const metadata: Metadata = {
