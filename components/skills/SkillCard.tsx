@@ -21,7 +21,7 @@ export const SkillCard = ({ skill }: { skill: ISkill }) => {
         className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl blur-xl group-hover:opacity-75 transition-opacity"
       />
       <motion.div
-        className="flex flex-col gap-2 justify-center items-center text-center p-6 bg-gradient-to-br from-[#0D1127] to-[#1a1f3c] rounded-xl border-2 border-blue-500/50 shadow-xl shadow-blue-900/20 relative z-10 backdrop-blur-sm"
+        className="flex flex-col gap-2 justify-center items-center text-center p-6 bg-gradient-to-br from-surface-card to-surface-card-to rounded-xl border-2 border-blue-500/50 shadow-xl shadow-blue-900/20 relative z-10 backdrop-blur-sm"
         whileHover={{ y: -5 }}
         transition={{ type: "spring", stiffness: 300 }}
       >

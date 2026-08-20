@@ -102,7 +102,7 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
                     : "whatsapp";
                 handleSocialClick(platform);
               }}
-              className={`block p-4 rounded-xl bg-[#0f172a]/80 backdrop-blur-md border border-white/10 shadow-lg transition-all duration-300 ${social.borderColor} ${social.shadowColor} hover:shadow-xl`}
+              className={`block p-4 rounded-xl bg-surface-panel/80 backdrop-blur-md border border-white/10 shadow-lg transition-all duration-300 ${social.borderColor} ${social.shadowColor} hover:shadow-xl`}
             >
               <social.icon
                 className={`text-2xl md:text-3xl text-gray-300 transition-colors duration-300 ${social.color}`}

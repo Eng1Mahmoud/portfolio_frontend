@@ -35,6 +35,18 @@ export default {
           primary: "#ffffff",
           secondary: "#e9ecef",
         },
+        /**
+         * The four navy shades the UI actually uses. They were previously
+         * written as raw hex in ~24 places, which read as inconsistency rather
+         * than intent — #0a1326, #0f172a and #0D1127 are close enough to look
+         * like the same colour done three different ways.
+         */
+        surface: {
+          base: "#0a1326", // page background
+          panel: "#0f172a", // glass panels, hero, timeline cards
+          card: "#0D1127", // card gradient — from
+          "card-to": "#1a1f3c", // card gradient — to
+        },
       },
 
       // add new shadows

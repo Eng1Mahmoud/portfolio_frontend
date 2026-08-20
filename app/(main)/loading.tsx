@@ -14,7 +14,7 @@ export default function Loading() {
         {Array.from({ length: 6 }).map((_, i) => (
           <div
             key={i}
-            className="rounded-xl border-2 border-blue-500/20 bg-gradient-to-br from-[#0D1127] to-[#1a1f3c] overflow-hidden"
+            className="rounded-xl border-2 border-blue-500/20 bg-gradient-to-br from-surface-card to-surface-card-to overflow-hidden"
           >
             <div className="h-[200px] w-full bg-white/5" />
             <div className="p-6 space-y-3">

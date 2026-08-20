@@ -29,7 +29,7 @@ const ChatBot: React.FC = () => {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="mb-4 w-[350px] sm:w-[400px] h-[500px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-100"
+            className="mb-4 w-[350px] sm:w-[400px] h-[500px] bg-surface-card rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-blue-500/30"
           >
             <ChatHeader onClose={closeChat} />
             <ChatMessages

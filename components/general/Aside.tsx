@@ -42,7 +42,7 @@ export const Aside = ({
   return (
     <motion.aside
       {...(isMobile ? mobileConfig : desktopConfig)}
-      className="h-screen overflow-y-auto w-full bg-gradient-to-b from-primary-dark to-[#1a1f3c] text-white flex flex-col items-center relative z-[100] scrollBar py-10"
+      className="h-screen overflow-y-auto w-full bg-gradient-to-b from-primary-dark to-surface-card-to text-white flex flex-col items-center relative z-[100] scrollBar py-10"
     >
       <motion.div
         initial={{ scale: 0.8 }}
@@ -54,11 +54,7 @@ export const Aside = ({
         }}
         className="avatar mb-8 relative group"
       >
-        <motion.div
-          className="absolute inset-0 rounded-full bg-blue-500/20 blur-xl group-hover:bg-blue-400/30 transition-colors"
-          animate={isMobile ? {} : { scale: [1, 1.1, 1] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        />
+        <motion.div className="absolute inset-0 rounded-full bg-blue-500/20 blur-xl group-hover:bg-blue-400/30 transition-colors" />
         <div className="border-[6px] border-secondary-dark rounded-full shadow-lg shadow-blue-400/50 relative">
           <motion.div
             whileHover={{ scale: 1.05 }}
