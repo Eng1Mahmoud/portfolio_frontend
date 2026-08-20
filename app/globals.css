@@ -11,24 +11,26 @@ main {
   overflow-x: hidden;
 }
 /* Main App Scrollbar */
+/* Firefox has no ::-webkit-scrollbar; without these two it fell back to the
+   default chrome scrollbar. */
+.scrollBar {
+  scrollbar-width: thin;
+  scrollbar-color: #3b82f6 transparent;
+}
+
 .scrollBar::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 .scrollBar::-webkit-scrollbar-track {
-  background: #1f2937;
-  border-radius: 10px;
+  background: transparent;
 }
 
 .scrollBar::-webkit-scrollbar-thumb {
   background: linear-gradient(to bottom, #3b82f6, #1d4ed8);
-  border-radius: 11px;
+  border-radius: 9999px;
   border: 2px solid transparent;
   background-clip: content-box;
-  -webkit-border-radius: 11px;
-  -moz-border-radius: 11px;
-  -ms-border-radius: 11px;
-  -o-border-radius: 11px;
 }
 
 .scrollBar::-webkit-scrollbar-thumb:hover {
