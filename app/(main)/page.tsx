@@ -1,34 +1,77 @@
-import { TypedName } from "@/components/Home/TypedName";
+import Link from "next/link";
+import { FaArrowRight, FaDownload } from "react-icons/fa";
 import { SocialLinks } from "@/components/Home/SocialLinks";
 import { HomeIntro } from "@/components/Home/HomeIntro";
 import { getProfileInfo } from "@/actions/getProfileInfo";
+import { getAllProjects } from "@/actions/getAllProjects";
 import { IuserInfo } from "@/types/general";
 
 export default async function Home() {
-  const profileInfo = await getProfileInfo();
+  const [profileInfo, projects] = await Promise.all([
+    getProfileInfo(),
+    getAllProjects(),
+  ]);
+
+  const list = projects ?? [];
+  const technologies = new Set(
+    list.flatMap((project) =>
+      (project.technologies ?? []).map((tech) => tech.trim().toLowerCase()),
+    ),
+  );
 
   return (
-    <section className="min-h-dvh flex items-center justify-center bg-surface-panel text-white relative ">
-      {/*
-        Background: a faint grid plus one soft glow behind the content.
-        It was four stacked layers — grid, a full-screen gradient, and two
-        hard-edged 384px colour blobs in opposite corners — which pulled the
-        eye to the corners and away from the text.
-      */}
+    /*
+      Exactly one viewport tall. The 5rem accounts for the padding the layout
+      puts around <main> — pt-16 pb-4 on mobile and py-10 from lg up, which
+      both come to 5rem. `min-h` on small screens so a long bio scrolls rather
+      than being clipped; a fixed height from lg up, where it fits.
+    */
+    <section className="relative flex min-h-[calc(100dvh-5rem)] items-center overflow-hidden lg:h-[calc(100dvh-5rem)]">
+      {/* Two quiet layers: a faint grid, and one glow set behind the type. */}
       <div
         aria-hidden="true"
-        className="fixed inset-0 bg-[url('/grid.svg')] bg-center opacity-[0.07] [mask-image:radial-gradient(ellipse_at_center,white,transparent_75%)] pointer-events-none"
+        className="pointer-events-none absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-[0.06] [mask-image:radial-gradient(ellipse_at_30%_50%,white,transparent_70%)]"
       />
       <div
         aria-hidden="true"
-        className="fixed left-1/2 top-1/2 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[120px] pointer-events-none"
+        className="pointer-events-none absolute -left-32 top-1/2 h-[32rem] w-[32rem] -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[130px]"
       />
 
-      <div className="container mx-auto px-4 z-10">
-        <div className="mx-auto w-full max-w-3xl text-center">
-          <TypedName profileInfo={profileInfo as IuserInfo} />
-          <HomeIntro profileInfo={profileInfo as IuserInfo} />
-          <SocialLinks profileInfo={profileInfo as IuserInfo} />
+      <div className="relative z-10 w-full py-6">
+        <HomeIntro
+          profileInfo={profileInfo as IuserInfo}
+          projectCount={list.length}
+          technologyCount={technologies.size}
+        />
+
+        <div className="mt-9 flex flex-wrap items-center gap-x-4 gap-y-4 pl-6 sm:pl-10">
+          <Link
+            href="/projects"
+            className="group inline-flex items-center gap-2 rounded-full bg-cyan-400 px-6 py-3 text-sm font-medium text-[#06121f] transition-colors hover:bg-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base"
+          >
+            View projects
+            <FaArrowRight
+              aria-hidden="true"
+              className="h-3 w-3 transition-transform group-hover:translate-x-1"
+            />
+          </Link>
+
+          {profileInfo?.cv && (
+            <a
+              href={profileInfo.cv}
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-medium text-[#c3cede] transition-colors hover:border-cyan-400/60 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+            >
+              <FaDownload aria-hidden="true" className="h-3 w-3" />
+              Download CV
+            </a>
+          )}
+
+          <div className="sm:ms-auto">
+            <SocialLinks profileInfo={profileInfo as IuserInfo} />
+          </div>
         </div>
       </div>
     </section>
