@@ -4,20 +4,25 @@ import { SocialLinks } from "@/components/Home/SocialLinks";
 import { HomeIntro } from "@/components/Home/HomeIntro";
 import { getProfileInfo } from "@/actions/getProfileInfo";
 import { getAllProjects } from "@/actions/getAllProjects";
+import { getAllSkills } from "@/actions/getAllSkills";
 import { IuserInfo } from "@/types/general";
 
 export default async function Home() {
-  const [profileInfo, projects] = await Promise.all([
+  const [profileInfo, projects, skills] = await Promise.all([
     getProfileInfo(),
     getAllProjects(),
+    getAllSkills(),
   ]);
 
-  const list = projects ?? [];
-  const technologies = new Set(
-    list.flatMap((project) =>
-      (project.technologies ?? []).map((tech) => tech.trim().toLowerCase()),
-    ),
-  );
+  // Both figures are counted from the data the site already serves, so they
+  // move on their own as projects and skills are added.
+  //
+  // The technology count comes from the skills collection rather than from
+  // the tags on projects: the skills list is the canonical one, while the
+  // project tags contain duplicates across projects and a few typos
+  // ("Talwindcss", "Expres.js") that would inflate a unique count.
+  const projectCount = (projects ?? []).length;
+  const skillCount = (skills ?? []).length;
 
   return (
     /*
@@ -43,8 +48,8 @@ export default async function Home() {
       <div className="relative z-10 w-full py-6">
         <HomeIntro
           profileInfo={profileInfo as IuserInfo}
-          projectCount={list.length}
-          technologyCount={technologies.size}
+          projectCount={projectCount}
+          technologyCount={skillCount}
         />
 
         <div className="mt-9 flex flex-wrap items-center gap-x-4 gap-y-4 pl-6 sm:pl-10">

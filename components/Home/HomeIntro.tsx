@@ -41,7 +41,9 @@ export const HomeIntro = ({
 
   const figures = [
     { value: projectCount, label: "projects shipped" },
-    { value: technologyCount, label: "technologies used" },
+    // Counted from the skills collection, so "used" would overstate it —
+    // these are the technologies worked with, not ones tallied per project.
+    { value: technologyCount, label: "technologies" },
   ];
 
   return (
