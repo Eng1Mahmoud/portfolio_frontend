@@ -114,16 +114,15 @@ export const HomeIntro = ({
         variants={rise}
         className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/10 pt-5 font-mono"
       >
+        {/* dt before dd keeps the list valid; `order` shows the figure first
+            without repeating the label in a second, sr-only copy. */}
         {figures.map((figure) => (
-          <div key={figure.label}>
-            <dt className="sr-only">{figure.label}</dt>
-            <dd className="flex items-baseline gap-2">
-              <span className="text-xl text-cyan-300 sm:text-2xl">
-                {figure.value}
-              </span>
-              <span className="text-[11px] uppercase tracking-[0.18em] text-[#93a3bd]">
-                {figure.label}
-              </span>
+          <div key={figure.label} className="flex items-baseline gap-2">
+            <dt className="order-2 text-[11px] uppercase tracking-[0.18em] text-[#93a3bd]">
+              {figure.label}
+            </dt>
+            <dd className="order-1 text-xl text-cyan-300 sm:text-2xl">
+              {figure.value}
             </dd>
           </div>
         ))}

@@ -21,12 +21,15 @@ export default async function Home() {
 
   return (
     /*
-      Exactly one viewport tall. The 5rem accounts for the padding the layout
-      puts around <main> — pt-16 pb-4 on mobile and py-10 from lg up, which
-      both come to 5rem. `min-h` on small screens so a long bio scrolls rather
-      than being clipped; a fixed height from lg up, where it fits.
+      Fills one viewport when the content fits, and grows past it when it does
+      not. A fixed height with overflow-hidden was clipping the end of the
+      hero on shorter viewports — the bio runs ~90 words, so how much room it
+      needs depends on the window.
+
+      The 5rem is the padding the layout puts around <main>: pt-16 pb-4 on
+      mobile and py-10 from lg up, which both come to 5rem.
     */
-    <section className="relative flex min-h-[calc(100dvh-5rem)] items-center overflow-hidden lg:h-[calc(100dvh-5rem)]">
+    <section className="relative flex min-h-[calc(100dvh-5rem)] items-center">
       {/* Two quiet layers: a faint grid, and one glow set behind the type. */}
       <div
         aria-hidden="true"
