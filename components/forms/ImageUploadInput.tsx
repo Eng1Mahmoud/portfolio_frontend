@@ -34,7 +34,9 @@ const ImageUploadInput = ({ name, label, className }: InputFieldProps) => {
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-gray-700">{label}</label>
+      <label htmlFor={`file-picker-${name}`} className="text-gray-700">
+        {label}
+      </label>
       {/* Hidden input registered with RHF to hold the URL value */}
       <input type="hidden" {...register(name)} />
       <div

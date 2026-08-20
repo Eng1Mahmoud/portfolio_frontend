@@ -4,19 +4,32 @@ import { InputFieldProps } from "@/types/forms";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import {
+  fieldBase,
+  fieldError,
+  fieldVariants,
+  labelVariants,
+} from "./fieldStyles";
 
 const InputField = ({
   name,
   label,
   className,
   type = "text",
-  value,
+  variant = "dark",
+  showLabel,
 }: InputFieldProps) => {
   const {
     register,
     formState: { errors },
   } = useFormContext();
   const [isHovered, setIsHovered] = useState(false);
+
+  // Dashboard fields show their label; the public site keeps its cleaner look
+  // and exposes the label to assistive tech only.
+  const labelIsVisible = showLabel ?? variant === "light";
+  const errorId = `${name}-error`;
+  const hasError = Boolean(errors[name]);
 
   return (
     <motion.div
@@ -25,6 +38,19 @@ const InputField = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
+      {/* Always rendered: a placeholder is not an accessible name, and it
+          disappears as soon as the user types. */}
+      <label
+        htmlFor={name}
+        className={clsx(
+          labelIsVisible
+            ? clsx("text-sm font-medium", labelVariants[variant])
+            : "sr-only",
+        )}
+      >
+        {label}
+      </label>
+
       <motion.div
         whileTap={{ scale: 0.98 }}
         animate={{
@@ -36,42 +62,42 @@ const InputField = ({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10"
-          animate={{
-            opacity: isHovered ? 1 : 0,
-          }}
-          transition={{ duration: 0.3 }}
-        />
+        {variant === "dark" && (
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 pointer-events-none"
+            animate={{ opacity: isHovered ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
+          />
+        )}
         <input
           {...register(name)}
+          id={name}
           type={type}
+          placeholder={label}
+          aria-invalid={hasError || undefined}
+          aria-describedby={hasError ? errorId : undefined}
           className={clsx(
-            "w-full px-4 py-3 rounded-lg",
-            "border-2 border-gray-700/50",
-            "bg-gray-800/30 backdrop-blur-sm",
-            "text-gray-200 placeholder-gray-400",
-            "transition-all duration-300",
-            "focus:outline-none focus:border-blue-500",
-            "focus:ring-2 focus:ring-blue-500/20",
-            "hover:border-gray-600",
-            errors[name] &&
-              "border-red-500 focus:border-red-500 focus:ring-red-500/20",
+            fieldBase,
+            fieldVariants[variant],
+            hasError && fieldError,
             className,
           )}
-          placeholder={label}
-          value={value}
         />
       </motion.div>
 
-      {errors[name] && (
+      {hasError && (
         <motion.p
+          id={errorId}
+          role="alert"
           className="text-red-500 text-sm pl-2 flex items-center gap-2"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
         >
-          <span className="inline-block w-1 h-1 bg-red-500 rounded-full" />
+          <span
+            aria-hidden="true"
+            className="inline-block w-1 h-1 bg-red-500 rounded-full"
+          />
           {errors[name]?.message as string}
         </motion.p>
       )}

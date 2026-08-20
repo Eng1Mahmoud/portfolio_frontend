@@ -22,31 +22,31 @@ const EditProjectForm = ({ initialValues }: { initialValues: Iproject }) => {
           name="title"
           label="Title of Project"
           type="text"
-          className="input-light"
+          variant="light"
         />
         <TextArea
           name="description"
           label="Description of Project"
           rows={8}
-          className="input-light"
+          variant="light"
         />
         <InputField
           name="demoLink"
           label="Demo Link"
           type="text"
-          className="input-light"
+          variant="light"
         />
         <InputField
           name="githubLink"
           label="Github Link"
           type="text"
-          className="input-light"
+          variant="light"
         />
         <InputField
           name="order"
           label="Display Order"
           type="number"
-          className="input-light"
+          variant="light"
         />
         <ImageUploadInput name="imageUrl" label="Upload project image" />
       </div>

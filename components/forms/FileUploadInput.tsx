@@ -44,7 +44,9 @@ const FileUploadInput = ({
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-gray-700">{label}</label>
+      <label htmlFor={name} className="text-gray-700">
+        {label}
+      </label>
       <div
         className={`border border-dashed border-gray-400 rounded-md p-4 h-[200px] flex items-center justify-center ${className}`}
       >

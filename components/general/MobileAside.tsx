@@ -1,7 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion";
 import { Aside } from "@/components/general/Aside";
 import { IuserInfo } from "@/types/general";
 
@@ -11,60 +10,95 @@ export const MobileAsideToggle = ({
   profileInfo: IuserInfo;
 }) => {
   const [isAsideOpen, setIsAsideOpen] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const openerRef = useRef<HTMLButtonElement>(null);
+  const hasBeenOpened = useRef(false);
 
-  const toggleAside = () => {
-    setIsAsideOpen(!isAsideOpen);
-  };
+  const toggleAside = () => setIsAsideOpen((open) => !open);
+
+  // Close on Escape and lock background scrolling while the drawer is open.
+  useEffect(() => {
+    if (!isAsideOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsAsideOpen(false);
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [isAsideOpen]);
+
+  // Move focus into the drawer when it opens, and back to the toggle on close,
+  // so keyboard users are not stranded behind the overlay.
+  useEffect(() => {
+    if (isAsideOpen) {
+      hasBeenOpened.current = true;
+      panelRef.current?.focus();
+    } else if (hasBeenOpened.current) {
+      // Guarded: without this the first render would steal focus to the menu
+      // button on every page load.
+      openerRef.current?.focus({ preventScroll: true });
+    }
+  }, [isAsideOpen]);
 
   return (
     <>
       {/* Mobile Menu Toggle */}
       {!isAsideOpen && (
         <button
+          ref={openerRef}
           onClick={toggleAside}
-          className={`
-          lg:hidden fixed top-4 left-4 z-[1000] 
-          bg-blue-600 text-white p-2 rounded-md
-          transition-all duration-300
-        `}
+          aria-label="Open navigation menu"
+          aria-expanded={isAsideOpen}
+          className="lg:hidden fixed top-4 left-4 z-[1000] bg-blue-600 text-white p-2 rounded-md transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light"
         >
-          <FaBars />
+          <FaBars aria-hidden="true" />
         </button>
       )}
 
-      {/* Mobile Layout */}
-      <AnimatePresence>
-        {isAsideOpen && (
-          <motion.div
-            initial={{ x: "-100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "-100%" }}
-            transition={{ type: "tween" }}
-            className="
-              fixed inset-0 z-50 
-              lg:hidden
-              w-[80%] max-w-[300px]
-              rounded-r-xl
-            "
-          >
-            <div className="h-full overflow-y-auto ">
-              <Aside
-                setIsAsideOpen={setIsAsideOpen}
-                profileInfo={profileInfo}
-              />
-            </div>
-            <button
-              onClick={toggleAside}
-              className="
-                absolute top-4 right-5 z-[1000]
-                bg-red-600 text-white p-2 rounded-md
-              "
-            >
-              <FaTimes />
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/*
+        A CSS transition plus `inert` rather than AnimatePresence: correctness
+        here does not depend on an exit animation completing, the panel is
+        removed from the tab order and the accessibility tree whenever it is
+        closed, and the prefers-reduced-motion rule in globals.css applies
+        automatically. One fewer moving part for a drawer that only slides.
+      */}
+      <div
+        onClick={() => setIsAsideOpen(false)}
+        aria-hidden="true"
+        className={`fixed inset-0 z-40 bg-black/60 lg:hidden transition-opacity duration-300 ${
+          isAsideOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      />
+
+      <div
+        ref={panelRef}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
+        inert={!isAsideOpen}
+        className={`fixed inset-y-0 left-0 z-50 lg:hidden w-[80%] max-w-[300px] rounded-r-xl outline-none transition-transform duration-300 ease-out ${
+          isAsideOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="h-full overflow-y-auto">
+          <Aside setIsAsideOpen={setIsAsideOpen} profileInfo={profileInfo} />
+        </div>
+        <button
+          onClick={toggleAside}
+          aria-label="Close navigation menu"
+          className="absolute top-4 right-5 z-[1000] bg-red-600 text-white p-2 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+        >
+          <FaTimes aria-hidden="true" />
+        </button>
+      </div>
     </>
   );
 };

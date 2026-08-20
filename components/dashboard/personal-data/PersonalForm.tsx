@@ -22,60 +22,40 @@ const PersonalForm = ({
       }}
     >
       <div className="grid grid-cols-1 gap-6">
-        <InputField
-          name="userName"
-          label="Name"
-          type="text"
-          className="input-light"
-        />
-        <InputField
-          name="title"
-          label="Title"
-          type="text"
-          className="input-light"
-        />
-        <InputField
-          name="email"
-          label="Email"
-          type="email"
-          className="input-light"
-        />
+        <InputField name="userName" label="Name" type="text" variant="light" />
+        <InputField name="title" label="Title" type="text" variant="light" />
+        <InputField name="email" label="Email" type="email" variant="light" />
         <InputField
           name="address"
           label="Address"
           type="text"
-          className="input-light"
+          variant="light"
         />
         <InputField
           name="phone1"
           label="Phone number 1"
           type="text"
-          className="input-light"
+          variant="light"
         />
         <InputField
           name="phone2"
           label="Phone number 2"
           type="text"
-          className="input-light"
+          variant="light"
         />
-        <TextArea name="bio" label="Bio" rows={6} className="input-light" />
-        <InputField
-          name="github"
-          label="Github"
-          type="text"
-          className="input-light"
-        />
+        <TextArea name="bio" label="Bio" rows={6} variant="light" />
+        <InputField name="github" label="Github" type="text" variant="light" />
         <InputField
           name="linkedin"
           label="LinkedIn"
           type="text"
-          className="input-light"
+          variant="light"
         />
         <ImageUploadInput
           name="avatar"
           label="Upload avatar Image"
           type="image"
-          className="input-light"
+          variant="light"
         />
         <ImageUploadInput
           name="aboutImage"

@@ -42,37 +42,32 @@ const EditEducationForm = ({
     >
       <div className="grid grid-cols-1 gap-6">
         <EducationIdField id={education._id} />
-        <InputField
-          name="degree"
-          label="Degree"
-          type="text"
-          className="input-light"
-        />
+        <InputField name="degree" label="Degree" type="text" variant="light" />
         <InputField
           name="institution"
           label="Institution"
           type="text"
-          className="input-light"
+          variant="light"
         />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <InputField
             name="startDate"
             label="Start Date"
             type="text"
-            className="input-light"
+            variant="light"
           />
           <InputField
             name="endDate"
             label="End Date"
             type="text"
-            className="input-light"
+            variant="light"
           />
         </div>
         <InputField
           name="skills"
           label="Skills (comma-separated, e.g. JavaScript, Python)"
           type="text"
-          className="input-light"
+          variant="light"
         />
         <ImageUploadInput
           name="image"
@@ -83,7 +78,7 @@ const EditEducationForm = ({
           name="description"
           label="Description"
           rows={6}
-          className="input-light"
+          variant="light"
         />
       </div>
     </Form>
