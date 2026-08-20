@@ -16,7 +16,7 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
   messagesEndRef,
 }) => {
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50/50 antialiased font-sans">
+    <div className="scrollBar flex-1 overflow-y-auto p-4 space-y-4 bg-surface-base/60 antialiased font-sans">
       {messages.map((msg) => (
         <div
           key={msg.id}
@@ -30,10 +30,10 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
               "p-3 rounded-2xl text-sm leading-relaxed shadow-sm",
               msg.sender === "user"
                 ? "bg-blue-600 text-white rounded-tr-none"
-                : "bg-white text-gray-800 border border-gray-100 rounded-tl-none",
+                : "bg-white/5 text-gray-200 border border-white/10 rounded-tl-none",
             )}
           >
-            <div className="prose prose-sm prose-slate max-w-none prose-p:leading-relaxed">
+            <div className="prose prose-sm prose-invert max-w-none prose-p:leading-relaxed prose-a:text-blue-400">
               <ReactMarkdown>{msg.text}</ReactMarkdown>
             </div>
           </div>

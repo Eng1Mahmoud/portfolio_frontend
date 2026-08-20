@@ -22,8 +22,8 @@ export default function ExperienceTimeline({
           transition={{ duration: 0.5, delay: index * 0.12 }}
         >
           {/* Timeline point */}
-          <div className="absolute left-[-38px] md:left-[-38px] top-0 w-6 h-6 rounded-full bg-[#0D1127] border-4 border-cyan-500 z-10 -translate-x-1/2 shadow-[0_0_15px_rgba(6,182,212,0.5)] hidden md:block"></div>
-          <div className="absolute left-[-22px] top-0 w-5 h-5 rounded-full bg-[#0D1127] border-2 border-cyan-500 z-10 -translate-x-1/2 shadow-[0_0_10px_rgba(6,182,212,0.5)] md:hidden block"></div>
+          <div className="absolute left-[-38px] md:left-[-38px] top-0 w-6 h-6 rounded-full bg-surface-card border-4 border-cyan-500 z-10 -translate-x-1/2 shadow-[0_0_15px_rgba(6,182,212,0.5)] hidden md:block"></div>
+          <div className="absolute left-[-22px] top-0 w-5 h-5 rounded-full bg-surface-card border-2 border-cyan-500 z-10 -translate-x-1/2 shadow-[0_0_10px_rgba(6,182,212,0.5)] md:hidden block"></div>
 
           <ExperienceCard experience={item} index={index} />
         </motion.div>

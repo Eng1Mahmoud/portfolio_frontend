@@ -59,7 +59,7 @@ export const ProjectDescriptionModal = ({
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
-        className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-blue-500/30 bg-gradient-to-br from-[#0D1127] to-[#1a1f3c] outline-none"
+        className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-blue-500/30 bg-gradient-to-br from-surface-card to-surface-card-to outline-none"
       >
         {/* Header stays put so the close button is always reachable while
             scrolling a long description. */}

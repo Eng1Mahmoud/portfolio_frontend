@@ -18,7 +18,7 @@ export default function Error({
 
   return (
     <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
-      <div className="rounded-2xl border border-red-500/30 bg-[#0f172a]/80 backdrop-blur-xl p-8 md:p-12 max-w-lg">
+      <div className="rounded-2xl border border-red-500/30 bg-surface-panel/80 backdrop-blur-xl p-8 md:p-12 max-w-lg">
         <h1 className="text-2xl md:text-3xl font-bold mb-3 bg-gradient-to-r from-red-400 to-purple-400 bg-clip-text text-transparent">
           Something went wrong
         </h1>

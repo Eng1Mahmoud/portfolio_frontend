@@ -36,7 +36,7 @@ export const ProjectCard = ({ project }: { project: Iproject }) => {
       transition={{ duration: 0.5 }}
       // h-full + flex column: every card in a row ends up the same height and
       // the action buttons line up along the bottom.
-      className="group relative flex h-full flex-col overflow-hidden bg-gradient-to-br from-[#0D1127] to-[#1a1f3c] rounded-xl border-2 border-blue-500/50 shadow-xl shadow-blue-900/20"
+      className="group relative flex h-full flex-col overflow-hidden bg-gradient-to-br from-surface-card to-surface-card-to rounded-xl border-2 border-blue-500/50 shadow-xl shadow-blue-900/20"
     >
       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
