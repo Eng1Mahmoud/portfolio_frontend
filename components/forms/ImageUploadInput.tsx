@@ -48,6 +48,7 @@ const ImageUploadInput = ({ name, label, className }: InputFieldProps) => {
               src={url}
               alt="Uploaded Image"
               fill
+              unoptimized
               className="rounded-md object-contain"
             />
             <button

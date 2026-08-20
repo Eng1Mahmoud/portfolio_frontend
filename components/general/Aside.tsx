@@ -65,6 +65,7 @@ export const Aside = ({
               width={1000}
               height={1000}
               priority
+              unoptimized
               className="rounded-full w-[140px] h-[140px] object-cover"
             />
           </motion.div>
