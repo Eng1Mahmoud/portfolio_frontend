@@ -11,12 +11,9 @@ interface TitleProps {
 }
 
 /**
- * Page heading, in the home page's language: a sage-headed hairline rail on
- * the left, a mono eyebrow, and the heading set in the display face.
- *
- * The heading rises out of a clipping mask rather than fading in. It is one
- * text node — splitting it per character puts eight elements inside an <h1>
- * and collapses the space in "About Me" to zero width.
+ * A rail, a mono eyebrow, and a heading that rises out of a clipping mask.
+ * The heading stays one text node — splitting it per character collapses the
+ * space in "About Me" to zero width.
  */
 export const Title = ({ title, eyebrow, count }: TitleProps) => {
   return (
@@ -49,8 +46,7 @@ export const Title = ({ title, eyebrow, count }: TitleProps) => {
         </motion.div>
       )}
 
-      {/* The mask. overflow-hidden on a wrapper with a little bottom padding,
-          so descenders in "Projects" are not shaved off once it settles. */}
+      {/* Bottom padding so the mask does not shave descenders. */}
       <span className="block overflow-hidden pb-[0.12em]">
         <motion.h1
           initial={{ y: "115%" }}

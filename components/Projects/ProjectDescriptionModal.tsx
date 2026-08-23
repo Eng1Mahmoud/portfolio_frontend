@@ -23,11 +23,9 @@ export const ProjectDescriptionModal = ({
   onClose,
 }: ProjectDescriptionModalProps) => {
   const panelRef = useRef<HTMLDivElement>(null);
-  // The card that opens this dialog now sits inside a 3D transform (the
-  // pinboard tilt). A transformed ancestor becomes the containing block for
-  // `position: fixed`, so the backdrop would be pinned to the card instead of
-  // the viewport. Rendering through a portal takes the dialog out of that
-  // subtree entirely.
+  // The card sits inside a 3D transform, and a transformed ancestor becomes
+  // the containing block for `position: fixed` — so the backdrop would pin to
+  // the card instead of the viewport. The portal takes it out of that subtree.
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 

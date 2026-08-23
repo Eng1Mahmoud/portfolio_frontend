@@ -4,9 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaGithub, FaExternalLinkAlt, FaChevronDown } from "react-icons/fa";
 import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useTransform,
+} from "framer-motion";
 import { ProjectDescriptionModal } from "@/components/Projects/ProjectDescriptionModal";
-import { PinnedCard } from "@/components/general/PinnedCard";
+import { PinnedCard, useCardProgress } from "@/components/general/PinnedCard";
 import {
   handleProjectExternalClick,
   handleViewProject,
@@ -16,6 +21,46 @@ import {
 // tall and wildly uneven, so the card shows a preview and the modal has the
 // full list.
 const VISIBLE_TECHNOLOGIES = 4;
+
+/** How far the screenshot travels inside its frame, as a percentage. */
+const DRIFT = 7;
+
+/**
+ * The screenshot drifts against its opening as the card crosses the screen.
+ * A separate component because the clock comes from <PinnedCard /> by context,
+ * and only a child can read it.
+ */
+const ProjectShot = ({
+  src,
+  alt,
+  priority,
+}: {
+  src: string;
+  alt: string;
+  priority: boolean;
+}) => {
+  const progress = useCardProgress();
+  const fallback = useMotionValue(0.5);
+  const y = useTransform(
+    progress ?? fallback,
+    [0, 1],
+    [`-${DRIFT}%`, `${DRIFT}%`],
+  );
+
+  return (
+    // Oversized by the drift distance, or the travel exposes the image edge.
+    <motion.div style={{ y }} className="absolute inset-x-0 -top-[8%] h-[116%]">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+        priority={priority}
+        className="object-cover object-top transition-transform duration-700 ease-out group-hover/pin:scale-[1.06]"
+      />
+    </motion.div>
+  );
+};
 
 export const ProjectCard = ({
   project,
@@ -42,29 +87,22 @@ export const ProjectCard = ({
           the action buttons line up along the bottom. */}
       <article className="group/card relative flex h-full flex-col overflow-hidden rounded-2xl border border-parchment/10 bg-surface-panel/80 backdrop-blur-sm transition-colors duration-300 group-hover/pin:border-sage/30">
         <div className="relative h-[200px] shrink-0 overflow-hidden">
-          <Image
+          {/* The first row is above the fold and holds the page's largest
+              contentful paint, so those three load eagerly. */}
+          <ProjectShot
             src={project.imageUrl}
             alt={project.title}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-            // The first row is above the fold and holds the page's largest
-            // contentful paint, so those three load eagerly.
             priority={index < 3}
-            className="object-cover object-top transition-transform duration-700 ease-out group-hover/pin:scale-[1.06]"
           />
-          {/* The print settles into the card stock instead of butting against
-              the text block with a hard edge. The gradient is confined to the
-              bottom third — a full-height fade washed out the screenshot,
-              which is the one thing on the card a visitor came to see. */}
+          {/* Confined to the bottom third: a full-height fade washed out the
+              screenshot, which is what the visitor came to see. */}
           <div
             aria-hidden="true"
             className="absolute inset-0 bg-[linear-gradient(to_top,theme(colors.surface.panel)_0%,transparent_38%)]"
           />
         </div>
 
-        {/* pin-lift floats the text plate above the face while the card turns,
-            which is what sells the depth — a flat card that merely rotates
-            reads as a sticker. */}
+        {/* pin-lift floats the plate above the face while the card turns. */}
         <div className="pin-lift relative z-10 flex flex-1 flex-col p-4 sm:p-5">
           <h3 className="display-card mb-2 text-[1.15rem] text-ink-strong">
             {project.title.trim()}

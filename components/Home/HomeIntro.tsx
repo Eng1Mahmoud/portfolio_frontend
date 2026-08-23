@@ -15,9 +15,7 @@ interface HomeIntroProps {
   technologyCount: number;
 }
 
-// One orchestrated load sequence rather than scattered effects. Every delay is
-// a multiple of BEAT, so the whole hero shares one rhythm instead of each
-// block guessing its own timing.
+// Every delay is a multiple of BEAT, so the hero shares one rhythm.
 const BEAT = 0.09;
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -39,11 +37,7 @@ const lineUp = {
   }),
 };
 
-/**
- * The figures are real data, so they count rather than fade — the number
- * arriving at its value is the one place on the page where motion carries
- * information instead of decorating it.
- */
+/** Real data, so the figures count rather than fade. */
 const Counter = ({ value, delay }: { value: number; delay: number }) => {
   const reduceMotion = useReducedMotion();
   const count = useMotionValue(0);
@@ -81,9 +75,7 @@ export const HomeIntro = ({
   const role = profileInfo?.title?.trim() ?? "";
   const bio = profileInfo?.bio?.trim() ?? "";
 
-  // The author controls the split: a blank line in the bio field promotes the
-  // first paragraph to a larger lead. Parsing sentences here would break
-  // React.js, Next.js, Vue.js and CI/CD.
+  // A blank line in the bio field promotes the first paragraph to a lead.
   const [lead, ...rest] = bio.split(/\n\s*\n/);
   const body = rest.join("\n\n");
 
@@ -94,15 +86,13 @@ export const HomeIntro = ({
 
   const figures = [
     { value: projectCount, label: "projects shipped" },
-    // Counted from the skills collection, so "used" would overstate it —
-    // these are the technologies worked with, not ones tallied per project.
+    // From the skills collection, so "used" would overstate it.
     { value: technologyCount, label: "technologies" },
   ];
 
   return (
     <div className="relative w-full max-w-4xl pl-6 text-start sm:pl-10">
-      {/* The rail. A single hairline anchors the whole column — no panel, no
-          card. Its cyan head marks where the content starts. */}
+      {/* A single hairline anchors the column. */}
       <motion.div
         aria-hidden="true"
         initial={{ scaleY: 0 }}
@@ -123,8 +113,7 @@ export const HomeIntro = ({
         </motion.p>
       )}
 
-      {/* Each line gets its own mask, so the two halves of the name arrive one
-          after the other like a nameplate being set. */}
+      {/* One mask per line, so the halves of the name arrive in turn. */}
       <h1 className="display-hero text-[clamp(2.6rem,9.5vw,5.5rem)] leading-[0.92] text-ink-strong">
         <span className="block overflow-hidden pb-[0.06em]">
           <motion.span
@@ -179,8 +168,7 @@ export const HomeIntro = ({
         variants={rise}
         className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-parchment/10 pt-5 font-mono"
       >
-        {/* dt before dd keeps the list valid; `order` shows the figure first
-            without repeating the label in a second, sr-only copy. */}
+        {/* dt before dd keeps the list valid; `order` flips them visually. */}
         {figures.map((figure, index) => (
           <div key={figure.label} className="flex items-baseline gap-2">
             <dt className="order-2 text-[11px] uppercase tracking-[0.18em] text-ink-muted">

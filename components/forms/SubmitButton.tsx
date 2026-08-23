@@ -2,14 +2,27 @@
 import { SubmitButtonProps } from "@/types/forms";
 import clsx from "clsx";
 
-const SubmitButton = ({ name, className, isPending }: SubmitButtonProps) => {
+const VARIANTS = {
+  admin:
+    "bg-secondary-light text-white hover:bg-secondary-dark shadow-secondary-dark",
+  site: "bg-sage text-surface-base hover:bg-sage-bright shadow-surface-well/60",
+} as const;
+
+const SubmitButton = ({
+  name,
+  className,
+  variant = "admin",
+  isPending,
+}: SubmitButtonProps) => {
   return (
     <button
       disabled={isPending}
       type="submit"
       className={clsx(
-        "w-full bg-secondary-light text-white p-2 rounded-md hover:bg-secondary-dark transition-colors duration-300 flex items-center justify-center shadow-md shadow-secondary-dark",
-        isPending && "opacity-50 cursor-not-allowed",
+        "flex w-full items-center justify-center rounded-md p-2 font-medium shadow-md transition-colors duration-300",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base",
+        VARIANTS[variant],
+        isPending && "cursor-not-allowed opacity-50",
         className,
       )}
     >

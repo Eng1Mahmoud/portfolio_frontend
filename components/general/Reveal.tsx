@@ -4,12 +4,8 @@ import { motion } from "framer-motion";
 import { type ReactNode } from "react";
 
 /**
- * Entry animation for a block inside a server component. It exists so pages
- * can join the load sequence without becoming client components themselves —
- * `children` is passed through as a prop, so the page stays on the server.
- *
- * `delay` is expressed in the same beats as the home hero, so a block added
- * here lands in rhythm with the heading above it rather than on its own clock.
+ * Entry animation for a block inside a server component: `children` passes
+ * through as a prop, so the page stays on the server.
  */
 export const Reveal = ({
   children,

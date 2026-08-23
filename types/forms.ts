@@ -15,6 +15,7 @@ export interface FormProps<T extends FieldValues> {
   buttonProps: {
     name: string;
     className?: string;
+    variant?: SubmitButtonVariant;
   };
 }
 
@@ -48,8 +49,17 @@ export interface TextAreaProps {
 }
 
 // submit button props
+/**
+ * "admin" is the dashboard's own blue; "site" is the public palette's sage.
+ * A prop rather than a `className` override because both set background-color,
+ * and which one wins would come down to Tailwind's output order rather than
+ * the order they are passed in.
+ */
+export type SubmitButtonVariant = "admin" | "site";
+
 export interface SubmitButtonProps {
   name: string;
   className?: string;
+  variant?: SubmitButtonVariant;
   isPending: boolean;
 }

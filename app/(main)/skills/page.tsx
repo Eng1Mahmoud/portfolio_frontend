@@ -1,6 +1,7 @@
 import { Title } from "@/components/general/Title";
 import { getAllSkills } from "@/actions/getAllSkills";
 import { SkillCard } from "@/components/skills/SkillCard";
+import { SkillGroupHeading } from "@/components/skills/SkillGroupHeading";
 import { SKILL_CATEGORIES } from "@/zod/skillsSchema";
 import { ISkill } from "@/types/general";
 import { Metadata } from "next";
@@ -45,20 +46,7 @@ export default async function SkillsPage() {
       <div className="space-y-12">
         {ordered.map(([category, items]) => (
           <section key={category}>
-            <div className="mb-5 flex items-center gap-4">
-              <h2 className="font-mono text-[11px] uppercase tracking-[0.28em] text-sage">
-                {category}
-              </h2>
-              <span className="font-mono text-[11px] text-ink-muted">
-                {items.length}
-              </span>
-              {/* Rule fills the remaining width, tying the heading to the row
-                  of cards beneath it. */}
-              <span
-                aria-hidden="true"
-                className="h-px flex-1 bg-parchment/10"
-              />
-            </div>
+            <SkillGroupHeading category={category} count={items.length} />
 
             <div className="grid grid-cols-2 items-center justify-center gap-4 md:grid-cols-5 md:gap-6">
               {items.map((skill, index) => (

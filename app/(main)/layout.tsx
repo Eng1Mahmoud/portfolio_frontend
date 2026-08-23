@@ -13,18 +13,14 @@ export default async function MainLayout({
     <div className="bg-surface-base text-ink-body h-screen flex flex-col lg:flex-row ">
       <MobileAsideToggle profileInfo={profileInfo as IuserInfo} />
       <div className="hidden lg:block lg:w-[20%] h-screen">
-        <Aside profileInfo={profileInfo as IuserInfo} />
+        <Aside scope="desktop" profileInfo={profileInfo as IuserInfo} />
       </div>
       {/* Single content region for both breakpoints — rendering `children`
           twice puts the whole page in the DOM twice (duplicate <main>/<h1>). */}
       {/*
-        The page scrolls in here, not in the window. Anything that reacts to
-        scroll position has to be told so — <Timeline /> looks this id up to
-        subscribe to the right element.
-
-        `relative` is load-bearing: a scroll container measured by
-        framer-motion has to be a containing block, or the offsets it reads
-        for its children are computed against the wrong origin.
+        The page scrolls here, not in the window — <Timeline /> looks this id
+        up. `relative` is load-bearing: framer-motion measures scroll offsets
+        against the containing block.
       */}
       <div
         id="page-scroll"

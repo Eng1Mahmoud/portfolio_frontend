@@ -4,11 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { IuserInfo } from "@/types/general";
 import { handleDownloadCV } from "@/utiles/analytics-events/events";
 
-/**
- * Milliseconds per character. The previous 300ms took four and a half seconds
- * to spell a name — long enough that visitors read the paragraph below it and
- * looked back to find the heading still typing.
- */
+/** Milliseconds per character. 300ms took four seconds to spell a name. */
 const TYPE_SPEED = 65;
 
 export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
@@ -54,8 +50,7 @@ export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
       <h2 className="display-title mb-4 text-2xl text-ink-strong">
         Hi, I am{" "}
         <span className="text-sage">
-          {/* The full name is always in the DOM for assistive tech; the typed
-              copy is the decorative one. */}
+          {/* The full name stays in the DOM for assistive tech. */}
           <span aria-hidden="true">{name}</span>
           <span className="sr-only">{typedName}</span>
           {isTyping && (
@@ -82,13 +77,8 @@ export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
         {profileInfo?.bio}
       </motion.p>
 
-      {/*
-        A spec sheet, set as one. These are fixed facts about a person, so the
-        rows are a definition list with a hairline leader carrying the eye from
-        label to value — the structure of an index, because that is what this
-        is. It replaces a bulleted list where the label and value ran together
-        in one line of prose.
-      */}
+      {/* A spec sheet, set as one: a definition list with a hairline leader
+          carrying the eye from label to value. */}
       <dl className="mb-8 divide-y divide-parchment/[0.07] border-y border-parchment/[0.07]">
         {personalDetails.map((detail, index) => (
           <motion.div

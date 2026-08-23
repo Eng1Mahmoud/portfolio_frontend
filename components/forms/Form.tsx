@@ -98,6 +98,7 @@ export const Form = <T extends FieldValues>({
           <SubmitButton
             name={buttonProps.name}
             isPending={isPending}
+            variant={buttonProps.variant}
             className={buttonProps.className}
           />
         </div>

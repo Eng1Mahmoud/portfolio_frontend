@@ -3,16 +3,11 @@
 @tailwind utilities;
 
 @layer base {
-  /* Body sets the reading face once; headings opt into the display face via
-     `font-display` or the .display-* utilities below. The previous `* { }`
-     rule forced one family onto every element including <code>, which meant
-     the mono variable was declared but never actually seen. */
+  /* Body sets the reading face once; headings opt in via `font-display`. */
   body {
     font-family: var(--main-font), system-ui, sans-serif;
     background-color: theme("colors.surface.well");
     color: theme("colors.ink.body");
-    /* Instrument Sans ships proper contextual alternates; without this the
-       "ti"/"tt" pairs in body copy sit a hair too loose. */
     font-feature-settings:
       "calt" 1,
       "liga" 1;
@@ -27,16 +22,12 @@
 
 @layer components {
   /*
-    Bricolage Grotesque is variable on three axes. Rather than let the browser
-    interpolate optical size from the rendered px value (which it only does
-    when `font-optical-sizing: auto` is supported), each heading role states
-    the axis values it wants. Larger opsz = tighter apertures and finer joins,
-    which is what keeps a 5rem name from looking inflated.
+    Each heading role states its own axis values rather than relying on
+    `font-optical-sizing: auto`, which is not universally supported.
   */
   .display-hero {
     font-family: var(--display-font), sans-serif;
-    /* wdth 92 narrows the name just enough to hold two words per line on a
-       phone without hyphenating. */
+    /* wdth 92 holds two words per line on a phone without hyphenating. */
     font-variation-settings:
       "opsz" 96,
       "wdth" 92,
@@ -63,11 +54,9 @@
   }
 
   /*
-    Pinboard mechanics.
-
-    Every tilted card lives inside its own perspective context rather than one
-    shared parent: a single perspective across a 3-column grid makes the outer
-    cards shear, because they sit far from the vanishing point.
+    One perspective context per card: a single perspective shared across a
+    3-column grid shears the outer cards, which sit far from the vanishing
+    point.
   */
   .pin-stage {
     perspective: 1100px;
@@ -80,12 +69,8 @@
   }
 
   /*
-    Children that float above the card face while it tilts.
-
-    The lift only applies once the card is engaged. Left on permanently, a
-    translateZ inside a perspective context renders the plate ~3.5% larger at
-    rest — enough to crowd the card's padding for no gain, since there is no
-    depth to read until the card actually turns.
+    Hover-only: a permanent translateZ inside a perspective context renders
+    the plate ~3.5% larger at rest for no gain.
   */
   .pin-lift {
     transform: translateZ(0);
@@ -97,12 +82,10 @@
   }
 }
 
-/* Main App Scrollbar */
-/* Firefox has no ::-webkit-scrollbar; without these two it fell back to the
-   default chrome scrollbar. */
+/* Firefox has no ::-webkit-scrollbar, hence the two properties. */
 .scrollBar {
   scrollbar-width: thin;
-  scrollbar-color: #6E8C76 transparent;
+  scrollbar-color: #6e8c76 transparent;
 }
 
 .scrollBar::-webkit-scrollbar {
@@ -114,20 +97,18 @@
 }
 
 .scrollBar::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #6E8C76, #4C6B54);
+  background: linear-gradient(to bottom, #6e8c76, #4c6b54);
   border-radius: 9999px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
 
 .scrollBar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #9DC2A6, #6E8C76);
+  background: linear-gradient(to bottom, #9dc2a6, #6e8c76);
   background-clip: content-box;
 }
 
-/* Honour the OS "reduce motion" setting for CSS-driven animation.
-   framer-motion is handled separately by MotionConfig in MotionProvider, and
-   the pointer-tilt hook checks useReducedMotion before subscribing. */
+/* CSS-driven animation only; framer-motion is handled by MotionProvider. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -138,8 +119,7 @@
     scroll-behavior: auto !important;
   }
 
-  /* Flatten the board entirely — a static tilt is still a legible layout,
-     but the 3D depth is what causes discomfort. */
+  /* Flatten the board: a static tilt still reads, the depth is what does not. */
   .pin-stage {
     perspective: none;
   }

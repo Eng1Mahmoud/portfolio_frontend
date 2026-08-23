@@ -2,15 +2,13 @@
 
 import { useEffect, useLayoutEffect, useState } from "react";
 
-// useLayoutEffect warns when called during server rendering, but its timing is
-// what keeps a layout-affecting query from flashing the wrong branch: it runs
-// before paint, so the corrected value is the first thing drawn.
+// Layout timing keeps a layout-affecting query from flashing the wrong branch.
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /**
- * Subscribes to a media query. Returns false during server rendering, so write
- * queries whose false branch is the one the markup should ship with.
+ * Returns false during server rendering, so write queries whose false branch is
+ * the one the markup should ship with.
  */
 export const useMediaQuery = (query: string) => {
   const [matches, setMatches] = useState(false);

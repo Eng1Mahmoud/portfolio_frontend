@@ -89,7 +89,11 @@ export const MobileAsideToggle = ({
         }`}
       >
         <div className="h-full overflow-y-auto">
-          <Aside setIsAsideOpen={setIsAsideOpen} profileInfo={profileInfo} />
+          <Aside
+            scope="mobile"
+            setIsAsideOpen={setIsAsideOpen}
+            profileInfo={profileInfo}
+          />
         </div>
         <button
           onClick={toggleAside}

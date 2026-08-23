@@ -15,26 +15,14 @@ export default async function Home() {
     getAllSkills(),
   ]);
 
-  // Both figures are counted from the data the site already serves, so they
-  // move on their own as projects and skills are added.
-  //
-  // The technology count comes from the skills collection rather than from
-  // the tags on projects: the skills list is the canonical one, while the
-  // project tags contain duplicates across projects and a few typos
-  // ("Talwindcss", "Expres.js") that would inflate a unique count.
+  // The technology count comes from the skills collection, not project tags:
+  // those contain duplicates and typos that would inflate a unique count.
   const projectCount = (projects ?? []).length;
   const skillCount = (skills ?? []).length;
 
   return (
-    /*
-      Fills one viewport when the content fits, and grows past it when it does
-      not. A fixed height with overflow-hidden was clipping the end of the
-      hero on shorter viewports — the bio runs ~90 words, so how much room it
-      needs depends on the window.
-
-      The 5rem is the padding the layout puts around <main>: pt-16 pb-4 on
-      mobile and py-10 from lg up, which both come to 5rem.
-    */
+    /* Grows past one viewport when the bio needs it; the 5rem is the padding
+       the layout puts around <main>. */
     <section className="relative flex min-h-[calc(100dvh-5rem)] items-center">
       {/* Two quiet layers: a faint grid, and one glow set behind the type. */}
       <div
@@ -53,8 +41,7 @@ export default async function Home() {
           technologyCount={skillCount}
         />
 
-        {/* Last beat of the hero sequence: the actions arrive after the
-            figures have finished counting. */}
+        {/* Last beat: the actions arrive after the figures finish counting. */}
         <Reveal
           delay={0.62}
           className="mt-9 flex flex-wrap items-center gap-x-4 gap-y-4 pl-6 sm:pl-10"

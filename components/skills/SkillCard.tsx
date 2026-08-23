@@ -6,11 +6,7 @@ import { motion, useMotionTemplate, useTransform } from "framer-motion";
 import { useTilt } from "@/hooks/use-tilt";
 import { handleSkillHover } from "@/utiles/analytics-events/events";
 
-/**
- * A skill tile turns with the same physics as a project card, but half as far
- * and with no pin, no scatter angle and no wheat. The pinboard stays the one
- * thing the site is remembered by; these are its quiet echo.
- */
+/** Same physics as a project card, but no pin, no scatter angle, no wheat. */
 export const SkillCard = ({
   skill,
   index = 0,
@@ -21,8 +17,6 @@ export const SkillCard = ({
   const { ref, engaged, reduceMotion, handlers, sx, sy, rotateX, rotateY } =
     useTilt({ range: 9 });
 
-  // A cool edge-light instead of the pinboard's warm sheen — the tiles are
-  // interface, not artefacts, so they take the interface accent.
   const glowX = useTransform(sx, [-0.5, 0.5], ["12%", "88%"]);
   const glowY = useTransform(sy, [-0.5, 0.5], ["12%", "88%"]);
   const glow = useMotionTemplate`radial-gradient(9rem circle at ${glowX} ${glowY}, rgba(157,194,166,0.18), transparent 70%)`;
@@ -36,8 +30,7 @@ export const SkillCard = ({
         viewport={{ once: true, margin: "-40px 0px" }}
         transition={{
           duration: 0.45,
-          // Cascades along the row rather than firing all at once; capped so a
-          // long category does not leave the last tile waiting a full second.
+          // Capped so a long category does not leave the last tile waiting.
           delay: Math.min(index, 9) * 0.045,
           ease: [0.22, 1, 0.36, 1],
         }}

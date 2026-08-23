@@ -3,23 +3,18 @@ import { IExperience } from "@/types/general";
 import { FaBriefcase } from "react-icons/fa";
 import Image from "next/image";
 
-/**
- * One role on the experience rail. The entry animation and the rail node live
- * in <TimelineEntry />, so this component is just the card face.
- */
+/** The card face; the entry animation and rail node live in <TimelineEntry />. */
 export const ExperienceCard = ({ experience }: { experience: IExperience }) => {
   return (
     <div className="group relative overflow-hidden rounded-2xl border border-parchment/10 bg-surface-panel/80 p-5 shadow-pinned backdrop-blur-xl transition-colors duration-300 hover:border-sage/30 md:p-7">
-      {/* One warm rake across the panel on hover. The pinboard's gesture,
-          reduced to a single static highlight so the projects page keeps the
-          interactive version to itself. */}
+      {/* A static highlight; the projects page keeps the interactive one. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(30rem_circle_at_85%_0%,rgba(157,194,166,0.06),transparent_60%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
       />
 
       <div className="relative z-10">
-        {/* The dates lead. On a rail, when is the first thing you check. */}
+        {/* Dates lead: on a rail, when is what you check first. */}
         <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.22em] text-sage">
           {experience.startDate} — {experience.endDate}
         </p>

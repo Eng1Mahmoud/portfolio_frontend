@@ -1,60 +1,31 @@
 "use client";
 
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import { type ReactNode, useEffect, useLayoutEffect, useRef } from "react";
+import { type ReactNode, useRef } from "react";
+import { usePageScrollContainer } from "@/hooks/use-page-scroll";
 
-// useLayoutEffect warns when it is called during server rendering. This is the
-// standard guard: the layout timing matters only on the client, where it is
-// what guarantees the container is resolved before useScroll subscribes.
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect;
-
-/**
- * A timeline is the one structure on this site where order genuinely carries
- * information, so the rail is the thing that animates: a dim track with a lit
- * segment that fills as you read down it, and a node that ignites as each
- * entry arrives. Scroll position drives it, so the progress you see is the
- * progress you have actually made through the history.
- */
-/**
- * Where the rail runs: 10px from the timeline's left edge, which is exactly
- * where the entry nodes land at both breakpoints. Shared so the line and the
- * dots can never be nudged apart by editing one and not the other.
- */
+/** Where the rail runs. Shared so the line and the dots cannot drift apart. */
 const RAIL_X = "absolute left-[10px] top-0 h-full -translate-x-1/2";
 
 /*
-  Reveal margins are vertical-only ("-Npx 0px"), never the one-value shorthand.
-
-  `margin` becomes the IntersectionObserver rootMargin, and a single value
-  insets all four sides. On a 390px-wide phone "-80px" narrows the trigger box
-  to x 80–310, which is enough to miss a small element pinned near the left
-  edge entirely — the timeline node is 16px wide at x 18, so it never
-  intersected and sat at its initial opacity: 0 forever. It looked fine on a
-  desktop only because the same box is 1280px wide there.
+  Reveal margins here are vertical-only ("-Npx 0px"). A one-value rootMargin
+  insets all four sides, which at 390px narrowed the trigger box enough that
+  the 16px node near the left edge never intersected and stayed invisible.
 */
+
+/**
+ * A dim track with a lit segment that fills as you scroll, and a node that
+ * ignites as each entry arrives.
+ */
 export const Timeline = ({ children }: { children: ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  /*
-    The page scrolls inside a container in the layout, not in the window, and
-    scroll events do not bubble. Without this the rail would subscribe to the
-    window — which never scrolls here — and sit frozen at zero.
-
-    Declared before useScroll so that this layout effect runs first and the ref
-    is populated by the time useScroll reads `container.current`.
-  */
-  const containerRef = useRef<HTMLElement | null>(null);
-  useIsomorphicLayoutEffect(() => {
-    containerRef.current = document.getElementById("page-scroll");
-  }, []);
+  const containerRef = usePageScrollContainer();
 
   const { scrollYProgress } = useScroll({
     container: containerRef,
     target: ref,
-    // Starts filling when the top of the list reaches three-quarters down the
-    // viewport, and is full once the bottom clears the halfway mark — so the
-    // rail completes as the last entry is read, not after it has scrolled off.
+    // Completes as the last entry is read, not after it has scrolled off.
     offset: ["start 0.75", "end 0.5"],
   });
   const fill = useSpring(scrollYProgress, {
@@ -67,13 +38,9 @@ export const Timeline = ({ children }: { children: ReactNode }) => {
   return (
     <div ref={ref} className="relative pl-8 md:pl-12">
       {/*
-        Everything on the rail is centred on RAIL_X by a plain wrapper, and the
-        animated part lives inside it.
-
-        This split is not cosmetic: framer-motion writes `transform` as an
-        inline style, which outranks Tailwind's `-translate-x-1/2` class and
-        silently wipes the centring — leaving the element sitting half its own
-        width to the right of the line it is supposed to be on.
+        A plain wrapper does the centring and the animated part sits inside it:
+        framer-motion writes `transform` inline, which outranks Tailwind's
+        `-translate-x-1/2` and would leave the element half its width off-line.
       */}
 
       {/* Track. */}
@@ -100,11 +67,7 @@ export const Timeline = ({ children }: { children: ReactNode }) => {
   );
 };
 
-/**
- * One entry on the rail. Owns its node so the node and the card can never
- * drift out of step — they previously lived in two different components and
- * were rendered twice on the experience page.
- */
+/** One entry on the rail. Owns its node so the two cannot drift out of step. */
 export const TimelineEntry = ({
   index = 0,
   children,
@@ -125,18 +88,9 @@ export const TimelineEntry = ({
       }}
     >
       {/*
-        The node. One element for both breakpoints — the previous pair of
-        `hidden md:block` / `md:hidden` dots meant two nodes to keep in sync
-        for one dot on screen.
-
-        The outer span does the positioning and the inner one does the
-        animation, for the same reason as the rail above: framer-motion's
-        inline transform would otherwise overwrite the centring translate and
-        park the dot beside the line instead of on it.
-
-        Its offsets land the centre on the rail at both widths: the entry
-        starts at the container's 32px / 48px left padding, and -22 / -38
-        brings the centre back to RAIL_X.
+        Outer span positions, inner span animates — same reason as the rail.
+        The -22 / -38 offsets cancel the container's 32px / 48px left padding
+        so the centre lands on RAIL_X at both widths.
       */}
       <span
         aria-hidden="true"

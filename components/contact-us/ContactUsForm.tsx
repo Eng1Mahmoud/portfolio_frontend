@@ -15,6 +15,7 @@ const ContactUsForm = () => {
       action={contactUs}
       buttonProps={{
         name: "Send Message",
+        variant: "site",
       }}
     >
       <div className="grid grid-cols-1 gap-6">
