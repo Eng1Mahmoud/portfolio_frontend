@@ -2,6 +2,7 @@ import Link from "next/link";
 import { FaArrowRight, FaDownload } from "react-icons/fa";
 import { SocialLinks } from "@/components/Home/SocialLinks";
 import { HomeIntro } from "@/components/Home/HomeIntro";
+import { Reveal } from "@/components/general/Reveal";
 import { getProfileInfo } from "@/actions/getProfileInfo";
 import { getAllProjects } from "@/actions/getAllProjects";
 import { getAllSkills } from "@/actions/getAllSkills";
@@ -52,7 +53,12 @@ export default async function Home() {
           technologyCount={skillCount}
         />
 
-        <div className="mt-9 flex flex-wrap items-center gap-x-4 gap-y-4 pl-6 sm:pl-10">
+        {/* Last beat of the hero sequence: the actions arrive after the
+            figures have finished counting. */}
+        <Reveal
+          delay={0.62}
+          className="mt-9 flex flex-wrap items-center gap-x-4 gap-y-4 pl-6 sm:pl-10"
+        >
           <Link
             href="/projects"
             className="group inline-flex items-center gap-2 rounded-full bg-cyan-400 px-6 py-3 text-sm font-medium text-[#06121f] transition-colors hover:bg-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base"
@@ -80,7 +86,7 @@ export default async function Home() {
           <div className="sm:ms-auto">
             <SocialLinks profileInfo={profileInfo as IuserInfo} />
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

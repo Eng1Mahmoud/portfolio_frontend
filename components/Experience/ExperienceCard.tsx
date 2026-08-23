@@ -1,106 +1,77 @@
 "use client";
 import { IExperience } from "@/types/general";
-import { motion } from "framer-motion";
-import { FaBriefcase, FaCalendarAlt } from "react-icons/fa";
+import { FaBriefcase } from "react-icons/fa";
 import Image from "next/image";
 
-export const ExperienceCard = ({
-  experience,
-  index = 0,
-}: {
-  experience: IExperience;
-  index?: number;
-}) => {
+/**
+ * One role on the experience rail. The entry animation and the rail node live
+ * in <TimelineEntry />, so this component is just the card face.
+ */
+export const ExperienceCard = ({ experience }: { experience: IExperience }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.2 }}
-      className="mb-12 flex flex-col relative"
-    >
-      {/* Timeline point with glow */}
-      <div className="absolute left-[-38px] md:left-[-38px] top-0 w-6 h-6 rounded-full bg-surface-card border-4 border-cyan-500 z-10 -translate-x-1/2 shadow-[0_0_15px_rgba(6,182,212,0.5)] hidden md:block"></div>
+    <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-surface-panel/80 p-5 shadow-pinned backdrop-blur-xl transition-colors duration-300 hover:border-cyan-400/30 md:p-7">
+      {/* One warm rake across the panel on hover. The pinboard's gesture,
+          reduced to a single static highlight so the projects page keeps the
+          interactive version to itself. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(30rem_circle_at_85%_0%,rgba(34,211,238,0.08),transparent_60%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+      />
 
-      {/* Mobile Timeline point with glow */}
-      <div className="absolute left-[-22px] top-0 w-5 h-5 rounded-full bg-surface-card border-2 border-cyan-500 z-10 -translate-x-1/2 shadow-[0_0_10px_rgba(6,182,212,0.5)] md:hidden block"></div>
+      <div className="relative z-10">
+        {/* The dates lead. On a rail, when is the first thing you check. */}
+        <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.22em] text-cyan-300">
+          {experience.startDate} — {experience.endDate}
+        </p>
 
-      {/* Time period */}
-      <div className="mb-4">
-        <span className="text-sm font-bold bg-white/[0.06] text-white py-1.5 px-4 rounded-full shadow-lg shadow-cyan-500/20 border border-cyan-500/20 backdrop-blur-sm">
-          {experience.startDate} - {experience.endDate}
-        </span>
-      </div>
-
-      {/* Card Container with Gradient Border */}
-      <div className="group relative rounded-xl p-[1px] bg-white/10 shadow-xl shadow-blue-900/20">
-        <div className="relative overflow-hidden bg-surface-panel/90 backdrop-blur-xl rounded-xl p-4 md:p-6 h-full">
-          {/* Hover Gradient Overlay */}
-          <motion.div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-          <div className="relative z-10">
-            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
-              <div className="flex items-start gap-4">
-                {experience.image && (
-                  <Image
-                    src={experience.image}
-                    alt={experience.company || experience.role}
-                    width={64}
-                    height={64}
-                    className="w-16 h-16 rounded-full object-cover"
-                  />
-                )}
-                <div>
-                  <h3 className="text-lg md:text-2xl font-bold text-ink-strong">
-                    {experience.role}
-                  </h3>
-                  <div className="flex flex-wrap items-center gap-2 text-ink-body mt-2">
-                    <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1">
-                      <FaBriefcase className="text-cyan-400 text-sm" />
-                      <span className="font-semibold text-sm md:text-base text-gray-200">
-                        {experience.company}
-                      </span>
-                    </div>
-                    {experience.workType && (
-                      <span className="text-[10px] md:text-xs px-2 py-1 rounded-md border border-white/10 bg-white/[0.04] text-ink-muted font-medium tracking-wide">
-                        {experience.workType}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-2 text-xs md:text-sm text-ink-muted bg-white/[0.02] p-3 rounded-lg border border-white/10">
-                <div className="flex items-center gap-2">
-                  <FaCalendarAlt className="text-cyan-400" />
-                  <span className="text-ink-body">
-                    {experience.startDate} - {experience.endDate}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <p className="mb-6 whitespace-pre-line border-l border-cyan-400/40 pl-4 text-sm leading-relaxed text-ink-body md:text-base">
-              {experience.description}
-            </p>
-
-            {experience.skills &&
-              Array.isArray(experience.skills) &&
-              experience.skills.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {experience.skills.map((skill, index) => (
-                    <span
-                      key={index}
-                      className="text-[10px] md:text-xs px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04] text-ink-muted transition-colors hover:border-cyan-400/50 hover:text-cyan-300 cursor-default"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
+        <div className="flex items-start gap-4">
+          {experience.image && (
+            <Image
+              src={experience.image}
+              alt={experience.company || experience.role}
+              width={64}
+              height={64}
+              className="h-14 w-14 shrink-0 rounded-full object-cover ring-1 ring-white/10"
+            />
+          )}
+          <div className="min-w-0">
+            <h3 className="display-card text-lg text-ink-strong md:text-2xl">
+              {experience.role}
+            </h3>
+            <div className="mt-2 flex flex-wrap items-center gap-2">
+              <span className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1 text-sm font-medium text-ink-body">
+                <FaBriefcase
+                  className="text-xs text-cyan-400"
+                  aria-hidden="true"
+                />
+                {experience.company}
+              </span>
+              {experience.workType && (
+                <span className="rounded-md border border-white/10 bg-white/[0.04] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted md:text-[11px]">
+                  {experience.workType}
+                </span>
               )}
+            </div>
           </div>
         </div>
+
+        <p className="mb-6 mt-5 whitespace-pre-line border-l border-cyan-400/40 pl-4 text-sm leading-relaxed text-ink-body md:text-base">
+          {experience.description}
+        </p>
+
+        {Array.isArray(experience.skills) && experience.skills.length > 0 && (
+          <ul className="flex flex-wrap gap-2">
+            {experience.skills.map((skill) => (
+              <li
+                key={skill}
+                className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 font-mono text-[10px] text-ink-muted transition-colors hover:border-cyan-400/50 hover:text-cyan-300 md:text-xs"
+              >
+                {skill}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
-    </motion.div>
+    </div>
   );
 };

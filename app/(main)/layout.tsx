@@ -17,7 +17,19 @@ export default async function MainLayout({
       </div>
       {/* Single content region for both breakpoints — rendering `children`
           twice puts the whole page in the DOM twice (duplicate <main>/<h1>). */}
-      <div className="flex-1 lg:flex-none lg:w-[80%] h-screen overflow-y-auto scrollBar pt-16 pb-4 lg:pt-0 lg:pb-0">
+      {/*
+        The page scrolls in here, not in the window. Anything that reacts to
+        scroll position has to be told so — <Timeline /> looks this id up to
+        subscribe to the right element.
+
+        `relative` is load-bearing: a scroll container measured by
+        framer-motion has to be a containing block, or the offsets it reads
+        for its children are computed against the wrong origin.
+      */}
+      <div
+        id="page-scroll"
+        className="relative flex-1 lg:flex-none lg:w-[80%] h-screen overflow-y-auto scrollBar pt-16 pb-4 lg:pt-0 lg:pb-0"
+      >
         <main className="container lg:py-10">{children}</main>
         <CanvasCursor />
       </div>

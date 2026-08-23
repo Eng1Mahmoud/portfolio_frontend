@@ -40,7 +40,7 @@ export default async function SkillsPage() {
 
   return (
     <div>
-      <Title title="Skills" eyebrow="What I work with" />
+      <Title title="Skills" eyebrow="What I work with" count={skills.length} />
 
       <div className="space-y-12">
         {ordered.map(([category, items]) => (
@@ -58,8 +58,8 @@ export default async function SkillsPage() {
             </div>
 
             <div className="grid grid-cols-2 items-center justify-center gap-4 md:grid-cols-5 md:gap-6">
-              {items.map((skill) => (
-                <SkillCard key={skill._id} skill={skill} />
+              {items.map((skill, index) => (
+                <SkillCard key={skill._id} skill={skill} index={index} />
               ))}
             </div>
           </section>
