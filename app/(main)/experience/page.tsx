@@ -12,7 +12,8 @@ export default async function ExperiencePage() {
   const experiences = (await getAllExperiences()) || [];
 
   return (
-    <div className="container mx-auto px-4 ">
+    /* <main> is already the container — see the projects page. */
+    <div>
       <div className="max-w-4xl mx-auto">
         <Title
           title="Experience"

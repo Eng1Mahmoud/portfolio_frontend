@@ -23,6 +23,16 @@ const useIsomorphicLayoutEffect =
  */
 const RAIL_X = "absolute left-[10px] top-0 h-full -translate-x-1/2";
 
+/*
+  Reveal margins are vertical-only ("-Npx 0px"), never the one-value shorthand.
+
+  `margin` becomes the IntersectionObserver rootMargin, and a single value
+  insets all four sides. On a 390px-wide phone "-80px" narrows the trigger box
+  to x 80–310, which is enough to miss a small element pinned near the left
+  edge entirely — the timeline node is 16px wide at x 18, so it never
+  intersected and sat at its initial opacity: 0 forever. It looked fine on a
+  desktop only because the same box is 1280px wide there.
+*/
 export const Timeline = ({ children }: { children: ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -107,7 +117,7 @@ export const TimelineEntry = ({
       className="relative mb-12 flex flex-col"
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, margin: "-80px 0px" }}
       transition={{
         duration: 0.55,
         delay: Math.min(index, 4) * 0.08,
@@ -135,7 +145,7 @@ export const TimelineEntry = ({
         <motion.span
           initial={{ scale: 0.4, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: true, margin: "-80px 0px" }}
           transition={{
             duration: 0.4,
             delay: Math.min(index, 4) * 0.08 + 0.1,

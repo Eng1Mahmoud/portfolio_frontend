@@ -64,16 +64,28 @@ export const PinnedCard = ({
     <div className={`pin-stage h-full ${className}`}>
       <motion.div
         ref={ref}
+        initial={
+          reduceMotion ? { opacity: 0 } : { opacity: 0, y: 26, scale: 0.97 }
+        }
         // Cards arrive already pinned: they drop in past their rest angle and
         // settle onto it, rather than rotating up from square, which would
         // read as a loading spinner.
-        initial={
-          reduceMotion
-            ? { opacity: 0 }
-            : { opacity: 0, y: 26, rotate: restAngle * 2.2, scale: 0.97 }
-        }
-        whileInView={{ opacity: 1, y: 0, rotate: restAngle, scale: 1 }}
-        viewport={{ once: true, margin: "-60px" }}
+        //
+        // The overshoot is a keyframe pair here rather than a rotation in
+        // `initial`, because framer-motion snapshots `initial` once on mount —
+        // before the media query that flattens the board on phones has
+        // resolved. Cards below the fold were holding the desktop tilt at a
+        // width where the board is meant to be square, pushing their corners
+        // ~15px past the screen edge until they scrolled into view.
+        // `whileInView` is read when it fires, by which point restAngle is
+        // correct for the width.
+        whileInView={{
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          rotate: reduceMotion ? restAngle : [restAngle * 2.2, restAngle],
+        }}
+        viewport={{ once: true, margin: "-60px 0px" }}
         transition={{
           duration: 0.55,
           delay: Math.min(index, 5) * 0.07,

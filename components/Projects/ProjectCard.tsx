@@ -65,7 +65,7 @@ export const ProjectCard = ({
         {/* pin-lift floats the text plate above the face while the card turns,
             which is what sells the depth — a flat card that merely rotates
             reads as a sticker. */}
-        <div className="pin-lift relative z-10 flex flex-1 flex-col p-5">
+        <div className="pin-lift relative z-10 flex flex-1 flex-col p-4 sm:p-5">
           <h3 className="display-card mb-2 text-[1.15rem] text-ink-strong">
             {project.title.trim()}
           </h3>

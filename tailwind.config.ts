@@ -19,7 +19,9 @@ export default {
       container: {
         center: true,
         padding: {
-          DEFAULT: "1rem",
+          // Phones get a tighter gutter: at 390px every pixel spent here comes
+          // straight out of the card the visitor came to read.
+          DEFAULT: "0.75rem",
           sm: "1rem",
           lg: "4rem",
           xl: "5rem",
