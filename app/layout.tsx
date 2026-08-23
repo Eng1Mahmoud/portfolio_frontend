@@ -1,7 +1,7 @@
 import { ToastContainer } from "react-toastify";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "react-toastify/dist/ReactToastify.css";
-import { mainFont, monoFont } from "@/fonts";
+import { displayFont, mainFont, monoFont } from "@/fonts";
 import { Metadata } from "next";
 import { Person, WithContext } from "schema-dts";
 import ChatBotWraper from "@/components/general/chatbot/ChatBotWraper";
@@ -71,7 +71,7 @@ export default async function RootLayout({
     <html lang="en">
       <body
         suppressHydrationWarning={true}
-        className={`${mainFont.variable} ${monoFont.variable}`}
+        className={`${displayFont.variable} ${mainFont.variable} ${monoFont.variable}`}
       >
         <script
           type="application/ld+json"

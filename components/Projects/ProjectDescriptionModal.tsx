@@ -2,7 +2,8 @@
 import { motion } from "framer-motion";
 import { FaTimes, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 interface ProjectDescriptionModalProps {
   title: string;
@@ -22,6 +23,13 @@ export const ProjectDescriptionModal = ({
   onClose,
 }: ProjectDescriptionModalProps) => {
   const panelRef = useRef<HTMLDivElement>(null);
+  // The card that opens this dialog now sits inside a 3D transform (the
+  // pinboard tilt). A transformed ancestor becomes the containing block for
+  // `position: fixed`, so the backdrop would be pinned to the card instead of
+  // the viewport. Rendering through a portal takes the dialog out of that
+  // subtree entirely.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   // Escape to close, and lock the page behind the dialog so the background
   // does not scroll while the description is being read.
@@ -40,7 +48,9 @@ export const ProjectDescriptionModal = ({
     };
   }, [onClose]);
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -130,6 +140,7 @@ export const ProjectDescriptionModal = ({
           </div>
         )}
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body,
   );
 };

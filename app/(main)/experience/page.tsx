@@ -14,7 +14,11 @@ export default async function ExperiencePage() {
   return (
     <div className="container mx-auto px-4 ">
       <div className="max-w-4xl mx-auto">
-        <Title title="Experience" eyebrow="Where I have worked" />
+        <Title
+          title="Experience"
+          eyebrow="Where I have worked"
+          count={experiences.length}
+        />
 
         <ExperienceTimeline experiences={experiences} />
       </div>

@@ -2,14 +2,101 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  font-family: var(--main-font);
+@layer base {
+  /* Body sets the reading face once; headings opt into the display face via
+     `font-display` or the .display-* utilities below. The previous `* { }`
+     rule forced one family onto every element including <code>, which meant
+     the mono variable was declared but never actually seen. */
+  body {
+    font-family: var(--main-font), system-ui, sans-serif;
+    background-color: theme("colors.surface.well");
+    color: theme("colors.ink.body");
+    /* Instrument Sans ships proper contextual alternates; without this the
+       "ti"/"tt" pairs in body copy sit a hair too loose. */
+    font-feature-settings:
+      "calt" 1,
+      "liga" 1;
+  }
+
+  html,
+  body,
+  main {
+    overflow-x: hidden;
+  }
 }
-html,
-body,
-main {
-  overflow-x: hidden;
+
+@layer components {
+  /*
+    Bricolage Grotesque is variable on three axes. Rather than let the browser
+    interpolate optical size from the rendered px value (which it only does
+    when `font-optical-sizing: auto` is supported), each heading role states
+    the axis values it wants. Larger opsz = tighter apertures and finer joins,
+    which is what keeps a 5rem name from looking inflated.
+  */
+  .display-hero {
+    font-family: var(--display-font), sans-serif;
+    /* wdth 92 narrows the name just enough to hold two words per line on a
+       phone without hyphenating. */
+    font-variation-settings:
+      "opsz" 96,
+      "wdth" 92,
+      "wght" 620;
+    letter-spacing: -0.035em;
+  }
+
+  .display-title {
+    font-family: var(--display-font), sans-serif;
+    font-variation-settings:
+      "opsz" 48,
+      "wdth" 96,
+      "wght" 600;
+    letter-spacing: -0.022em;
+  }
+
+  .display-card {
+    font-family: var(--display-font), sans-serif;
+    font-variation-settings:
+      "opsz" 18,
+      "wdth" 100,
+      "wght" 620;
+    letter-spacing: -0.012em;
+  }
+
+  /*
+    Pinboard mechanics.
+
+    Every tilted card lives inside its own perspective context rather than one
+    shared parent: a single perspective across a 3-column grid makes the outer
+    cards shear, because they sit far from the vanishing point.
+  */
+  .pin-stage {
+    perspective: 1100px;
+    perspective-origin: center;
+  }
+
+  .pin-card {
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  /*
+    Children that float above the card face while it tilts.
+
+    The lift only applies once the card is engaged. Left on permanently, a
+    translateZ inside a perspective context renders the plate ~3.5% larger at
+    rest — enough to crowd the card's padding for no gain, since there is no
+    depth to read until the card actually turns.
+  */
+  .pin-lift {
+    transform: translateZ(0);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .pin-card:hover .pin-lift {
+    transform: translateZ(34px);
+  }
 }
+
 /* Main App Scrollbar */
 /* Firefox has no ::-webkit-scrollbar; without these two it fell back to the
    default chrome scrollbar. */
@@ -39,7 +126,8 @@ main {
 }
 
 /* Honour the OS "reduce motion" setting for CSS-driven animation.
-   framer-motion is handled separately by MotionConfig in MotionProvider. */
+   framer-motion is handled separately by MotionConfig in MotionProvider, and
+   the pointer-tilt hook checks useReducedMotion before subscribing. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -48,5 +136,15 @@ main {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* Flatten the board entirely — a static tilt is still a legible layout,
+     but the 3D depth is what causes discomfort. */
+  .pin-stage {
+    perspective: none;
+  }
+
+  .pin-lift {
+    transform: none;
   }
 }

@@ -1,6 +1,13 @@
 "use client";
 import { IuserInfo } from "@/types/general";
-import { motion } from "framer-motion";
+import {
+  animate,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+} from "framer-motion";
+import { useEffect } from "react";
 
 interface HomeIntroProps {
   profileInfo: IuserInfo;
@@ -8,15 +15,61 @@ interface HomeIntroProps {
   technologyCount: number;
 }
 
-// One orchestrated load sequence rather than scattered effects: the rail draws
-// down, then each block arrives behind it.
+// One orchestrated load sequence rather than scattered effects. Every delay is
+// a multiple of BEAT, so the whole hero shares one rhythm instead of each
+// block guessing its own timing.
+const BEAT = 0.09;
+const EASE = [0.22, 1, 0.36, 1] as const;
+
 const rise = {
   hidden: { opacity: 0, y: 14 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: 0.25 + i * 0.09, duration: 0.5, ease: "easeOut" },
+    transition: { delay: 0.34 + i * BEAT, duration: 0.55, ease: EASE },
   }),
+};
+
+/** A heading line that rises out of a clipping mask. */
+const lineUp = {
+  hidden: { y: "112%" },
+  visible: (i: number) => ({
+    y: "0%",
+    transition: { delay: 0.16 + i * 0.11, duration: 0.85, ease: EASE },
+  }),
+};
+
+/**
+ * The figures are real data, so they count rather than fade — the number
+ * arriving at its value is the one place on the page where motion carries
+ * information instead of decorating it.
+ */
+const Counter = ({ value, delay }: { value: number; delay: number }) => {
+  const reduceMotion = useReducedMotion();
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (latest) => Math.round(latest));
+
+  useEffect(() => {
+    if (reduceMotion) {
+      count.set(value);
+      return;
+    }
+    const controls = animate(count, value, {
+      duration: 1.1,
+      delay,
+      ease: "easeOut",
+    });
+    return () => controls.stop();
+  }, [count, value, delay, reduceMotion]);
+
+  // The static value stays in the DOM for screen readers and for the moment
+  // before hydration; the animated one is decorative.
+  return (
+    <>
+      <motion.span aria-hidden="true">{rounded}</motion.span>
+      <span className="sr-only">{value}</span>
+    </>
+  );
 };
 
 export const HomeIntro = ({
@@ -54,54 +107,64 @@ export const HomeIntro = ({
         aria-hidden="true"
         initial={{ scaleY: 0 }}
         animate={{ scaleY: 1 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
+        transition={{ duration: 0.9, ease: EASE }}
         style={{ transformOrigin: "top" }}
         className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-cyan-400 via-white/12 to-transparent"
       />
 
       {role && (
         <motion.p
-          custom={0}
-          initial="hidden"
-          animate="visible"
-          variants={rise}
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.12, duration: 0.5, ease: EASE }}
           className="mb-5 font-mono text-[11px] uppercase tracking-[0.28em] text-cyan-300 sm:text-xs"
         >
           {role}
         </motion.p>
       )}
 
-      <motion.h1
-        custom={1}
-        initial="hidden"
-        animate="visible"
-        variants={rise}
-        className="font-main text-[clamp(2.5rem,9vw,5rem)] font-semibold leading-[0.95] tracking-[-0.03em] text-[#e8ecf4]"
-      >
-        {firstName}
+      {/* Each line gets its own mask, so the two halves of the name arrive one
+          after the other like a nameplate being set. */}
+      <h1 className="display-hero text-[clamp(2.6rem,9.5vw,5.5rem)] leading-[0.92] text-ink-strong">
+        <span className="block overflow-hidden pb-[0.06em]">
+          <motion.span
+            custom={0}
+            initial="hidden"
+            animate="visible"
+            variants={lineUp}
+            className="block"
+          >
+            {firstName}
+          </motion.span>
+        </span>
         {lastName && (
-          <>
-            {/* A real space before the break, so the name still copies as
-                "Mahmoud Mohamed" rather than running together. */}{" "}
-            <br />
-            <span className="text-[#93a3bd]">{lastName}</span>
-          </>
+          <span className="block overflow-hidden pb-[0.08em]">
+            <motion.span
+              custom={1}
+              initial="hidden"
+              animate="visible"
+              variants={lineUp}
+              className="block text-ink-muted"
+            >
+              {lastName}
+            </motion.span>
+          </span>
         )}
-      </motion.h1>
+      </h1>
 
       {bio && (
         <motion.div
-          custom={2}
+          custom={0}
           initial="hidden"
           animate="visible"
           variants={rise}
           className="mt-7 max-w-[58ch] space-y-3"
         >
-          <p className="whitespace-pre-line text-[0.975rem] leading-[1.75] text-[#c3cede] sm:text-[1.0625rem]">
+          <p className="whitespace-pre-line text-[0.975rem] leading-[1.75] text-ink-body sm:text-[1.0625rem]">
             {lead}
           </p>
           {body && (
-            <p className="whitespace-pre-line text-[0.9rem] leading-[1.75] text-[#93a3bd] sm:text-[0.95rem]">
+            <p className="whitespace-pre-line text-[0.9rem] leading-[1.75] text-ink-muted sm:text-[0.95rem]">
               {body}
             </p>
           )}
@@ -110,7 +173,7 @@ export const HomeIntro = ({
 
       {/* Real figures, read from the projects the site already loads. */}
       <motion.dl
-        custom={3}
+        custom={1}
         initial="hidden"
         animate="visible"
         variants={rise}
@@ -118,13 +181,13 @@ export const HomeIntro = ({
       >
         {/* dt before dd keeps the list valid; `order` shows the figure first
             without repeating the label in a second, sr-only copy. */}
-        {figures.map((figure) => (
+        {figures.map((figure, index) => (
           <div key={figure.label} className="flex items-baseline gap-2">
-            <dt className="order-2 text-[11px] uppercase tracking-[0.18em] text-[#93a3bd]">
+            <dt className="order-2 text-[11px] uppercase tracking-[0.18em] text-ink-muted">
               {figure.label}
             </dt>
-            <dd className="order-1 text-xl text-cyan-300 sm:text-2xl">
-              {figure.value}
+            <dd className="order-1 text-xl text-cyan-300 tabular-nums sm:text-2xl">
+              <Counter value={figure.value} delay={0.7 + index * 0.12} />
             </dd>
           </div>
         ))}
