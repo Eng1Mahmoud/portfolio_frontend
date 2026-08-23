@@ -4,7 +4,7 @@ import { IuserInfo } from "@/types/general";
 
 export const ProfileImage = ({ profileInfo }: { profileInfo: IuserInfo }) => {
   return (
-    <div className="relative w-full aspect-square mx-auto max-w-md group">
+    <div className="group relative aspect-square w-full max-w-md">
       <Image
         src={profileInfo?.aboutImage}
         alt="Mahmoud Mohamed"
@@ -18,7 +18,7 @@ export const ProfileImage = ({ profileInfo }: { profileInfo: IuserInfo }) => {
           absolute top-0 left-0 
           w-8 h-8 
           border-l-[6px] border-t-[6px] 
-          border-cyan-400 
+          border-sage 
           rounded-tl-lg
         "
       />
@@ -28,7 +28,7 @@ export const ProfileImage = ({ profileInfo }: { profileInfo: IuserInfo }) => {
           absolute bottom-0 right-0 
           w-8 h-8 
           border-r-[6px] border-b-[6px] 
-          border-cyan-400 
+          border-sage 
           rounded-br-lg
         "
       />
@@ -37,7 +37,7 @@ export const ProfileImage = ({ profileInfo }: { profileInfo: IuserInfo }) => {
         className="
         absolute inset-0 
         border-4 border-transparent 
-        group-hover:border-cyan-400/50 
+        group-hover:border-sage/50 
         rounded-lg 
         transition-all 
         duration-300 

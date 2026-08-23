@@ -56,7 +56,7 @@ export const ProjectDescriptionModal = ({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
-      className="fixed inset-0 z-[1000] flex items-center justify-center bg-[#050a14]/85 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[1000] flex items-center justify-center bg-surface-well/85 p-4 backdrop-blur-sm"
     >
       <motion.div
         ref={panelRef}
@@ -69,11 +69,11 @@ export const ProjectDescriptionModal = ({
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
-        className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-white/10 bg-surface-card outline-none"
+        className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-parchment/10 bg-surface-card outline-none"
       >
         {/* Header stays put so the close button is always reachable while
             scrolling a long description. */}
-        <div className="flex shrink-0 items-start justify-between gap-4 border-b border-white/10 px-6 py-4">
+        <div className="flex shrink-0 items-start justify-between gap-4 border-b border-parchment/10 px-6 py-4">
           <h3 className="text-xl font-semibold text-ink-strong md:text-2xl">
             {title}
           </h3>
@@ -81,7 +81,7 @@ export const ProjectDescriptionModal = ({
             type="button"
             onClick={onClose}
             aria-label="Close project details"
-            className="shrink-0 rounded-md p-1 text-ink-muted transition-colors hover:bg-white/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+            className="shrink-0 rounded-md p-1 text-ink-muted transition-colors hover:bg-parchment/10 hover:text-ink-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
           >
             <FaTimes size={20} aria-hidden="true" />
           </button>
@@ -98,7 +98,7 @@ export const ProjectDescriptionModal = ({
                 {technologies.map((tech) => (
                   <li
                     key={tech}
-                    className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-ink-body"
+                    className="rounded-full border border-parchment/10 bg-parchment/[0.04] px-3 py-1 text-xs text-ink-body"
                   >
                     {tech}
                   </li>
@@ -114,13 +114,13 @@ export const ProjectDescriptionModal = ({
 
         {/* Actions stay visible instead of being scrolled past. */}
         {(githubLink || demoLink) && (
-          <div className="flex shrink-0 flex-wrap gap-3 border-t border-white/10 px-6 py-4">
+          <div className="flex shrink-0 flex-wrap gap-3 border-t border-parchment/10 px-6 py-4">
             {githubLink && (
               <Link
                 href={githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-ink-body transition-colors hover:border-cyan-400/60 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                className="flex items-center gap-2 rounded-full border border-parchment/15 px-4 py-2 text-sm text-ink-body transition-colors hover:border-sage/60 hover:text-ink-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
               >
                 <FaGithub aria-hidden="true" />
                 GitHub
@@ -131,7 +131,7 @@ export const ProjectDescriptionModal = ({
                 href={demoLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full bg-cyan-400 px-4 py-2 text-sm font-medium text-[#06121f] transition-colors hover:bg-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                className="flex items-center gap-2 rounded-full bg-sage px-4 py-2 text-sm font-medium text-surface-base transition-colors hover:bg-sage-bright focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
               >
                 <FaExternalLinkAlt aria-hidden="true" />
                 Live

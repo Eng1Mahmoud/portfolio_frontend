@@ -10,7 +10,7 @@ export default async function MainLayout({
 }) {
   const profileInfo = await getProfileInfo();
   return (
-    <div className="bg-primary-light text-white h-screen flex flex-col lg:flex-row ">
+    <div className="bg-surface-base text-ink-body h-screen flex flex-col lg:flex-row ">
       <MobileAsideToggle profileInfo={profileInfo as IuserInfo} />
       <div className="hidden lg:block lg:w-[20%] h-screen">
         <Aside profileInfo={profileInfo as IuserInfo} />

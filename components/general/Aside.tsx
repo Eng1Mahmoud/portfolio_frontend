@@ -42,7 +42,7 @@ export const Aside = ({
   return (
     <motion.aside
       {...(isMobile ? mobileConfig : desktopConfig)}
-      className="h-screen overflow-y-auto overflow-x-hidden w-full bg-surface-base text-ink-body flex flex-col items-center relative z-[100] scrollBar border-e border-white/10 py-10"
+      className="h-screen overflow-y-auto overflow-x-hidden w-full bg-surface-base text-ink-body flex flex-col items-center relative z-[100] scrollBar border-e border-parchment/10 py-10"
     >
       <motion.div
         initial={{ scale: 0.8 }}
@@ -54,7 +54,7 @@ export const Aside = ({
         }}
         className="avatar mb-8 relative group"
       >
-        <div className="rounded-full p-[3px] ring-1 ring-white/15 transition-colors group-hover:ring-cyan-400/50 relative">
+        <div className="rounded-full p-[3px] ring-1 ring-parchment/15 transition-colors group-hover:ring-sage/50 relative">
           <motion.div
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300 }}
@@ -98,10 +98,10 @@ export const Aside = ({
                       // the same language as the page headings it sits beside.
                       "relative block w-full rounded-lg py-2.5 ps-5 pe-3 text-start font-main text-[0.9375rem] transition-colors duration-200",
                       "before:absolute before:start-0 before:top-1/2 before:h-5 before:w-px before:-translate-y-1/2 before:rounded-full before:transition-colors before:content-['']",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage",
                       isActive(item.path)
-                        ? "bg-white/[0.06] font-medium text-white before:bg-cyan-400"
-                        : "text-ink-muted before:bg-white/15 hover:bg-white/[0.03] hover:text-ink-strong hover:before:bg-cyan-400/60",
+                        ? "bg-parchment/[0.06] font-medium text-ink-strong before:bg-sage"
+                        : "text-ink-muted before:bg-parchment/15 hover:bg-parchment/[0.03] hover:text-ink-strong hover:before:bg-sage/60",
                     )}
                   >
                     {item.label}
@@ -120,7 +120,7 @@ export const Aside = ({
             href={profileInfo?.cv}
             target="_blank"
             download
-            className="flex w-full items-center justify-center gap-2 rounded-full border border-white/15 py-2.5 px-4 text-center text-sm font-medium text-ink-body transition-colors hover:border-cyan-400/60 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+            className="flex w-full items-center justify-center gap-2 rounded-full border border-parchment/15 py-2.5 px-4 text-center text-sm font-medium text-ink-body transition-colors hover:border-sage/60 hover:text-ink-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage"
             onClick={handleDownloadCV}
           >
             Download CV

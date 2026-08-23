@@ -17,7 +17,7 @@ export default function Loading() {
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
-              className="flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-white/[0.02]"
+              className="flex h-full flex-col overflow-hidden rounded-xl border border-parchment/10 bg-parchment/[0.02]"
             >
               <SkeletonBlock className="h-[190px] rounded-none" />
               <div className="flex flex-1 flex-col p-5">

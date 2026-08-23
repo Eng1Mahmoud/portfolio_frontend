@@ -64,7 +64,7 @@ const InputField = ({
       >
         {variant === "dark" && (
           <motion.div
-            className="absolute inset-0 bg-cyan-500/5 pointer-events-none"
+            className="absolute inset-0 bg-sage/[0.06] pointer-events-none"
             animate={{ opacity: isHovered ? 1 : 0 }}
             transition={{ duration: 0.3 }}
           />

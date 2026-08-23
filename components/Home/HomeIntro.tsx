@@ -109,7 +109,7 @@ export const HomeIntro = ({
         animate={{ scaleY: 1 }}
         transition={{ duration: 0.9, ease: EASE }}
         style={{ transformOrigin: "top" }}
-        className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-cyan-400 via-white/12 to-transparent"
+        className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-sage via-parchment/12 to-transparent"
       />
 
       {role && (
@@ -117,7 +117,7 @@ export const HomeIntro = ({
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.12, duration: 0.5, ease: EASE }}
-          className="mb-5 font-mono text-[11px] uppercase tracking-[0.28em] text-cyan-300 sm:text-xs"
+          className="mb-5 font-mono text-[11px] uppercase tracking-[0.28em] text-sage sm:text-xs"
         >
           {role}
         </motion.p>
@@ -177,7 +177,7 @@ export const HomeIntro = ({
         initial="hidden"
         animate="visible"
         variants={rise}
-        className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/10 pt-5 font-mono"
+        className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-parchment/10 pt-5 font-mono"
       >
         {/* dt before dd keeps the list valid; `order` shows the figure first
             without repeating the label in a second, sr-only copy. */}
@@ -186,7 +186,7 @@ export const HomeIntro = ({
             <dt className="order-2 text-[11px] uppercase tracking-[0.18em] text-ink-muted">
               {figure.label}
             </dt>
-            <dd className="order-1 text-xl text-cyan-300 tabular-nums sm:text-2xl">
+            <dd className="order-1 text-xl text-sage tabular-nums sm:text-2xl">
               <Counter value={figure.value} delay={0.7 + index * 0.12} />
             </dd>
           </div>

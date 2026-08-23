@@ -32,7 +32,7 @@ export default function Loading() {
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="flex gap-4 rounded-xl border border-white/10 bg-white/[0.02] p-5"
+                className="flex gap-4 rounded-xl border border-parchment/10 bg-parchment/[0.02] p-5"
               >
                 <SkeletonBlock className="h-11 w-11 flex-shrink-0" />
                 <div className="flex-1 space-y-2">

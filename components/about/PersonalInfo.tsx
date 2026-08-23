@@ -53,7 +53,7 @@ export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
     <div>
       <h2 className="display-title mb-4 text-2xl text-ink-strong">
         Hi, I am{" "}
-        <span className="text-cyan-300">
+        <span className="text-sage">
           {/* The full name is always in the DOM for assistive tech; the typed
               copy is the decorative one. */}
           <span aria-hidden="true">{name}</span>
@@ -67,7 +67,7 @@ export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
                 repeat: Infinity,
                 times: [0, 0.5, 0.5, 1],
               }}
-              className="ms-0.5 inline-block h-[0.9em] w-[2px] translate-y-[0.05em] bg-cyan-300"
+              className="ms-0.5 inline-block h-[0.9em] w-[2px] translate-y-[0.05em] bg-sage-bright"
             />
           )}
         </span>
@@ -89,7 +89,7 @@ export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
         is. It replaces a bulleted list where the label and value ran together
         in one line of prose.
       */}
-      <dl className="mb-8 divide-y divide-white/[0.07] border-y border-white/[0.07]">
+      <dl className="mb-8 divide-y divide-parchment/[0.07] border-y border-parchment/[0.07]">
         {personalDetails.map((detail, index) => (
           <motion.div
             key={detail.label}
@@ -118,7 +118,7 @@ export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
         href={profileInfo?.cv}
         target="_blank"
         download
-        className="inline-flex items-center gap-2 rounded-full bg-cyan-400 px-6 py-3 text-sm font-medium text-[#06121f] transition-colors hover:bg-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+        className="inline-flex items-center gap-2 rounded-full bg-sage px-6 py-3 text-sm font-medium text-surface-base transition-colors hover:bg-sage-bright focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
         onClick={handleDownloadCV}
       >
         Download CV

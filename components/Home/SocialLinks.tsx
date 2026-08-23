@@ -45,28 +45,13 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
 
   const variants = getVariants(isMobile);
 
+  // One hover treatment for all three. They used to hover in each platform's
+  // own brand colour, which put three unrelated hues on the quietest corner of
+  // the page.
   const socialLinks = [
-    {
-      icon: FaLinkedin,
-      href: profileInfo?.linkedin,
-      color: "hover:text-cyan-400",
-      borderColor: "group-hover:border-cyan-400/50",
-      shadowColor: "group-hover:shadow-cyan-400/20",
-    },
-    {
-      icon: FaGithub,
-      href: profileInfo?.github,
-      color: "hover:text-cyan-300",
-      borderColor: "group-hover:border-cyan-400/50",
-      shadowColor: "group-hover:shadow-cyan-400/20",
-    },
-    {
-      icon: FaWhatsapp,
-      href: `https://wa.me/${profileInfo?.phone1}`,
-      color: "hover:text-green-400",
-      borderColor: "group-hover:border-green-400/50",
-      shadowColor: "group-hover:shadow-green-400/20",
-    },
+    { icon: FaLinkedin, href: profileInfo?.linkedin },
+    { icon: FaGithub, href: profileInfo?.github },
+    { icon: FaWhatsapp, href: `https://wa.me/${profileInfo?.phone1}` },
   ];
 
   return (
@@ -102,11 +87,9 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
                     : "whatsapp";
                 handleSocialClick(platform);
               }}
-              className={`block rounded-full border border-white/10 p-3 transition-colors duration-300 hover:border-cyan-400/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 ${social.borderColor}`}
+              className="block rounded-full border border-parchment/10 p-3 transition-colors duration-300 hover:border-sage/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
             >
-              <social.icon
-                className={`text-lg text-[#93a3bd] transition-colors duration-300 ${social.color}`}
-              />
+              <social.icon className="text-lg text-ink-muted transition-colors duration-300 group-hover:text-sage" />
             </Link>
           </motion.li>
         ))}

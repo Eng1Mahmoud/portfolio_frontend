@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 /**
  * Dashboard skeletons need their own blocks: the panels there are white, so
- * the white/5 tones used on the public site would be invisible.
+ * the parchment/5 tones used on the public site would be invisible.
  */
 export const DashScreen = ({
   title,

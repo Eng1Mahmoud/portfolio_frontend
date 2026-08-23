@@ -29,15 +29,30 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
             className={clsx(
               "p-3 rounded-2xl text-sm leading-relaxed shadow-sm",
               msg.sender === "user"
-                ? "bg-blue-600 text-white rounded-tr-none"
-                : "bg-white/5 text-gray-200 border border-white/10 rounded-tl-none",
+                ? "bg-sage text-surface-base rounded-tr-none"
+                : "bg-parchment/5 text-ink-body border border-parchment/10 rounded-tl-none",
             )}
           >
-            <div className="prose prose-sm prose-invert max-w-none prose-p:leading-relaxed prose-a:text-blue-400">
+            {/*
+              The two bubbles need opposite prose colours. `prose-invert` sets
+              a light body colour for dark backgrounds, which is right for the
+              assistant's bubble and was leaving the sent message at 1.6:1 —
+              light text on a light sage fill, effectively invisible. The
+              parent's `text-surface-base` could not fix it, because prose
+              sets the colour on the paragraph itself.
+            */}
+            <div
+              className={clsx(
+                "prose prose-sm max-w-none prose-p:leading-relaxed",
+                msg.sender === "user"
+                  ? "prose-headings:text-surface-base prose-p:text-surface-base prose-strong:text-surface-base prose-li:text-surface-base prose-code:text-surface-base prose-a:text-sage-deepest"
+                  : "prose-invert prose-a:text-sage",
+              )}
+            >
               <ReactMarkdown>{msg.text}</ReactMarkdown>
             </div>
           </div>
-          <span className="text-[10px] text-gray-400 mt-1 px-1">
+          <span className="text-[10px] text-ink-muted mt-1 px-1">
             {msg.timestamp.toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
@@ -46,11 +61,11 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
         </div>
       ))}
       {isLoading && (
-        <div className="flex items-center gap-2 text-gray-500 text-sm italic">
+        <div className="flex items-center gap-2 text-ink-muted text-sm italic">
           <div className="flex gap-1">
-            <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.3s]" />
-            <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.15s]" />
-            <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" />
+            <span className="w-1.5 h-1.5 bg-ink-muted rounded-full animate-bounce [animation-delay:-0.3s]" />
+            <span className="w-1.5 h-1.5 bg-ink-muted rounded-full animate-bounce [animation-delay:-0.15s]" />
+            <span className="w-1.5 h-1.5 bg-ink-muted rounded-full animate-bounce" />
           </div>
           Assistant is thinking...
         </div>
