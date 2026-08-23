@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { RevealText } from "@/components/general/RevealText";
 
 interface TitleProps {
   title: string;
@@ -46,17 +47,12 @@ export const Title = ({ title, eyebrow, count }: TitleProps) => {
         </motion.div>
       )}
 
-      {/* Bottom padding so the mask does not shave descenders. */}
-      <span className="block overflow-hidden pb-[0.12em]">
-        <motion.h1
-          initial={{ y: "115%" }}
-          animate={{ y: "0%" }}
-          transition={{ duration: 0.7, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-          className="display-title text-[clamp(1.9rem,5vw,2.9rem)] leading-[1.05] text-ink-strong"
-        >
-          {title}
-        </motion.h1>
-      </span>
+      <RevealText
+        as="h1"
+        text={title}
+        delay={0.06}
+        className="display-title block text-[clamp(1.9rem,5vw,2.9rem)] leading-[1.05] text-ink-strong"
+      />
     </div>
   );
 };

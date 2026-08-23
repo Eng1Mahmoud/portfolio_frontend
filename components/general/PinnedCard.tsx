@@ -76,10 +76,25 @@ export const PinnedCard = ({
     restDelta: 0.01,
   });
 
+  // Depth: cards away from the middle of the screen sit slightly back and
+  // dimmer, so the row you are actually reading is the one in focus. Derived
+  // from the same scroll subscription as the lean, so it costs nothing extra.
+  const depthScale = useTransform(
+    scrollYProgress,
+    [0, 0.25, 0.5, 0.75, 1],
+    [0.94, 0.99, 1, 0.99, 0.94],
+  );
+  const depthFade = useTransform(
+    scrollYProgress,
+    [0, 0.18, 0.5, 0.82, 1],
+    [0.55, 1, 1, 1, 0.55],
+  );
+
   // Pointer and scroll write to the same axis, so they are summed rather than
   // left to fight. Only one is ever non-zero: the pointer tilt ignores touch,
   // and the lean is gated to compact widths.
   const leanActive = compact && !reduceMotion;
+  const depthActive = !reduceMotion;
   const tiltX = useTransform<number, number>(
     [rotateX, leanSmooth],
     ([pointer, scroll]: number[]) => pointer + (leanActive ? scroll : 0),
@@ -94,7 +109,12 @@ export const PinnedCard = ({
 
   return (
     <CardProgress.Provider value={scrollYProgress}>
-      <div className={`pin-stage h-full ${className}`}>
+      <motion.div
+        style={
+          depthActive ? { scale: depthScale, opacity: depthFade } : undefined
+        }
+        className={`pin-stage h-full ${className}`}
+      >
         <motion.div
           ref={ref}
           initial={
@@ -136,15 +156,20 @@ export const PinnedCard = ({
 
           {children}
 
-          <motion.span
-            aria-hidden="true"
-            style={{ backgroundImage: reduceMotion ? undefined : sheen }}
-            animate={{ opacity: engaged ? 1 : 0 }}
-            transition={{ duration: 0.35 }}
-            className="pointer-events-none absolute inset-0 z-20 rounded-2xl mix-blend-screen"
-          />
+          {/* Mounted only while engaged: a mix-blend layer is blended on every
+              frame even at opacity 0, and there are ten cards on this page. */}
+          {engaged && !reduceMotion && (
+            <motion.span
+              aria-hidden="true"
+              style={{ backgroundImage: sheen }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.35 }}
+              className="pointer-events-none absolute inset-0 z-20 rounded-2xl mix-blend-screen"
+            />
+          )}
         </motion.div>
-      </div>
+      </motion.div>
     </CardProgress.Provider>
   );
 };

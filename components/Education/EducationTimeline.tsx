@@ -13,7 +13,7 @@ export default function EducationTimeline({
     <Timeline>
       {educations.map((item, index) => (
         <TimelineEntry key={item._id} index={index}>
-          <div className="group relative overflow-hidden rounded-2xl border border-parchment/10 bg-surface-panel/80 p-5 shadow-pinned backdrop-blur-xl transition-colors duration-300 hover:border-sage/30 md:p-7">
+          <div className="group relative overflow-hidden rounded-2xl border border-parchment/10 bg-surface-panel p-5 shadow-pinned transition-colors duration-300 hover:border-sage/30 md:p-7">
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-0 bg-[radial-gradient(30rem_circle_at_85%_0%,rgba(157,194,166,0.06),transparent_60%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"

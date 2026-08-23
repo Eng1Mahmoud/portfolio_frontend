@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { FaArrowRight, FaDownload } from "react-icons/fa";
 import { SocialLinks } from "@/components/Home/SocialLinks";
 import { HomeIntro } from "@/components/Home/HomeIntro";
 import { Reveal } from "@/components/general/Reveal";
+import { MagneticLink } from "@/components/general/MagneticLink";
 import { getProfileInfo } from "@/actions/getProfileInfo";
 import { getAllProjects } from "@/actions/getAllProjects";
 import { getAllSkills } from "@/actions/getAllSkills";
@@ -46,7 +46,7 @@ export default async function Home() {
           delay={0.62}
           className="mt-9 flex flex-wrap items-center gap-x-4 gap-y-4 pl-6 sm:pl-10"
         >
-          <Link
+          <MagneticLink
             href="/projects"
             className="group inline-flex items-center gap-2 rounded-full bg-sage px-6 py-3 text-sm font-medium text-surface-base transition-colors hover:bg-sage-bright focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base"
           >
@@ -55,19 +55,18 @@ export default async function Home() {
               aria-hidden="true"
               className="h-3 w-3 transition-transform group-hover:translate-x-1"
             />
-          </Link>
+          </MagneticLink>
 
           {profileInfo?.cv && (
-            <a
+            <MagneticLink
               href={profileInfo.cv}
-              target="_blank"
-              rel="noopener noreferrer"
+              external
               download
               className="inline-flex items-center gap-2 rounded-full border border-parchment/15 px-6 py-3 text-sm font-medium text-ink-body transition-colors hover:border-sage/60 hover:text-ink-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
             >
               <FaDownload aria-hidden="true" className="h-3 w-3" />
               Download CV
-            </a>
+            </MagneticLink>
           )}
 
           <div className="sm:ms-auto">

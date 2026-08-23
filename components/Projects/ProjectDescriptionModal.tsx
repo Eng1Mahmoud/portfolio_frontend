@@ -1,9 +1,15 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { FaTimes, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+
+/** Where on screen the dialog should appear to come from. */
+export interface Origin {
+  x: number;
+  y: number;
+}
 
 interface ProjectDescriptionModalProps {
   title: string;
@@ -11,6 +17,8 @@ interface ProjectDescriptionModalProps {
   technologies?: string[];
   githubLink?: string;
   demoLink?: string;
+  /** Centre of the card that opened this, in viewport coordinates. */
+  origin?: Origin | null;
   onClose: () => void;
 }
 
@@ -20,9 +28,11 @@ export const ProjectDescriptionModal = ({
   technologies,
   githubLink,
   demoLink,
+  origin,
   onClose,
 }: ProjectDescriptionModalProps) => {
   const panelRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
   // The card sits inside a 3D transform, and a transformed ancestor becomes
   // the containing block for `position: fixed` — so the backdrop would pin to
   // the card instead of the viewport. The portal takes it out of that subtree.
@@ -46,6 +56,26 @@ export const ProjectDescriptionModal = ({
     };
   }, [onClose]);
 
+  /*
+    The dialog grows out of the card that opened it. The panel is centred in
+    the viewport, so its resting centre is the viewport centre — which means
+    the offset to the card is just the difference between the two, and no
+    measurement of the panel itself is needed.
+
+    Done with transforms rather than `layoutId`: the card sits inside a
+    perspective context with a 3D transform, and layout projection across that
+    and a portal is not something to rely on.
+  */
+  const from =
+    origin && !reduceMotion
+      ? {
+          x: origin.x - window.innerWidth / 2,
+          y: origin.y - window.innerHeight / 2,
+          scale: 0.3,
+          opacity: 0,
+        }
+      : { scale: 0.95, opacity: 0 };
+
   if (!mounted) return null;
 
   return createPortal(
@@ -64,9 +94,15 @@ export const ProjectDescriptionModal = ({
         aria-label={title}
         // Stop clicks inside the panel from reaching the backdrop's close.
         onClick={(event) => event.stopPropagation()}
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.95, opacity: 0 }}
+        initial={from}
+        animate={{ x: 0, y: 0, scale: 1, opacity: 1 }}
+        exit={from}
+        transition={{
+          type: "spring",
+          stiffness: 260,
+          damping: 30,
+          opacity: { duration: 0.22 },
+        }}
         className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-parchment/10 bg-surface-card outline-none"
       >
         {/* Header stays put so the close button is always reachable while

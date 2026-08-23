@@ -6,7 +6,7 @@ import Image from "next/image";
 /** The card face; the entry animation and rail node live in <TimelineEntry />. */
 export const ExperienceCard = ({ experience }: { experience: IExperience }) => {
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-parchment/10 bg-surface-panel/80 p-5 shadow-pinned backdrop-blur-xl transition-colors duration-300 hover:border-sage/30 md:p-7">
+    <div className="group relative overflow-hidden rounded-2xl border border-parchment/10 bg-surface-panel p-5 shadow-pinned transition-colors duration-300 hover:border-sage/30 md:p-7">
       {/* A static highlight; the projects page keeps the interactive one. */}
       <div
         aria-hidden="true"

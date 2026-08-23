@@ -3,14 +3,17 @@ import { Iproject } from "@/types/general";
 import Image from "next/image";
 import Link from "next/link";
 import { FaGithub, FaExternalLinkAlt, FaChevronDown } from "react-icons/fa";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
   useMotionValue,
   useTransform,
 } from "framer-motion";
-import { ProjectDescriptionModal } from "@/components/Projects/ProjectDescriptionModal";
+import {
+  ProjectDescriptionModal,
+  type Origin,
+} from "@/components/Projects/ProjectDescriptionModal";
 import { PinnedCard, useCardProgress } from "@/components/general/PinnedCard";
 import {
   handleProjectExternalClick,
@@ -71,12 +74,24 @@ export const ProjectCard = ({
   index?: number;
 }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
+  // Where the dialog should appear to come from, captured at the moment of the
+  // click — the card is still moving under the pointer, so reading it later
+  // would give the wrong point.
+  const [origin, setOrigin] = useState<Origin | null>(null);
+  const faceRef = useRef<HTMLElement>(null);
 
   const technologies = project.technologies ?? [];
   const visible = technologies.slice(0, VISIBLE_TECHNOLOGIES);
   const hiddenCount = technologies.length - visible.length;
 
   const openDetails = () => {
+    const rect = faceRef.current?.getBoundingClientRect();
+    if (rect) {
+      setOrigin({
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2,
+      });
+    }
     setShowFullDescription(true);
     handleViewProject(project.title);
   };
@@ -85,7 +100,10 @@ export const ProjectCard = ({
     <PinnedCard index={index}>
       {/* h-full + flex column: every card in a row ends up the same height and
           the action buttons line up along the bottom. */}
-      <article className="group/card relative flex h-full flex-col overflow-hidden rounded-2xl border border-parchment/10 bg-surface-panel/80 backdrop-blur-sm transition-colors duration-300 group-hover/pin:border-sage/30">
+      <article
+        ref={faceRef}
+        className="group/card relative flex h-full flex-col overflow-hidden rounded-2xl border border-parchment/10 bg-surface-panel transition-colors duration-300 group-hover/pin:border-sage/30"
+      >
         <div className="relative h-[200px] shrink-0 overflow-hidden">
           {/* The first row is above the fold and holds the page's largest
               contentful paint, so those three load eagerly. */}
@@ -189,6 +207,7 @@ export const ProjectCard = ({
             technologies={technologies}
             githubLink={project.githubLink}
             demoLink={project.demoLink}
+            origin={origin}
             onClose={() => setShowFullDescription(false)}
           />
         )}
