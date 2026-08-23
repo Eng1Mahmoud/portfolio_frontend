@@ -36,7 +36,7 @@ export default function GlobalError({
           gap: "1rem",
           textAlign: "center",
           padding: "1.5rem",
-          backgroundColor: "#0a1326",
+          backgroundColor: "#12100D",
           color: "#ffffff",
           fontFamily: "system-ui, sans-serif",
         }}

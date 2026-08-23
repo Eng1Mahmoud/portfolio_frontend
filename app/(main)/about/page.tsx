@@ -36,7 +36,7 @@ export default async function AboutUsPage() {
   return (
     <div>
       <Title title="About Me" eyebrow="Who I am" />
-      <div className="grid md:grid-cols-2 gap-8 items-center">
+      <div className="grid items-start gap-8 md:grid-cols-2">
         {/* Profile Image */}
         <ProfileImage profileInfo={profileInfo as IuserInfo} />
 

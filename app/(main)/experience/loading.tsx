@@ -15,11 +15,11 @@ export default function Loading() {
           <SkeletonTitle />
 
           <div className="relative pl-8 md:pl-12">
-            <div className="absolute left-2 h-full w-px bg-white/10" />
+            <div className="absolute left-2 h-full w-px bg-parchment/10" />
             {Array.from({ length: 2 }).map((_, i) => (
               <div key={i} className="mb-12">
                 <SkeletonPill className="mb-4 h-6 w-36" />
-                <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5 md:p-6">
+                <div className="rounded-xl border border-parchment/10 bg-parchment/[0.02] p-5 md:p-6">
                   <SkeletonLine w="w-2/3" h="h-6" className="mb-3" />
                   <div className="mb-5 flex flex-wrap gap-2">
                     <SkeletonPill className="h-7 w-40" />

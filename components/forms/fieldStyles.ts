@@ -9,14 +9,14 @@ export const fieldBase = [
 
 export const fieldVariants: Record<FieldVariant, string> = {
   dark: [
-    "bg-white/[0.03] backdrop-blur-sm text-ink-strong placeholder-ink-muted",
-    "border-white/10 hover:border-white/20",
-    "focus:border-cyan-400 focus:ring-cyan-400/20",
+    "bg-parchment/[0.03] backdrop-blur-sm text-ink-strong placeholder-ink-muted",
+    "border-parchment/10 hover:border-parchment/20",
+    "focus:border-sage focus:ring-sage/30",
   ].join(" "),
   light: [
     "bg-white text-gray-800 placeholder-gray-500",
     "border-gray-300 hover:border-gray-400",
-    "focus:border-cyan-400 focus:ring-cyan-400/20",
+    "focus:border-sage focus:ring-sage/30",
   ].join(" "),
 };
 

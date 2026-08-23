@@ -56,7 +56,7 @@ export const MobileAsideToggle = ({
           onClick={toggleAside}
           aria-label="Open navigation menu"
           aria-expanded={isAsideOpen}
-          className="lg:hidden fixed top-4 left-4 z-[1000] bg-blue-600 text-white p-2 rounded-md transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light"
+          className="lg:hidden fixed top-4 left-4 z-[1000] bg-sage text-surface-base p-2 rounded-md transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base"
         >
           <FaBars aria-hidden="true" />
         </button>
@@ -94,7 +94,7 @@ export const MobileAsideToggle = ({
         <button
           onClick={toggleAside}
           aria-label="Close navigation menu"
-          className="absolute top-4 right-5 z-[1000] bg-red-600 text-white p-2 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          className="absolute top-4 right-5 z-[1000] bg-surface-raised text-ink-strong p-2 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
         >
           <FaTimes aria-hidden="true" />
         </button>

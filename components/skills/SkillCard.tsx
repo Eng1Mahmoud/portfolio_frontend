@@ -8,7 +8,7 @@ import { handleSkillHover } from "@/utiles/analytics-events/events";
 
 /**
  * A skill tile turns with the same physics as a project card, but half as far
- * and with no pin, no scatter angle and no brass. The pinboard stays the one
+ * and with no pin, no scatter angle and no wheat. The pinboard stays the one
  * thing the site is remembered by; these are its quiet echo.
  */
 export const SkillCard = ({
@@ -25,7 +25,7 @@ export const SkillCard = ({
   // interface, not artefacts, so they take the interface accent.
   const glowX = useTransform(sx, [-0.5, 0.5], ["12%", "88%"]);
   const glowY = useTransform(sy, [-0.5, 0.5], ["12%", "88%"]);
-  const glow = useMotionTemplate`radial-gradient(9rem circle at ${glowX} ${glowY}, rgba(34,211,238,0.16), transparent 70%)`;
+  const glow = useMotionTemplate`radial-gradient(9rem circle at ${glowX} ${glowY}, rgba(157,194,166,0.18), transparent 70%)`;
 
   return (
     <div className="pin-stage">
@@ -47,8 +47,8 @@ export const SkillCard = ({
         style={{ rotateX, rotateY }}
         className={`pin-card group relative flex flex-col items-center justify-center gap-3 rounded-xl border p-6 text-center transition-colors duration-300 ${
           engaged
-            ? "border-cyan-400/40 bg-white/[0.05]"
-            : "border-white/10 bg-white/[0.03]"
+            ? "border-sage/40 bg-parchment/[0.05]"
+            : "border-parchment/10 bg-parchment/[0.03]"
         }`}
       >
         <motion.span

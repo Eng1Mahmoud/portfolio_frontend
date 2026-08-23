@@ -25,13 +25,13 @@ const ContactItem = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.1 }}
       whileHover={{ scale: 1.02 }}
-      className="flex gap-4 rounded-xl border border-white/10 bg-white/[0.03] p-5 text-ink-body transition-colors hover:border-cyan-400/40"
+      className="flex gap-4 rounded-xl border border-parchment/10 bg-parchment/[0.03] p-5 text-ink-body transition-colors hover:border-sage/40"
     >
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: index * 0.1 + 0.2, type: "spring" }}
-        className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-cyan-300"
+        className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg border border-parchment/10 bg-parchment/[0.04] text-sage"
       >
         <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.5 }}>
           {icon}
@@ -57,7 +57,7 @@ const ContactItem = ({
             {linkType === "phone" && item ? (
               <motion.a
                 href={`tel:${item}`}
-                className="inline-block transition-colors hover:text-cyan-300"
+                className="inline-block transition-colors hover:text-sage"
                 whileHover={{ scale: 1.05 }}
               >
                 {item}
@@ -65,7 +65,7 @@ const ContactItem = ({
             ) : linkType === "email" && item ? (
               <motion.a
                 href={`mailto:${item}`}
-                className="inline-block transition-colors hover:text-cyan-300"
+                className="inline-block transition-colors hover:text-sage"
                 whileHover={{ scale: 1.05 }}
               >
                 {item}
@@ -84,21 +84,21 @@ const ContactUsInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
   return (
     <div className="grid grid-cols-1 gap-6 md:gap-8">
       <ContactItem
-        icon={<AiFillPhone className="text-xl text-cyan-300" />}
+        icon={<AiFillPhone className="text-xl text-sage" />}
         title="Phone"
         content={[profileInfo?.phone1, profileInfo?.phone2]}
         linkType="phone"
         index={0}
       />
       <ContactItem
-        icon={<AiOutlineMail className="text-xl text-cyan-300" />}
+        icon={<AiOutlineMail className="text-xl text-sage" />}
         title="Email"
         content={[profileInfo?.email]}
         linkType="email"
         index={1}
       />
       <ContactItem
-        icon={<GoLocation className="text-xl text-cyan-300" />}
+        icon={<GoLocation className="text-xl text-sage" />}
         title="Address"
         content={[profileInfo?.address]}
         index={2}

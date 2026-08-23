@@ -13,7 +13,7 @@ export default function Loading() {
     <SkeletonScreen label="Loading home">
       <section className="flex min-h-[calc(100dvh-5rem)] items-center">
         <div className="relative w-full max-w-4xl pl-6 sm:pl-10">
-          <div className="absolute left-0 top-0 h-full w-px bg-white/10" />
+          <div className="absolute left-0 top-0 h-full w-px bg-parchment/10" />
 
           <SkeletonLine w="w-40" h="h-2.5" className="mb-5" />
 
@@ -27,7 +27,7 @@ export default function Loading() {
             <SkeletonLine w="w-4/5" />
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/10 pt-5">
+          <div className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-parchment/10 pt-5">
             <SkeletonLine w="w-32" h="h-5" />
             <SkeletonLine w="w-36" h="h-5" />
           </div>

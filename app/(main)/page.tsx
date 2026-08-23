@@ -43,7 +43,7 @@ export default async function Home() {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-32 top-1/2 h-[32rem] w-[32rem] -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[130px]"
+        className="pointer-events-none absolute -left-32 top-1/2 h-[32rem] w-[32rem] -translate-y-1/2 rounded-full bg-sage/10 blur-[130px]"
       />
 
       <div className="relative z-10 w-full py-6">
@@ -61,7 +61,7 @@ export default async function Home() {
         >
           <Link
             href="/projects"
-            className="group inline-flex items-center gap-2 rounded-full bg-cyan-400 px-6 py-3 text-sm font-medium text-[#06121f] transition-colors hover:bg-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base"
+            className="group inline-flex items-center gap-2 rounded-full bg-sage px-6 py-3 text-sm font-medium text-surface-base transition-colors hover:bg-sage-bright focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base"
           >
             View projects
             <FaArrowRight
@@ -76,7 +76,7 @@ export default async function Home() {
               target="_blank"
               rel="noopener noreferrer"
               download
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-medium text-[#c3cede] transition-colors hover:border-cyan-400/60 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+              className="inline-flex items-center gap-2 rounded-full border border-parchment/15 px-6 py-3 text-sm font-medium text-ink-body transition-colors hover:border-sage/60 hover:text-ink-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
             >
               <FaDownload aria-hidden="true" className="h-3 w-3" />
               Download CV

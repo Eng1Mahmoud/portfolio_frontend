@@ -11,7 +11,7 @@ import { useMediaQuery } from "@/hooks/use-media-query";
  * Project cards are screenshots of shipped work, so the page treats them as
  * exactly that: prints pinned to a board by hand, each one a degree or two off
  * square. Bring the pointer to one and it straightens, lifts toward you, and a
- * brass sheen rakes across the glass — the gesture of leaning in and taking a
+ * wheat sheen rakes across the glass — the gesture of leaning in and taking a
  * print down off the wall.
  *
  * This is the one bold element on the site. Everything it touches stays quiet:
@@ -55,7 +55,7 @@ export const PinnedCard = ({
   const sheenY = useTransform(sy, [-0.5, 0.5], ["8%", "92%"]);
   // Tight warm core with a wide falloff. A single wide stop reads as a flat
   // tint rather than light landing on a surface.
-  const sheen = useMotionTemplate`radial-gradient(22rem circle at ${sheenX} ${sheenY}, rgba(233,184,114,0.20), rgba(233,184,114,0.07) 28%, transparent 65%)`;
+  const sheen = useMotionTemplate`radial-gradient(22rem circle at ${sheenX} ${sheenY}, rgba(201,185,138,0.20), rgba(201,185,138,0.07) 28%, transparent 65%)`;
 
   const compact = useMediaQuery(FLAT_BELOW);
   const restAngle = compact ? 0 : REST_ANGLES[index % REST_ANGLES.length];
@@ -105,7 +105,7 @@ export const PinnedCard = ({
             Z so it stays put on the board while the card turns under it. */}
         <span
           aria-hidden="true"
-          className="pin-lift absolute -top-1.5 left-6 z-30 h-3 w-3 animate-pin-glint rounded-full bg-gradient-to-br from-brass to-brass-dim shadow-[0_1px_3px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.55)]"
+          className="pin-lift absolute -top-1.5 left-6 z-30 h-3 w-3 animate-pin-glint rounded-full bg-gradient-to-br from-wheat to-wheat-deep shadow-[0_1px_3px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.55)]"
         />
 
         {children}

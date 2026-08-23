@@ -40,7 +40,7 @@ export const ProjectCard = ({
     <PinnedCard index={index}>
       {/* h-full + flex column: every card in a row ends up the same height and
           the action buttons line up along the bottom. */}
-      <article className="group/card relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface-panel/80 backdrop-blur-sm transition-colors duration-300 group-hover/pin:border-brass/30">
+      <article className="group/card relative flex h-full flex-col overflow-hidden rounded-2xl border border-parchment/10 bg-surface-panel/80 backdrop-blur-sm transition-colors duration-300 group-hover/pin:border-sage/30">
         <div className="relative h-[200px] shrink-0 overflow-hidden">
           <Image
             src={project.imageUrl}
@@ -76,7 +76,7 @@ export const ProjectCard = ({
               {visible.map((tech) => (
                 <li
                   key={tech}
-                  className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 font-mono text-[11px] text-ink-body"
+                  className="rounded-full border border-parchment/10 bg-parchment/[0.04] px-2.5 py-0.5 font-mono text-[11px] text-ink-body"
                 >
                   {tech}
                 </li>
@@ -87,7 +87,7 @@ export const ProjectCard = ({
                     type="button"
                     onClick={openDetails}
                     aria-label={`Show all ${technologies.length} technologies for ${project.title.trim()}`}
-                    className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 font-mono text-[11px] text-ink-muted transition-colors hover:border-cyan-400/50 hover:text-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                    className="rounded-full border border-parchment/10 bg-parchment/[0.04] px-2.5 py-0.5 font-mono text-[11px] text-ink-muted transition-colors hover:border-sage/50 hover:text-sage focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
                   >
                     +{hiddenCount} more
                   </button>
@@ -103,7 +103,7 @@ export const ProjectCard = ({
           <button
             type="button"
             onClick={openDetails}
-            className="mb-4 flex w-fit items-center gap-1.5 rounded text-sm text-cyan-300 transition-colors hover:text-cyan-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+            className="mb-4 flex w-fit items-center gap-1.5 rounded text-sm text-sage transition-colors hover:text-sage focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
           >
             Read more
             <FaChevronDown className="h-3 w-3" aria-hidden="true" />
@@ -116,7 +116,7 @@ export const ProjectCard = ({
                 href={project.githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-ink-body transition-colors hover:border-cyan-400/60 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                className="flex items-center gap-2 rounded-full border border-parchment/15 px-4 py-2 text-sm text-ink-body transition-colors hover:border-sage/60 hover:text-ink-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
                 onClick={() =>
                   handleProjectExternalClick(project.title, "github")
                 }
@@ -130,7 +130,7 @@ export const ProjectCard = ({
                 href={project.demoLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full bg-cyan-400 px-4 py-2 text-sm font-medium text-[#06121f] transition-colors hover:bg-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                className="flex items-center gap-2 rounded-full bg-sage px-4 py-2 text-sm font-medium text-surface-base transition-colors hover:bg-sage-bright focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
                 onClick={() =>
                   handleProjectExternalClick(project.title, "live")
                 }

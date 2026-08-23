@@ -11,7 +11,7 @@ interface TitleProps {
 }
 
 /**
- * Page heading, in the home page's language: a cyan-headed hairline rail on
+ * Page heading, in the home page's language: a sage-headed hairline rail on
  * the left, a mono eyebrow, and the heading set in the display face.
  *
  * The heading rises out of a clipping mask rather than fading in. It is one
@@ -27,7 +27,7 @@ export const Title = ({ title, eyebrow, count }: TitleProps) => {
         animate={{ scaleY: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         style={{ transformOrigin: "top" }}
-        className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-cyan-400 via-white/12 to-transparent"
+        className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-sage via-parchment/12 to-transparent"
       />
 
       {(eyebrow || count !== undefined) && (
@@ -37,10 +37,10 @@ export const Title = ({ title, eyebrow, count }: TitleProps) => {
           transition={{ duration: 0.4, delay: 0.1 }}
           className="mb-3 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.28em]"
         >
-          {eyebrow && <p className="text-cyan-300">{eyebrow}</p>}
+          {eyebrow && <p className="text-sage">{eyebrow}</p>}
           {count !== undefined && (
             <>
-              <span aria-hidden="true" className="h-px w-6 bg-white/15" />
+              <span aria-hidden="true" className="h-px w-6 bg-parchment/15" />
               <span className="tracking-[0.18em] text-ink-muted">
                 {String(count).padStart(2, "0")}
               </span>

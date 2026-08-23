@@ -29,14 +29,14 @@ export default function Error({
         <div className="flex flex-wrap gap-3 justify-center">
           <button
             onClick={reset}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-cyan-400 text-[#06121f] hover:bg-cyan-300 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-sage text-surface-base hover:bg-sage-bright transition-colors"
           >
             <FaRedo aria-hidden="true" />
             Try again
           </button>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-parchment/5 hover:bg-parchment/10 border border-parchment/10 transition-colors"
           >
             <FaHome aria-hidden="true" />
             Go home
@@ -44,7 +44,7 @@ export default function Error({
         </div>
 
         {error.digest && (
-          <p className="mt-6 text-xs text-gray-600">
+          <p className="mt-6 text-xs text-ink-muted">
             Reference: {error.digest}
           </p>
         )}

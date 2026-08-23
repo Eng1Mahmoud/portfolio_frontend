@@ -77,13 +77,13 @@ export const Timeline = ({ children }: { children: ReactNode }) => {
       */}
 
       {/* Track. */}
-      <span aria-hidden="true" className={`${RAIL_X} w-px bg-white/10`} />
+      <span aria-hidden="true" className={`${RAIL_X} w-px bg-parchment/10`} />
 
       {/* Lit segment. */}
       <span aria-hidden="true" className={`${RAIL_X} w-px`}>
         <motion.span
           style={{ scaleY: fill, transformOrigin: "top" }}
-          className="block h-full w-full bg-gradient-to-b from-cyan-400 to-cyan-400/40"
+          className="block h-full w-full bg-gradient-to-b from-sage to-sage/40"
         />
       </span>
 
@@ -91,7 +91,7 @@ export const Timeline = ({ children }: { children: ReactNode }) => {
       <span aria-hidden="true" className={`${RAIL_X} w-px`}>
         <motion.span
           style={{ top: glowY }}
-          className="absolute h-16 w-px bg-gradient-to-b from-cyan-300 to-transparent blur-[2px]"
+          className="absolute h-16 w-px bg-gradient-to-b from-sage to-transparent blur-[2px]"
         />
       </span>
 
@@ -151,7 +151,7 @@ export const TimelineEntry = ({
             delay: Math.min(index, 4) * 0.08 + 0.1,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="block h-full w-full rounded-full border-2 border-cyan-400 bg-surface-well shadow-[0_0_14px_rgba(34,211,238,0.55)]"
+          className="block h-full w-full rounded-full border-2 border-sage bg-surface-well shadow-[0_0_14px_rgba(157,194,166,0.45)]"
         />
       </span>
       {children}
