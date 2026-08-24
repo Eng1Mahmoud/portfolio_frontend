@@ -9,6 +9,7 @@ const routes = [
   { path: "/projects", priority: 0.9 },
   { path: "/experience", priority: 0.8 },
   { path: "/education", priority: 0.6 },
+  { path: "/recommendations", priority: 0.7 },
   { path: "/contac-us", priority: 0.7 },
 ];
 

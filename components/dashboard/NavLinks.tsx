@@ -7,6 +7,7 @@ import {
   FaLightbulb,
   FaBriefcase,
   FaGraduationCap,
+  FaQuoteLeft,
 } from "react-icons/fa";
 
 const NavLinks = () => {
@@ -37,6 +38,11 @@ const NavLinks = () => {
       href: "/dashboard/education",
       label: "Education",
       icon: <FaGraduationCap size={20} />,
+    },
+    {
+      href: "/dashboard/recommendations",
+      label: "Recommendations",
+      icon: <FaQuoteLeft size={20} />,
     },
   ];
 

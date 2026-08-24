@@ -4,6 +4,7 @@ import {
   IuserInfo,
   IEducation,
   IExperience,
+  IRecommendation,
 } from "@/types/general";
 export interface GeneralResponse {
   message: string;
@@ -45,4 +46,10 @@ export interface ExperienceResponse {
 }
 export interface ExperienceByIdResponse {
   experience: IExperience;
+}
+export interface RecommendationsResponse {
+  recommendations: IRecommendation[];
+}
+export interface RecommendationByIdResponse {
+  recommendation: IRecommendation;
 }

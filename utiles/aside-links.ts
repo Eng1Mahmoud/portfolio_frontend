@@ -24,6 +24,10 @@ export const asideLinks = [
     path: "/education",
   },
   {
+    label: "Recommendations",
+    path: "/recommendations",
+  },
+  {
     label: "Contact",
     path: "/contac-us",
   },

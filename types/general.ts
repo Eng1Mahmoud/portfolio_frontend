@@ -3,6 +3,7 @@ import { TuserInfoSchema } from "@/zod/userInfoSchema";
 import { TprojectsSchema } from "@/zod/projectsSchema";
 import { TexperienceSchema } from "@/zod/experienceSchema";
 import { TeducationSchema } from "@/zod/educationSchema";
+import { TrecommendationsSchema } from "@/zod/recommendationsSchema";
 // Interface for toast options
 export interface ToastOptions {
   type: "success" | "error" | "warning" | "info";
@@ -31,5 +32,9 @@ export interface IExperience extends TexperienceSchema {
 }
 
 export interface IEducation extends TeducationSchema {
+  _id?: string;
+}
+
+export interface IRecommendation extends TrecommendationsSchema {
   _id?: string;
 }
