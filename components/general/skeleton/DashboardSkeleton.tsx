@@ -2,8 +2,8 @@ import { type ReactNode } from "react";
 import clsx from "clsx";
 
 /**
- * Dashboard skeletons need their own blocks: the panels there are white, so
- * the parchment/5 tones used on the public site would be invisible.
+ * Traces the DashPanel these screens load into, so the skeleton and the real
+ * panel share an outline instead of swapping one shape for another.
  */
 export const DashScreen = ({
   title,
@@ -15,12 +15,16 @@ export const DashScreen = ({
   label?: string;
 }) => (
   <div
-    className="mb-4 animate-pulse rounded-lg bg-white px-8 pb-8 pt-6 shadow-md"
+    className="mb-4 animate-pulse rounded-2xl border border-parchment/10 bg-surface-panel px-5 py-6 shadow-pinned sm:px-8 sm:pb-8 sm:pt-6"
     aria-busy="true"
     aria-live="polite"
   >
     <span className="sr-only">{label}…</span>
-    {title && <div className="mb-6 h-7 w-56 rounded bg-gray-200" />}
+    {title && (
+      <div className="mb-6 border-b border-parchment/10 pb-4">
+        <div className="h-7 w-56 rounded bg-parchment/10" />
+      </div>
+    )}
     {children}
   </div>
 );
@@ -33,10 +37,10 @@ export const DashLine = ({
   w?: string;
   h?: string;
   className?: string;
-}) => <div className={clsx("rounded bg-gray-200", w, h, className)} />;
+}) => <div className={clsx("rounded bg-parchment/10", w, h, className)} />;
 
 export const DashBlock = ({ className }: { className?: string }) => (
-  <div className={clsx("rounded-lg bg-gray-200", className)} />
+  <div className={clsx("rounded-lg bg-parchment/10", className)} />
 );
 
 /** A labelled input, as the dashboard forms render them. */

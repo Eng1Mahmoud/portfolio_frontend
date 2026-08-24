@@ -60,13 +60,13 @@ const PersonalForm = ({
         <ImageUploadInput
           name="aboutImage"
           label="Upload About Image"
-          className="bg-white text-gray-800 border-gray-300"
+          className="w-full"
         />
         <FileUploadInput
           name="cv"
           label="Upload PDF Document"
           accept="application/pdf"
-          className="bg-white text-gray-800 border-gray-300"
+          className="w-full"
         />
       </div>
     </Form>

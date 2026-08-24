@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import * as Sentry from "@sentry/nextjs";
 import { FaRedo } from "react-icons/fa";
+import { DashPanel } from "@/components/dashboard/DashPanel";
 
 export default function DashboardError({
   error,
@@ -16,23 +17,25 @@ export default function DashboardError({
   }, [error]);
 
   return (
-    <div className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
-      <h2 className="text-2xl font-semibold mb-2 text-gray-800">
+    <DashPanel>
+      <h2 className="display-card mb-2 text-xl text-ink-strong sm:text-2xl">
         Something went wrong
       </h2>
-      <p className="text-gray-600 mb-6">
+      <p className="mb-6 text-sm text-ink-body">
         This page failed to load. Your data has not been changed.
       </p>
       <button
         onClick={reset}
-        className="inline-flex items-center gap-2 bg-secondary-light hover:bg-secondary-dark text-white font-medium py-2 px-4 rounded-lg transition-colors"
+        className="inline-flex items-center gap-2 rounded-full bg-sage px-5 py-2 text-sm font-medium text-surface-base transition-colors hover:bg-sage-bright focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
       >
-        <FaRedo aria-hidden="true" />
+        <FaRedo aria-hidden="true" className="h-3 w-3" />
         Try again
       </button>
       {error.digest && (
-        <p className="mt-6 text-xs text-gray-400">Reference: {error.digest}</p>
+        <p className="mt-6 font-mono text-xs text-ink-muted">
+          Reference: {error.digest}
+        </p>
       )}
-    </div>
+    </DashPanel>
   );
 }

@@ -9,9 +9,12 @@ const LoginForm = () => {
     password: "",
   };
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">
+    <main className="flex min-h-screen items-center justify-center bg-surface-base">
+      <div className="w-full max-w-md rounded-2xl border border-parchment/10 bg-surface-panel p-8 shadow-pinned">
+        <p className="mb-3 text-center font-mono text-[11px] uppercase tracking-[0.28em] text-sage">
+          Dashboard
+        </p>
+        <h1 className="display-title mb-8 text-center text-2xl text-ink-strong">
           Welcome Back
         </h1>
         <Form

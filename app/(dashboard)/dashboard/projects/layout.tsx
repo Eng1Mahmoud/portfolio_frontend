@@ -1,5 +1,4 @@
-import { FaList, FaPlus } from "react-icons/fa";
-import Link from "next/link";
+import { SectionTabs } from "@/components/dashboard/SectionTabs";
 
 export default function ProjectsLayout({
   children,
@@ -8,24 +7,11 @@ export default function ProjectsLayout({
 }) {
   return (
     <div className="space-y-6">
-      {/* Navigation Buttons */}
-      <div className="flex space-x-4 mb-6">
-        <Link
-          href="/dashboard/projects"
-          className="flex items-center px-4 py-2 rounded-lg transition-all bg-secondary-light text-white shadow-md"
-        >
-          <FaList className="w-5 h-5 mr-2" />
-          Current Projects
-        </Link>
-        <Link
-          href="/dashboard/projects/add"
-          className="flex items-center px-4 py-2 rounded-lg transition-all bg-white text-gray-600 hover:bg-gray-50"
-        >
-          <FaPlus className="w-5 h-5 mr-2" />
-          Add New Project
-        </Link>
-      </div>
-
+      <SectionTabs
+        base="/dashboard/projects"
+        listLabel="Current Projects"
+        addLabel="Add New Project"
+      />
       {children}
     </div>
   );

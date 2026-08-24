@@ -1,5 +1,6 @@
 import { getEducationById } from "@/actions/getEducationById";
 import EditEducationForm from "@/components/dashboard/education/EditEducationForm";
+import { DashPanel } from "@/components/dashboard/DashPanel";
 import { notFound } from "next/navigation";
 
 export default async function EditEducationPage({
@@ -15,11 +16,8 @@ export default async function EditEducationPage({
   }
 
   return (
-    <div className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 max-w-4xl mx-auto">
-      <h2 className="text-2xl font-semibold mb-6 text-gray-800 border-b pb-2">
-        Edit Education
-      </h2>
+    <DashPanel title="Edit Education" className="mx-auto max-w-4xl">
       <EditEducationForm education={education} />
-    </div>
+    </DashPanel>
   );
 }

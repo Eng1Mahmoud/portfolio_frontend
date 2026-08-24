@@ -1,37 +1,46 @@
 import React from "react";
-import { FaEdit } from "react-icons/fa";
+import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import { Iproject } from "@/types/general";
 import DeleteButton from "@/components/general/DeleteButton";
+import { DashCard, EditLink } from "@/components/dashboard/DashCard";
 import { deleteProjectId } from "@/actions/deleteProject";
+
+const externalLink =
+  "flex items-center justify-center gap-2 rounded-md border border-parchment/15 px-3 py-1 text-ink-body transition-colors hover:border-sage/50 hover:text-sage focus:outline-none focus-visible:ring-2 focus-visible:ring-sage";
 
 const ProjectCard = ({ project }: { project: Iproject }) => {
   return (
-    <div className="bg-white rounded-xl shadow-2xl p-4 hover:shadow-xl transition-shadow duration-300">
-      <div className="flex flex-col h-full">
-        <div className="flex-grow">
-          <div className="relative w-full h-48 mb-4 overflow-hidden rounded-lg group">
-            <Image
-              src={project.imageUrl}
-              alt={project.title}
-              fill
-              className="object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
-            />
-          </div>
-          <h3 className="text-xl font-bold">{project.title}</h3>
-          <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-            {project.description}
-          </p>
+    <DashCard className="group">
+      <div className="flex-grow">
+        <div className="relative mb-4 h-40 w-full overflow-hidden rounded-lg border border-parchment/10">
+          <Image
+            src={project.imageUrl}
+            alt={project.title}
+            fill
+            className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+          />
         </div>
-        <div className="flex flex-col space-y-3">
-          <div className="flex justify-center space-x-3">
+        <h3 className="mb-1 truncate font-semibold text-ink-strong">
+          {project.title}
+        </h3>
+        <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-ink-body">
+          {project.description}
+        </p>
+      </div>
+
+      <div className="mt-auto space-y-2 text-sm">
+        {(project.demoLink || project.githubLink) && (
+          <div className="flex justify-center gap-2">
             {project.demoLink && (
               <Link
                 href={project.demoLink}
                 target="_blank"
-                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center min-w-[100px]"
+                rel="noopener noreferrer"
+                className={externalLink}
               >
+                <FaExternalLinkAlt className="h-3 w-3" aria-hidden="true" />
                 Demo
               </Link>
             )}
@@ -39,28 +48,25 @@ const ProjectCard = ({ project }: { project: Iproject }) => {
               <Link
                 href={project.githubLink}
                 target="_blank"
-                className="bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center min-w-[100px]"
+                rel="noopener noreferrer"
+                className={externalLink}
               >
+                <FaGithub className="h-3.5 w-3.5" aria-hidden="true" />
                 GitHub
               </Link>
             )}
           </div>
-          <div className="flex justify-center space-x-3">
-            <Link
-              href={`/dashboard/projects/edit/${project._id}`}
-              className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center w-full max-w-[200px]"
-            >
-              <FaEdit className="w-4 h-4 mr-2" />
-              Edit
-            </Link>
-            <DeleteButton
-              itemId={project._id as string}
-              deleteAction={deleteProjectId}
-            />
-          </div>
+        )}
+
+        <div className="flex justify-center gap-2">
+          <EditLink href={`/dashboard/projects/edit/${project._id}`} />
+          <DeleteButton
+            itemId={project._id as string}
+            deleteAction={deleteProjectId}
+          />
         </div>
       </div>
-    </div>
+    </DashCard>
   );
 };
 

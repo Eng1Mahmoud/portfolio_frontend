@@ -11,7 +11,7 @@ export default function Loading() {
     <DashScreen title label="Loading recommendations">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="rounded-xl border border-gray-100 p-4">
+          <div key={i} className="rounded-xl border border-parchment/10 p-4">
             <div className="mb-4 flex items-start gap-4">
               <DashBlock className="h-12 w-12 shrink-0 rounded-full" />
               <div className="flex-1">

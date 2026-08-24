@@ -46,14 +46,14 @@ const DeleteButton = ({ itemId, deleteAction }: DeleteButtonProps) => {
             setIsConfirming(false);
             StartTransition(() => formAction(itemId));
           }}
-          className="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-2 rounded-md transition duration-150 disabled:opacity-50"
+          className="rounded-md bg-red-500/90 px-2 py-1 font-medium text-white transition-colors duration-150 hover:bg-red-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400 disabled:opacity-50"
         >
           {isPending ? "Deleting" : "Confirm"}
         </button>
         <button
           type="button"
           onClick={() => setIsConfirming(false)}
-          className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-2 rounded-md transition duration-150"
+          className="rounded-md border border-parchment/15 px-2 py-1 font-medium text-ink-body transition-colors duration-150 hover:border-parchment/30 hover:text-ink-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
         >
           Cancel
         </button>
@@ -65,7 +65,7 @@ const DeleteButton = ({ itemId, deleteAction }: DeleteButtonProps) => {
     <button
       type="button"
       disabled={isPending}
-      className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded-md transition duration-150 flex items-center disabled:opacity-50"
+      className="flex items-center rounded-md border border-red-500/30 bg-red-500/10 px-2 py-1 font-medium text-red-300 transition-colors duration-150 hover:border-red-500/50 hover:bg-red-500/20 hover:text-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400 disabled:opacity-50"
       onClick={() => setIsConfirming(true)}
     >
       <FaTrash className="w-4 h-4 mr-1" aria-hidden="true" />

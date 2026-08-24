@@ -34,13 +34,16 @@ const ImageUploadInput = ({ name, label, className }: InputFieldProps) => {
 
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={`file-picker-${name}`} className="text-gray-700">
+      <label
+        htmlFor={`file-picker-${name}`}
+        className="text-sm font-medium text-ink-body"
+      >
         {label}
       </label>
       {/* Hidden input registered with RHF to hold the URL value */}
       <input type="hidden" {...register(name)} />
       <div
-        className={`border border-dashed border-gray-400 rounded-md p-4 h-[200px] flex items-center justify-center ${className}`}
+        className={`flex h-[200px] items-center justify-center rounded-lg border border-dashed border-parchment/20 bg-surface-well/40 p-4 transition-colors hover:border-sage/40 ${className}`}
       >
         {url && url !== "" ? (
           <div className="relative w-full h-full">
@@ -54,7 +57,7 @@ const ImageUploadInput = ({ name, label, className }: InputFieldProps) => {
             <button
               type="button"
               onClick={handleDelete}
-              className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-md"
+              className="absolute right-2 top-2 rounded-md border border-red-500/30 bg-red-500/15 px-2 py-1 text-xs font-medium text-red-200 backdrop-blur-sm transition-colors hover:bg-red-500/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
             >
               Delete
             </button>
@@ -73,8 +76,8 @@ const ImageUploadInput = ({ name, label, className }: InputFieldProps) => {
               htmlFor={`file-picker-${name}`}
               className="cursor-pointer text-center"
             >
-              <span className="text-gray-500">
-                {loading ? "Uploading..." : "Click or Drag to upload an image"}
+              <span className="text-sm text-ink-muted">
+                {loading ? "Uploading…" : "Click or drag to upload an image"}
               </span>
             </label>
           </>

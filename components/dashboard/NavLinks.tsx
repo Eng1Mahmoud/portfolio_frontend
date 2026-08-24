@@ -62,20 +62,30 @@ const NavLinks = () => {
             <li key={link.href}>
               <Link
                 href={link.href}
+                aria-current={isActive ? "page" : undefined}
                 className={`
-                  group flex items-center px-4 py-3 text-sm font-medium rounded-lg
-                  transition-all duration-200 ease-in-out
+                  group relative flex items-center rounded-lg px-4 py-3 text-sm font-medium
+                  transition-colors duration-200 ease-in-out
+                  focus:outline-none focus-visible:ring-2 focus-visible:ring-sage
                   ${
                     isActive
-                      ? "bg-secondary-light text-white shadow-md"
-                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                      ? "bg-parchment/[0.06] text-ink-strong"
+                      : "text-ink-muted hover:bg-parchment/[0.04] hover:text-ink-strong"
                   }
                 `}
               >
+                {/* A rail rather than a filled pill — the same mark the public
+                    site uses to flag the section you are in. */}
+                {isActive && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-y-2 left-0 w-0.5 rounded-full bg-sage"
+                  />
+                )}
                 <span
                   className={`
                   mr-3 transition-colors
-                  ${isActive ? "text-white" : "text-gray-500 group-hover:text-gray-700"}
+                  ${isActive ? "text-sage" : "text-ink-muted group-hover:text-sage"}
                 `}
                 >
                   {link.icon}

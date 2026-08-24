@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 const VARIANTS = {
   admin:
-    "bg-secondary-light text-white hover:bg-secondary-dark shadow-secondary-dark",
+    "bg-sage text-surface-base hover:bg-sage-bright shadow-surface-well/60",
   site: "bg-sage text-surface-base hover:bg-sage-bright shadow-surface-well/60",
 } as const;
 

@@ -11,7 +11,7 @@ export default function Loading() {
     <DashScreen title label="Loading skills">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="rounded-xl border border-gray-100 p-4">
+          <div key={i} className="rounded-xl border border-parchment/10 p-4">
             <DashBlock className="mb-4 h-12 w-full" />
             <DashLine w="w-2/3" h="h-5" className="mb-2" />
             <DashLine className="mb-1" />

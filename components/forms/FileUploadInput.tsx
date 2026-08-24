@@ -44,11 +44,11 @@ const FileUploadInput = ({
 
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={name} className="text-gray-700">
+      <label htmlFor={name} className="text-sm font-medium text-ink-body">
         {label}
       </label>
       <div
-        className={`border border-dashed border-gray-400 rounded-md p-4 h-[200px] flex items-center justify-center ${className}`}
+        className={`flex h-[200px] items-center justify-center rounded-lg border border-dashed border-parchment/20 bg-surface-well/40 p-4 transition-colors hover:border-sage/40 ${className}`}
       >
         {url && url !== "" ? (
           <div className="relative w-full h-full flex items-center justify-center">
@@ -57,13 +57,14 @@ const FileUploadInput = ({
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 underline hover:text-blue-800"
+                className="text-sm text-sage underline transition-colors hover:text-sage-bright"
               >
-                {fileName || "Download File"}
+                {fileName || "Download file"}
               </a>
               <button
+                type="button"
                 onClick={handleDelete}
-                className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                className="rounded-md border border-red-500/30 bg-red-500/10 px-2 py-1 text-xs font-medium text-red-300 transition-colors hover:bg-red-500/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
               >
                 Delete
               </button>
@@ -81,8 +82,8 @@ const FileUploadInput = ({
         )}
         {!url && (
           <label htmlFor={name} className="cursor-pointer text-center">
-            <span className="text-gray-500">
-              {loading ? "Uploading..." : "Click or Drag to upload a file"}
+            <span className="text-sm text-ink-muted">
+              {loading ? "Uploading…" : "Click or drag to upload a file"}
             </span>
           </label>
         )}

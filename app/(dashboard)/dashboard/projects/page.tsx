@@ -1,19 +1,32 @@
 import { getAllProjects } from "@/actions/getAllProjects";
 import ProjectCard from "@/components/dashboard/projects/ProjectCard";
+import { DashPanel, DashEmpty } from "@/components/dashboard/DashPanel";
+
 export default async function Projects() {
   const projects = (await getAllProjects()) || [];
+
   return (
-    <div className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
-      <h2 className="text-2xl font-semibold mb-6 text-gray-800">
-        Current Projects
-      </h2>
-      <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {projects.map((project) => (
-          <div key={project._id}>
-            <ProjectCard project={project} />
-          </div>
-        ))}
-      </div>
-    </div>
+    <DashPanel
+      title="Current Projects"
+      action={
+        <span className="font-mono text-xs uppercase tracking-[0.18em] text-ink-muted">
+          {projects.length} total
+        </span>
+      }
+    >
+      {projects.length === 0 ? (
+        <DashEmpty
+          message="No projects yet."
+          href="/dashboard/projects/add"
+          cta="Add the first one"
+        />
+      ) : (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {projects.map((project) => (
+            <ProjectCard key={project._id} project={project} />
+          ))}
+        </div>
+      )}
+    </DashPanel>
   );
 }
