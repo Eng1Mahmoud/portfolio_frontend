@@ -5,12 +5,23 @@ import { Title } from "@/components/general/Title";
 import { Reveal } from "@/components/general/Reveal";
 import { IuserInfo } from "@/types/general";
 import { Metadata } from "next";
-export const metadata: Metadata = {
-  title: "Contact Us",
-  description: "Contact Mahmoud Mohamed",
-};
+import { buildPublicPageMetadata } from "@/utiles/site";
+import { buildContactPageJsonLd } from "@/utiles/seo-schemas";
+
+const description =
+  "Get in touch with Mahmoud Mohamed, Frontend Software Engineer — available for React.js and Next.js roles, freelance and contract work.";
+
+export const metadata: Metadata = buildPublicPageMetadata({
+  title: "Contact",
+  description,
+  path: "/contact-us",
+  ogTitle: "Get In Touch | Mahmoud Mohamed — Frontend Engineer",
+});
+
 const ContactUsPage = async () => {
   const profileInfo = await getProfileInfo();
+  const jsonld = buildContactPageJsonLd(profileInfo?.avatar);
+
   return (
     <div>
       <Title title="Get in touch" eyebrow="Open to work" />
@@ -24,6 +35,13 @@ const ContactUsPage = async () => {
           <ContactUsInfo profileInfo={profileInfo as IuserInfo} />
         </Reveal>
       </div>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonld),
+        }}
+      />
     </div>
   );
 };

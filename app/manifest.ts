@@ -2,13 +2,14 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Mahmoud Mohammed",
+    name: "Mahmoud Mohamed | Frontend Software Engineer",
     short_name: "Dev Mahmoud",
-    description: "Portfolio of Mahmoud Mohammed",
+    description:
+      "Portfolio of Mahmoud Mohamed, Frontend Software Engineer focused on React.js, Next.js and TypeScript.",
     start_url: "/",
     display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#000000",
+    background_color: "#171A16",
+    theme_color: "#9DC2A6",
     icons: [
       {
         src: "/icons/icon192x192.png",

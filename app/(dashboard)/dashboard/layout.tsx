@@ -1,6 +1,14 @@
 import { type ReactNode } from "react";
+import { Metadata } from "next";
 import HeaderContainer from "@/components/dashboard/HeaderContainer";
 import NavLinks from "@/components/dashboard/NavLinks";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (

@@ -3,12 +3,13 @@ import { siteUrl } from "@/utiles/site";
 
 export const ogSize = { width: 1200, height: 630 };
 export const ogContentType = "image/png";
-export const ogAlt = "Mahmoud Mohamed — Frontend Engineer";
+export const ogAlt =
+  "Mahmoud Mohamed — Frontend Software Engineer (React.js, Next.js)";
 
 // Shared social card used by both opengraph-image and twitter-image.
 // Rendered by Satori, so keep to the CSS subset it supports (flex + solid
 // colors + linear-gradient) and avoid filters/background-clip.
-export function renderOgImage() {
+export function renderOgImage(profileImageUrl?: string) {
   return new ImageResponse(
     (
       <div
@@ -19,8 +20,10 @@ export function renderOgImage() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "0 90px",
-          backgroundColor: "#0a1326",
-          color: "#ffffff",
+          // The site's own ground and ink, so a shared link does not preview in
+          // a palette the page never uses.
+          backgroundColor: "#171A16",
+          color: "#E8EBE5",
           fontFamily: "sans-serif",
         }}
       >
@@ -32,19 +35,45 @@ export function renderOgImage() {
             marginBottom: 28,
           }}
         >
-          <div
-            style={{
-              width: 14,
-              height: 14,
-              borderRadius: 99,
-              backgroundColor: "#22d3ee",
-            }}
-          />
+          {profileImageUrl ? (
+            // next/og renders through Satori, so a plain img is required here.
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={profileImageUrl}
+              alt=""
+              width={96}
+              height={96}
+              style={{
+                width: 96,
+                height: 96,
+                borderRadius: 999,
+                objectFit: "cover",
+                border: "4px solid #9DC2A6",
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                width: 96,
+                height: 96,
+                borderRadius: 999,
+                backgroundColor: "#9DC2A6",
+                color: "#171A16",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 34,
+                fontWeight: 700,
+              }}
+            >
+              MM
+            </div>
+          )}
           <div
             style={{
               fontSize: 24,
               letterSpacing: 6,
-              color: "#94a3b8",
+              color: "#8A9085",
             }}
           >
             PORTFOLIO
@@ -58,12 +87,12 @@ export function renderOgImage() {
         <div
           style={{
             display: "flex",
-            fontSize: 40,
-            color: "#cbd5e1",
+            fontSize: 38,
+            color: "#BCC2B7",
             marginTop: 18,
           }}
         >
-          Frontend Engineer · React &amp; Next.js
+          Frontend Software Engineer · React.js &amp; Next.js
         </div>
 
         <div
@@ -72,7 +101,7 @@ export function renderOgImage() {
             height: 10,
             borderRadius: 99,
             marginTop: 44,
-            backgroundImage: "linear-gradient(90deg, #22d3ee, #a855f7)",
+            backgroundImage: "linear-gradient(90deg, #9DC2A6, #4C6B54)",
           }}
         />
 
@@ -80,7 +109,7 @@ export function renderOgImage() {
           style={{
             display: "flex",
             fontSize: 26,
-            color: "#64748b",
+            color: "#8A9085",
             marginTop: 44,
           }}
         >

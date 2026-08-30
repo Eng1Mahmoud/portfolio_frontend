@@ -1,26 +1,38 @@
 import { Title } from "@/components/general/Title";
 import { getAllSkills } from "@/actions/getAllSkills";
+import { getProfileInfo } from "@/actions/getProfileInfo";
 import { SkillCard } from "@/components/skills/SkillCard";
 import { SkillGroupHeading } from "@/components/skills/SkillGroupHeading";
 import { SKILL_CATEGORIES } from "@/zod/skillsSchema";
 import { ISkill } from "@/types/general";
 import { Metadata } from "next";
+import { buildPublicPageMetadata } from "@/utiles/site";
+import { buildSkillsJsonLd } from "@/utiles/seo-schemas";
 
-export const metadata: Metadata = {
+const description =
+  "The frontend stack Mahmoud Mohamed works in day to day — React.js, Next.js, TypeScript, Vue.js, Redux, Zustand, TanStack Query and Tailwind CSS.";
+
+export const metadata: Metadata = buildPublicPageMetadata({
   title: "Skills",
-  description: "Skills Mahmoud Mohamed",
-};
+  description,
+  path: "/skills",
+  ogTitle: "Technical Skills | Mahmoud Mohamed — Frontend Engineer",
+});
 
 const UNGROUPED = "Other";
 
 export default async function SkillsPage() {
-  const skills = (await getAllSkills()) || [];
+  const [skills, profileInfo] = await Promise.all([
+    getAllSkills(),
+    getProfileInfo(),
+  ]);
+  const skillsData = skills || [];
 
   // Group in the order SKILL_CATEGORIES declares, so Frontend always leads and
   // the page does not reshuffle when a skill is added. Anything without a
   // category — every skill predates the field — falls into "Other".
   const groups = new Map<string, ISkill[]>();
-  for (const skill of skills) {
+  for (const skill of skillsData) {
     const key = skill.category?.trim() || UNGROUPED;
     const group = groups.get(key);
     if (group) group.push(skill);
@@ -39,9 +51,15 @@ export default async function SkillsPage() {
     ),
   ] as [string, ISkill[]][];
 
+  const jsonld = buildSkillsJsonLd(skillsData, profileInfo?.avatar);
+
   return (
     <div>
-      <Title title="Skills" eyebrow="What I work with" count={skills.length} />
+      <Title
+        title="Skills"
+        eyebrow="What I work with"
+        count={skillsData.length}
+      />
 
       <div className="space-y-12">
         {ordered.map(([category, items]) => (
@@ -56,6 +74,13 @@ export default async function SkillsPage() {
           </section>
         ))}
       </div>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonld),
+        }}
+      />
     </div>
   );
 }

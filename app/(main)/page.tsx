@@ -9,6 +9,19 @@ import { getAllSkills } from "@/actions/getAllSkills";
 import { getAllRecommendations } from "@/actions/getAllRecommendations";
 import { FeaturedRecommendations } from "@/components/Home/FeaturedRecommendations";
 import { IuserInfo } from "@/types/general";
+import { Metadata } from "next";
+import {
+  buildPublicPageMetadata,
+  siteDescription,
+  siteTitle,
+} from "@/utiles/site";
+import { buildHomePageJsonLd } from "@/utiles/seo-schemas";
+
+export const metadata: Metadata = buildPublicPageMetadata({
+  title: siteTitle,
+  description: siteDescription,
+  path: "/",
+});
 
 export default async function Home() {
   const [profileInfo, projects, skills, recommendations] = await Promise.all([
@@ -22,6 +35,7 @@ export default async function Home() {
   // those contain duplicates and typos that would inflate a unique count.
   const projectCount = (projects ?? []).length;
   const skillCount = (skills ?? []).length;
+  const jsonld = buildHomePageJsonLd();
 
   return (
     <>
@@ -81,6 +95,13 @@ export default async function Home() {
       </section>
 
       <FeaturedRecommendations recommendations={recommendations ?? []} />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonld),
+        }}
+      />
     </>
   );
 }
