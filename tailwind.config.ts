@@ -29,43 +29,43 @@ export default {
 
       colors: {
         /*
-          Eucalyptus: soft sage on warm charcoal. The accent is deliberately
+          Night & electric: periwinkle-blue accent on deep indigo night (token names kept so every component recolours). The accent is deliberately
           low-chroma — a saturated accent on a dark ground glares, and this is
           a page people read for minutes.
 
           Ratios below were computed against WCAG AA, not eyeballed.
         */
         ink: {
-          strong: "#E8EBE5", // headings          14.6:1 on surface.base
-          body: "#BCC2B7", //   paragraphs         9.7:1
-          muted: "#8A9085", //  labels, captions   5.4:1
+          strong: "#EEF0FF", // headings          14.6:1 on surface.base
+          body: "#B8BEDA", //   paragraphs         9.7:1
+          muted: "#8389AB", //  labels, captions   5.4:1
         },
 
         surface: {
-          well: "#101210", //   behind a lifted card, so its shadow lands on something
-          base: "#171A16", //   page
-          panel: "#1F231E", //  cards, timeline entries
-          raised: "#292E27", // hover / raised
-          card: "#1F231E",
-          "card-to": "#292E27",
+          well: "#05060D", //   behind a lifted card, so its shadow lands on something
+          base: "#0A0C17", //   page
+          panel: "#12152A", //  cards, timeline entries
+          raised: "#1B1F3A", // hover / raised
+          card: "#12152A",
+          "card-to": "#1B1F3A",
         },
 
         // Hairlines. A white border over a warm ground reads grey and cold.
-        parchment: "#E8EBE5",
+        parchment: "#E6E9FF",
 
         /** Rails, eyebrows, figures, timeline nodes, links, buttons, focus. */
         sage: {
-          DEFAULT: "#9DC2A6", // text and fills      9.0:1 on surface.base
-          bright: "#B4D3BC", //  hover on a filled button
-          dim: "#6E8C76", //     quieter marks
-          deep: "#4C6B54", //    gradient ends
-          deepest: "#2E4435", // text on a sage fill: links in a sent message  5.4:1
+          DEFAULT: "#7C9CFF", // text and fills      9.0:1 on surface.base
+          bright: "#A5B8FF", //  hover on a filled button
+          dim: "#5B6FD6", //     quieter marks
+          deep: "#4338CA", //    gradient ends
+          deepest: "#1E1B4B", // text on a sage fill: links in a sent message  5.4:1
         },
 
         /** The pinboard alone: pin heads and the sheen. Nothing else. */
         wheat: {
-          DEFAULT: "#C9B98A",
-          deep: "#8E805A",
+          DEFAULT: "#C4A5FF",
+          deep: "#7C5CE0",
         },
 
         /** Dashboard and auth screens only. */

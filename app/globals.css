@@ -3,6 +3,18 @@
 @tailwind utilities;
 
 @layer base {
+  /* Fontshare faces (linked in app/layout.tsx) mapped onto the variables the
+     rest of the code reads. */
+  .font-vars {
+    --display-font: "Clash Display";
+    --main-font: "Satoshi";
+  }
+
+  ::selection {
+    background: rgba(124, 156, 255, 0.35);
+    color: #eef0ff;
+  }
+
   /* Body sets the reading face once; headings opt in via `font-display`. */
   body {
     font-family: var(--main-font), system-ui, sans-serif;
@@ -27,29 +39,28 @@
   */
   .display-hero {
     font-family: var(--display-font), sans-serif;
-    /* wdth 92 holds two words per line on a phone without hyphenating. */
-    font-variation-settings:
-      "opsz" 96,
-      "wdth" 92,
-      "wght" 620;
-    letter-spacing: -0.035em;
+        font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  /* Gradient on the innermost spans: background-clip on the h1 itself does
+     not reach children that are transformed by the reveal animation. */
+  .display-hero span span {
+    background: linear-gradient(120deg, #eef0ff 25%, #a5b8ff 60%, #c4a5ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .display-title {
     font-family: var(--display-font), sans-serif;
-    font-variation-settings:
-      "opsz" 48,
-      "wdth" 96,
-      "wght" 600;
+    font-weight: 600;
     letter-spacing: -0.022em;
   }
 
   .display-card {
     font-family: var(--display-font), sans-serif;
-    font-variation-settings:
-      "opsz" 18,
-      "wdth" 100,
-      "wght" 620;
+    font-weight: 600;
     letter-spacing: -0.012em;
   }
 
@@ -84,7 +95,7 @@
 /* Firefox has no ::-webkit-scrollbar, hence the two properties. */
 .scrollBar {
   scrollbar-width: thin;
-  scrollbar-color: #6e8c76 transparent;
+  scrollbar-color: #5b6fd6 transparent;
 }
 
 .scrollBar::-webkit-scrollbar {
@@ -96,14 +107,14 @@
 }
 
 .scrollBar::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #6e8c76, #4c6b54);
+  background: linear-gradient(to bottom, #5b6fd6, #4338ca);
   border-radius: 9999px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
 
 .scrollBar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #9dc2a6, #6e8c76);
+  background: linear-gradient(to bottom, #7c9cff, #5b6fd6);
   background-clip: content-box;
 }
 

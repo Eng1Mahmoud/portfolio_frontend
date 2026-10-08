@@ -7,6 +7,7 @@ import { getProfileInfo } from "@/actions/getProfileInfo";
 import { getAllProjects } from "@/actions/getAllProjects";
 import { getAllSkills } from "@/actions/getAllSkills";
 import { getAllRecommendations } from "@/actions/getAllRecommendations";
+import { SkillsOrbit } from "@/components/Home/SkillsOrbit";
 import { FeaturedRecommendations } from "@/components/Home/FeaturedRecommendations";
 import { IuserInfo } from "@/types/general";
 import { Metadata } from "next";
@@ -49,10 +50,11 @@ export default async function Home() {
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -left-32 top-1/2 h-[32rem] w-[32rem] -translate-y-1/2 rounded-full bg-sage/10 blur-[130px]"
+          className="pointer-events-none absolute -left-32 top-1/2 h-[32rem] w-[32rem] -translate-y-1/2 rounded-full bg-sage/20 blur-[130px]"
         />
 
-        <div className="relative z-10 w-full py-6">
+        <div className="relative z-10 grid w-full items-center gap-6 py-6 lg:grid-cols-[1.1fr_1fr]">
+          <div>
           <HomeIntro
             profileInfo={profileInfo as IuserInfo}
             projectCount={projectCount}
@@ -91,6 +93,10 @@ export default async function Home() {
               <SocialLinks profileInfo={profileInfo as IuserInfo} />
             </div>
           </Reveal>
+          </div>
+          <div className="flex justify-center lg:justify-end">
+            <SkillsOrbit skills={skills ?? []} />
+          </div>
         </div>
       </section>
 

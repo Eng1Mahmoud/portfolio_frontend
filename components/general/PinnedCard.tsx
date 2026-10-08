@@ -102,7 +102,7 @@ export const PinnedCard = ({
 
   const sheenX = useTransform(sx, [-0.5, 0.5], ["8%", "92%"]);
   const sheenY = useTransform(sy, [-0.5, 0.5], ["8%", "92%"]);
-  const sheen = useMotionTemplate`radial-gradient(22rem circle at ${sheenX} ${sheenY}, rgba(201,185,138,0.20), rgba(201,185,138,0.07) 28%, transparent 65%)`;
+  const sheen = useMotionTemplate`radial-gradient(22rem circle at ${sheenX} ${sheenY}, rgba(196,165,255,0.20), rgba(196,165,255,0.07) 28%, transparent 65%)`;
 
   const restAngle = compact ? 0 : REST_ANGLES[index % REST_ANGLES.length];
   const zero = useMotionValue(0);

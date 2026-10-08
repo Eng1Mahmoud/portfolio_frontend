@@ -10,7 +10,7 @@ export const ExperienceCard = ({ experience }: { experience: IExperience }) => {
       {/* A static highlight; the projects page keeps the interactive one. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(30rem_circle_at_85%_0%,rgba(157,194,166,0.06),transparent_60%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(30rem_circle_at_85%_0%,rgba(124,156,255,0.06),transparent_60%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
       />
 
       <div className="relative z-10">

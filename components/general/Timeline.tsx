@@ -105,7 +105,7 @@ export const TimelineEntry = ({
             delay: Math.min(index, 4) * 0.08 + 0.1,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="block h-full w-full rounded-full border-2 border-sage bg-surface-well shadow-[0_0_14px_rgba(157,194,166,0.45)]"
+          className="block h-full w-full rounded-full border-2 border-sage bg-surface-well shadow-[0_0_14px_rgba(124,156,255,0.45)]"
         />
       </span>
       {children}

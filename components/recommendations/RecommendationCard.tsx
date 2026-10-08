@@ -82,7 +82,7 @@ export const RecommendationCard = ({
 
   const glowX = useTransform(sx, [-0.5, 0.5], ["10%", "90%"]);
   const glowY = useTransform(sy, [-0.5, 0.5], ["10%", "90%"]);
-  const glow = useMotionTemplate`radial-gradient(22rem circle at ${glowX} ${glowY}, rgba(157,194,166,0.14), transparent 70%)`;
+  const glow = useMotionTemplate`radial-gradient(22rem circle at ${glowX} ${glowY}, rgba(124,156,255,0.14), transparent 70%)`;
 
   const written = formatDate(recommendation.date);
 

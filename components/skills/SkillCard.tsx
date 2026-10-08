@@ -19,7 +19,7 @@ export const SkillCard = ({
 
   const glowX = useTransform(sx, [-0.5, 0.5], ["12%", "88%"]);
   const glowY = useTransform(sy, [-0.5, 0.5], ["12%", "88%"]);
-  const glow = useMotionTemplate`radial-gradient(9rem circle at ${glowX} ${glowY}, rgba(157,194,166,0.18), transparent 70%)`;
+  const glow = useMotionTemplate`radial-gradient(9rem circle at ${glowX} ${glowY}, rgba(124,156,255,0.18), transparent 70%)`;
 
   return (
     <div className="pin-stage">

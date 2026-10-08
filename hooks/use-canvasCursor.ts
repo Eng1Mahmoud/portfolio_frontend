@@ -144,9 +144,9 @@ export default function useCanvasCursor() {
 
     const hue = new Oscillator({
       phase: Math.random() * 2 * Math.PI,
-      amplitude: 85,
+      amplitude: 35,
       frequency: 0.0015,
-      offset: 285,
+      offset: 245,
     });
 
     const initLines = () => {
@@ -191,7 +191,7 @@ export default function useCanvasCursor() {
       ctx.globalCompositeOperation = "source-over";
       ctx.clearRect(0, 0, cssWidth, cssHeight);
       ctx.globalCompositeOperation = "lighter";
-      ctx.strokeStyle = `hsla(${Math.round(hue.update())}, 50%, 50%, 0.22)`;
+      ctx.strokeStyle = `hsla(${Math.round(hue.update())}, 85%, 66%, 0.24)`;
       ctx.lineWidth = 1;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";

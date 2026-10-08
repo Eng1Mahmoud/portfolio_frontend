@@ -24,8 +24,10 @@ export default withSentryConfig(nextConfig, {
   project: "dev-mahmoud-portfolio",
   silent: !process.env.CI,
   widenClientFileUpload: true,
+  // Off: the annotation adds data-sentry-* props to every JSX element, and
+  // react-three-fiber elements (the home page's 3D orbit) reject them.
   reactComponentAnnotation: {
-    enabled: true,
+    enabled: false,
   },
   tunnelRoute: "/monitoring",
   disableLogger: true,

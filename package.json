@@ -20,7 +20,10 @@
     "@emailjs/nodejs": "^5.0.2",
     "@hookform/resolvers": "^4.1.0",
     "@next/third-parties": "^15.2.5",
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.1",
     "@sentry/nextjs": "^9.5.0",
+    "@types/three": "^0.169.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.4.5",
     "jose": "^6.2.9",
@@ -34,6 +37,7 @@
     "react-markdown": "^10.1.0",
     "react-toastify": "^11.0.3",
     "schema-dts": "^1.1.5",
+    "three": "^0.169.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
