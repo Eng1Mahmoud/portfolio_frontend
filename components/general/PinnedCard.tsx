@@ -27,7 +27,7 @@ import { usePageScrollContainer } from "@/hooks/use-page-scroll";
  * Deterministic rather than random: a Math.random() angle hydrates to a
  * different value on the client and React discards the whole subtree.
  */
-const REST_ANGLES = [-2.4, 1.7, -1.1, 2.5, -1.9, 1.2];
+const REST_ANGLES = [-0.6, 0.4, -0.3, 0.5, -0.4, 0.3];
 
 /**
  * Below this the board flattens and the scroll lean takes over. A z-rotated
@@ -56,7 +56,7 @@ export const PinnedCard = ({
   className?: string;
 }) => {
   const { ref, engaged, reduceMotion, handlers, sx, sy, rotateX, rotateY } =
-    useTilt({ range: 9 });
+    useTilt({ range: 3 });
   const compact = useMediaQuery(FLAT_BELOW);
   const container = usePageScrollContainer();
 
@@ -93,8 +93,8 @@ export const PinnedCard = ({
   // Pointer and scroll write to the same axis, so they are summed rather than
   // left to fight. Only one is ever non-zero: the pointer tilt ignores touch,
   // and the lean is gated to compact widths.
-  const leanActive = compact && !reduceMotion;
-  const depthActive = !reduceMotion;
+  const leanActive = false;
+  const depthActive = false;
   const tiltX = useTransform<number, number>(
     [rotateX, leanSmooth],
     ([pointer, scroll]: number[]) => pointer + (leanActive ? scroll : 0),
@@ -141,33 +141,15 @@ export const PinnedCard = ({
           }}
           // On whileHover rather than a second `animate` prop, which would
           // fight the entry transition for control of `rotate`.
-          whileHover={reduceMotion ? undefined : { rotate: 0, scale: 1.015 }}
+          whileHover={reduceMotion || compact ? undefined : { rotate: 0, scale: 1.005 }}
           {...handlers}
           style={{ rotateX: tiltX, rotateY: leanActive ? zero : rotateY }}
           className={`pin-card group/pin relative h-full rounded-2xl transition-shadow duration-300 ${
             engaged ? "shadow-lifted" : "shadow-pinned"
           }`}
         >
-          {/* pin-lift keeps the pin on the board while the card turns under it. */}
-          <span
-            aria-hidden="true"
-            className="pin-lift absolute -top-1.5 left-6 z-30 h-3 w-3 animate-pin-glint rounded-full bg-gradient-to-br from-wheat to-wheat-deep shadow-[0_1px_3px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.5)]"
-          />
-
           {children}
 
-          {/* Mounted only while engaged: a mix-blend layer is blended on every
-              frame even at opacity 0, and there are ten cards on this page. */}
-          {engaged && !reduceMotion && (
-            <motion.span
-              aria-hidden="true"
-              style={{ backgroundImage: sheen }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.35 }}
-              className="pointer-events-none absolute inset-0 z-20 rounded-2xl mix-blend-screen"
-            />
-          )}
         </motion.div>
       </motion.div>
     </CardProgress.Provider>

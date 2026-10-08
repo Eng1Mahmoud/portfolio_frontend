@@ -171,3 +171,24 @@
 .slider-arrow:focus-visible, .content-slider:focus-visible { outline: 2px solid var(--portfolio-accent); outline-offset: 4px; }
 @media (max-width: 1023px) { .content-slider { grid-auto-columns: calc((100% - 32px) / 2); } }
 @media (max-width: 639px) { .content-slider { grid-auto-columns: 92%; } .portfolio-section { padding-block: 48px; } }
+
+/* Work leads; biography and career are quieter, unframed reading sections. */
+.portfolio-intro { min-height: min(72svh, 780px); }
+.content-slider--showcase { grid-auto-columns: 78%; }
+.content-slider--quotes { grid-auto-columns: calc((100% - 32px) / 2); }
+.content-slider--showcase article { display: grid; grid-template-columns: 1.15fr 1fr; }
+.content-slider--showcase article > div:first-child { height: 100%; min-height: 340px; }
+.content-slider--showcase article > div:nth-child(2) { padding: 32px; }
+.content-slider--showcase article h3 { font-size: 1.5rem; }
+.content-slider--showcase article p { -webkit-line-clamp: 4; }
+.journey-more { margin-block: 28px; border-top: 1px solid color-mix(in oklch, var(--portfolio-strong) 12%, transparent); }
+.journey-more summary { cursor: pointer; color: var(--portfolio-accent); padding-block: 20px; }
+.journey-more summary:focus-visible { outline: 2px solid var(--portfolio-accent); outline-offset: 4px; }
+.journey-more[open] summary { margin-bottom: 24px; }
+@media (max-width: 767px) {
+  .portfolio-intro { min-height: auto; }
+  .content-slider--showcase, .content-slider--quotes { grid-auto-columns: 92%; }
+  .content-slider--showcase article { display: flex; }
+  .content-slider--showcase article > div:first-child { min-height: 0; height: 220px; }
+  .content-slider--showcase article > div:nth-child(2) { padding: 22px; }
+}

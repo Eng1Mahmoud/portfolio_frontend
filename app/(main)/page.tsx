@@ -60,7 +60,7 @@ export default async function Home() {
     <>
       {/* Grows past one viewport when the bio needs it; the 5rem is the padding
        the layout puts around <main>. */}
-      <section id="home" className="portfolio-section relative flex min-h-[calc(100dvh-10rem)] items-center">
+      <section id="home" className="portfolio-section portfolio-intro relative flex items-center">
         {/* Two quiet layers: a faint grid, and one glow set behind the type. */}
         <div
           aria-hidden="true"
@@ -115,34 +115,35 @@ export default async function Home() {
         </div>
       </section>
 
+      <section id="projects" className="portfolio-section">
+        <Title title="Projects" eyebrow="Selected work" count={projectCount} />
+        <ContentSlider label="Projects" variant="showcase">{(projects ?? []).map((project, i) => <ProjectCard key={project._id ?? project.title} project={project} index={i} />)}</ContentSlider>
+      </section>
+
       <section id="about" className="portfolio-section">
-        <Title title="About Me" eyebrow="Who I am" />
-        <div className="grid items-start gap-8 md:grid-cols-2">
+        <Title title="Behind the work" eyebrow="About me" />
+        <div className={`grid items-start gap-10 ${profileInfo?.aboutImage ? "md:grid-cols-[0.8fr_1.2fr]" : "max-w-3xl"}`}>
           <ProfileImage profileInfo={profileInfo as IuserInfo} />
           <PersonalInfo profileInfo={profileInfo as IuserInfo} />
         </div>
-      </section>
-      <section id="skills" className="portfolio-section">
+        <div id="skills" className="mt-16 scroll-mt-28">
         <Title title="Skills" eyebrow="What I work with" count={skillCount} />
         <div className="space-y-10">{orderedCategories.map(category => {
           const items = (skills ?? []).filter(skill => (skill.category?.trim() || "Other") === category);
           return <div key={category}><SkillGroupHeading category={category} count={items.length} /><div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5">{items.map((skill, i) => <SkillCard key={skill._id ?? skill.name} skill={skill} index={i} />)}</div></div>;
         })}</div>
-      </section>
-      <section id="projects" className="portfolio-section">
-        <Title title="Projects" eyebrow="Selected work" count={projectCount} />
-        <ContentSlider label="Projects">{(projects ?? []).map((project, i) => <ProjectCard key={project._id ?? project.title} project={project} index={i} />)}</ContentSlider>
+        </div>
       </section>
       <section id="experience" className="portfolio-section">
-        <div className="mx-auto max-w-4xl"><Title title="Experience" eyebrow="Where I have worked" count={(experiences ?? []).length} /><ExperienceTimeline experiences={experiences ?? []} /></div>
-      </section>
-      <section id="education" className="portfolio-section">
+        <div className="mx-auto max-w-4xl"><Title title="My journey" eyebrow="Experience & education" count={(experiences ?? []).length} /><ExperienceTimeline experiences={(experiences ?? []).slice(0, 3)} />{(experiences ?? []).length > 3 && <details className="journey-more"><summary>More experience ({(experiences ?? []).length - 3})</summary><ExperienceTimeline experiences={(experiences ?? []).slice(3)} /></details>}</div>
+        <div id="education" className="mx-auto mt-14 max-w-4xl scroll-mt-28">
         <Title title="Education" eyebrow="Where I studied" count={(educations ?? []).length} />
-        <EducationTimeline educations={educations ?? []} />
+        <EducationTimeline educations={(educations ?? []).slice(0, 2)} />{(educations ?? []).length > 2 && <details className="journey-more"><summary>More education ({(educations ?? []).length - 2})</summary><EducationTimeline educations={(educations ?? []).slice(2)} /></details>}
+        </div>
       </section>
       <section id="recommendations" className="portfolio-section">
         <Title title="Recommendations" eyebrow="What people say" count={(recommendations ?? []).length} />
-        <ContentSlider label="Recommendations">{(recommendations ?? []).map((item, i) => <RecommendationCard key={item._id ?? item.name} recommendation={item} index={i} />)}</ContentSlider>
+        <ContentSlider label="Recommendations" variant="quotes">{(recommendations ?? []).map((item, i) => <RecommendationCard key={item._id ?? item.name} recommendation={item} index={i} />)}</ContentSlider>
       </section>
       <section id="contact-us" className="portfolio-section">
         <Title title="Get in touch" eyebrow="Contact" />

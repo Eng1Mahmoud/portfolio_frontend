@@ -4,7 +4,7 @@ import { Children, type ReactNode, useEffect, useRef, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 /** Native scroll snapping retains touch, keyboard and each card's own actions. */
-export const ContentSlider = ({ children, label }: { children: ReactNode; label: string }) => {
+export const ContentSlider = ({ children, label, variant = "quotes" }: { children: ReactNode; label: string; variant?: "showcase" | "quotes" }) => {
   const track = useRef<HTMLDivElement>(null);
   const items = Children.toArray(children);
   const [position, setPosition] = useState({ first: 1, last: 1, start: true, end: false });
@@ -36,7 +36,7 @@ export const ContentSlider = ({ children, label }: { children: ReactNode; label:
         <span aria-live="polite" className="mr-2 font-mono text-xs text-ink-muted">{position.first}–{position.last} / {items.length}</span>
         {[-1, 1].map((direction) => <button key={direction} type="button" aria-label={`${direction < 0 ? "Previous" : "Next"} ${label.toLowerCase()}`} title={`${direction < 0 ? "Previous" : "Next"} ${label.toLowerCase()}`} aria-controls={`${label.toLowerCase()}-slider`} disabled={direction < 0 ? position.start : position.end} onClick={() => move(direction)} className="slider-arrow">{direction < 0 ? <FaArrowLeft /> : <FaArrowRight />}</button>)}
       </div>
-      <div ref={track} id={`${label.toLowerCase()}-slider`} tabIndex={0} className="content-slider" onKeyDown={(event) => { if (event.target !== event.currentTarget) return; if (event.key === "ArrowRight" || event.key === "ArrowLeft") { event.preventDefault(); move(event.key === "ArrowRight" ? 1 : -1); } }}>
+      <div ref={track} id={`${label.toLowerCase()}-slider`} tabIndex={0} className={`content-slider content-slider--${variant}`} onKeyDown={(event) => { if (event.target !== event.currentTarget) return; if (event.key === "ArrowRight" || event.key === "ArrowLeft") { event.preventDefault(); move(event.key === "ArrowRight" ? 1 : -1); } }}>
         {items.map((item, i) => <div key={i} className="slider-item" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${items.length}`}>{item}</div>)}
       </div>
     </div>

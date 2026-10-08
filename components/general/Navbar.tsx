@@ -26,7 +26,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
     if (!root) return;
     const update = () => {
       const line = root.getBoundingClientRect().top + 180;
-      const sections = Array.from(document.querySelectorAll<HTMLElement>("main section[id]"));
+      const sections = Array.from(document.querySelectorAll<HTMLElement>("main section.portfolio-section[id]"));
       const current = sections.filter(section => section.getBoundingClientRect().top <= line).at(-1);
       if (current) setActive(`/#${current.id}`);
     };

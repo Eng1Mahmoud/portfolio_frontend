@@ -1,5 +1,4 @@
 import { getProfileInfo } from "@/actions/getProfileInfo";
-import CanvasCursor from "@/components/general/CanvasCursor";
 import { Navbar } from "@/components/general/Navbar";
 import { ScrollProgress } from "@/components/general/ScrollProgress";
 import { IuserInfo } from "@/types/general";
@@ -11,11 +10,6 @@ export default async function MainLayout({
   const profileInfo = await getProfileInfo();
   return (
     <div className="relative bg-surface-base text-ink-body h-screen">
-      {/* Ambient night glow behind every page. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(60rem_40rem_at_85%_-10%,rgba(124,156,255,0.16),transparent_60%),radial-gradient(50rem_35rem_at_-10%_110%,rgba(196,165,255,0.12),transparent_60%)]"
-      />
       <Navbar profileInfo={profileInfo as IuserInfo} />
       {/*
         The page scrolls here, not in the window — <Timeline />, <PinnedCard />
@@ -28,7 +22,6 @@ export default async function MainLayout({
       >
         <ScrollProgress />
         <main className="container max-w-7xl lg:pb-10">{children}</main>
-        <CanvasCursor />
       </div>
     </div>
   );
