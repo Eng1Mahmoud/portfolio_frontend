@@ -73,11 +73,6 @@ export const HomeIntro = ({
 }: HomeIntroProps) => {
   const name = profileInfo?.userName?.trim() ?? "";
   const role = profileInfo?.title?.trim() ?? "";
-  const bio = profileInfo?.bio?.trim() ?? "";
-
-  // A blank line in the bio field promotes the first paragraph to a lead.
-  const [lead, ...rest] = bio.split(/\n\s*\n/);
-  const body = rest.join("\n\n");
 
   // "Mahmoud Mohamed" sets on two lines; a single-word name keeps one.
   const nameParts = name.split(" ");
@@ -140,25 +135,6 @@ export const HomeIntro = ({
           </span>
         )}
       </h1>
-
-      {bio && (
-        <motion.div
-          custom={0}
-          initial="hidden"
-          animate="visible"
-          variants={rise}
-          className="mt-7 max-w-[58ch] space-y-3"
-        >
-          <p className="whitespace-pre-line text-[0.975rem] leading-[1.75] text-ink-body sm:text-[1.0625rem]">
-            {lead}
-          </p>
-          {body && (
-            <p className="whitespace-pre-line text-[0.9rem] leading-[1.75] text-ink-muted sm:text-[0.95rem]">
-              {body}
-            </p>
-          )}
-        </motion.div>
-      )}
 
       {/* Real figures, read from the projects the site already loads. */}
       <motion.dl

@@ -50,9 +50,9 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: EASE }}
-        className="fixed inset-x-0 top-3 z-[1000] px-3 sm:top-4 sm:px-6"
+        className="portfolio-navbar pointer-events-none fixed left-0 top-3 z-[1000] px-3 sm:top-4 sm:px-6"
       >
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full border border-parchment/10 bg-surface-base/60 py-2 pe-2 ps-2 shadow-lifted backdrop-blur-xl">
+        <div className="pointer-events-auto mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full border border-parchment/10 bg-surface-base/60 py-2 pe-2 ps-2 shadow-lifted backdrop-blur-xl">
           <Link
             href="/"
             className="group flex items-center gap-2.5 rounded-full pe-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage"

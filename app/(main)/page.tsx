@@ -60,7 +60,7 @@ export default async function Home() {
     <>
       {/* Grows past one viewport when the bio needs it; the 5rem is the padding
        the layout puts around <main>. */}
-      <section id="home" className="portfolio-section portfolio-intro relative flex items-center">
+      <section id="home" tabIndex={-1} className="portfolio-section portfolio-intro relative flex items-center">
         {/* Two quiet layers: a faint grid, and one glow set behind the type. */}
         <div
           aria-hidden="true"

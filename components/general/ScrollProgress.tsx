@@ -1,22 +1,42 @@
 "use client";
-import { motion, useScroll, useSpring } from "framer-motion";
-import { usePageScrollContainer } from "@/hooks/use-page-scroll";
+import { useEffect, useState } from "react";
 
-/** A thin gradient bar at the very top that fills as the page scrolls. */
+/** The top rail is both a progress indicator and a draggable page seek control. */
 export const ScrollProgress = () => {
-  const container = usePageScrollContainer();
-  const { scrollYProgress } = useScroll({ container });
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 140,
-    damping: 30,
-    mass: 0.3,
-  });
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const root = document.getElementById("page-scroll");
+    if (!root) return;
+    const update = () => {
+      const range = root.scrollHeight - root.clientHeight;
+      setProgress(range > 0 ? root.scrollTop / range * 100 : 0);
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(root);
+    const main = root.querySelector("main");
+    if (main) observer.observe(main);
+    root.addEventListener("scroll", update, { passive: true });
+    return () => { observer.disconnect(); root.removeEventListener("scroll", update); };
+  }, []);
 
   return (
-    <motion.div
-      aria-hidden="true"
-      style={{ scaleX, transformOrigin: "0% 50%" }}
-      className="fixed inset-x-0 top-0 z-[1100] h-[3px] bg-gradient-to-r from-sage via-wheat to-sage-bright shadow-[0_0_12px_rgba(124,156,255,0.7)]"
-    />
+    <div className="page-seek">
+      <div aria-hidden="true" className="page-seek-fill" style={{ transform: `scaleX(${progress / 100})` }} />
+      <input
+        type="range"
+        min={0}
+        max={100}
+        step={0.1}
+        value={progress}
+        aria-label="Page scroll position"
+        aria-valuetext={`${Math.round(progress)}% through page`}
+        onChange={event => {
+          const root = document.getElementById("page-scroll");
+          if (!root) return;
+          root.scrollTo({ top: Number(event.target.value) / 100 * (root.scrollHeight - root.clientHeight), behavior: "instant" });
+        }}
+      />
+    </div>
   );
 };
