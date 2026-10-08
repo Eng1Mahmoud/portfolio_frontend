@@ -48,10 +48,10 @@ export const Title = ({ title, eyebrow, count }: TitleProps) => {
       )}
 
       <RevealText
-        as="h1"
+        as="h2"
         text={title}
         delay={0.06}
-        className="display-title block text-[clamp(1.9rem,5vw,2.9rem)] leading-[1.05] text-ink-strong"
+        className="display-title block text-3xl sm:text-4xl leading-[1.05] text-ink-strong"
       />
     </div>
   );

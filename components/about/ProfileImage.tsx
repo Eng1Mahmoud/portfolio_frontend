@@ -3,6 +3,7 @@ import Image from "next/image";
 import { IuserInfo } from "@/types/general";
 
 export const ProfileImage = ({ profileInfo }: { profileInfo: IuserInfo }) => {
+  if (!profileInfo?.aboutImage) return null;
   return (
     <div className="group relative aspect-square w-full max-w-md">
       <Image

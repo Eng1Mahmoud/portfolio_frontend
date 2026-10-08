@@ -1,34 +1,34 @@
 export const asideLinks = [
   {
     label: "Home",
-    path: "/",
+    path: "/#home",
   },
   {
     label: "About",
-    path: "/about",
+    path: "/#about",
   },
   {
     label: "Skills",
-    path: "/skills",
+    path: "/#skills",
   },
   {
     label: "Projects",
-    path: "/projects",
+    path: "/#projects",
   },
   {
     label: "Experience",
-    path: "/experience",
+    path: "/#experience",
   },
   {
     label: "Education",
-    path: "/education",
+    path: "/#education",
   },
   {
     label: "Recommendations",
-    path: "/recommendations",
+    path: "/#recommendations",
   },
   {
     label: "Contact",
-    path: "/contact-us",
+    path: "/#contact-us",
   },
 ];

@@ -3,6 +3,25 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --portfolio-strong: oklch(0.97 0.008 255);
+    --portfolio-body: oklch(0.8 0.018 255);
+    --portfolio-muted: oklch(0.67 0.024 255);
+    --portfolio-well: oklch(0.13 0.013 255);
+    --portfolio-base: oklch(0.16 0.016 255);
+    --portfolio-panel: oklch(0.21 0.019 255);
+    --portfolio-raised: oklch(0.26 0.022 255);
+    --portfolio-accent: oklch(0.76 0.12 245);
+    --portfolio-accent-bright: oklch(0.86 0.075 240);
+    --portfolio-accent-dim: oklch(0.61 0.115 245);
+    --portfolio-accent-deep: oklch(0.47 0.1 250);
+    --portfolio-accent-darkest: oklch(0.23 0.055 255);
+    --portfolio-support: oklch(0.8 0.08 175);
+    --portfolio-support-deep: oklch(0.6 0.075 175);
+    --portfolio-shadow-pinned: 0 2px 4px oklch(0.08 0.005 255 / 30%), 0 16px 34px -18px oklch(0.05 0.005 255 / 65%);
+    --portfolio-shadow-lifted: 0 3px 8px oklch(0.08 0.005 255 / 30%), 0 20px 48px -18px oklch(0.05 0.005 255 / 70%);
+    --portfolio-shadow-accent: 0 4px 18px -6px oklch(0.76 0.12 245 / 35%);
+  }
   /* Fontshare faces (linked in app/layout.tsx) mapped onto the variables the
      rest of the code reads. */
   .font-vars {
@@ -11,8 +30,8 @@
   }
 
   ::selection {
-    background: rgba(124, 156, 255, 0.35);
-    color: #eef0ff;
+    background: color-mix(in oklch, var(--portfolio-accent) 35%, transparent);
+    color: var(--portfolio-strong);
   }
 
   /* Body sets the reading face once; headings opt in via `font-display`. */
@@ -40,13 +59,13 @@
   .display-hero {
     font-family: var(--display-font), sans-serif;
         font-weight: 700;
-    letter-spacing: -0.03em;
+    letter-spacing: 0;
   }
 
   /* Gradient on the innermost spans: background-clip on the h1 itself does
      not reach children that are transformed by the reveal animation. */
   .display-hero span span {
-    background: linear-gradient(120deg, #eef0ff 25%, #a5b8ff 60%, #c4a5ff);
+    background: linear-gradient(120deg, var(--portfolio-strong) 25%, var(--portfolio-accent-bright) 65%, var(--portfolio-support));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -55,13 +74,13 @@
   .display-title {
     font-family: var(--display-font), sans-serif;
     font-weight: 600;
-    letter-spacing: -0.022em;
+    letter-spacing: 0;
   }
 
   .display-card {
     font-family: var(--display-font), sans-serif;
     font-weight: 600;
-    letter-spacing: -0.012em;
+    letter-spacing: 0;
   }
 
   /*
@@ -95,7 +114,7 @@
 /* Firefox has no ::-webkit-scrollbar, hence the two properties. */
 .scrollBar {
   scrollbar-width: thin;
-  scrollbar-color: #5b6fd6 transparent;
+  scrollbar-color: var(--portfolio-accent-dim) transparent;
 }
 
 .scrollBar::-webkit-scrollbar {
@@ -107,14 +126,14 @@
 }
 
 .scrollBar::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #5b6fd6, #4338ca);
+  background: linear-gradient(to bottom, var(--portfolio-accent-dim), var(--portfolio-accent-deep));
   border-radius: 9999px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
 
 .scrollBar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #7c9cff, #5b6fd6);
+  background: linear-gradient(to bottom, var(--portfolio-accent), var(--portfolio-accent-dim));
   background-clip: content-box;
 }
 
@@ -138,3 +157,17 @@
     transform: none;
   }
 }
+
+#page-scroll { scroll-behavior: smooth; scroll-padding-top: 100px; }
+.portfolio-section { position: relative; padding-block: 72px; border-bottom: 1px solid color-mix(in oklch, var(--portfolio-strong) 9%, transparent); scroll-margin-top: 12px; }
+.portfolio-section:first-child { padding-top: 12px; border-bottom: 0; }
+.portfolio-section:last-of-type { border-bottom: 0; }
+.content-slider { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 64px) / 3); align-items: stretch; gap: 32px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-padding-inline: 20px; padding: 28px 20px 44px; margin-inline: -20px; scrollbar-width: thin; scrollbar-color: var(--portfolio-accent-dim) transparent; }
+.slider-item { min-width: 0; scroll-snap-align: start; }
+.slider-item > div { height: 100%; }
+.slider-arrow { display: inline-flex; width: 42px; height: 42px; align-items: center; justify-content: center; border: 1px solid color-mix(in oklch, var(--portfolio-strong) 18%, transparent); border-radius: 50%; background: var(--portfolio-panel); color: var(--portfolio-strong); box-shadow: var(--portfolio-shadow-pinned); transition: border-color 200ms, background 200ms; }
+.slider-arrow:hover:not(:disabled) { background: var(--portfolio-raised); border-color: var(--portfolio-accent); }
+.slider-arrow:disabled { opacity: .3; cursor: not-allowed; }
+.slider-arrow:focus-visible, .content-slider:focus-visible { outline: 2px solid var(--portfolio-accent); outline-offset: 4px; }
+@media (max-width: 1023px) { .content-slider { grid-auto-columns: calc((100% - 32px) / 2); } }
+@media (max-width: 639px) { .content-slider { grid-auto-columns: 92%; } .portfolio-section { padding-block: 48px; } }

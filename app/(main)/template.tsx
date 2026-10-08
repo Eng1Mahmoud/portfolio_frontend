@@ -22,7 +22,10 @@ export default function MainTemplate({
   // restoration never sees it — navigating from the bottom of one page left
   // the next one already scrolled down.
   useEffect(() => {
-    document.getElementById("page-scroll")?.scrollTo({ top: 0 });
+    const target = window.location.hash.slice(1);
+    if (target) {
+      requestAnimationFrame(() => document.getElementById(target)?.scrollIntoView({ block: "start" }));
+    } else document.getElementById("page-scroll")?.scrollTo({ top: 0 });
   }, [pathname]);
 
   return (

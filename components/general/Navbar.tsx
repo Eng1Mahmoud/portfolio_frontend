@@ -19,7 +19,21 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const isActive = (path: string) => pathname === path;
+  const [active, setActive] = useState("/#home");
+  const isActive = (path: string) => active === path;
+  useEffect(() => {
+    const root = document.getElementById("page-scroll");
+    if (!root) return;
+    const update = () => {
+      const line = root.getBoundingClientRect().top + 180;
+      const sections = Array.from(document.querySelectorAll<HTMLElement>("main section[id]"));
+      const current = sections.filter(section => section.getBoundingClientRect().top <= line).at(-1);
+      if (current) setActive(`/#${current.id}`);
+    };
+    update();
+    root.addEventListener("scroll", update, { passive: true });
+    return () => root.removeEventListener("scroll", update);
+  }, [pathname]);
 
   useEffect(() => setOpen(false), [pathname]);
 
@@ -70,9 +84,10 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
                   <li key={item.path}>
                     <Link
                       href={item.path}
+                      onClick={() => setActive(item.path)}
                       aria-current={isActive(item.path) ? "page" : undefined}
                       className={clsx(
-                        "relative block rounded-full px-3.5 py-2 text-[0.85rem] font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage",
+                        "relative block rounded-full px-2.5 py-2 text-[0.8rem] font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage",
                         isActive(item.path)
                           ? "text-surface-base"
                           : "text-ink-muted hover:text-ink-strong",
@@ -87,7 +102,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
                             stiffness: 420,
                             damping: 34,
                           }}
-                          className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-sage to-sage-bright shadow-[0_0_20px_rgba(124,156,255,0.45)]"
+                          className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-sage to-sage-bright shadow-accent"
                         />
                       )}
                       {item.label}
@@ -135,10 +150,6 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
             transition={{ duration: 0.6, ease: EASE }}
             className="fixed inset-0 z-[999] flex flex-col justify-center bg-surface-well/95 px-8 backdrop-blur-2xl lg:hidden"
           >
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -right-24 top-1/3 h-80 w-80 rounded-full bg-sage/20 blur-[110px]"
-            />
             <ul className="relative space-y-1">
               {asideLinks.map((item, i) => (
                 <motion.li
@@ -150,7 +161,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
                 >
                   <Link
                     href={item.path}
-                    onClick={() => setOpen(false)}
+                    onClick={() => { setActive(item.path); setOpen(false); }}
                     aria-current={isActive(item.path) ? "page" : undefined}
                     className={clsx(
                       "flex items-baseline gap-4 py-1.5 font-display text-4xl font-semibold tracking-tight transition-colors sm:text-5xl",

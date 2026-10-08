@@ -36,36 +36,36 @@ export default {
           Ratios below were computed against WCAG AA, not eyeballed.
         */
         ink: {
-          strong: "#EEF0FF", // headings          14.6:1 on surface.base
-          body: "#B8BEDA", //   paragraphs         9.7:1
-          muted: "#8389AB", //  labels, captions   5.4:1
+          strong: "oklch(from var(--portfolio-strong) l c h / <alpha-value>)", // headings          14.6:1 on surface.base
+          body: "oklch(from var(--portfolio-body) l c h / <alpha-value>)", //   paragraphs         9.7:1
+          muted: "oklch(from var(--portfolio-muted) l c h / <alpha-value>)", //  labels, captions   5.4:1
         },
 
         surface: {
-          well: "#05060D", //   behind a lifted card, so its shadow lands on something
-          base: "#0A0C17", //   page
-          panel: "#12152A", //  cards, timeline entries
-          raised: "#1B1F3A", // hover / raised
-          card: "#12152A",
-          "card-to": "#1B1F3A",
+          well: "oklch(from var(--portfolio-well) l c h / <alpha-value>)", //   behind a lifted card, so its shadow lands on something
+          base: "oklch(from var(--portfolio-base) l c h / <alpha-value>)", //   page
+          panel: "oklch(from var(--portfolio-panel) l c h / <alpha-value>)", //  cards, timeline entries
+          raised: "oklch(from var(--portfolio-raised) l c h / <alpha-value>)", // hover / raised
+          card: "oklch(from var(--portfolio-panel) l c h / <alpha-value>)",
+          "card-to": "oklch(from var(--portfolio-raised) l c h / <alpha-value>)",
         },
 
         // Hairlines. A white border over a warm ground reads grey and cold.
-        parchment: "#E6E9FF",
+        parchment: "oklch(from var(--portfolio-strong) l c h / <alpha-value>)",
 
         /** Rails, eyebrows, figures, timeline nodes, links, buttons, focus. */
         sage: {
-          DEFAULT: "#7C9CFF", // text and fills      9.0:1 on surface.base
-          bright: "#A5B8FF", //  hover on a filled button
-          dim: "#5B6FD6", //     quieter marks
-          deep: "#4338CA", //    gradient ends
-          deepest: "#1E1B4B", // text on a sage fill: links in a sent message  5.4:1
+          DEFAULT: "oklch(from var(--portfolio-accent) l c h / <alpha-value>)", // text and fills      9.0:1 on surface.base
+          bright: "oklch(from var(--portfolio-accent-bright) l c h / <alpha-value>)", //  hover on a filled button
+          dim: "oklch(from var(--portfolio-accent-dim) l c h / <alpha-value>)", //     quieter marks
+          deep: "oklch(from var(--portfolio-accent-deep) l c h / <alpha-value>)", //    gradient ends
+          deepest: "oklch(from var(--portfolio-accent-darkest) l c h / <alpha-value>)", // text on a sage fill: links in a sent message  5.4:1
         },
 
         /** The pinboard alone: pin heads and the sheen. Nothing else. */
         wheat: {
-          DEFAULT: "#C4A5FF",
-          deep: "#7C5CE0",
+          DEFAULT: "oklch(from var(--portfolio-support) l c h / <alpha-value>)",
+          deep: "oklch(from var(--portfolio-support-deep) l c h / <alpha-value>)",
         },
 
         /** Dashboard and auth screens only. */
@@ -84,13 +84,14 @@ export default {
       },
 
       boxShadow: {
+        accent: "var(--portfolio-shadow-accent)",
         "custom-shadow": "0px 0px 4px #e9ecef, 0px 0px 4px #e9ecef",
         // Tight contact shadow plus a wide soft one: what separates
         // "floating" from "stuck on".
         pinned:
-          "0 1px 2px rgba(0,0,0,0.45), 0 10px 24px -12px rgba(0,0,0,0.65)",
+          "var(--portfolio-shadow-pinned)",
         lifted:
-          "0 2px 6px rgba(0,0,0,0.55), 0 32px 60px -24px rgba(10,8,6,0.95)",
+          "var(--portfolio-shadow-lifted)",
       },
 
       keyframes: {
