@@ -10,6 +10,7 @@ import { ContentSlider } from "@/components/general/ContentSlider";
 import { Title } from "@/components/general/Title";
 import { ProjectCard } from "@/components/Projects/ProjectCard";
 import { RecommendationCard } from "@/components/recommendations/RecommendationCard";
+import { ServicesSection } from "@/components/services/ServicesSection";
 import { SkillCard } from "@/components/skills/SkillCard";
 import { SkillGroupHeading } from "@/components/skills/SkillGroupHeading";
 import ExperienceTimeline from "@/components/Experience/ExperienceTimeline";
@@ -130,6 +131,10 @@ export default async function Home() {
             );
           })}
         </div>
+      </section>
+      <section id="services" className="portfolio-section relative! py-10 sm:py-11 md:py-14 [border-bottom:var(--section-border)]! [scroll-margin-top:12px]! [&:first-child]:pt-3! [&:first-child]:[border-bottom:0]! [&:last-of-type]:[border-bottom:0]! ">
+        <Title title="Services" eyebrow="What I can build for you" />
+        <ServicesSection />
       </section>
       <section
         id="projects"
