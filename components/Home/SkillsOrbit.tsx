@@ -5,25 +5,24 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ISkill } from "@/types/general";
+import { getOrbitLayout } from "./orbit-layout";
 
 /** Static fallback: shown while the 3D chunk loads and when WebGL is missing. */
-const StaticSkills = ({ skills }: { skills: ISkill[] }) => (
-  <div className="relative flex h-full w-full items-center justify-center">
-    <div className="absolute inset-0">
-      {skills.slice(0, 12).map((s, i, list) => (
-        <div
-          key={s._id ?? s.name}
-          title={s.name}
-          className="static-orbit-badge"
-          style={{ left: `${50 + 39 * Math.cos(i / list.length * Math.PI * 2)}%`, top: `${50 + 39 * Math.sin(i / list.length * Math.PI * 2)}%` }}
-        >
+const StaticSkills = ({ skills }: { skills: ISkill[] }) => {
+  const layout = getOrbitLayout(skills.length);
+  return (
+    <div className="absolute inset-0" aria-hidden="true">
+      {layout.rings.map((ring, i) => <div key={i} className="static-orbit-ring" style={{ width: `${ring.radius * 200}%` }} />)}
+      {layout.slots.map(slot => {
+        const skill = skills[slot.index];
+        return <div key={skill._id ?? `${skill.name}-${slot.index}`} title={skill.name} className="static-orbit-badge" style={{ width: `${layout.badgeSize * 100}%`, left: `${50 + slot.radius * 100 * Math.cos(slot.angle)}%`, top: `${50 + slot.radius * 100 * Math.sin(slot.angle)}%` }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={s.imageUrl} alt={s.name} className="h-full w-full object-contain" />
-        </div>
-      ))}
+          <img src={skill.imageUrl} alt={skill.name} className="h-full w-full object-contain" />
+        </div>;
+      })}
     </div>
-  </div>
-);
+  );
+};
 
 const Scene = dynamic(() => import("./SkillsOrbitScene"), {
   ssr: false,
@@ -57,13 +56,15 @@ export const SkillsOrbit = ({ skills, portrait, name }: { skills: ISkill[]; port
     return () => mobile.removeEventListener("change", update);
   }, []);
 
+  const layout = getOrbitLayout(skills.length);
+
   return (
     <motion.div
       initial={reduceMotion ? false : { opacity: 0, scale: 0.94 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 0.3, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
       className="skills-orbit relative aspect-square min-w-0 w-full cursor-grab active:cursor-grabbing"
-      aria-label={`${name} and skills I work with`}
+      aria-label={`${name}: ${skills.map(skill => skill.name).join(", ")}`}
       role="img"
     >
       {mode === "3d" ? (
@@ -77,8 +78,8 @@ export const SkillsOrbit = ({ skills, portrait, name }: { skills: ISkill[]; port
         <StaticSkills skills={skills} />
       ) : null}
       {portrait && (
-        <div className="hero-orbit-portrait pointer-events-none absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-2 border-sage/60 bg-surface-panel shadow-accent">
-          <Image src={portrait} alt={name} fill priority unoptimized sizes="(max-width: 767px) 122px, 205px" className="object-cover" />
+        <div style={{ width: `${layout.portraitSize * 100}%` }} className="hero-orbit-portrait pointer-events-none absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-2 border-sage/60 bg-surface-panel shadow-accent">
+          <Image src={portrait} alt={name} fill priority unoptimized sizes="(max-width: 767px) 103px, 173px" className="object-cover" />
         </div>
       )}
     </motion.div>

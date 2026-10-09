@@ -1,191 +1,81 @@
 "use client";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Html, Sparkles } from "@react-three/drei";
-import { useMemo, useRef, useState } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Html } from "@react-three/drei";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { ISkill } from "@/types/general";
+import { getOrbitLayout } from "./orbit-layout";
 
-interface Props {
-  skills: ISkill[];
-  lite: boolean;
-  paused?: boolean;
+interface Props { skills: ISkill[]; lite: boolean; paused?: boolean; }
+
+function Orbit({ skills, paused }: { skills: ISkill[]; paused: boolean }) {
+  const layout = useMemo(() => getOrbitLayout(skills.length), [skills.length]);
+  const { size, camera } = useThree();
+  const rig = useRef<THREE.Group>(null);
+  const projected = useMemo(() => new THREE.Vector3(), []);
+  const spin = useRef({ dragging: false, lastX: 0, velocity: 0 });
+  const lines = useMemo(() => layout.rings.map(ring => {
+    const points = Array.from({ length: 129 }, (_, i) => {
+      const angle = i / 128 * Math.PI * 2;
+      return new THREE.Vector3(Math.cos(angle) * ring.radius * 10, Math.sin(angle) * ring.radius * 10, 0);
+    });
+    return new THREE.BufferGeometry().setFromPoints(points);
+  }), [layout]);
+  const [accent, support] = useMemo(() => {
+    const styles = getComputedStyle(document.documentElement);
+    // Resolve the existing CSS palette through the browser into Three-compatible sRGB.
+    const resolve = (token: string) => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return new THREE.Color();
+      ctx.fillStyle = styles.getPropertyValue(token).trim();
+      ctx.fillRect(0, 0, 1, 1);
+      const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+      return new THREE.Color().setRGB(r / 255, g / 255, b / 255, THREE.SRGBColorSpace);
+    };
+    return [resolve("--portfolio-accent"), resolve("--portfolio-support")];
+  }, []);
+  useEffect(() => {
+    if (camera instanceof THREE.OrthographicCamera) {
+      camera.zoom = Math.min(size.width, size.height) / 10;
+      camera.updateProjectionMatrix();
+    }
+  }, [camera, size.width, size.height]);
+  useEffect(() => () => lines.forEach(line => line.dispose()), [lines]);
+  useFrame((state, rawDelta) => {
+    const group = rig.current;
+    if (!group || paused) return;
+    const dt = Math.min(rawDelta, 0.05);
+    const s = spin.current;
+    group.rotation.z += (0.035 + s.velocity) * dt;
+    if (!s.dragging) s.velocity *= Math.exp(-3 * dt);
+    group.rotation.x += (state.pointer.y * 0.1 - group.rotation.x) * (1 - Math.exp(-3 * dt));
+    group.rotation.y += (state.pointer.x * 0.1 - group.rotation.y) * (1 - Math.exp(-3 * dt));
+  });
+  return <group ref={rig}
+    onPointerDown={e => { spin.current.dragging = true; spin.current.lastX = e.clientX; if (e.target instanceof Element) e.target.setPointerCapture(e.pointerId); }}
+    onPointerUp={e => { spin.current.dragging = false; if (e.target instanceof Element && e.target.hasPointerCapture(e.pointerId)) e.target.releasePointerCapture(e.pointerId); }}
+    onPointerCancel={() => { spin.current.dragging = false; }}
+    onPointerMove={e => { const s = spin.current; if (!s.dragging) return; s.velocity = THREE.MathUtils.clamp((e.clientX - s.lastX) * 0.03, -1.2, 1.2); s.lastX = e.clientX; }}>
+    <mesh><circleGeometry args={[4.8, 48]} /><meshBasicMaterial transparent opacity={0} depthWrite={false} /></mesh>
+    {lines.map((geometry, i) => <lineLoop key={i} geometry={geometry}><lineBasicMaterial color={i % 2 ? support : accent} transparent opacity={0.24} /></lineLoop>)}
+    {layout.slots.map(slot => {
+      const skill = skills[slot.index];
+      return <group key={skill._id ?? `${skill.name}-${slot.index}`} position={[Math.cos(slot.angle) * slot.radius * 10, Math.sin(slot.angle) * slot.radius * 10, 0]}>
+        <Html center zIndexRange={[20, 0]}>
+          <div className="orbit-skill-badge" title={skill.name} style={{ width: Math.min(size.width, size.height) * layout.badgeSize }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={skill.imageUrl} alt={skill.name} draggable={false} />
+            <span className="orbit-skill-label">{skill.name}</span>
+          </div>
+        </Html>
+      </group>;
+    })}
+  </group>;
 }
 
-/** Ring tilt (x, z) and radius — skills are dealt round-robin onto these. */
-const RINGS = [
-  { radius: 2.8, tilt: [0.35, 0.1], speed: 0.16 },
-  { radius: 3.6, tilt: [-0.45, -0.25], speed: -0.11 },
-  { radius: 4.4, tilt: [0.15, 0.55], speed: 0.07 },
-] as const;
-
-const SkillBadge = ({ skill }: { skill: ISkill }) => {
-  const [hover, setHover] = useState(false);
-  return (
-    <Html center distanceFactor={8} zIndexRange={[20, 0]}>
-      <div
-        onPointerEnter={() => setHover(true)}
-        onPointerLeave={() => setHover(false)}
-        className="group relative flex flex-col items-center select-none"
-      >
-          <div
-            className={`flex h-16 w-16 items-center justify-center rounded-2xl border bg-surface-panel/80 p-3 backdrop-blur-md transition-all duration-300 ${
-            hover
-              ? "scale-125 border-sage shadow-[0_0_28px_rgba(124,156,255,0.85)]"
-              : "border-parchment/15 shadow-[0_0_14px_rgba(124,156,255,0.25)]"
-          }`}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={skill.imageUrl}
-            alt={skill.name}
-            draggable={false}
-            className="h-full w-full object-contain"
-          />
-        </div>
-        <span
-          className={`pointer-events-none absolute top-full mt-2 whitespace-nowrap rounded-full bg-surface-well/90 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-ink-strong transition-all duration-200 ${
-            hover ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1"
-          }`}
-        >
-          {skill.name}
-        </span>
-      </div>
-    </Html>
-  );
-};
-
-const Ring = ({
-  skills,
-  radius,
-  tilt,
-  speed,
-}: {
-  skills: ISkill[];
-  radius: number;
-  tilt: readonly [number, number];
-  speed: number;
-}) => {
-  const ref = useRef<THREE.Group>(null);
-  useFrame((_, delta) => {
-    if (ref.current) ref.current.rotation.y += speed * Math.min(delta, 0.05);
-  });
-
-  const ringLine = useMemo(() => {
-    const pts = new THREE.EllipseCurve(0, 0, radius, radius).getPoints(128);
-    const geo = new THREE.BufferGeometry().setFromPoints(
-      pts.map((p) => new THREE.Vector3(p.x, 0, p.y)),
-    );
-    const mat = new THREE.LineBasicMaterial({
-      color: "#7C9CFF",
-      transparent: true,
-      opacity: 0.22,
-    });
-    return new THREE.Line(geo, mat);
-  }, [radius]);
-
-  return (
-    <group rotation={[tilt[0], 0, tilt[1]]}>
-      <primitive object={ringLine} />
-      <group ref={ref}>
-        {skills.map((skill, i) => {
-          const a = (i / skills.length) * Math.PI * 2;
-          return (
-            <group
-              key={skill._id ?? skill.name}
-              position={[Math.cos(a) * radius, 0, Math.sin(a) * radius]}
-            >
-              <SkillBadge skill={skill} />
-            </group>
-          );
-        })}
-      </group>
-    </group>
-  );
-};
-
-/** Tilts the whole system toward the pointer; drag adds spin with inertia. */
-const Rig = ({ children }: { children: React.ReactNode }) => {
-  const ref = useRef<THREE.Group>(null);
-  const spin = useRef({ v: 0, dragging: false, lastX: 0 });
-
-  useFrame((state, rawDelta) => {
-    const dt = Math.min(rawDelta, 0.05);
-    const g = ref.current;
-    if (!g) return;
-    const s = spin.current;
-    g.rotation.y += s.v * dt;
-    if (!s.dragging) s.v *= Math.exp(-2.2 * dt);
-    const targetX = state.pointer.y * -0.25;
-    const targetZ = state.pointer.x * 0.12;
-    g.rotation.x += (targetX - g.rotation.x) * (1 - Math.exp(-3 * dt));
-    g.rotation.z += (targetZ - g.rotation.z) * (1 - Math.exp(-3 * dt));
-  });
-
-  return (
-    <group
-      ref={ref}
-      onPointerDown={(e) => {
-        spin.current.dragging = true;
-        spin.current.lastX = e.clientX;
-      }}
-      onPointerUp={() => (spin.current.dragging = false)}
-      onPointerLeave={() => (spin.current.dragging = false)}
-      onPointerMove={(e) => {
-        const s = spin.current;
-        if (!s.dragging) return;
-        s.v = (e.clientX - s.lastX) * 0.35;
-        s.lastX = e.clientX;
-      }}
-    >
-      {/* Invisible hit sphere so drags register anywhere on the system. */}
-      <mesh>
-        <sphereGeometry args={[5, 16, 16]} />
-        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-      </mesh>
-      {children}
-    </group>
-  );
-};
-
 export default function SkillsOrbitScene({ skills, lite, paused = false }: Props) {
-  const rings = useMemo(() => {
-    const list = lite ? skills.slice(0, 10) : skills.slice(0, 21);
-    const out: ISkill[][] = RINGS.map(() => []);
-    list.forEach((s, i) => out[i % RINGS.length].push(s));
-    return out;
-  }, [skills, lite]);
-
-  return (
-    <Canvas
-      frameloop={paused ? "never" : "always"}
-      dpr={lite ? [1, 1.25] : [1, 2]}
-      camera={{ position: [0, 1.4, 14.5], fov: 45 }}
-      gl={{ antialias: !lite, alpha: true }}
-      style={{ touchAction: "pan-y" }}
-    >
-      <ambientLight intensity={0.4} />
-      <pointLight position={[4, 4, 6]} intensity={60} color="#A5B8FF" />
-      <pointLight position={[-5, -3, -2]} intensity={40} color="#C4A5FF" />
-      <Rig>
-        {RINGS.map((r, i) =>
-          rings[i].length ? (
-            <Ring
-              key={i}
-              skills={rings[i]}
-              radius={r.radius}
-              tilt={r.tilt}
-              speed={r.speed}
-            />
-          ) : null,
-        )}
-      </Rig>
-      <Sparkles
-        count={lite ? 40 : 110}
-        scale={[11, 7, 6]}
-        size={2.2}
-        speed={0.35}
-        color="#A5B8FF"
-      />
-    </Canvas>
-  );
+  return <Canvas orthographic frameloop={paused ? "demand" : "always"} dpr={lite ? [1, 1.25] : [1, 1.5]} camera={{ position: [0, 0, 20], zoom: 40 }} gl={{ antialias: !lite, alpha: true }} style={{ touchAction: "pan-y" }}>
+    <Orbit skills={skills} paused={paused} />
+  </Canvas>;
 }
