@@ -15,19 +15,19 @@ const SERVICES: {
     title: "Frontend Development",
     text: "Fast, accessible and responsive interfaces that bring your ideas to life in the browser.",
     Icon: FiMonitor,
-    stack: ["React", "Next.js", "TypeScript", "Tailwind"],
+    stack: ["React.js", "Next.js", "Vue 3", "TypeScript", "Tailwind CSS", "Redux Toolkit"],
   },
   {
     title: "Full-stack Development",
     text: "From polished frontends to robust APIs and databases, I build complete web applications.",
     Icon: FiLayers,
-    stack: ["Node.js", "REST APIs", "MongoDB", "Auth"],
+    stack: ["Node.js", "Express.js", "REST APIs", "PostgreSQL", "MongoDB", "Socket.io"],
   },
   {
     title: "Maintenance & Support",
     text: "Keep your platform secure, up to date and running smoothly with ongoing improvements.",
     Icon: FiTool,
-    stack: ["Performance", "SEO", "Bug fixing", "Upgrades"],
+    stack: ["Sentry", "Lighthouse", "CI/CD", "Vercel", "Git/GitHub", "Code splitting"],
   },
 ];
 
