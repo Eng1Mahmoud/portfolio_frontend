@@ -1,8 +1,6 @@
-import { FaArrowRight, FaDownload } from "react-icons/fa";
 import { SocialLinks } from "@/components/Home/SocialLinks";
 import { HomeIntro } from "@/components/Home/HomeIntro";
 import { Reveal } from "@/components/general/Reveal";
-import { MagneticLink } from "@/components/general/MagneticLink";
 import { getProfileInfo } from "@/actions/getProfileInfo";
 import { getAllProjects } from "@/actions/getAllProjects";
 import { getAllSkills } from "@/actions/getAllSkills";
@@ -72,38 +70,13 @@ export default async function Home() {
           <HomeIntro profileInfo={profileInfo as IuserInfo} />
 
 
-          {/* Last beat: the actions arrive after the figures finish counting. */}
+          {/* The hero closes with the social links; the CV stays in the navigation. */}
           <Reveal
             delay={0.45}
-             trigger="mount"
-             className="hero-actions mt-6 grid grid-cols-2 items-center gap-3 pl-6 sm:mt-8 sm:pl-10"
+            trigger="mount"
+            className="hero-actions mt-6 pl-6 sm:mt-8 sm:pl-10"
           >
-            <MagneticLink
-              href="#projects"
-              className="group inline-flex justify-center items-center gap-2 rounded-full bg-sage px-2 py-3 text-xs sm:px-5 sm:text-sm font-medium text-surface-base transition-colors hover:bg-sage-bright focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base"
-            >
-              View projects
-              <FaArrowRight
-                aria-hidden="true"
-                className="h-3 w-3 transition-transform group-hover:translate-x-1"
-              />
-            </MagneticLink>
-
-            {profileInfo?.cv && (
-              <MagneticLink
-                href={profileInfo.cv}
-                external
-                download
-                className="inline-flex justify-center items-center gap-2 rounded-full border border-parchment/15 px-2 py-3 text-xs sm:px-5 sm:text-sm font-medium text-ink-body transition-colors hover:border-sage/60 hover:text-ink-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
-              >
-                <FaDownload aria-hidden="true" className="h-3 w-3" />
-                Download CV
-              </MagneticLink>
-            )}
-
-            <div className="col-span-2">
-              <SocialLinks profileInfo={profileInfo as IuserInfo} />
-            </div>
+            <SocialLinks profileInfo={profileInfo as IuserInfo} />
           </Reveal>
           </div>
           <div className="hero-visual min-w-0 flex justify-center lg:justify-end">

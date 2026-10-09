@@ -6,8 +6,9 @@ import {
 
 /**
  * Home hero. Traces HomeIntro: the rail, the mono role line, a two-line name,
- * the biography, then the action row.
+ * the biography, then the social links.
  */
+
 
 export default function Loading() {
   return (
@@ -28,13 +29,12 @@ export default function Loading() {
           </div>
 
 
-          <div className="mt-9 flex flex-wrap items-center gap-4">
-            <SkeletonPill className="h-11 w-36" />
-            <SkeletonPill className="h-11 w-36" />
+          <div className="mt-9 flex flex-wrap items-center gap-3">
             <SkeletonPill className="h-10 w-10" />
             <SkeletonPill className="h-10 w-10" />
             <SkeletonPill className="h-10 w-10" />
           </div>
+
         </div>
       </section>
     </SkeletonScreen>

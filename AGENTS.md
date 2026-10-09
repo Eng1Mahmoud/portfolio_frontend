@@ -1,8 +1,11 @@
 ## Portfolio presentation
 - Hero columns use zero-minimum grid tracks with a larger bounded visual track and an orbit that shrinks to its available width; section entrances respect reduced motion, so larger skills stay clear of text at every viewport.
 - Keep all public content on one scrolling page, with legacy section URLs redirecting to retained anchors, so existing links keep working.
+- Section rhythm uses one shared padding scale that only tightens as the viewport shrinks, so the page reads as a continuous scroll and spacing stays compact rather than growing.
+
 - Group career with education; preserve every data item through sliders or expandable timelines.
-- The hero carries the person only: role, name, the full profile biography and the actions — no figures or spec-sheet detail rows — and the 3D skills visual is top-aligned with the text column, so the page opens with the description and the orbit reads from the same line.
+- The hero carries the person only: role, name, the full profile biography and the social links — no buttons, figures or spec-sheet detail rows — and the 3D skills visual is top-aligned with the text column, so the page opens with the description and the orbit reads from the same line.
+
 
 - Keep API actions, dashboard, tracking integrations and data models unchanged when redesigning presentation.
 - Use #page-scroll as the only public-page scroll root, with accessible seek and back-to-top controls; fixed navigation must leave its native scrollbar unobstructed.

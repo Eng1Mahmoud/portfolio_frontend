@@ -222,7 +222,8 @@
   .contact-detail { padding-block: 18px; }
 }
 @media (max-width: 359px) { .skill-grid { grid-template-columns: minmax(0, 1fr); } }
-.portfolio-section { position: relative; padding-block: 72px; border-bottom: 1px solid color-mix(in oklch, var(--portfolio-strong) 9%, transparent); scroll-margin-top: 12px; }
+.portfolio-section { position: relative; padding-block: 56px; border-bottom: 1px solid color-mix(in oklch, var(--portfolio-strong) 9%, transparent); scroll-margin-top: 12px; }
+
 .portfolio-section:first-child { padding-top: 12px; border-bottom: 0; }
 .portfolio-section:last-of-type { border-bottom: 0; }
 .content-slider { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 64px) / 3); align-items: stretch; gap: 32px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-padding-inline: 20px; padding: 28px 20px 44px; margin-inline: -20px; scrollbar-width: thin; scrollbar-color: var(--portfolio-accent-dim) transparent; }
@@ -233,7 +234,9 @@
 .slider-arrow:disabled { opacity: .3; cursor: not-allowed; }
 .slider-arrow:focus-visible, .content-slider:focus-visible { outline: 2px solid var(--portfolio-accent); outline-offset: 4px; }
 @media (max-width: 1023px) { .content-slider { grid-auto-columns: calc((100% - 32px) / 2); } }
-@media (max-width: 639px) { .content-slider { grid-auto-columns: 92%; } .portfolio-section { padding-block: 48px; } }
+@media (max-width: 767px) { .portfolio-section { padding-block: 44px; } }
+@media (max-width: 639px) { .content-slider { grid-auto-columns: 92%; } .portfolio-section { padding-block: 40px; } }
+
 
 /* Stable hero tracks prevent intrinsic 3D widths from expanding the page. */
 .hero-layout { grid-template-columns: minmax(0, 1fr); }
@@ -244,6 +247,8 @@
 .hero-actions .magnetic-link > a { width: 100%; min-width: 0; min-height: 44px; white-space: nowrap; }
 .skills-orbit { max-width: 380px; overflow: hidden; isolation: isolate; }
 .hero-orbit-portrait { width: 32%; aspect-ratio: 1; }
+.portfolio-intro { padding-bottom: 28px; }
+
 .static-orbit-badge { position: absolute; width: 16%; aspect-ratio: 1; display: grid; place-items: center; padding: 7px; transform: translate(-50%, -50%); border-radius: 8px; border: 1px solid color-mix(in oklch, var(--portfolio-strong) 15%, transparent); background: var(--portfolio-panel); }
 @media (min-width: 768px) {
   .hero-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
@@ -251,8 +256,10 @@
   .skills-orbit { max-width: 640px; }
 }
 @media (max-width: 767px) {
-  .portfolio-intro { padding-bottom: 24px; }
-  .hero-visual { margin-top: 8px; }
+  .portfolio-intro { padding-bottom: 20px; }
+  .hero-layout { gap: 10px; }
+  .hero-visual { margin-top: -18px; }
+
   .hero-bio { font-size: 14px; line-height: 1.6; }
 }
 @media (max-width: 767px) and (max-height: 700px) {
