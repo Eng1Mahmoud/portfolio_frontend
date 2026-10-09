@@ -1,6 +1,6 @@
 "use client";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Html, MeshDistortMaterial, Sparkles } from "@react-three/drei";
+import { Html, Sparkles } from "@react-three/drei";
 import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { ISkill } from "@/types/general";
@@ -147,32 +147,6 @@ const Rig = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const Core = ({ lite }: { lite: boolean }) => (
-  <Float speed={2} rotationIntensity={0.6} floatIntensity={0.8}>
-    <mesh>
-      <icosahedronGeometry args={[1.25, lite ? 8 : 24]} />
-      <MeshDistortMaterial
-        color="#5B6FD6"
-        emissive="#4338CA"
-        emissiveIntensity={0.9}
-        roughness={0.15}
-        metalness={0.6}
-        distort={0.38}
-        speed={2.2}
-      />
-    </mesh>
-    <mesh scale={1.55}>
-      <sphereGeometry args={[1, 32, 32]} />
-      <meshBasicMaterial color="#7C9CFF" transparent opacity={0.07} />
-    </mesh>
-    <Html center zIndexRange={[10, 0]} className="pointer-events-none">
-      <span className="select-none bg-gradient-to-br from-ink-strong to-sage-bright bg-clip-text font-display text-6xl font-bold text-transparent drop-shadow-[0_0_18px_rgba(124,156,255,0.8)]">
-        M
-      </span>
-    </Html>
-  </Float>
-);
-
 export default function SkillsOrbitScene({ skills, lite, paused = false }: Props) {
   const rings = useMemo(() => {
     const list = lite ? skills.slice(0, 10) : skills.slice(0, 21);
@@ -193,7 +167,6 @@ export default function SkillsOrbitScene({ skills, lite, paused = false }: Props
       <pointLight position={[4, 4, 6]} intensity={60} color="#A5B8FF" />
       <pointLight position={[-5, -3, -2]} intensity={40} color="#C4A5FF" />
       <Rig>
-        <Core lite={lite} />
         {RINGS.map((r, i) =>
           rings[i].length ? (
             <Ring

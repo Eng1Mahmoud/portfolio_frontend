@@ -3,6 +3,6 @@ export const asideLinks = [
   { label: "About", path: "/#about" },
   { label: "Projects", path: "/#projects" },
   { label: "Journey", path: "/#experience" },
-  { label: "Recommendations", path: "/#recommendations" },
+  { label: "Testimonials", path: "/#recommendations" },
   { label: "Contact", path: "/#contact-us" },
 ];

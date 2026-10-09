@@ -2,13 +2,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { FaBars, FaDownload, FaTimes } from "react-icons/fa";
 import clsx from "clsx";
 import { asideLinks } from "@/utiles/aside-links";
 import { IuserInfo } from "@/types/general";
 import { handleDownloadCV } from "@/utiles/analytics-events/events";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -19,6 +20,9 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const reduceMotion = useReducedMotion();
   const [active, setActive] = useState("/#home");
   const isActive = (path: string) => active === path;
   useEffect(() => {
@@ -39,9 +43,30 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const root = document.getElementById("page-scroll");
+    const previousOverflow = root?.style.overflowY;
+    if (root) root.style.overflowY = "hidden";
+    menuRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+      if (e.key !== "Tab") return;
+      const links = Array.from(menuRef.current?.querySelectorAll<HTMLAnchorElement>("a[href]") ?? []);
+      const controls: HTMLElement[] = toggleRef.current ? [toggleRef.current, ...links] : links;
+      const first = controls[0];
+      const last = controls.at(-1);
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
+    };
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const onResize = () => { if (desktop.matches) setOpen(false); };
+    desktop.addEventListener("change", onResize);
     document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      desktop.removeEventListener("change", onResize);
+      if (root) root.style.overflowY = previousOverflow ?? "";
+      toggleRef.current?.focus();
+    };
   }, [open]);
 
   return (
@@ -52,12 +77,12 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
         transition={{ duration: 0.7, ease: EASE }}
         className="portfolio-navbar pointer-events-none fixed left-0 top-3 z-[1000] px-3 sm:top-4 sm:px-6"
       >
-        <div className="pointer-events-auto mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full border border-parchment/10 bg-surface-base/60 py-2 pe-2 ps-2 shadow-lifted backdrop-blur-xl">
+        <div className="pointer-events-auto mx-auto grid grid-cols-[minmax(0,1fr)_auto] lg:flex max-w-6xl items-center justify-between gap-2 lg:gap-4 rounded-full border border-parchment/10 bg-surface-base/60 py-2 pe-2 ps-2 shadow-lifted backdrop-blur-xl">
           <Link
             href="/"
-            className="group flex items-center gap-2.5 rounded-full pe-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+            className="group flex min-w-0 items-center gap-2.5 rounded-full pe-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage"
           >
-            <span className="relative block h-9 w-9 overflow-hidden rounded-full ring-1 ring-sage/40 transition group-hover:ring-sage">
+            <span className="relative block h-9 w-9 shrink-0 overflow-hidden rounded-full ring-1 ring-sage/40 transition group-hover:ring-sage">
               {profileInfo?.avatar ? (
                 <Image
                   src={profileInfo.avatar}
@@ -72,7 +97,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
                 </span>
               )}
             </span>
-            <span className="font-display text-base font-semibold tracking-tight text-ink-strong">
+            <span className="truncate font-display text-base font-semibold text-ink-strong">
               Mahmoud<span className="text-sage">.</span>
             </span>
           </Link>
@@ -113,7 +138,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
             </LayoutGroup>
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             {profileInfo?.cv && (
               <a
                 href={profileInfo.cv}
@@ -127,9 +152,12 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
               </a>
             )}
             <button
+              ref={toggleRef}
+              type="button"
               onClick={() => setOpen((o) => !o)}
               aria-label={open ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={open}
+              aria-controls="mobile-navigation"
               className="flex h-10 w-10 items-center justify-center rounded-full bg-sage text-surface-base transition hover:bg-sage-bright focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base lg:hidden"
             >
               {open ? <FaTimes aria-hidden="true" /> : <FaBars aria-hidden="true" />}
@@ -141,30 +169,33 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
       <AnimatePresence>
         {open && (
           <motion.div
+            ref={menuRef}
+            id="mobile-navigation"
             role="dialog"
             aria-modal="true"
             aria-label="Navigation menu"
-            initial={{ clipPath: "circle(0% at calc(100% - 3rem) 2.5rem)" }}
+            initial={reduceMotion ? false : { clipPath: "circle(0% at calc(100% - 3rem) 2.5rem)" }}
             animate={{ clipPath: "circle(150% at calc(100% - 3rem) 2.5rem)" }}
             exit={{ clipPath: "circle(0% at calc(100% - 3rem) 2.5rem)" }}
-            transition={{ duration: 0.6, ease: EASE }}
-            className="fixed inset-0 z-[999] flex flex-col justify-center bg-surface-well/95 px-8 backdrop-blur-2xl lg:hidden"
+            transition={{ duration: reduceMotion ? 0 : 0.6, ease: EASE }}
+            className="portfolio-mobile-menu fixed inset-0 z-[999] flex flex-col bg-surface-well/95 backdrop-blur-2xl lg:hidden"
           >
+            <div className="portfolio-mobile-menu-content">
             <ul className="relative space-y-1">
               {asideLinks.map((item, i) => (
                 <motion.li
                   key={item.path}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={reduceMotion ? false : { opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
-                  transition={{ delay: 0.15 + i * 0.05, duration: 0.5, ease: EASE }}
+                  transition={{ delay: reduceMotion ? 0 : 0.15 + i * 0.05, duration: reduceMotion ? 0 : 0.5, ease: EASE }}
                 >
                   <Link
                     href={item.path}
                     onClick={() => { setActive(item.path); setOpen(false); }}
                     aria-current={isActive(item.path) ? "page" : undefined}
                     className={clsx(
-                      "flex items-baseline gap-4 py-1.5 font-display text-4xl font-semibold tracking-tight transition-colors sm:text-5xl",
+                      "portfolio-mobile-menu-link font-display font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage",
                       isActive(item.path)
                         ? "text-sage"
                         : "text-ink-strong hover:text-sage",
@@ -173,7 +204,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
                     <span className="font-mono text-xs font-normal text-ink-muted">
                       0{i + 1}
                     </span>
-                    {item.label}
+                    <span className="min-w-0 break-words">{item.label}</span>
                   </Link>
                 </motion.li>
               ))}
@@ -193,6 +224,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
                 Download CV
               </motion.a>
             )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -162,6 +162,10 @@
 
 .portfolio-shell { height: 100dvh; overflow: hidden; }
 .portfolio-navbar { right: 16px; }
+.portfolio-mobile-menu { height: 100dvh; overflow-y: auto; overscroll-behavior: contain; padding: max(100px, env(safe-area-inset-top)) 24px max(28px, env(safe-area-inset-bottom)); }
+.portfolio-mobile-menu-content { width: 100%; min-width: 0; max-width: 640px; margin: auto; }
+.portfolio-mobile-menu-link { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 12px; align-items: baseline; min-height: 48px; padding-block: 8px; font-size: 28px; letter-spacing: 0; }
+@media (min-width: 640px) { .portfolio-mobile-menu-link { font-size: 40px; } }
 #page-scroll { height: 100dvh; scrollbar-gutter: stable; scroll-behavior: smooth; scroll-padding-top: 100px; }
 .page-seek { position: fixed; inset: 0 16px auto 0; height: 10px; z-index: 1100; background: var(--portfolio-well); }
 .page-seek-fill { height: 3px; transform-origin: left; background: var(--portfolio-accent); }
@@ -237,6 +241,8 @@
 .hero-actions .magnetic-link > a { width: 100%; min-width: 0; min-height: 44px; white-space: nowrap; }
 .hero-figures dt { line-height: 1.5; letter-spacing: 0; }
 .skills-orbit { max-width: 240px; overflow: hidden; isolation: isolate; }
+.hero-orbit-portrait { width: 32%; aspect-ratio: 1; }
+.static-orbit-badge { position: absolute; width: 16%; aspect-ratio: 1; display: grid; place-items: center; padding: 7px; transform: translate(-50%, -50%); border-radius: 8px; border: 1px solid color-mix(in oklch, var(--portfolio-strong) 15%, transparent); background: var(--portfolio-panel); }
 @media (min-width: 768px) {
   .hero-layout { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
   .hero-role { letter-spacing: 0.12em; }

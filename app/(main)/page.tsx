@@ -111,7 +111,7 @@ export default async function Home() {
           </Reveal>
           </div>
           <div className="hero-visual min-w-0 flex justify-center lg:justify-end">
-            <SkillsOrbit skills={skills ?? []} />
+            <SkillsOrbit skills={skills ?? []} portrait={profileInfo?.avatar?.trim() || profileInfo?.aboutImage?.trim() || "https://dev-mahmoud.sirv.com/portfolio/MAHMOUD.png"} name={profileInfo?.userName || "Mahmoud Mohamed"} />
           </div>
         </div>
       </section>
@@ -143,8 +143,8 @@ export default async function Home() {
         </div>
       </section>
       <section id="recommendations" className="portfolio-section">
-        <Title title="Recommendations" eyebrow="What people say" count={(recommendations ?? []).length} />
-        <Reveal><ContentSlider label="Recommendations" variant="quotes">{(recommendations ?? []).map((item, i) => <RecommendationCard key={item._id ?? item.name} recommendation={item} index={i} />)}</ContentSlider></Reveal>
+        <Title title="Testimonials" eyebrow="What people say" count={(recommendations ?? []).length} />
+        <Reveal><ContentSlider label="Testimonials" variant="quotes">{(recommendations ?? []).map((item, i) => <RecommendationCard key={item._id ?? item.name} recommendation={item} index={i} />)}</ContentSlider></Reveal>
       </section>
       <section id="contact-us" className="portfolio-section">
         <Title title="Get in touch" eyebrow="Contact" />

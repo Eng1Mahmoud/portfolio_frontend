@@ -9,3 +9,5 @@
 - Render skills as compact category rows with stable icon tiles and contact as unframed details beside a labelled form, preserving the existing data and form actions.
 
 - Reduced-motion hooks use a server-safe external-store snapshot so accessibility preferences do not change initial server markup.
+- The hero portrait uses existing profile data, falling back to the verified existing portrait when image fields are empty, as a stable overlay shared by animated and static skill rings so the person stays visible without rotating or depending on WebGL.
+- Mobile navigation uses a scrollable viewport-height dialog with bounded text tracks, focus containment and scroll locking, so all destinations remain reachable on narrow and short screens.

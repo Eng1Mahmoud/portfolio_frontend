@@ -90,7 +90,7 @@ export const RecommendationModal = ({
         tabIndex={-1}
         role="dialog"
         aria-modal="true"
-        aria-label={`Recommendation from ${recommendation.name}`}
+        aria-label={`Testimonial from ${recommendation.name}`}
         onClick={(event) => event.stopPropagation()}
         initial={from}
         animate={{ x: 0, y: 0, scale: 1, opacity: 1 }}
@@ -137,7 +137,7 @@ export const RecommendationModal = ({
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close recommendation"
+            aria-label="Close testimonial"
             className="shrink-0 rounded-md p-1 text-ink-muted transition-colors hover:bg-parchment/10 hover:text-ink-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
           >
             <FaTimes size={20} aria-hidden="true" />

@@ -1,6 +1,7 @@
 "use client";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ISkill } from "@/types/general";
@@ -8,13 +9,13 @@ import { ISkill } from "@/types/general";
 /** Static fallback: shown while the 3D chunk loads and when WebGL is missing. */
 const StaticSkills = ({ skills }: { skills: ISkill[] }) => (
   <div className="relative flex h-full w-full items-center justify-center">
-    <div className="absolute h-40 w-40 rounded-full bg-gradient-to-br from-sage to-wheat-deep opacity-70 blur-2xl" />
-    <div className="relative grid grid-cols-4 gap-3">
-      {skills.slice(0, 12).map((s) => (
+    <div className="absolute inset-0">
+      {skills.slice(0, 12).map((s, i, list) => (
         <div
           key={s._id ?? s.name}
           title={s.name}
-          className="flex h-14 w-14 items-center justify-center rounded-2xl border border-parchment/15 bg-surface-panel/80 p-2.5 backdrop-blur"
+          className="static-orbit-badge"
+          style={{ left: `${50 + 39 * Math.cos(i / list.length * Math.PI * 2)}%`, top: `${50 + 39 * Math.sin(i / list.length * Math.PI * 2)}%` }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={s.imageUrl} alt={s.name} className="h-full w-full object-contain" />
@@ -42,7 +43,7 @@ const hasWebGL = () => {
  * The home page's 3D object: real skills (from getAllSkills) orbiting a
  * glowing core. Client-only; phones get a lighter scene.
  */
-export const SkillsOrbit = ({ skills }: { skills: ISkill[] }) => {
+export const SkillsOrbit = ({ skills, portrait, name }: { skills: ISkill[]; portrait?: string; name: string }) => {
   const reduceMotion = useReducedMotion();
   const [mode, setMode] = useState<"pending" | "3d" | "static">("pending");
   const [lite, setLite] = useState(false);
@@ -62,7 +63,7 @@ export const SkillsOrbit = ({ skills }: { skills: ISkill[] }) => {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 0.3, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
       className="skills-orbit relative aspect-square min-w-0 w-full cursor-grab active:cursor-grabbing"
-      aria-label="Skills I work with"
+      aria-label={`${name} and skills I work with`}
       role="img"
     >
       {mode === "3d" ? (
@@ -75,7 +76,11 @@ export const SkillsOrbit = ({ skills }: { skills: ISkill[] }) => {
       ) : mode === "static" ? (
         <StaticSkills skills={skills} />
       ) : null}
-
+      {portrait && (
+        <div className="hero-orbit-portrait pointer-events-none absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-2 border-sage/60 bg-surface-panel shadow-accent">
+          <Image src={portrait} alt={name} fill priority unoptimized sizes="(max-width: 767px) 80px, 180px" className="object-cover" />
+        </div>
+      )}
     </motion.div>
   );
 };

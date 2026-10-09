@@ -140,7 +140,7 @@ export const RecommendationCard = ({
               <button
                 type="button"
                 onClick={openFull}
-                aria-label={`Read the full recommendation from ${recommendation.name}`}
+                aria-label={`Read the full testimonial from ${recommendation.name}`}
                 className="mt-3 flex w-fit items-center gap-1.5 rounded text-sm text-sage transition-colors hover:text-sage-bright focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
               >
                 Read more
