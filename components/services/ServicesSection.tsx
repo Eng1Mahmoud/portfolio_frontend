@@ -44,7 +44,7 @@ export const ServicesSection = () => {
           <h3 className="mb-3 font-display text-xl font-semibold text-ink-strong">{title}</h3>
           <p className="mb-6 grow text-sm leading-relaxed text-ink-muted">{text}</p>
           <a
-            href="/#contact-us"
+            href="#contact-us"
             className="inline-flex items-center gap-2 self-start text-sm font-medium text-sage focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sage"
           >
             Let&apos;s talk
