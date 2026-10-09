@@ -35,3 +35,61 @@ export function getOrbitLayout(count: number) {
   });
   return { rings, slots, badgeSize, portraitSize: ringCount > 2 ? 0.22 : 0.24 };
 }
+
+/** Seeded variation keeps the initial client/static layout identical. */
+const variation = (index: number, salt: number) => {
+  const value = Math.sin((index + 1) * 127.1 + salt * 311.7) * 43758.5453;
+  return value - Math.floor(value);
+};
+
+export type FloatingPosition = { x: number; y: number; z: number };
+export function createFloatingPositions(count: number): FloatingPosition[] {
+  return Array.from({ length: count }, () => ({ x: 0, y: 0, z: 0 }));
+}
+
+/** Independent wandering, then separation in screen space; no frame allocations. */
+export function updateFloatingPositions(
+  layout: ReturnType<typeof getOrbitLayout>,
+  positions: FloatingPosition[],
+  time: number,
+  rotation = 0,
+) {
+  const clearance = layout.badgeSize * Math.SQRT2;
+  const minRadius = layout.portraitSize / Math.SQRT2 + clearance / 2 + 0.025;
+  const maxRadius = 0.5 - clearance / 2 - 0.015;
+  const separation = clearance + 0.012;
+  layout.slots.forEach((slot, i) => {
+    const p = positions[i];
+    if (!p) return;
+    const phase = variation(i, 1) * Math.PI * 2;
+    const speed = 0.18 + variation(i, 2) * 0.22;
+    const angle = slot.angle + rotation + Math.sin(time * speed + phase) * 0.14;
+    const radius = slot.radius + Math.sin(time * speed * 0.73 + phase * 2) * 0.035;
+    p.x = Math.cos(angle) * radius;
+    p.y = Math.sin(angle) * radius;
+    p.z = Math.sin(time * speed + phase) * 0.25;
+  });
+  // Keep icons apart, off the portrait and inside the display, even while drifting.
+  for (let pass = 0; pass < 16; pass++) {
+    for (let i = 0; i < positions.length; i++) {
+      const a = positions[i];
+      for (let j = i + 1; j < positions.length; j++) {
+        const b = positions[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const distance = Math.hypot(dx, dy);
+        if (distance >= separation) continue;
+        const push = (separation - distance) / 2;
+        const nx = distance > 0.00001 ? dx / distance : 1;
+        const ny = distance > 0.00001 ? dy / distance : 0;
+        a.x += nx * push; a.y += ny * push;
+        b.x -= nx * push; b.y -= ny * push;
+      }
+    }
+    for (const p of positions) {
+      const radius = Math.hypot(p.x, p.y);
+      const bounded = Math.max(minRadius, Math.min(maxRadius, radius));
+      if (radius > 0) { p.x *= bounded / radius; p.y *= bounded / radius; }
+    }
+  }
+}

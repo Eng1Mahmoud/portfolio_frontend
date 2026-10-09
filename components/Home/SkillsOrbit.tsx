@@ -5,17 +5,19 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ISkill } from "@/types/general";
-import { getOrbitLayout } from "./orbit-layout";
+import { createFloatingPositions, getOrbitLayout, updateFloatingPositions } from "./orbit-layout";
 
 /** Static fallback: shown while the 3D chunk loads and when WebGL is missing. */
 const StaticSkills = ({ skills }: { skills: ISkill[] }) => {
   const layout = getOrbitLayout(skills.length);
+  const positions = createFloatingPositions(skills.length);
+  updateFloatingPositions(layout, positions, 0);
   return (
     <div className="absolute inset-0" aria-hidden="true">
-      {layout.rings.map((ring, i) => <div key={i} className="static-orbit-ring" style={{ width: `${ring.radius * 200}%` }} />)}
       {layout.slots.map(slot => {
         const skill = skills[slot.index];
-        return <div key={skill._id ?? `${skill.name}-${slot.index}`} title={skill.name} className="static-orbit-badge" style={{ width: `${layout.badgeSize * 100}%`, left: `${50 + slot.radius * 100 * Math.cos(slot.angle)}%`, top: `${50 + slot.radius * 100 * Math.sin(slot.angle)}%` }}>
+        const position = positions[slot.index];
+        return <div key={skill._id ?? `${skill.name}-${slot.index}`} title={skill.name} className="static-orbit-badge" style={{ width: `${layout.badgeSize * 100}%`, left: `${50 + position.x * 100}%`, top: `${50 - position.y * 100}%` }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={skill.imageUrl} alt={skill.name} className="h-full w-full object-contain" />
         </div>;
