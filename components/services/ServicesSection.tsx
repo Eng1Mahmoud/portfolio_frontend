@@ -87,7 +87,9 @@ export const ServicesSection = () => {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, delay: reduceMotion ? 0 : i * 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="group relative isolate flex flex-col overflow-hidden rounded-3xl p-6 pt-8 md:p-7 lg:p-8 [background:var(--glass-background)] [border:var(--hairline-border)] [backdrop-filter:blur(14px)_saturate(140%)] [box-shadow:var(--glass-shadow)] transition-[border-color,box-shadow,translate] duration-500 hover:-translate-y-2 hover:[border-color:var(--glass-hover-border)] hover:[box-shadow:var(--glass-corner-light)] before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:opacity-0 before:transition-opacity before:duration-500 before:[background:radial-gradient(320px_circle_at_var(--mx,50%)_var(--my,0%),color-mix(in_oklab,var(--portfolio-accent)_22%,transparent),transparent_70%)] hover:before:opacity-100"
+            className={`group relative isolate flex flex-col overflow-hidden rounded-3xl p-6 pt-8 md:p-7 lg:p-8 [background:var(--glass-background)] [border:var(--hairline-border)] [backdrop-filter:blur(14px)_saturate(140%)] [box-shadow:var(--glass-shadow)] transition-[border-color,box-shadow,translate] duration-500 hover:-translate-y-2 hover:[border-color:var(--glass-hover-border)] hover:[box-shadow:var(--glass-corner-light)] before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:opacity-0 before:transition-opacity before:duration-500 before:[background:radial-gradient(320px_circle_at_var(--mx,50%)_var(--my,0%),color-mix(in_oklab,var(--portfolio-accent)_22%,transparent),transparent_70%)] hover:before:opacity-100 ${
+              i === 1 ? "md:mt-10" : i === 2 ? "md:mt-20" : ""
+            }`}
           >
             {/* Large outlined index sitting behind the content. */}
             <span
