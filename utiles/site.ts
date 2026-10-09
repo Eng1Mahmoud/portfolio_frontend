@@ -18,7 +18,7 @@ export const siteDescription =
 
 /** The name to beat in search is generic, so the title carries the role. */
 export const siteTitle =
-  "Mahmoud Mohamed | Software Engineer (Frontend & Full-Stack)";
+  "Mahmoud Mohamed | Software Engineer";
 
 /**
  * Feeds both the `keywords` meta tag and the Person schema's `knowsAbout`.
