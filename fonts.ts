@@ -1,30 +1,16 @@
-import {
-  Bricolage_Grotesque,
-  Instrument_Sans,
-  JetBrains_Mono,
-} from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 
 /**
- * Display: the name on the home page, page headings, card titles.
- *
- * Variable on opsz, so a 5rem name and a 1rem card title can each get their own
- * optical size instead of one being the other scaled. The .display-* classes in
- * globals.css drive the axes.
+ * Display (Clash Display) and body (Satoshi) come from Fontshare — they are
+ * not on Google Fonts. The stylesheet is linked in app/layout.tsx and the
+ * `.font-vars` class in globals.css maps them onto the same CSS variables the
+ * rest of the code already reads (--display-font, --main-font), so nothing
+ * downstream changes. The objects keep the `.variable` shape of next/font.
  */
-export const displayFont = Bricolage_Grotesque({
-  subsets: ["latin"],
-  display: "swap",
-  axes: ["opsz", "wdth"],
-  variable: "--display-font",
-});
+export const displayFont = { variable: "font-vars" };
 
 /** Body: everything that is read rather than looked at. */
-export const mainFont = Instrument_Sans({
-  subsets: ["latin"],
-  display: "swap",
-  axes: ["wdth"],
-  variable: "--main-font",
-});
+export const mainFont = { variable: "font-vars" };
 
 /** Utility: eyebrows, figures, dates, technology names. */
 export const monoFont = JetBrains_Mono({

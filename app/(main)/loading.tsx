@@ -6,8 +6,10 @@ import {
 
 /**
  * Home hero. Traces HomeIntro: the rail, the mono role line, a two-line name,
- * the bio paragraph, the two figures, then the action row.
+ * the biography, then the social links.
  */
+
+
 export default function Loading() {
   return (
     <SkeletonScreen label="Loading home">
@@ -20,25 +22,19 @@ export default function Loading() {
           <SkeletonLine w="w-64" h="h-12" className="mb-2 max-w-full" />
           <SkeletonLine w="w-52" h="h-12" className="max-w-full" />
 
-          <div className="mt-7 max-w-[58ch] space-y-3">
+          <div className="mt-6 max-w-[54ch] space-y-2">
             <SkeletonLine />
             <SkeletonLine w="w-11/12" />
-            <SkeletonLine w="w-full" />
-            <SkeletonLine w="w-4/5" />
+            <SkeletonLine w="w-2/3" />
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-parchment/10 pt-5">
-            <SkeletonLine w="w-32" h="h-5" />
-            <SkeletonLine w="w-36" h="h-5" />
+
+          <div className="mt-9 flex flex-wrap items-center gap-3">
+            <SkeletonPill className="h-10 w-10" />
+            <SkeletonPill className="h-10 w-10" />
+            <SkeletonPill className="h-10 w-10" />
           </div>
 
-          <div className="mt-9 flex flex-wrap items-center gap-4">
-            <SkeletonPill className="h-11 w-36" />
-            <SkeletonPill className="h-11 w-36" />
-            <SkeletonPill className="h-10 w-10" />
-            <SkeletonPill className="h-10 w-10" />
-            <SkeletonPill className="h-10 w-10" />
-          </div>
         </div>
       </section>
     </SkeletonScreen>

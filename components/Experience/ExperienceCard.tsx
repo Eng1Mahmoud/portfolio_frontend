@@ -6,13 +6,7 @@ import Image from "next/image";
 /** The card face; the entry animation and rail node live in <TimelineEntry />. */
 export const ExperienceCard = ({ experience }: { experience: IExperience }) => {
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-parchment/10 bg-surface-panel p-5 shadow-pinned transition-colors duration-300 hover:border-sage/30 md:p-7">
-      {/* A static highlight; the projects page keeps the interactive one. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(30rem_circle_at_85%_0%,rgba(157,194,166,0.06),transparent_60%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-      />
-
+    <div className="glass-card group relative overflow-hidden rounded-2xl p-5 md:p-7">
       <div className="relative z-10">
         {/* Dates lead: on a rail, when is what you check first. */}
         <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.22em] text-sage">
@@ -26,7 +20,7 @@ export const ExperienceCard = ({ experience }: { experience: IExperience }) => {
               alt={experience.company || experience.role}
               width={64}
               height={64}
-              className="h-14 w-14 shrink-0 rounded-full object-cover ring-1 ring-parchment/10"
+              className="h-14 w-14 shrink-0 rounded-full object-cover ring-1 ring-sage/25"
             />
           )}
           <div className="min-w-0">
@@ -34,12 +28,12 @@ export const ExperienceCard = ({ experience }: { experience: IExperience }) => {
               {experience.role}
             </h3>
             <div className="mt-2 flex flex-wrap items-center gap-2">
-              <span className="flex items-center gap-2 rounded-lg border border-parchment/10 bg-parchment/[0.04] px-3 py-1 text-sm font-medium text-ink-body">
+              <span className="flex items-center gap-2 rounded-lg border border-sage/25 bg-sage/[0.07] px-3 py-1 text-sm font-medium text-ink-body">
                 <FaBriefcase className="text-xs text-sage" aria-hidden="true" />
                 {experience.company}
               </span>
               {experience.workType && (
-                <span className="rounded-md border border-parchment/10 bg-parchment/[0.04] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted md:text-[11px]">
+                <span className="rounded-md border border-sage/20 bg-sage/[0.05] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted md:text-[11px]">
                   {experience.workType}
                 </span>
               )}
@@ -56,7 +50,7 @@ export const ExperienceCard = ({ experience }: { experience: IExperience }) => {
             {experience.skills.map((skill) => (
               <li
                 key={skill}
-                className="rounded-full border border-parchment/10 bg-parchment/[0.04] px-3 py-1.5 font-mono text-[10px] text-ink-muted transition-colors hover:border-sage/50 hover:text-sage md:text-xs"
+                className="rounded-full border border-sage/20 bg-sage/[0.05] px-3 py-1.5 font-mono text-[10px] text-ink-muted transition-colors hover:border-sage/50 hover:text-sage md:text-xs"
               >
                 {skill}
               </li>

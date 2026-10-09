@@ -140,6 +140,15 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        {/* Clash Display + Satoshi are Fontshare faces, not on Google Fonts. */}
+        <link rel="preconnect" href="https://api.fontshare.com" />
+        <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="" />
+        <link
+          rel="stylesheet"
+          href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap"
+        />
+      </head>
       <body
         suppressHydrationWarning={true}
         className={`${displayFont.variable} ${mainFont.variable} ${monoFont.variable}`}
@@ -161,7 +170,7 @@ export default async function RootLayout({
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme="light"
+          theme="dark"
           className="z[1000]"
         />
         <MotionProvider>{children}</MotionProvider>

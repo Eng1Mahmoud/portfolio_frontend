@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useChat } from "@/hooks/useChat";
 import { ChatHeader } from "./ChatHeader";
@@ -21,15 +21,20 @@ const ChatBot: React.FC = () => {
     handleSend,
   } = useChat();
 
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent("portfolio-chat-state", { detail: isOpen }));
+    return () => { window.dispatchEvent(new CustomEvent("portfolio-chat-state", { detail: false })); };
+  }, [isOpen]);
+
   return (
-    <div className="fixed bottom-6 right-6 z-[9999] font-sans">
+    <div className="portfolio-chat fixed z-[9999] font-sans">
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="mb-4 w-[350px] sm:w-[400px] h-[500px] bg-surface-card rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-sage/25"
+            className="portfolio-chat-window bg-surface-card rounded-lg shadow-pinned flex flex-col overflow-hidden border border-sage/25"
           >
             <ChatHeader onClose={closeChat} />
             <ChatMessages

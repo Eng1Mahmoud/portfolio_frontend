@@ -29,43 +29,43 @@ export default {
 
       colors: {
         /*
-          Eucalyptus: soft sage on warm charcoal. The accent is deliberately
+          Night & electric: periwinkle-blue accent on deep indigo night (token names kept so every component recolours). The accent is deliberately
           low-chroma — a saturated accent on a dark ground glares, and this is
           a page people read for minutes.
 
           Ratios below were computed against WCAG AA, not eyeballed.
         */
         ink: {
-          strong: "#E8EBE5", // headings          14.6:1 on surface.base
-          body: "#BCC2B7", //   paragraphs         9.7:1
-          muted: "#8A9085", //  labels, captions   5.4:1
+          strong: "oklch(from var(--portfolio-strong) l c h / <alpha-value>)", // headings          14.6:1 on surface.base
+          body: "oklch(from var(--portfolio-body) l c h / <alpha-value>)", //   paragraphs         9.7:1
+          muted: "oklch(from var(--portfolio-muted) l c h / <alpha-value>)", //  labels, captions   5.4:1
         },
 
         surface: {
-          well: "#101210", //   behind a lifted card, so its shadow lands on something
-          base: "#171A16", //   page
-          panel: "#1F231E", //  cards, timeline entries
-          raised: "#292E27", // hover / raised
-          card: "#1F231E",
-          "card-to": "#292E27",
+          well: "oklch(from var(--portfolio-well) l c h / <alpha-value>)", //   behind a lifted card, so its shadow lands on something
+          base: "oklch(from var(--portfolio-base) l c h / <alpha-value>)", //   page
+          panel: "oklch(from var(--portfolio-panel) l c h / <alpha-value>)", //  cards, timeline entries
+          raised: "oklch(from var(--portfolio-raised) l c h / <alpha-value>)", // hover / raised
+          card: "oklch(from var(--portfolio-panel) l c h / <alpha-value>)",
+          "card-to": "oklch(from var(--portfolio-raised) l c h / <alpha-value>)",
         },
 
         // Hairlines. A white border over a warm ground reads grey and cold.
-        parchment: "#E8EBE5",
+        parchment: "oklch(from var(--portfolio-strong) l c h / <alpha-value>)",
 
         /** Rails, eyebrows, figures, timeline nodes, links, buttons, focus. */
         sage: {
-          DEFAULT: "#9DC2A6", // text and fills      9.0:1 on surface.base
-          bright: "#B4D3BC", //  hover on a filled button
-          dim: "#6E8C76", //     quieter marks
-          deep: "#4C6B54", //    gradient ends
-          deepest: "#2E4435", // text on a sage fill: links in a sent message  5.4:1
+          DEFAULT: "oklch(from var(--portfolio-accent) l c h / <alpha-value>)", // text and fills      9.0:1 on surface.base
+          bright: "oklch(from var(--portfolio-accent-bright) l c h / <alpha-value>)", //  hover on a filled button
+          dim: "oklch(from var(--portfolio-accent-dim) l c h / <alpha-value>)", //     quieter marks
+          deep: "oklch(from var(--portfolio-accent-deep) l c h / <alpha-value>)", //    gradient ends
+          deepest: "oklch(from var(--portfolio-accent-darkest) l c h / <alpha-value>)", // text on a sage fill: links in a sent message  5.4:1
         },
 
         /** The pinboard alone: pin heads and the sheen. Nothing else. */
         wheat: {
-          DEFAULT: "#C9B98A",
-          deep: "#8E805A",
+          DEFAULT: "oklch(from var(--portfolio-support) l c h / <alpha-value>)",
+          deep: "oklch(from var(--portfolio-support-deep) l c h / <alpha-value>)",
         },
 
         /** Dashboard and auth screens only. */
@@ -84,13 +84,14 @@ export default {
       },
 
       boxShadow: {
+        accent: "var(--portfolio-shadow-accent)",
         "custom-shadow": "0px 0px 4px #e9ecef, 0px 0px 4px #e9ecef",
         // Tight contact shadow plus a wide soft one: what separates
         // "floating" from "stuck on".
         pinned:
-          "0 1px 2px rgba(0,0,0,0.45), 0 10px 24px -12px rgba(0,0,0,0.65)",
+          "var(--portfolio-shadow-pinned)",
         lifted:
-          "0 2px 6px rgba(0,0,0,0.55), 0 32px 60px -24px rgba(10,8,6,0.95)",
+          "var(--portfolio-shadow-lifted)",
       },
 
       keyframes: {

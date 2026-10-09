@@ -1,30 +1,49 @@
 "use client";
-import { Form } from "@/components/forms/Form";
+import { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { TcontactUsSchema } from "@/zod/contactUsSchema";
+import SubmitButton from "../forms/SubmitButton";
 import { contactUsSchema } from "@/zod/contactUsSchema";
 import InputField from "@/components/forms/InputField";
 import { contactUs } from "@/actions/contactUs";
 import TextArea from "../forms/TextArea";
 
 const ContactUsForm = () => {
-  const initialValues = { email: "", password: "" };
+  const methods = useForm<TcontactUsSchema>({
+    defaultValues: { userName: "", email: "", phone: "", message: "" },
+    resolver: zodResolver(contactUsSchema),
+    mode: "onTouched",
+  });
+  const [result, setResult] = useState<{ success: boolean; message: string } | null>(null);
+  const submit = async (data: TcontactUsSchema) => {
+    setResult(null);
+    try {
+      const response = await contactUs({ success: false, message: "" }, data);
+      setResult(response);
+      if (response.success) methods.reset();
+    } catch {
+      setResult({ success: false, message: "Your message could not be sent. Please check your connection and try again — your details are still here." });
+    }
+  };
 
   return (
-    <Form
-      defaultValues={initialValues}
-      schema={contactUsSchema}
-      action={contactUs}
-      buttonProps={{
-        name: "Send Message",
-        variant: "site",
-      }}
-    >
-      <div className="grid grid-cols-1 gap-6">
-        <InputField name="userName" label="Enter your name" type="text" />
-        <InputField name="email" label="Enter your email" type="email" />
-        <InputField name="phone" label="Enter your phone number" type="text" />
-        <TextArea name="message" label="Enter your message" rows={6} />
+    <FormProvider {...methods}>
+    <form className="contact-form" noValidate aria-busy={methods.formState.isSubmitting} onSubmit={methods.handleSubmit(submit, () => setResult(null))}>
+      <fieldset disabled={methods.formState.isSubmitting} className="min-w-0 border-0 p-0 m-0">
+      <div className="grid grid-cols-1 gap-5">
+        <InputField name="userName" label="Your name" type="text" showLabel />
+        <InputField name="email" label="Email address" type="email" showLabel />
+        <InputField name="phone" label="Phone number" type="tel" showLabel />
+        <TextArea name="message" label="Your message" rows={6} showLabel />
       </div>
-    </Form>
+      </fieldset>
+      <div className="mt-4">
+        <SubmitButton name={methods.formState.isSubmitting ? "Sending…" : "Send Message"} isPending={methods.formState.isSubmitting} variant="site" className="min-h-12 sm:w-auto sm:px-8" />
+      </div>
+      {result && <p role={result.success ? "status" : "alert"} className="mt-4 text-sm leading-relaxed text-ink break-words">{result.message}</p>}
+    </form>
+    </FormProvider>
   );
 };
 

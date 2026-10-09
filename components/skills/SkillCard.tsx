@@ -1,68 +1,24 @@
 "use client";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 import { ISkill } from "@/types/general";
 import Image from "next/image";
-import { motion, useMotionTemplate, useTransform } from "framer-motion";
-import { useTilt } from "@/hooks/use-tilt";
+import { motion } from "framer-motion";
 import { handleSkillHover } from "@/utiles/analytics-events/events";
 
-/** Same physics as a project card, but no pin, no scatter angle, no wheat. */
-export const SkillCard = ({
-  skill,
-  index = 0,
-}: {
-  skill: ISkill;
-  index?: number;
-}) => {
-  const { ref, engaged, reduceMotion, handlers, sx, sy, rotateX, rotateY } =
-    useTilt({ range: 9 });
-
-  const glowX = useTransform(sx, [-0.5, 0.5], ["12%", "88%"]);
-  const glowY = useTransform(sy, [-0.5, 0.5], ["12%", "88%"]);
-  const glow = useMotionTemplate`radial-gradient(9rem circle at ${glowX} ${glowY}, rgba(157,194,166,0.18), transparent 70%)`;
-
+export const SkillCard = ({ skill, index = 0 }: { skill: ISkill; index?: number }) => {
+  const reduceMotion = useReducedMotion();
   return (
-    <div className="pin-stage">
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: 14, scale: 0.94 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true, margin: "-40px 0px" }}
-        transition={{
-          duration: 0.45,
-          // Capped so a long category does not leave the last tile waiting.
-          delay: Math.min(index, 9) * 0.045,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-        whileHover={reduceMotion ? undefined : { y: -6 }}
-        {...handlers}
-        onMouseEnter={() => handleSkillHover(skill.name)}
-        style={{ rotateX, rotateY }}
-        className={`pin-card group relative flex flex-col items-center justify-center gap-3 rounded-xl border p-6 text-center transition-colors duration-300 ${
-          engaged
-            ? "border-sage/40 bg-parchment/[0.05]"
-            : "border-parchment/10 bg-parchment/[0.03]"
-        }`}
-      >
-        <motion.span
-          aria-hidden="true"
-          style={{ backgroundImage: reduceMotion ? undefined : glow }}
-          animate={{ opacity: engaged ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="pointer-events-none absolute inset-0 rounded-xl"
-        />
-
-        <Image
-          src={skill.imageUrl}
-          alt={skill.name}
-          width={1000}
-          height={1000}
-          className="pin-lift relative h-20 w-20 drop-shadow-2xl"
-        />
-        <p className="relative font-mono text-xs tracking-wide text-ink-body md:text-sm">
-          {skill.name}
-        </p>
-      </motion.div>
-    </div>
+    <motion.div
+      initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-20px" }}
+      transition={{ duration: 0.3, delay: Math.min(index, 6) * 0.035 }}
+      onMouseEnter={() => handleSkillHover(skill.name)}
+      className="skill-tile"
+    >
+      <span className="skill-icon"><Image src={skill.imageUrl} alt="" width={40} height={40} className="h-8 w-8 object-contain" /></span>
+      <p className="min-w-0 break-words text-sm font-medium text-ink-strong">{skill.name}</p>
+    </motion.div>
   );
 };

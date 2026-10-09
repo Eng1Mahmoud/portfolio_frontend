@@ -1,4 +1,5 @@
 "use client";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 import { motion } from "framer-motion";
 import { RevealText } from "@/components/general/RevealText";
@@ -17,12 +18,14 @@ interface TitleProps {
  * space in "About Me" to zero width.
  */
 export const Title = ({ title, eyebrow, count }: TitleProps) => {
+  const reduceMotion = useReducedMotion();
   return (
     <div className="relative mb-10 pl-6 sm:pl-10">
       <motion.span
         aria-hidden="true"
-        initial={{ scaleY: 0 }}
-        animate={{ scaleY: 1 }}
+        initial={reduceMotion ? false : { scaleY: 0 }}
+        whileInView={{ scaleY: 1 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         style={{ transformOrigin: "top" }}
         className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-sage via-parchment/12 to-transparent"
@@ -30,10 +33,11 @@ export const Title = ({ title, eyebrow, count }: TitleProps) => {
 
       {(eyebrow || count !== undefined) && (
         <motion.div
-          initial={{ opacity: 0, x: -8 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={reduceMotion ? false : { opacity: 0, x: -8 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="mb-3 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.28em]"
+          className="mb-3 grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-3 sm:flex font-mono text-[11px] uppercase tracking-[0.28em]"
         >
           {eyebrow && <p className="text-sage">{eyebrow}</p>}
           {count !== undefined && (
@@ -48,10 +52,11 @@ export const Title = ({ title, eyebrow, count }: TitleProps) => {
       )}
 
       <RevealText
-        as="h1"
+        as="h2"
         text={title}
+        trigger="scroll"
         delay={0.06}
-        className="display-title block text-[clamp(1.9rem,5vw,2.9rem)] leading-[1.05] text-ink-strong"
+        className="display-title block text-3xl sm:text-4xl leading-[1.05] text-ink-strong"
       />
     </div>
   );

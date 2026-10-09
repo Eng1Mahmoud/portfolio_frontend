@@ -1,18 +1,11 @@
 "use client";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { IuserInfo } from "@/types/general";
-import {
-  animate,
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useTransform,
-} from "framer-motion";
-import { useEffect } from "react";
+import { motion } from "framer-motion";
+import clsx from "clsx";
 
 interface HomeIntroProps {
   profileInfo: IuserInfo;
-  projectCount: number;
-  technologyCount: number;
 }
 
 // Every delay is a multiple of BEAT, so the hero shares one rhythm.
@@ -37,65 +30,34 @@ const lineUp = {
   }),
 };
 
-/** Real data, so the figures count rather than fade. */
-const Counter = ({ value, delay }: { value: number; delay: number }) => {
+/**
+ * The biography arrives as one field of text: blank lines are paragraph
+ * breaks, a single line break is just a wrap.
+ */
+const toParagraphs = (bio: string) =>
+  bio
+    .replace(/\r/g, "")
+    .split(/\n{2,}/)
+    .map((part) => part.replace(/\s*\n\s*/g, " ").trim())
+    .filter(Boolean);
+
+export const HomeIntro = ({ profileInfo }: HomeIntroProps) => {
   const reduceMotion = useReducedMotion();
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, (latest) => Math.round(latest));
-
-  useEffect(() => {
-    if (reduceMotion) {
-      count.set(value);
-      return;
-    }
-    const controls = animate(count, value, {
-      duration: 1.1,
-      delay,
-      ease: "easeOut",
-    });
-    return () => controls.stop();
-  }, [count, value, delay, reduceMotion]);
-
-  // The static value stays in the DOM for screen readers and for the moment
-  // before hydration; the animated one is decorative.
-  return (
-    <>
-      <motion.span aria-hidden="true">{rounded}</motion.span>
-      <span className="sr-only">{value}</span>
-    </>
-  );
-};
-
-export const HomeIntro = ({
-  profileInfo,
-  projectCount,
-  technologyCount,
-}: HomeIntroProps) => {
   const name = profileInfo?.userName?.trim() ?? "";
   const role = profileInfo?.title?.trim() ?? "";
-  const bio = profileInfo?.bio?.trim() ?? "";
-
-  // A blank line in the bio field promotes the first paragraph to a lead.
-  const [lead, ...rest] = bio.split(/\n\s*\n/);
-  const body = rest.join("\n\n");
+  const paragraphs = toParagraphs(profileInfo?.bio ?? "");
 
   // "Mahmoud Mohamed" sets on two lines; a single-word name keeps one.
   const nameParts = name.split(" ");
   const firstName = nameParts[0] ?? "";
   const lastName = nameParts.slice(1).join(" ");
 
-  const figures = [
-    { value: projectCount, label: "projects shipped" },
-    // From the skills collection, so "used" would overstate it.
-    { value: technologyCount, label: "technologies" },
-  ];
-
   return (
-    <div className="relative w-full max-w-4xl pl-6 text-start sm:pl-10">
+    <div className="hero-copy relative min-w-0 w-full max-w-4xl pl-6 text-start sm:pl-10">
       {/* A single hairline anchors the column. */}
       <motion.div
         aria-hidden="true"
-        initial={{ scaleY: 0 }}
+        initial={reduceMotion ? false : { scaleY: 0 }}
         animate={{ scaleY: 1 }}
         transition={{ duration: 0.9, ease: EASE }}
         style={{ transformOrigin: "top" }}
@@ -104,21 +66,21 @@ export const HomeIntro = ({
 
       {role && (
         <motion.p
-          initial={{ opacity: 0, x: -10 }}
+          initial={reduceMotion ? false : { opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.12, duration: 0.5, ease: EASE }}
-          className="mb-5 font-mono text-[11px] uppercase tracking-[0.28em] text-sage sm:text-xs"
+          className="hero-role mb-4 font-mono text-[11px] uppercase text-sage sm:mb-5 sm:text-xs"
         >
           {role}
         </motion.p>
       )}
 
       {/* One mask per line, so the halves of the name arrive in turn. */}
-      <h1 className="display-hero text-[clamp(2.6rem,9.5vw,5.5rem)] leading-[0.92] text-ink-strong">
+      <h1 className="display-hero text-[2.6rem] sm:text-6xl lg:text-7xl xl:text-[5.5rem] leading-[1.02] break-words text-ink-strong">
         <span className="block overflow-hidden pb-[0.06em]">
           <motion.span
             custom={0}
-            initial="hidden"
+            initial={reduceMotion ? false : "hidden"}
             animate="visible"
             variants={lineUp}
             className="block"
@@ -130,7 +92,7 @@ export const HomeIntro = ({
           <span className="block overflow-hidden pb-[0.08em]">
             <motion.span
               custom={1}
-              initial="hidden"
+              initial={reduceMotion ? false : "hidden"}
               animate="visible"
               variants={lineUp}
               className="block text-ink-muted"
@@ -141,45 +103,22 @@ export const HomeIntro = ({
         )}
       </h1>
 
-      {bio && (
-        <motion.div
-          custom={0}
-          initial="hidden"
+      {/* The whole biography, so a visitor learns the person before scrolling. */}
+      {paragraphs.map((paragraph, index) => (
+        <motion.p
+          key={index}
+          custom={1 + index}
+          initial={reduceMotion ? false : "hidden"}
           animate="visible"
           variants={rise}
-          className="mt-7 max-w-[58ch] space-y-3"
-        >
-          <p className="whitespace-pre-line text-[0.975rem] leading-[1.75] text-ink-body sm:text-[1.0625rem]">
-            {lead}
-          </p>
-          {body && (
-            <p className="whitespace-pre-line text-[0.9rem] leading-[1.75] text-ink-muted sm:text-[0.95rem]">
-              {body}
-            </p>
+          className={clsx(
+            "hero-bio text-[15px] leading-relaxed text-ink-body sm:text-base",
+            index === 0 ? "mt-4 sm:mt-5" : "mt-3",
           )}
-        </motion.div>
-      )}
-
-      {/* Real figures, read from the projects the site already loads. */}
-      <motion.dl
-        custom={1}
-        initial="hidden"
-        animate="visible"
-        variants={rise}
-        className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-parchment/10 pt-5 font-mono"
-      >
-        {/* dt before dd keeps the list valid; `order` flips them visually. */}
-        {figures.map((figure, index) => (
-          <div key={figure.label} className="flex items-baseline gap-2">
-            <dt className="order-2 text-[11px] uppercase tracking-[0.18em] text-ink-muted">
-              {figure.label}
-            </dt>
-            <dd className="order-1 text-xl text-sage tabular-nums sm:text-2xl">
-              <Counter value={figure.value} delay={0.7 + index * 0.12} />
-            </dd>
-          </div>
-        ))}
-      </motion.dl>
+        >
+          {paragraph}
+        </motion.p>
+      ))}
     </div>
   );
 };

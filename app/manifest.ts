@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "Portfolio of Mahmoud Mohamed, Frontend Software Engineer focused on React.js, Next.js and TypeScript.",
     start_url: "/",
     display: "standalone",
-    background_color: "#171A16",
-    theme_color: "#9DC2A6",
+    background_color: "#0A0C17",
+    theme_color: "#7C9CFF",
     icons: [
       {
         src: "/icons/icon192x192.png",
