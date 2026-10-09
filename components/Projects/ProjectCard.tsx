@@ -3,7 +3,7 @@ import { Iproject } from "@/types/general";
 import Image from "next/image";
 import Link from "next/link";
 import { FaGithub, FaExternalLinkAlt, FaChevronDown } from "react-icons/fa";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import {
   ProjectDescriptionModal,
@@ -21,7 +21,11 @@ import {
 // full list.
 const VISIBLE_TECHNOLOGIES = 4;
 
-/** Native scrolling preserves the screenshot's aspect ratio and page order. */
+/**
+ * A fixed 16:10 window onto the screenshot. Full-page captures are far taller
+ * than the card, so the image keeps its own proportions (width fills, height
+ * follows) and the visitor scrolls inside the window from top to bottom.
+ */
 const ProjectShot = ({
   src,
   alt,
@@ -34,24 +38,20 @@ const ProjectShot = ({
   return (
     <div
       role="region"
-      aria-label={`${alt.trim()} screenshot`}
+      aria-label={`${alt.trim()} screenshot, scroll to see the full page`}
       tabIndex={0}
-      className="absolute inset-0 overflow-x-hidden overflow-y-auto [scrollbar-width:thin] [scrollbar-color:var(--portfolio-accent-dim)_transparent] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-sage"
+      className="absolute inset-0 overflow-x-hidden overflow-y-auto overscroll-contain [scrollbar-width:thin] [scrollbar-color:var(--portfolio-accent-dim)_transparent] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-sage"
     >
-      {/* Reserve room for the overlay, so the screenshot's bottom can scroll
-          completely above the description rather than remain hidden behind it. */}
-      <div className="min-h-full pb-[var(--project-content-height,260px)]">
-        <Image
-          src={src}
-          alt={alt}
-          width={1200}
-          height={800}
-          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-          priority={priority}
-          draggable={false}
-          className="block h-auto! w-full! max-w-full object-contain object-top"
-        />
-      </div>
+      <Image
+        src={src}
+        alt={alt}
+        width={1200}
+        height={800}
+        sizes="(max-width: 768px) 100vw, 900px"
+        priority={priority}
+        draggable={false}
+        className="block h-auto! w-full! max-w-full"
+      />
     </div>
   );
 };
@@ -70,20 +70,6 @@ export const ProjectCard = ({
   // would give the wrong point.
   const [origin, setOrigin] = useState<Origin | null>(null);
   const faceRef = useRef<HTMLElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const content = contentRef.current;
-    const face = faceRef.current;
-    if (!content || !face) return;
-    const updateHeight = () => {
-      face.style.setProperty("--project-content-height", `${content.offsetHeight}px`);
-    };
-    updateHeight();
-    const observer = new ResizeObserver(updateHeight);
-    observer.observe(content);
-    return () => observer.disconnect();
-  }, []);
 
   const technologies = project.technologies ?? [];
   const visible = technologies.slice(0, VISIBLE_TECHNOLOGIES);
@@ -108,13 +94,11 @@ export const ProjectCard = ({
       <article
         ref={faceRef}
         onMouseMove={trackPointer}
-        className="glass-card relative! isolate! [background:var(--glass-background)]! [border:var(--hairline-border)]! [backdrop-filter:blur(14px)_saturate(140%)]! [box-shadow:var(--glass-shadow)]! [transition:border-color_300ms,_box-shadow_300ms,_translate_500ms_cubic-bezier(0.22,_1,_0.36,_1)]! [border-radius:16px]! [&::before]:[content:'']! [&::before]:absolute! [&::before]:[inset:0]! [&::before]:[z-index:-1]! [&::before]:[border-radius:inherit]! [&::before]:pointer-events-none! [&::before]:[background:var(--glass-hover-shadow)]! [&::before]:[opacity:0.7]! [&::before]:[transition:opacity_300ms]! [&:hover]:[border-color:var(--glass-hover-border)]! [&:hover]:[box-shadow:var(--glass-corner-light)]! [&:hover::before]:[opacity:1]! group/card relative flex h-full min-h-[360px] flex-col overflow-hidden rounded-2xl border border-parchment/10 transition-colors duration-300 group-hover/pin:border-sage/30 hover:-translate-y-1.5 motion-reduce:hover:translate-y-0"
+        className="glass-card relative! isolate! [background:var(--glass-background)]! [border:var(--hairline-border)]! [backdrop-filter:blur(14px)_saturate(140%)]! [box-shadow:var(--glass-shadow)]! [transition:border-color_300ms,_box-shadow_300ms,_translate_500ms_cubic-bezier(0.22,_1,_0.36,_1)]! [border-radius:16px]! [&::before]:[content:'']! [&::before]:absolute! [&::before]:[inset:0]! [&::before]:[z-index:-1]! [&::before]:[border-radius:inherit]! [&::before]:pointer-events-none! [&::before]:[background:var(--glass-hover-shadow)]! [&::before]:[opacity:0.7]! [&::before]:[transition:opacity_300ms]! [&:hover]:[border-color:var(--glass-hover-border)]! [&:hover]:[box-shadow:var(--glass-corner-light)]! [&:hover::before]:[opacity:1]! group/card relative flex h-full flex-col overflow-hidden rounded-2xl border border-parchment/10 transition-colors duration-300 group-hover/pin:border-sage/30 hover:-translate-y-1.5 motion-reduce:hover:translate-y-0"
       >
-        {/* The screenshot fills the whole card; the content plate sits on a
-            gradient scrim so the text stays readable. The first row is above
-            the fold and holds the page's largest contentful paint, so those
-            three load eagerly. */}
-        <div className="absolute inset-0 overflow-hidden">
+        {/* Screenshot window on top, details below — the text never covers
+            the image, and the first row loads eagerly for the largest paint. */}
+        <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden border-b border-parchment/10 bg-surface-panel">
           <ProjectShot
             src={project.imageUrl}
             alt={project.title}
@@ -122,7 +106,7 @@ export const ProjectCard = ({
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,color-mix(in_oklch,var(--color-surface-panel)_96%,transparent)_0%,color-mix(in_oklch,var(--color-surface-panel)_82%,transparent)_38%,transparent_72%)]"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-[linear-gradient(to_top,color-mix(in_oklch,var(--color-surface-panel)_70%,transparent),transparent)]"
           />
         </div>
 
@@ -148,7 +132,7 @@ export const ProjectCard = ({
         </span>
 
         {/* pin-lift floats the plate above the face while the card turns. */}
-        <div ref={contentRef} className="pin-lift [transform:translateZ(0)]! [transition:transform_0.35s_cubic-bezier(0.22,_1,_0.36,_1)]! motion-reduce:[transform:none]! relative z-10 mt-auto flex flex-col p-4 sm:p-5">
+        <div className="pin-lift [transform:translateZ(0)]! [transition:transform_0.35s_cubic-bezier(0.22,_1,_0.36,_1)]! motion-reduce:[transform:none]! relative z-10 flex flex-1 flex-col p-4 sm:p-5">
           <h3 className="display-card font-display! font-semibold! tracking-normal! mb-2 text-[1.15rem] text-ink-strong">
             {project.title.trim()}
           </h3>
