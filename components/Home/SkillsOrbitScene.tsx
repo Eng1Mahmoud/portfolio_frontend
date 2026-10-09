@@ -93,6 +93,8 @@ function FloatingSkills({ skills, paused, badges }: { skills: ISkill[]; paused: 
       badge.style.opacity = `${(0.35 + 0.65 * front) * clear}`;
       badge.style.zIndex = `${Math.round(10 + front * 40)}`;
       badge.style.pointerEvents = front > 0.45 && clear > 0.5 ? "auto" : "none";
+      // Reveal only after the camera and badge geometry are ready.
+      badge.style.visibility = "visible";
     });
   });
 
@@ -123,7 +125,13 @@ export default function SkillsOrbitScene({ skills, lite, paused = false }: Props
         ref={node => { badges.current[i] = node; }} className="orbit-skill-badge pointer-events-auto" title={skill.name}
         style={{ position: "absolute", transform: "translate(-50%, -50%)" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={skill.imageUrl} alt={skill.name} draggable={false} />
+        <img src={skill.imageUrl} alt={skill.name} draggable={false}
+          onLoad={async e => {
+            const image = e.currentTarget;
+            await image.decode().catch(() => {});
+            if (image.isConnected) image.dataset.ready = "true";
+          }}
+          onError={e => { e.currentTarget.dataset.ready = "true"; }} />
         <span className="orbit-skill-label">{skill.name}</span>
       </div>)}
     </div>
