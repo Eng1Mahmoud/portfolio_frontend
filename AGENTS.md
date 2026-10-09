@@ -17,5 +17,6 @@
 - Reduced-motion hooks use a server-safe external-store snapshot so accessibility preferences do not change initial server markup.
 - The hero portrait uses existing profile data, falling back to the verified existing portrait when image fields are empty, as a stable overlay shared by animated and static skill rings so the person stays visible without rotating or depending on WebGL.
 - Fixed navigation spans the viewport with symmetric horizontal spacing; mobile menus use a scrollable viewport-height dialog with bounded text tracks, focus containment and scroll locking, so the bar stays centered and destinations remain reachable.
+- Mobile navigation animates only opacity over an opaque surface, never a clipped backdrop-filter layer; hold scroll locking through exit and focus without scrolling to avoid mobile compositor flashes and page jumps.
 - Contact submission uses its existing EmailJS action with shared client/server validation and persistent inline feedback; clear values only after the provider accepts delivery so failed attempts retain visitor input.
 - Share a deterministic count-based floating layout between animated and static hero skills; independent drift uses screen-space separation and portrait/edge bounds, while a shared DOM overlay outside Canvas avoids per-skill React roots and keeps every dashboard item visible on every viewport.

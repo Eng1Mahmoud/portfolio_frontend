@@ -162,7 +162,7 @@
 
 .portfolio-shell { height: 100dvh; overflow: hidden; }
 .portfolio-navbar { right: 0; }
-.portfolio-mobile-menu { height: 100dvh; overflow-y: auto; overscroll-behavior: contain; padding: max(100px, env(safe-area-inset-top)) 24px max(28px, env(safe-area-inset-bottom)); }
+.portfolio-mobile-menu { height: 100dvh; overflow-y: auto; overscroll-behavior: contain; isolation: isolate; will-change: opacity; padding: max(100px, env(safe-area-inset-top)) 24px max(28px, env(safe-area-inset-bottom)); }
 .portfolio-mobile-menu-content { width: 100%; min-width: 0; max-width: 640px; margin: auto; }
 .portfolio-mobile-menu-link { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 12px; align-items: baseline; min-height: 48px; padding-block: 8px; font-size: 28px; letter-spacing: 0; }
 @media (min-width: 640px) { .portfolio-mobile-menu-link { font-size: 40px; } }
