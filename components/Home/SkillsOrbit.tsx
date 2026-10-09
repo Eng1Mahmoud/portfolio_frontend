@@ -5,19 +5,20 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ISkill } from "@/types/general";
-import { createFloatingPositions, getOrbitLayout, updateFloatingPositions } from "./orbit-layout";
+import { createFloatingPositions, getSphereLayout, updateFloatingPositions } from "./orbit-layout";
 
 /** Static fallback: shown while the 3D chunk loads and when WebGL is missing. */
 const StaticSkills = ({ skills }: { skills: ISkill[] }) => {
-  const layout = getOrbitLayout(skills.length);
+  const layout = getSphereLayout(skills.length);
   const positions = createFloatingPositions(skills.length);
-  updateFloatingPositions(layout, positions, 0);
+  updateFloatingPositions(layout, positions, 0, 0.4, 0.08);
   return (
     <div className="absolute inset-0" aria-hidden="true">
-      {layout.slots.map(slot => {
-        const skill = skills[slot.index];
-        const position = positions[slot.index];
-        return <div key={skill._id ?? `${skill.name}-${slot.index}`} title={skill.name} className="static-orbit-badge" style={{ width: `${layout.badgeSize * 100}%`, left: `${50 + position.x * 100}%`, top: `${50 - position.y * 100}%` }}>
+      {positions.map((position, index) => {
+        const skill = skills[index];
+        if (!skill) return null;
+        const front = (position.z / layout.radius + 1) / 2;
+        return <div key={skill._id ?? `${skill.name}-${index}`} title={skill.name} className="static-orbit-badge" style={{ width: `${layout.badgeSize * 100}%`, left: `${50 + position.x * 100}%`, top: `${50 - position.y * 100}%`, opacity: 0.45 + 0.55 * front }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={skill.imageUrl} alt={skill.name} className="h-full w-full object-contain" />
         </div>;
@@ -58,7 +59,7 @@ export const SkillsOrbit = ({ skills, portrait, name }: { skills: ISkill[]; port
     return () => mobile.removeEventListener("change", update);
   }, []);
 
-  const layout = getOrbitLayout(skills.length);
+  const layout = getSphereLayout(skills.length);
 
   return (
     <motion.div
