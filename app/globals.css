@@ -161,7 +161,7 @@
 }
 
 .portfolio-shell { height: 100dvh; overflow: hidden; }
-.portfolio-navbar { right: 16px; }
+.portfolio-navbar { right: 0; }
 .portfolio-mobile-menu { height: 100dvh; overflow-y: auto; overscroll-behavior: contain; padding: max(100px, env(safe-area-inset-top)) 24px max(28px, env(safe-area-inset-bottom)); }
 .portfolio-mobile-menu-content { width: 100%; min-width: 0; max-width: 640px; margin: auto; }
 .portfolio-mobile-menu-link { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 12px; align-items: baseline; min-height: 48px; padding-block: 8px; font-size: 28px; letter-spacing: 0; }
@@ -240,20 +240,20 @@
 .hero-actions .magnetic-link { display: block; min-width: 0; }
 .hero-actions .magnetic-link > a { width: 100%; min-width: 0; min-height: 44px; white-space: nowrap; }
 .hero-figures dt { line-height: 1.5; letter-spacing: 0; }
-.skills-orbit { max-width: 240px; overflow: hidden; isolation: isolate; }
+.skills-orbit { max-width: 380px; overflow: hidden; isolation: isolate; }
 .hero-orbit-portrait { width: 32%; aspect-ratio: 1; }
 .static-orbit-badge { position: absolute; width: 16%; aspect-ratio: 1; display: grid; place-items: center; padding: 7px; transform: translate(-50%, -50%); border-radius: 8px; border: 1px solid color-mix(in oklch, var(--portfolio-strong) 15%, transparent); background: var(--portfolio-panel); }
 @media (min-width: 768px) {
-  .hero-layout { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+  .hero-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
   .hero-role { letter-spacing: 0.12em; }
-  .skills-orbit { max-width: 540px; }
+  .skills-orbit { max-width: 640px; }
 }
 @media (max-width: 767px) {
   .portfolio-intro { padding-bottom: 24px; }
-  .hero-visual { margin-top: -4px; }
+  .hero-visual { margin-top: 8px; }
 }
 @media (max-width: 767px) and (max-height: 700px) {
-  .skills-orbit { max-width: 176px; }
+  .skills-orbit { max-width: 320px; }
   .hero-layout { gap: 8px; padding-block: 8px; }
   .hero-actions { margin-top: 20px; }
 }

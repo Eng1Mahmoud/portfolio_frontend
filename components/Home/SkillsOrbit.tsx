@@ -78,7 +78,7 @@ export const SkillsOrbit = ({ skills, portrait, name }: { skills: ISkill[]; port
       ) : null}
       {portrait && (
         <div className="hero-orbit-portrait pointer-events-none absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-2 border-sage/60 bg-surface-panel shadow-accent">
-          <Image src={portrait} alt={name} fill priority unoptimized sizes="(max-width: 767px) 80px, 180px" className="object-cover" />
+          <Image src={portrait} alt={name} fill priority unoptimized sizes="(max-width: 767px) 122px, 205px" className="object-cover" />
         </div>
       )}
     </motion.div>
