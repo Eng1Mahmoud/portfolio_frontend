@@ -102,10 +102,10 @@ export const RecommendationCard = ({
         whileHover={reduceMotion ? undefined : { y: -6 }}
         {...handlers}
         style={{ rotateX, rotateY }}
-        className={`pin-card group relative flex h-full flex-col rounded-2xl border p-6 shadow-pinned transition-colors duration-300 md:p-7 ${
+        className={`glass-card pin-card group relative flex h-full flex-col rounded-2xl border p-6 shadow-pinned transition-colors duration-300 md:p-7 ${
           engaged
-            ? "border-sage/40 bg-parchment/[0.05]"
-            : "border-parchment/10 bg-surface-panel"
+            ? "border-sage/40"
+            : "border-parchment/10"
         }`}
       >
         <motion.span

@@ -102,7 +102,7 @@ export const ProjectCard = ({
           the action buttons line up along the bottom. */}
       <article
         ref={faceRef}
-        className="group/card relative flex h-full flex-col overflow-hidden rounded-2xl border border-parchment/10 bg-surface-panel transition-colors duration-300 group-hover/pin:border-sage/30"
+        className="glass-card group/card relative flex h-full flex-col overflow-hidden rounded-2xl border border-parchment/10 transition-colors duration-300 group-hover/pin:border-sage/30"
       >
         <div className="relative h-[200px] shrink-0 overflow-hidden">
           {/* The first row is above the fold and holds the page's largest
@@ -116,7 +116,7 @@ export const ProjectCard = ({
               screenshot, which is what the visitor came to see. */}
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-[linear-gradient(to_top,theme(colors.surface.panel)_0%,transparent_38%)]"
+            className="absolute inset-0 bg-[linear-gradient(to_top,color-mix(in_oklch,theme(colors.surface.panel)_70%,transparent)_0%,transparent_38%)]"
           />
         </div>
 
