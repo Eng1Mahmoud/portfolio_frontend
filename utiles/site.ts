@@ -4,7 +4,7 @@ import { Metadata } from "next";
 // Set NEXT_PUBLIC_SITE_URL in the environment to override (e.g. preview deploys).
 export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
-  "https://dev-mahmoud-portfolio.vercel.app";
+  "https://www.mahmoud-mohamed.dev";
 
 export const siteName = "Mahmoud Mohamed | Portfolio";
 
@@ -57,8 +57,9 @@ export const fallbackProfileImageUrl =
   "https://dev-mahmoud.sirv.com/portfolio/MAHMOUD.png";
 
 // Explicit leaf metadata prevents Next.js from dropping inherited share images.
+// Bump `v` whenever the photo changes so link-preview caches fetch it again.
 export const socialPortraitUrl =
-  "https://dev-mahmoud.sirv.com/portfolio/MAHMOUD.png?w=1200&h=630&scale.option=fit&canvas.width=1200&canvas.height=630&canvas.color=171A16&format=jpg";
+  "https://dev-mahmoud.sirv.com/portfolio/MAHMOUD.png?w=1200&h=630&scale.option=fit&canvas.width=1200&canvas.height=630&canvas.color=171A16&format=jpg&v=2";
 
 export const getProfileImageUrl = (avatar?: string) =>
   avatar?.trim() || fallbackProfileImageUrl;
