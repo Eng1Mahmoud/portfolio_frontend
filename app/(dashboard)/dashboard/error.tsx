@@ -18,7 +18,7 @@ export default function DashboardError({
 
   return (
     <DashPanel>
-      <h2 className="display-card mb-2 text-xl text-ink-strong sm:text-2xl">
+      <h2 className="display-card font-display! font-semibold! tracking-normal! mb-2 text-xl text-ink-strong sm:text-2xl">
         Something went wrong
       </h2>
       <p className="mb-6 text-sm text-ink-body">
@@ -26,7 +26,7 @@ export default function DashboardError({
       </p>
       <button
         onClick={reset}
-        className="inline-flex items-center gap-2 rounded-full bg-sage px-5 py-2 text-sm font-medium text-surface-base transition-colors hover:bg-sage-bright focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+        className="inline-flex items-center gap-2 rounded-full bg-sage px-5 py-2 text-sm font-medium text-surface-base transition-colors hover:bg-sage-bright focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
       >
         <FaRedo aria-hidden="true" className="h-3 w-3" />
         Try again

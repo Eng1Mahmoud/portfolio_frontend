@@ -2,6 +2,7 @@
 import { FaGraduationCap, FaUniversity } from "react-icons/fa";
 import { IEducation } from "@/types/general";
 import Image from "next/image";
+import { Spotlight, trackPointer } from "@/components/general/Spotlight";
 import { Timeline, TimelineEntry } from "@/components/general/Timeline";
 
 export default function EducationTimeline({
@@ -13,7 +14,11 @@ export default function EducationTimeline({
     <Timeline>
       {educations.map((item, index) => (
         <TimelineEntry key={item._id} index={index}>
-          <div className="glass-card group relative overflow-hidden rounded-2xl p-5 md:p-7">
+          <div
+            onMouseMove={trackPointer}
+            className="glass-card relative! isolate! [background:var(--glass-background)]! [border:var(--hairline-border)]! [backdrop-filter:blur(14px)_saturate(140%)]! [box-shadow:var(--glass-shadow)]! [transition:border-color_300ms,_box-shadow_300ms,translate_500ms_cubic-bezier(0.22,1,0.36,1)]! [border-radius:16px]! [&::before]:[content:'']! [&::before]:absolute! [&::before]:[inset:0]! [&::before]:[z-index:-1]! [&::before]:[border-radius:inherit]! [&::before]:pointer-events-none! [&::before]:[background:var(--glass-hover-shadow)]! [&::before]:[opacity:0.7]! [&::before]:[transition:opacity_300ms]! [&:hover]:[border-color:var(--glass-hover-border)]! [&:hover]:[box-shadow:var(--glass-corner-light)]! [&:hover::before]:[opacity:1]! group relative overflow-hidden rounded-2xl p-5 md:p-7 hover:-translate-y-1.5"
+          >
+            <Spotlight />
             <div className="relative z-10">
               <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.22em] text-sage">
                 {item.startDate} — {item.endDate}
@@ -30,7 +35,7 @@ export default function EducationTimeline({
                   />
                 )}
                 <div className="min-w-0">
-                  <h3 className="display-card flex items-center gap-2 text-lg text-ink-strong md:text-2xl">
+                  <h3 className="display-card font-display! font-semibold! tracking-normal! flex items-center gap-2 text-lg text-ink-strong md:text-2xl">
                     <FaGraduationCap
                       className="shrink-0 text-sage"
                       aria-hidden="true"
@@ -56,7 +61,7 @@ export default function EducationTimeline({
                   {item.skills.map((skill) => (
                     <li
                       key={skill}
-                      className="rounded-full border border-sage/20 bg-sage/[0.05] px-3 py-1.5 font-mono text-[10px] text-ink-muted md:text-xs"
+                      className="rounded-full border border-sage/20 bg-sage/5 px-3 py-1.5 font-mono text-[10px] text-ink-muted md:text-xs"
                     >
                       {skill}
                     </li>

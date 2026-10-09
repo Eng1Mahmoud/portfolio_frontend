@@ -39,7 +39,7 @@ const CheckboxField = ({
           type="checkbox"
           aria-invalid={hasError || undefined}
           aria-describedby={hasError ? errorId : undefined}
-          className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded border-2 border-gray-300 text-sage accent-sage focus:outline-none focus:ring-2 focus:ring-sage/30"
+          className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded-sm border-2 border-gray-300 text-sage accent-sage focus:outline-hidden focus:ring-2 focus:ring-sage/30"
         />
         <label
           htmlFor={name}

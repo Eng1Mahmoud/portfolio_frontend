@@ -31,8 +31,14 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
     if (!root) return;
     const update = () => {
       const line = root.getBoundingClientRect().top + 180;
-      const sections = Array.from(document.querySelectorAll<HTMLElement>("main section.portfolio-section[id]"));
-      const current = sections.filter(section => section.getBoundingClientRect().top <= line).at(-1);
+      const sections = Array.from(
+        document.querySelectorAll<HTMLElement>(
+          "main section.portfolio-section[id]",
+        ),
+      );
+      const current = sections
+        .filter((section) => section.getBoundingClientRect().top <= line)
+        .at(-1);
       if (current) setActive(`/#${current.id}`);
     };
     update();
@@ -51,19 +57,32 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
     const root = document.getElementById("page-scroll");
     const previousOverflow = root?.style.overflowY;
     if (root) root.style.overflowY = "hidden";
-    menuRef.current?.querySelector<HTMLAnchorElement>("a")?.focus({ preventScroll: true });
+    menuRef.current
+      ?.querySelector<HTMLAnchorElement>("a")
+      ?.focus({ preventScroll: true });
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
       if (e.key !== "Tab") return;
-      const links = Array.from(menuRef.current?.querySelectorAll<HTMLAnchorElement>("a[href]") ?? []);
-      const controls: HTMLElement[] = toggleRef.current ? [toggleRef.current, ...links] : links;
+      const links = Array.from(
+        menuRef.current?.querySelectorAll<HTMLAnchorElement>("a[href]") ?? [],
+      );
+      const controls: HTMLElement[] = toggleRef.current
+        ? [toggleRef.current, ...links]
+        : links;
       const first = controls[0];
       const last = controls.at(-1);
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last?.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first?.focus();
+      }
     };
     const desktop = window.matchMedia("(min-width: 1024px)");
-    const onResize = () => { if (desktop.matches) setOpen(false); };
+    const onResize = () => {
+      if (desktop.matches) setOpen(false);
+    };
     desktop.addEventListener("change", onResize);
     document.addEventListener("keydown", onKey);
     return () => {
@@ -80,12 +99,12 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: EASE }}
-        className="portfolio-navbar pointer-events-none fixed left-0 top-3 z-[1000] px-3 sm:top-4 sm:px-6"
+        className="portfolio-navbar [right:0]! pointer-events-none fixed left-0 top-3 z-1000 px-3 sm:top-4 sm:px-6"
       >
         <div className="pointer-events-auto mx-auto grid grid-cols-[minmax(0,1fr)_auto] lg:flex max-w-6xl items-center justify-between gap-2 lg:gap-4 rounded-full border border-parchment/10 bg-surface-base/60 py-2 pe-2 ps-2 shadow-lifted backdrop-blur-xl">
           <Link
             href="/"
-            className="group flex min-w-0 items-center gap-2.5 rounded-full pe-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+            className="group flex min-w-0 items-center gap-2.5 rounded-full pe-3 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
           >
             <span className="relative block h-9 w-9 shrink-0 overflow-hidden rounded-full ring-1 ring-sage/40 transition group-hover:ring-sage">
               {profileInfo?.avatar ? (
@@ -97,7 +116,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
                   className="object-cover"
                 />
               ) : (
-                <span className="flex h-full w-full items-center justify-center bg-gradient-to-br from-sage to-wheat font-display font-bold text-surface-base">
+                <span className="flex h-full w-full items-center justify-center bg-linear-to-br from-sage to-wheat font-display font-bold text-surface-base">
                   M
                 </span>
               )}
@@ -117,7 +136,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
                       onClick={() => setActive(item.path)}
                       aria-current={isActive(item.path) ? "page" : undefined}
                       className={clsx(
-                        "relative block rounded-full px-2.5 py-2 text-[0.8rem] font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage",
+                        "relative block rounded-full px-2.5 py-2 text-[0.8rem] font-medium transition-colors duration-200 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-sage",
                         isActive(item.path)
                           ? "text-surface-base"
                           : "text-ink-muted hover:text-ink-strong",
@@ -132,7 +151,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
                             stiffness: 420,
                             damping: 34,
                           }}
-                          className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-sage to-sage-bright shadow-accent"
+                          className="absolute inset-0 -z-10 rounded-full bg-linear-to-r from-sage to-sage-bright shadow-accent"
                         />
                       )}
                       {item.label}
@@ -150,7 +169,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
                 target="_blank"
                 download
                 onClick={handleDownloadCV}
-                className="hidden items-center gap-2 rounded-full border border-sage/40 px-4 py-2 text-sm font-medium text-ink-strong transition hover:border-sage hover:bg-sage/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage sm:inline-flex"
+                className="hidden items-center gap-2 rounded-full border border-sage/40 px-4 py-2 text-sm font-medium text-ink-strong transition hover:border-sage hover:bg-sage/10 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-sage sm:inline-flex"
               >
                 <FaDownload aria-hidden="true" className="h-3 w-3" />
                 CV
@@ -160,12 +179,18 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
               ref={toggleRef}
               type="button"
               onClick={() => setOpen((o) => !o)}
-              aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+              aria-label={
+                open ? "Close navigation menu" : "Open navigation menu"
+              }
               aria-expanded={open}
               aria-controls="mobile-navigation"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-sage text-surface-base transition hover:bg-sage-bright focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base lg:hidden"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-sage text-surface-base transition hover:bg-sage-bright focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base lg:hidden"
             >
-              {open ? <FaTimes aria-hidden="true" /> : <FaBars aria-hidden="true" />}
+              {open ? (
+                <FaTimes aria-hidden="true" />
+              ) : (
+                <FaBars aria-hidden="true" />
+              )}
             </button>
           </div>
         </div>
@@ -183,51 +208,63 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: reduceMotion ? 0 : 0.22, ease: EASE }}
-            className="portfolio-mobile-menu fixed inset-0 z-[999] flex flex-col bg-surface-well lg:hidden"
+            className="portfolio-mobile-menu h-dvh! overflow-y-auto! [overscroll-behavior:contain]! isolate! [will-change:opacity]! [padding:max(100px,_env(safe-area-inset-top))_24px_max(28px,_env(safe-area-inset-bottom))]! fixed inset-0 z-999 flex flex-col bg-surface-well lg:hidden"
           >
-            <div className="portfolio-mobile-menu-content">
-            <ul className="relative space-y-1">
-              {asideLinks.map((item, i) => (
-                <motion.li
-                  key={item.path}
-                  initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: reduceMotion ? 0 : 0.06 + i * 0.035, duration: reduceMotion ? 0 : 0.28, ease: EASE }}
-                >
-                  <Link
-                    href={item.path}
-                    onClick={() => { setActive(item.path); setOpen(false); }}
-                    aria-current={isActive(item.path) ? "page" : undefined}
-                    className={clsx(
-                      "portfolio-mobile-menu-link font-display font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage",
-                      isActive(item.path)
-                        ? "text-sage"
-                        : "text-ink-strong hover:text-sage",
-                    )}
+            <div className="portfolio-mobile-menu-content w-full! min-w-0! max-w-160! [margin:auto]!">
+              <ul className="relative space-y-1">
+                {asideLinks.map((item, i) => (
+                  <motion.li
+                    key={item.path}
+                    initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      delay: reduceMotion ? 0 : 0.06 + i * 0.035,
+                      duration: reduceMotion ? 0 : 0.28,
+                      ease: EASE,
+                    }}
                   >
-                    <span className="font-mono text-xs font-normal text-ink-muted">
-                      0{i + 1}
-                    </span>
-                    <span className="min-w-0 break-words">{item.label}</span>
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
-            {profileInfo?.cv && (
-              <motion.a
-                initial={reduceMotion ? false : { opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: reduceMotion ? 0 : 0.24, duration: reduceMotion ? 0 : 0.2 }}
-                href={profileInfo.cv}
-                target="_blank"
-                download
-                onClick={handleDownloadCV}
-                className="relative mt-10 inline-flex w-fit items-center gap-2 rounded-full bg-sage px-6 py-3 text-sm font-medium text-surface-base"
-              >
-                <FaDownload aria-hidden="true" className="h-3 w-3" />
-                Download CV
-              </motion.a>
-            )}
+                    <Link
+                      href={item.path}
+                      onClick={() => {
+                        setActive(item.path);
+                        setOpen(false);
+                      }}
+                      aria-current={isActive(item.path) ? "page" : undefined}
+                      className={clsx(
+                        "portfolio-mobile-menu-link grid! [grid-template-columns:24px_minmax(0,_1fr)]! gap-3! items-baseline! min-h-12! py-2! [font-size:28px]! tracking-normal! sm:[font-size:40px]! font-display font-semibold transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-sage",
+                        isActive(item.path)
+                          ? "text-sage"
+                          : "text-ink-strong hover:text-sage",
+                      )}
+                    >
+                      <span className="font-mono text-xs font-normal text-ink-muted">
+                        0{i + 1}
+                      </span>
+                      <span className="min-w-0 wrap-break-word">
+                        {item.label}
+                      </span>
+                    </Link>
+                  </motion.li>
+                ))}
+              </ul>
+              {profileInfo?.cv && (
+                <motion.a
+                  initial={reduceMotion ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{
+                    delay: reduceMotion ? 0 : 0.24,
+                    duration: reduceMotion ? 0 : 0.2,
+                  }}
+                  href={profileInfo.cv}
+                  target="_blank"
+                  download
+                  onClick={handleDownloadCV}
+                  className="relative mt-10 inline-flex w-fit items-center gap-2 rounded-full bg-sage px-6 py-3 text-sm font-medium text-surface-base"
+                >
+                  <FaDownload aria-hidden="true" className="h-3 w-3" />
+                  Download CV
+                </motion.a>
+              )}
             </div>
           </motion.div>
         )}

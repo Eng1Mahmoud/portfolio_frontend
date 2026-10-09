@@ -85,7 +85,7 @@ export const ProjectDescriptionModal = ({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
-      className="fixed inset-0 z-[1000] flex items-center justify-center bg-surface-well/85 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-1000 flex items-center justify-center bg-surface-well/85 p-4 backdrop-blur-xs"
     >
       <motion.div
         ref={panelRef}
@@ -104,7 +104,7 @@ export const ProjectDescriptionModal = ({
           damping: 30,
           opacity: { duration: 0.22 },
         }}
-        className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-parchment/10 bg-surface-card outline-none"
+        className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-parchment/10 bg-surface-card outline-hidden"
       >
         {/* Header stays put so the close button is always reachable while
             scrolling a long description. */}
@@ -116,14 +116,14 @@ export const ProjectDescriptionModal = ({
             type="button"
             onClick={onClose}
             aria-label="Close project details"
-            className="shrink-0 rounded-md p-1 text-ink-muted transition-colors hover:bg-parchment/10 hover:text-ink-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+            className="shrink-0 rounded-md p-1 text-ink-muted transition-colors hover:bg-parchment/10 hover:text-ink-strong focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
           >
             <FaTimes size={20} aria-hidden="true" />
           </button>
         </div>
 
         {/* Only this region scrolls. */}
-        <div className="scrollBar min-h-0 flex-1 overflow-y-auto px-6 py-5">
+        <div className="scrollBar [scrollbar-width:auto]! [scrollbar-color:var(--portfolio-accent-dim)_var(--portfolio-well)]! [&::-webkit-scrollbar]:w-3! [&::-webkit-scrollbar-track]:bg-surface-well! [&::-webkit-scrollbar-thumb]:[background:var(--scrollbar-thumb)]! [&::-webkit-scrollbar-thumb]:[border-radius:9999px]! [&::-webkit-scrollbar-thumb]:[border:2px_solid_transparent]! [&::-webkit-scrollbar-thumb]:[background-clip:content-box]! [&::-webkit-scrollbar-thumb:hover]:[background:var(--scrollbar-thumb-hover)]! [&::-webkit-scrollbar-thumb:hover]:[background-clip:content-box]! min-h-0 flex-1 overflow-y-auto px-6 py-5">
           {technologies && technologies.length > 0 && (
             <div className="mb-5">
               <h4 className="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted">
@@ -133,7 +133,7 @@ export const ProjectDescriptionModal = ({
                 {technologies.map((tech) => (
                   <li
                     key={tech}
-                    className="rounded-full border border-parchment/10 bg-parchment/[0.04] px-3 py-1 text-xs text-ink-body"
+                    className="rounded-full border border-parchment/10 bg-parchment/4 px-3 py-1 text-xs text-ink-body"
                   >
                     {tech}
                   </li>
@@ -155,7 +155,7 @@ export const ProjectDescriptionModal = ({
                 href={githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full border border-parchment/15 px-4 py-2 text-sm text-ink-body transition-colors hover:border-sage/60 hover:text-ink-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+                className="flex items-center gap-2 rounded-full border border-parchment/15 px-4 py-2 text-sm text-ink-body transition-colors hover:border-sage/60 hover:text-ink-strong focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
               >
                 <FaGithub aria-hidden="true" />
                 GitHub
@@ -166,7 +166,7 @@ export const ProjectDescriptionModal = ({
                 href={demoLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full bg-sage px-4 py-2 text-sm font-medium text-surface-base transition-colors hover:bg-sage-bright focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+                className="flex items-center gap-2 rounded-full bg-sage px-4 py-2 text-sm font-medium text-surface-base transition-colors hover:bg-sage-bright focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
               >
                 <FaExternalLinkAlt aria-hidden="true" />
                 Live

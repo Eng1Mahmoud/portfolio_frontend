@@ -84,14 +84,14 @@ const TagsInput = ({
           {tags.map((tag, index) => (
             <li
               key={`${tag}-${index}`}
-              className="inline-flex items-center gap-1.5 rounded-full border border-parchment/10 bg-parchment/[0.04] px-3 py-1 text-xs font-medium text-ink-body"
+              className="inline-flex items-center gap-1.5 rounded-full border border-parchment/10 bg-parchment/4 px-3 py-1 text-xs font-medium text-ink-body"
             >
               {tag}
               <button
                 type="button"
                 onClick={() => removeAt(index)}
                 aria-label={`Remove ${tag}`}
-                className="rounded-full p-0.5 text-ink-muted transition-colors hover:bg-parchment/10 hover:text-ink-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+                className="rounded-full p-0.5 text-ink-muted transition-colors hover:bg-parchment/10 hover:text-ink-strong focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
               >
                 <FaTimes className="h-2.5 w-2.5" aria-hidden="true" />
               </button>

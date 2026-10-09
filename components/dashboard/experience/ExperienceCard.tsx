@@ -10,7 +10,7 @@ const ExperienceCard = ({ experience }: { experience: IExperience }) => {
 
   return (
     <DashCard>
-      <div className="mb-4 flex-grow">
+      <div className="mb-4 grow">
         <div className="flex items-start justify-between gap-2">
           <div className="flex min-w-0 items-start gap-3">
             {experience.image && (
@@ -32,7 +32,7 @@ const ExperienceCard = ({ experience }: { experience: IExperience }) => {
             </div>
           </div>
           {experience.workType && (
-            <span className="shrink-0 rounded-md border border-parchment/10 bg-parchment/[0.04] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-sage">
+            <span className="shrink-0 rounded-md border border-parchment/10 bg-parchment/4 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-sage">
               {experience.workType}
             </span>
           )}
@@ -51,13 +51,13 @@ const ExperienceCard = ({ experience }: { experience: IExperience }) => {
             {skills.slice(0, 4).map((skill, idx) => (
               <span
                 key={idx}
-                className="rounded border border-parchment/10 bg-parchment/[0.04] px-2 py-0.5 text-[10px] text-ink-body"
+                className="rounded-sm border border-parchment/10 bg-parchment/4 px-2 py-0.5 text-[10px] text-ink-body"
               >
                 {skill}
               </span>
             ))}
             {skills.length > 4 && (
-              <span className="rounded border border-parchment/10 px-2 py-0.5 text-[10px] text-ink-muted">
+              <span className="rounded-sm border border-parchment/10 px-2 py-0.5 text-[10px] text-ink-muted">
                 +{skills.length - 4} more
               </span>
             )}

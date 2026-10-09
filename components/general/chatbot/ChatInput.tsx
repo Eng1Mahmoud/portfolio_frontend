@@ -22,7 +22,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && onSend()}
         placeholder="Type your message..."
-        className="flex-1 bg-parchment/5 text-ink-body placeholder-ink-muted rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sage/40 transition-all border border-parchment/10"
+        className="flex-1 bg-parchment/5 text-ink-body placeholder-ink-muted rounded-full px-4 py-2 text-sm focus:outline-hidden focus:ring-2 focus:ring-sage/40 transition-all border border-parchment/10"
       />
       <button
         onClick={onSend}

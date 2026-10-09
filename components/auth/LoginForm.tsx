@@ -14,7 +14,7 @@ const LoginForm = () => {
         <p className="mb-3 text-center font-mono text-[11px] uppercase tracking-[0.28em] text-sage">
           Dashboard
         </p>
-        <h1 className="display-title mb-8 text-center text-2xl text-ink-strong">
+        <h1 className="display-title font-display! font-semibold! tracking-normal! mb-8 text-center text-2xl text-ink-strong">
           Welcome Back
         </h1>
         <Form

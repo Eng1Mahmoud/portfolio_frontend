@@ -66,11 +66,11 @@ const NavLinks = () => {
                 className={`
                   group relative flex items-center rounded-lg px-4 py-3 text-sm font-medium
                   transition-colors duration-200 ease-in-out
-                  focus:outline-none focus-visible:ring-2 focus-visible:ring-sage
+                  focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage
                   ${
                     isActive
-                      ? "bg-parchment/[0.06] text-ink-strong"
-                      : "text-ink-muted hover:bg-parchment/[0.04] hover:text-ink-strong"
+                      ? "bg-parchment/6 text-ink-strong"
+                      : "text-ink-muted hover:bg-parchment/4 hover:text-ink-strong"
                   }
                 `}
               >

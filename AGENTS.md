@@ -1,4 +1,5 @@
 ## Portfolio presentation
+- Project screenshots sit in a fixed 16:10 window above the card details, as native focusable vertical scroll regions with intrinsic image proportions; never overlay text on them, scale or parallax them, so full-page captures never look stretched and scroll top to bottom.
 - Hero columns use zero-minimum grid tracks with a larger bounded visual track and an orbit that shrinks to its available width; section entrances respect reduced motion, so larger skills stay clear of text at every viewport.
 - Keep all public content on one scrolling page, with legacy section URLs redirecting to retained anchors, so existing links keep working.
 - Section rhythm uses one shared padding scale that only tightens as the viewport shrinks, so the page reads as a continuous scroll and spacing stays compact rather than growing.
@@ -20,5 +21,5 @@
 - Mobile navigation animates only opacity over an opaque surface, never a clipped backdrop-filter layer; hold scroll locking through exit and focus without scrolling to avoid mobile compositor flashes and page jumps.
 - Contact submission uses its existing EmailJS action with shared client/server validation and persistent inline feedback; clear values only after the provider accepts delivery so failed attempts retain visitor input.
 - Share a deterministic count-based floating layout between animated and static hero skills; independent drift uses screen-space separation and portrait/edge bounds, while a shared DOM overlay outside Canvas avoids per-skill React roots and keeps every dashboard item visible on every viewport.
-- Keep global styles grouped under descriptive section headings and preserve override order; delete selectors only after checking dynamic and dashboard usages so cleanup cannot change the design.
+- Keep global CSS limited to semantic theme/effect tokens, browser-wide base rules, keyframes and registered animation properties; put component styling and screen-width variants directly in JSX utilities so presentation remains local and readable.
 - Hide animated skill badges until their first positioned frame and reveal each icon after image decoding; animate transforms rather than layout properties to prevent first-load stacking and image flashes.

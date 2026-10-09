@@ -22,19 +22,25 @@ const ChatBot: React.FC = () => {
   } = useChat();
 
   useEffect(() => {
-    window.dispatchEvent(new CustomEvent("portfolio-chat-state", { detail: isOpen }));
-    return () => { window.dispatchEvent(new CustomEvent("portfolio-chat-state", { detail: false })); };
+    window.dispatchEvent(
+      new CustomEvent("portfolio-chat-state", { detail: isOpen }),
+    );
+    return () => {
+      window.dispatchEvent(
+        new CustomEvent("portfolio-chat-state", { detail: false }),
+      );
+    };
   }, [isOpen]);
 
   return (
-    <div className="portfolio-chat fixed z-[9999] font-sans">
+    <div className="portfolio-chat right-6! [bottom:max(24px,_env(safe-area-inset-bottom))]! max-md:right-4! max-md:[bottom:max(16px,_env(safe-area-inset-bottom))]! fixed z-9999 font-sans">
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="portfolio-chat-window bg-surface-card rounded-lg shadow-pinned flex flex-col overflow-hidden border border-sage/25"
+            className="portfolio-chat-window [width:min(400px,_calc(100vw_-_48px))]! [height:min(500px,_calc(100dvh_-_80px))]! mb-4! max-md:[width:min(400px,_calc(100vw_-_32px))]! max-md:[height:min(500px,_calc(100dvh_-_64px))]! bg-surface-card rounded-lg shadow-pinned flex flex-col overflow-hidden border border-sage/25"
           >
             <ChatHeader onClose={closeChat} />
             <ChatMessages

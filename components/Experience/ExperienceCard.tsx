@@ -2,11 +2,16 @@
 import { IExperience } from "@/types/general";
 import { FaBriefcase } from "react-icons/fa";
 import Image from "next/image";
+import { Spotlight, trackPointer } from "@/components/general/Spotlight";
 
 /** The card face; the entry animation and rail node live in <TimelineEntry />. */
 export const ExperienceCard = ({ experience }: { experience: IExperience }) => {
   return (
-    <div className="glass-card group relative overflow-hidden rounded-2xl p-5 md:p-7">
+    <div
+      onMouseMove={trackPointer}
+      className="glass-card relative! isolate! [background:var(--glass-background)]! [border:var(--hairline-border)]! [backdrop-filter:blur(14px)_saturate(140%)]! [box-shadow:var(--glass-shadow)]! [transition:border-color_300ms,_box-shadow_300ms,translate_500ms_cubic-bezier(0.22,1,0.36,1)]! [border-radius:16px]! [&::before]:[content:'']! [&::before]:absolute! [&::before]:[inset:0]! [&::before]:[z-index:-1]! [&::before]:[border-radius:inherit]! [&::before]:pointer-events-none! [&::before]:[background:var(--glass-hover-shadow)]! [&::before]:[opacity:0.7]! [&::before]:[transition:opacity_300ms]! [&:hover]:[border-color:var(--glass-hover-border)]! [&:hover]:[box-shadow:var(--glass-corner-light)]! [&:hover::before]:[opacity:1]! group relative overflow-hidden rounded-2xl p-5 md:p-7 hover:-translate-y-1.5"
+    >
+      <Spotlight />
       <div className="relative z-10">
         {/* Dates lead: on a rail, when is what you check first. */}
         <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.22em] text-sage">
@@ -24,7 +29,7 @@ export const ExperienceCard = ({ experience }: { experience: IExperience }) => {
             />
           )}
           <div className="min-w-0">
-            <h3 className="display-card text-lg text-ink-strong md:text-2xl">
+            <h3 className="display-card font-display! font-semibold! tracking-normal! text-lg text-ink-strong md:text-2xl">
               {experience.role}
             </h3>
             <div className="mt-2 flex flex-wrap items-center gap-2">
@@ -33,7 +38,7 @@ export const ExperienceCard = ({ experience }: { experience: IExperience }) => {
                 {experience.company}
               </span>
               {experience.workType && (
-                <span className="rounded-md border border-sage/20 bg-sage/[0.05] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted md:text-[11px]">
+                <span className="rounded-md border border-sage/20 bg-sage/5 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted md:text-[11px]">
                   {experience.workType}
                 </span>
               )}
@@ -50,7 +55,7 @@ export const ExperienceCard = ({ experience }: { experience: IExperience }) => {
             {experience.skills.map((skill) => (
               <li
                 key={skill}
-                className="rounded-full border border-sage/20 bg-sage/[0.05] px-3 py-1.5 font-mono text-[10px] text-ink-muted transition-colors hover:border-sage/50 hover:text-sage md:text-xs"
+                className="rounded-full border border-sage/20 bg-sage/5 px-3 py-1.5 font-mono text-[10px] text-ink-muted transition-colors hover:border-sage/50 hover:text-sage md:text-xs"
               >
                 {skill}
               </li>

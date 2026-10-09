@@ -8,12 +8,12 @@ import { DashCard, EditLink } from "@/components/dashboard/DashCard";
 import { deleteProjectId } from "@/actions/deleteProject";
 
 const externalLink =
-  "flex items-center justify-center gap-2 rounded-md border border-parchment/15 px-3 py-1 text-ink-body transition-colors hover:border-sage/50 hover:text-sage focus:outline-none focus-visible:ring-2 focus-visible:ring-sage";
+  "flex items-center justify-center gap-2 rounded-md border border-parchment/15 px-3 py-1 text-ink-body transition-colors hover:border-sage/50 hover:text-sage focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage";
 
 const ProjectCard = ({ project }: { project: Iproject }) => {
   return (
     <DashCard className="group">
-      <div className="flex-grow">
+      <div className="grow">
         <div className="relative mb-4 h-40 w-full overflow-hidden rounded-lg border border-parchment/10">
           <Image
             src={project.imageUrl}

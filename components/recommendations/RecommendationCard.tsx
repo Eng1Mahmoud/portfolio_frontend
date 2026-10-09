@@ -10,6 +10,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { FaQuoteLeft, FaLinkedin, FaChevronDown } from "react-icons/fa";
 import { useTilt } from "@/hooks/use-tilt";
+import { Spotlight, trackPointer } from "@/components/general/Spotlight";
 import { IRecommendation } from "@/types/general";
 import {
   RecommendationModal,
@@ -87,7 +88,7 @@ export const RecommendationCard = ({
   const written = formatDate(recommendation.date);
 
   return (
-    <div className="pin-stage h-full">
+    <div className="pin-stage [perspective:1100px]! [perspective-origin:center]! motion-reduce:[perspective:none]! h-full">
       <motion.article
         ref={ref}
         initial={{ opacity: 0, y: 18, scale: 0.96 }}
@@ -101,11 +102,10 @@ export const RecommendationCard = ({
         }}
         whileHover={reduceMotion ? undefined : { y: -6 }}
         {...handlers}
+        onMouseMove={trackPointer}
         style={{ rotateX, rotateY }}
-        className={`glass-card pin-card group relative flex h-full flex-col rounded-2xl border p-6 shadow-pinned transition-colors duration-300 md:p-7 ${
-          engaged
-            ? "border-sage/40"
-            : "border-parchment/10"
+        className={`glass-card relative! isolate! [background:var(--glass-background)]! [border:var(--hairline-border)]! [backdrop-filter:blur(14px)_saturate(140%)]! [box-shadow:var(--glass-shadow)]! [transition:border-color_300ms,_box-shadow_300ms]! [border-radius:16px]! [&::before]:[content:'']! [&::before]:absolute! [&::before]:[inset:0]! [&::before]:[z-index:-1]! [&::before]:[border-radius:inherit]! [&::before]:pointer-events-none! [&::before]:[background:var(--glass-hover-shadow)]! [&::before]:[opacity:0.7]! [&::before]:[transition:opacity_300ms]! [&:hover]:[border-color:var(--glass-hover-border)]! [&:hover]:[box-shadow:var(--glass-corner-light)]! [&:hover::before]:[opacity:1]! pin-card [transform-style:preserve-3d]! [&:hover_.pin-lift]:[transform:translateZ(34px)]! group relative flex h-full flex-col rounded-2xl border p-6 shadow-pinned transition-colors duration-300 md:p-7 ${
+          engaged ? "border-sage/40" : "border-parchment/10"
         }`}
       >
         <motion.span
@@ -115,6 +115,8 @@ export const RecommendationCard = ({
           transition={{ duration: 0.35 }}
           className="pointer-events-none absolute inset-0 rounded-2xl"
         />
+
+        <Spotlight />
 
         <div className="relative z-10 flex h-full flex-col">
           <FaQuoteLeft
@@ -141,7 +143,7 @@ export const RecommendationCard = ({
                 type="button"
                 onClick={openFull}
                 aria-label={`Read the full testimonial from ${recommendation.name}`}
-                className="mt-3 flex w-fit items-center gap-1.5 rounded text-sm text-sage transition-colors hover:text-sage-bright focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+                className="mt-3 flex w-fit items-center gap-1.5 rounded-sm text-sm text-sage transition-colors hover:text-sage-bright focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
               >
                 Read more
                 <FaChevronDown className="h-3 w-3" aria-hidden="true" />
@@ -161,7 +163,7 @@ export const RecommendationCard = ({
             ) : (
               <span
                 aria-hidden="true"
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-parchment/[0.06] font-mono text-xs tracking-wider text-sage ring-1 ring-parchment/10"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-parchment/6 font-mono text-xs tracking-wider text-sage ring-1 ring-parchment/10"
               >
                 {initials(recommendation.name)}
               </span>
@@ -183,7 +185,7 @@ export const RecommendationCard = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${recommendation.name} on LinkedIn`}
-                className="shrink-0 rounded-md p-1.5 text-ink-muted transition-colors hover:text-sage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+                className="shrink-0 rounded-md p-1.5 text-ink-muted transition-colors hover:text-sage focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
               >
                 <FaLinkedin />
               </a>
@@ -191,7 +193,7 @@ export const RecommendationCard = ({
           </footer>
 
           <div className="mt-3 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-muted">
-            <span className="rounded-md border border-parchment/10 bg-parchment/[0.04] px-2 py-1 text-sage">
+            <span className="rounded-md border border-parchment/10 bg-parchment/4 px-2 py-1 text-sage">
               {recommendation.relation}
             </span>
             {written && <span>{written}</span>}
