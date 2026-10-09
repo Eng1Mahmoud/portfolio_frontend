@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 /**
- * One quiet layer behind every section: a faint blueprint grid, two slowly
+ * One quiet layer behind every section: a nebula star map with faint constellations, two slowly
  * drifting glows, a light that glides after the section you are reading and
  * shifts its tint per section, fine grain, and a vignette for depth.
  *
@@ -21,7 +21,30 @@ const TINTS: Record<string, [string, string]> = {
   "contact-us": ["var(--portfolio-accent-bright)", "var(--portfolio-support)"],
 };
 
+type Star = { x: number; y: number; r: number; hub: boolean; d: number };
+
+/** Deterministic star map so server and client render identical markup. */
+const buildStarMap = () => {
+  let seed = 7;
+  const rand = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
+  const stars: Star[] = [];
+  const lines: [Star, Star][] = [];
+  const hubs = [[220, 230], [520, 600], [880, 300], [1300, 180], [1180, 720], [260, 820]];
+  for (const [cx, cy] of hubs) {
+    const group: Star[] = [];
+    for (let i = 0; i < 6; i++) {
+      const star = { x: cx + (rand() - 0.5) * 300, y: cy + (rand() - 0.5) * 240, r: 1.4 + rand() * 1.6, hub: i === 0, d: rand() * 6 };
+      group.push(star);
+      stars.push(star);
+    }
+    for (let i = 1; i < group.length; i++) lines.push([group[i - 1], group[i]]);
+  }
+  for (let i = 0; i < 140; i++) stars.push({ x: rand() * 1600, y: rand() * 1000, r: 0.4 + rand() * 0.9, hub: false, d: rand() * 6 });
+  return { stars, lines };
+};
+
 export const SectionBackdrop = () => {
+  const map = useMemo(buildStarMap, []);
   const reduceMotion = useReducedMotion();
   const layerRef = useRef<HTMLDivElement>(null);
 
@@ -66,6 +89,7 @@ export const SectionBackdrop = () => {
     const tick = () => {
       current += (target - current) * 0.08;
       layer.style.setProperty("--lit-y", `${current.toFixed(1)}px`);
+      layer.style.setProperty("--star-shift", `${(-Math.min(scroller.scrollTop * 0.03, 140)).toFixed(1)}px`);
       frame = Math.abs(target - current) > 0.4 ? requestAnimationFrame(tick) : 0;
     };
     const queue = () => {
@@ -85,7 +109,23 @@ export const SectionBackdrop = () => {
 
   return (
     <div ref={layerRef} aria-hidden="true" className="section-backdrop">
-      <div className="section-backdrop-grid" />
+      <svg className="section-backdrop-stars" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+        <g className="star-lines">
+          {map.lines.map(([a, b], i) => (
+            <line key={i} x1={a.x} y1={a.y} x2={b.x} y2={b.y} />
+          ))}
+        </g>
+        {map.stars.map((star, i) => (
+          <circle
+            key={i}
+            cx={star.x}
+            cy={star.y}
+            r={star.r}
+            className={star.hub ? "star star--hub" : "star"}
+            style={{ animationDelay: `${star.d.toFixed(2)}s` }}
+          />
+        ))}
+      </svg>
       <div className="section-backdrop-drift section-backdrop-drift--one" />
       <div className="section-backdrop-drift section-backdrop-drift--two" />
       <div className="section-backdrop-light" />
