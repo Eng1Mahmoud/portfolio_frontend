@@ -56,6 +56,10 @@ export const fallbackProfileImageUrl =
   process.env.NEXT_PUBLIC_PROFILE_IMAGE_URL?.trim() ||
   "https://dev-mahmoud.sirv.com/portfolio/MAHMOUD.png";
 
+// Explicit leaf metadata prevents Next.js from dropping inherited share images.
+export const socialPortraitUrl =
+  "https://dev-mahmoud.sirv.com/portfolio/MAHMOUD.png?w=1200&h=630&scale.option=fit&canvas.width=1200&canvas.height=630&canvas.color=171A16&format=jpg";
+
 export const getProfileImageUrl = (avatar?: string) =>
   avatar?.trim() || fallbackProfileImageUrl;
 
@@ -84,9 +88,11 @@ export const buildPublicPageMetadata = ({
     description,
     url: path,
     type,
+    images: [{ url: socialPortraitUrl, width: 1200, height: 630, alt: "Mahmoud Mohamed — Software Engineer" }],
   },
   twitter: {
     card: "summary_large_image",
+    images: [socialPortraitUrl],
     title: ogTitle ?? title,
     description,
   },
