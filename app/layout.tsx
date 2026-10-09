@@ -7,6 +7,7 @@ import { Person, WithContext } from "schema-dts";
 import ChatBotWraper from "@/components/general/chatbot/ChatBotWraper";
 import MotionProvider from "@/app/providers/MotionProvider";
 import { getProfileInfo } from "@/actions/getProfileInfo";
+import { HERO_META_DESCRIPTION } from "@/utiles/hero-bio";
 import {
   getProfileImageUrl,
   siteDescription,
@@ -125,7 +126,7 @@ const buildPersonJsonLd = (profile?: {
   knowsAbout: siteKeywords.filter(
     (keyword) => keyword !== "Mahmoud Mohamed" && keyword !== "portfolio",
   ),
-  description: profile?.bio || siteDescription,
+  description: HERO_META_DESCRIPTION,
 });
 
 export default async function RootLayout({

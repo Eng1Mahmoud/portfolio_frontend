@@ -1,5 +1,6 @@
 "use client";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { HERO_BIO } from "@/utiles/hero-bio";
 import { IuserInfo } from "@/types/general";
 import { motion } from "framer-motion";
 import clsx from "clsx";
@@ -45,7 +46,9 @@ export const HomeIntro = ({ profileInfo }: HomeIntroProps) => {
   const reduceMotion = useReducedMotion();
   const name = profileInfo?.userName?.trim() ?? "";
   const role = profileInfo?.title?.trim() ?? "";
-  const paragraphs = toParagraphs(profileInfo?.bio ?? "");
+  // The hero copy is pinned in code so the presentation stays exactly as
+  // written, independent of the dashboard's free-text bio field.
+  const paragraphs = toParagraphs(HERO_BIO);
 
   // "Mahmoud Mohamed" sets on two lines; a single-word name keeps one.
   const nameParts = name.split(" ");
