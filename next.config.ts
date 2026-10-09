@@ -11,6 +11,17 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // The site is one page now; old section addresses jump to their section.
+  async redirects() {
+    const map: Record<string, string> = {
+      about: "home", "contact-us": "contact-us", education: "education",
+      experience: "experience", projects: "projects",
+      recommendations: "recommendations", skills: "skills",
+    };
+    return Object.entries(map).map(([from, to]) => ({
+      source: `/${from}`, destination: `/#${to}`, permanent: true,
+    }));
+  },
   experimental: {
     serverActions: {
       bodySizeLimit: "100mb",
