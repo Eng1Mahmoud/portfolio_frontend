@@ -57,11 +57,6 @@ export default async function Home() {
       {/* Grows past one viewport when the bio needs it; the 5rem is the padding
        the layout puts around <main>. */}
       <section id="home" tabIndex={-1} className="portfolio-section portfolio-intro relative flex items-center">
-        {/* Two quiet layers: a faint grid, and one glow set behind the type. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-[0.06] [mask-image:radial-gradient(ellipse_at_30%_50%,white,transparent_70%)]"
-        />
 
 
         <div className="hero-layout relative z-10 grid min-w-0 w-full items-start gap-4 py-4 md:gap-6 md:py-6">

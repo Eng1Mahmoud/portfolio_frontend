@@ -169,6 +169,14 @@
 #page-scroll { height: 100dvh; scrollbar-gutter: stable; scroll-behavior: smooth; scroll-padding-top: 100px; }
 /* Touch screens scroll by swipe plus the seek rail; a reserved native gutter would push content off center. */
 @media (max-width: 767px) { #page-scroll { scrollbar-gutter: auto; scrollbar-width: none; } #page-scroll::-webkit-scrollbar { display: none; } }
+/* One quiet backdrop for the whole page: a faint blueprint grid, a soft light that settles on the section being read, and a vignette for depth. */
+.section-backdrop { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.section-backdrop-grid { position: absolute; inset: -2px; background-image: linear-gradient(to right, color-mix(in oklch, var(--portfolio-strong) 8%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in oklch, var(--portfolio-strong) 8%, transparent) 1px, transparent 1px); background-size: 64px 64px; opacity: .45; mask-image: radial-gradient(120% 100% at 50% 30%, black, transparent 82%); }
+.section-backdrop-light { position: absolute; left: 50%; top: 0; width: min(1120px, 170vw); height: min(720px, 88vh); transform: translate3d(-50%, calc(var(--lit-y, 42vh) - 50%), 0); background: radial-gradient(closest-side, color-mix(in oklch, var(--portfolio-accent) 26%, transparent), color-mix(in oklch, var(--portfolio-support) 10%, transparent) 46%, transparent 76%); opacity: .38; transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1); }
+
+.section-backdrop-vignette { position: absolute; inset: 0; background: radial-gradient(130% 100% at 50% 0%, transparent 42%, color-mix(in oklch, var(--portfolio-well) 78%, transparent) 100%); }
+@media (prefers-reduced-motion: reduce) { .section-backdrop-light { transition: none; } }
+
 .page-seek { position: fixed; inset: 0 16px auto 0; height: 10px; z-index: 1100; background: var(--portfolio-well); }
 .page-seek-fill { height: 3px; transform-origin: left; background: var(--portfolio-accent); }
 .page-seek input { position: absolute; inset: 0; width: 100%; height: 10px; margin: 0; opacity: 0; cursor: ew-resize; }
