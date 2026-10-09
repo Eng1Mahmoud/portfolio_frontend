@@ -94,7 +94,7 @@ export const ContentSlider = ({
         ref={track}
         id={`${label.toLowerCase()}-slider`}
         tabIndex={0}
-        className={`relative grid grid-flow-col items-stretch overflow-x-auto overflow-y-hidden snap-x snap-mandatory gap-5 px-0 py-7 pb-11 mx-0 [scroll-padding-inline:0] [scrollbar-width:thin] [scrollbar-color:var(--portfolio-accent-dim)_transparent] focus-visible:outline-2 focus-visible:outline-sage focus-visible:outline-offset-4 md:gap-8 md:px-5 md:-mx-5 md:[scroll-padding-inline:20px] ${variant === "showcase" ? "auto-cols-[100%] md:auto-cols-[78%] [&_article]:flex md:[&_article]:grid md:[&_article]:grid-cols-[1.15fr_1fr] [&_article>div:first-child]:h-55 md:[&_article>div:first-child]:h-full md:[&_article>div:first-child]:min-h-85 [&_article>div:nth-child(2)]:p-[22px]! md:[&_article>div:nth-child(2)]:p-8! [&_article_h3]:text-2xl! [&_article_p]:line-clamp-4!" : "auto-cols-[100%] md:auto-cols-[calc((100%_-_32px)/2)]"}`}
+        className={`relative grid grid-flow-col items-stretch overflow-x-auto overflow-y-hidden snap-x snap-mandatory gap-5 px-0 py-7 pb-11 mx-0 [scroll-padding-inline:0] [scrollbar-width:thin] [scrollbar-color:var(--portfolio-accent-dim)_transparent] focus-visible:outline-2 focus-visible:outline-sage focus-visible:outline-offset-4 md:gap-8 md:px-5 md:-mx-5 md:[scroll-padding-inline:20px] ${variant === "showcase" ? "auto-cols-[100%] md:auto-cols-[78%] [&_article]:min-h-[max(360px,calc(var(--project-content-height,260px)+180px))] [&_article_h3]:text-2xl! [&_article_p]:line-clamp-4!" : "auto-cols-[100%] md:auto-cols-[calc((100%_-_32px)/2)]"}`}
         onKeyDown={(event) => {
           if (event.target !== event.currentTarget) return;
           if (event.key === "ArrowRight" || event.key === "ArrowLeft") {

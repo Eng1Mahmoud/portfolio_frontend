@@ -3,18 +3,13 @@ import { Iproject } from "@/types/general";
 import Image from "next/image";
 import Link from "next/link";
 import { FaGithub, FaExternalLinkAlt, FaChevronDown } from "react-icons/fa";
-import { useRef, useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValue,
-  useTransform,
-} from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import {
   ProjectDescriptionModal,
   type Origin,
 } from "@/components/Projects/ProjectDescriptionModal";
-import { PinnedCard, useCardProgress } from "@/components/general/PinnedCard";
+import { PinnedCard } from "@/components/general/PinnedCard";
 import { Spotlight, trackPointer } from "@/components/general/Spotlight";
 import {
   handleProjectExternalClick,
@@ -26,14 +21,7 @@ import {
 // full list.
 const VISIBLE_TECHNOLOGIES = 4;
 
-/** How far the screenshot travels inside its frame, as a percentage. */
-const DRIFT = 7;
-
-/**
- * The screenshot drifts against its opening as the card crosses the screen.
- * A separate component because the clock comes from <PinnedCard /> by context,
- * and only a child can read it.
- */
+/** Native scrolling preserves the screenshot's aspect ratio and page order. */
 const ProjectShot = ({
   src,
   alt,
@@ -43,26 +31,28 @@ const ProjectShot = ({
   alt: string;
   priority: boolean;
 }) => {
-  const progress = useCardProgress();
-  const fallback = useMotionValue(0.5);
-  const y = useTransform(
-    progress ?? fallback,
-    [0, 1],
-    [`-${DRIFT}%`, `${DRIFT}%`],
-  );
-
   return (
-    // Oversized by the drift distance, or the travel exposes the image edge.
-    <motion.div style={{ y }} className="absolute inset-x-0 top-[-8%] h-[116%]">
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-        priority={priority}
-        className="object-cover object-top transition-transform duration-700 ease-out group-hover/pin:scale-[1.06]"
-      />
-    </motion.div>
+    <div
+      role="region"
+      aria-label={`${alt.trim()} screenshot`}
+      tabIndex={0}
+      className="absolute inset-0 overflow-x-hidden overflow-y-auto [scrollbar-width:thin] [scrollbar-color:var(--portfolio-accent-dim)_transparent] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-sage"
+    >
+      {/* Reserve room for the overlay, so the screenshot's bottom can scroll
+          completely above the description rather than remain hidden behind it. */}
+      <div className="min-h-full pb-[var(--project-content-height,260px)]">
+        <Image
+          src={src}
+          alt={alt}
+          width={1200}
+          height={800}
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          priority={priority}
+          draggable={false}
+          className="block h-auto! w-full! max-w-full object-contain object-top"
+        />
+      </div>
+    </div>
   );
 };
 
@@ -80,6 +70,20 @@ export const ProjectCard = ({
   // would give the wrong point.
   const [origin, setOrigin] = useState<Origin | null>(null);
   const faceRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const content = contentRef.current;
+    const face = faceRef.current;
+    if (!content || !face) return;
+    const updateHeight = () => {
+      face.style.setProperty("--project-content-height", `${content.offsetHeight}px`);
+    };
+    updateHeight();
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(content);
+    return () => observer.disconnect();
+  }, []);
 
   const technologies = project.technologies ?? [];
   const visible = technologies.slice(0, VISIBLE_TECHNOLOGIES);
@@ -118,7 +122,7 @@ export const ProjectCard = ({
           />
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-[linear-gradient(to_top,color-mix(in_oklch,var(--color-surface-panel)_96%,transparent)_0%,color-mix(in_oklch,var(--color-surface-panel)_82%,transparent)_38%,transparent_72%)]"
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,color-mix(in_oklch,var(--color-surface-panel)_96%,transparent)_0%,color-mix(in_oklch,var(--color-surface-panel)_82%,transparent)_38%,transparent_72%)]"
           />
         </div>
 
@@ -144,7 +148,7 @@ export const ProjectCard = ({
         </span>
 
         {/* pin-lift floats the plate above the face while the card turns. */}
-        <div className="pin-lift [transform:translateZ(0)]! [transition:transform_0.35s_cubic-bezier(0.22,_1,_0.36,_1)]! motion-reduce:[transform:none]! relative z-10 mt-auto flex flex-col p-4 sm:p-5">
+        <div ref={contentRef} className="pin-lift [transform:translateZ(0)]! [transition:transform_0.35s_cubic-bezier(0.22,_1,_0.36,_1)]! motion-reduce:[transform:none]! relative z-10 mt-auto flex flex-col p-4 sm:p-5">
           <h3 className="display-card font-display! font-semibold! tracking-normal! mb-2 text-[1.15rem] text-ink-strong">
             {project.title.trim()}
           </h3>

@@ -1,4 +1,5 @@
 ## Portfolio presentation
+- Project screenshots use native focusable vertical scroll regions with intrinsic image proportions and measured content-overlay clearance; never scale or parallax the image, so visitors can inspect it from top to bottom without distortion.
 - Hero columns use zero-minimum grid tracks with a larger bounded visual track and an orbit that shrinks to its available width; section entrances respect reduced motion, so larger skills stay clear of text at every viewport.
 - Keep all public content on one scrolling page, with legacy section URLs redirecting to retained anchors, so existing links keep working.
 - Section rhythm uses one shared padding scale that only tightens as the viewport shrinks, so the page reads as a continuous scroll and spacing stays compact rather than growing.
