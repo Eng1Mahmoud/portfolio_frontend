@@ -6,7 +6,7 @@ import {
 
 /**
  * Home hero. Traces HomeIntro: the rail, the mono role line, a two-line name,
- * the bio paragraph, the two figures, then the action row.
+ * the one-line role summary, the two figures, then the action row.
  */
 export default function Loading() {
   return (
@@ -20,11 +20,9 @@ export default function Loading() {
           <SkeletonLine w="w-64" h="h-12" className="mb-2 max-w-full" />
           <SkeletonLine w="w-52" h="h-12" className="max-w-full" />
 
-          <div className="mt-7 max-w-[58ch] space-y-3">
+          <div className="mt-6 max-w-[46ch] space-y-2">
             <SkeletonLine />
-            <SkeletonLine w="w-11/12" />
-            <SkeletonLine w="w-full" />
-            <SkeletonLine w="w-4/5" />
+            <SkeletonLine w="w-3/5" />
           </div>
 
           <div className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-parchment/10 pt-5">

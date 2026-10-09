@@ -239,6 +239,7 @@
 .hero-layout { grid-template-columns: minmax(0, 1fr); }
 .hero-copy { overflow-wrap: anywhere; }
 .hero-role { letter-spacing: 0; line-height: 1.6; }
+.hero-summary { max-width: 46ch; text-wrap: pretty; }
 .hero-actions .magnetic-link { display: block; min-width: 0; }
 .hero-actions .magnetic-link > a { width: 100%; min-width: 0; min-height: 44px; white-space: nowrap; }
 .hero-figures dt { line-height: 1.5; letter-spacing: 0; }
@@ -253,6 +254,7 @@
 @media (max-width: 767px) {
   .portfolio-intro { padding-bottom: 24px; }
   .hero-visual { margin-top: 8px; }
+  .hero-summary { font-size: 14px; line-height: 1.55; margin-top: 14px; }
 }
 @media (max-width: 767px) and (max-height: 700px) {
   .skills-orbit { max-width: 320px; }

@@ -75,6 +75,17 @@ export const HomeIntro = ({
   const name = profileInfo?.userName?.trim() ?? "";
   const role = profileInfo?.title?.trim() ?? "";
 
+  // One sentence from the biography, so the hero introduces without repeating it.
+  const bio = (profileInfo?.bio ?? "").replace(/\s+/g, " ").trim();
+  const stop = bio.search(/[.!?](\s|$)/);
+  const firstSentence = stop > 0 ? bio.slice(0, stop + 1) : bio;
+  // A glance, not a paragraph: a long first sentence is cut at the last word.
+  const longCut = firstSentence.lastIndexOf(" ", 110);
+  const summary =
+    firstSentence.length > 110 && longCut > 0
+      ? `${firstSentence.slice(0, longCut)}…`
+      : firstSentence;
+
   // "Mahmoud Mohamed" sets on two lines; a single-word name keeps one.
   const nameParts = name.split(" ");
   const firstName = nameParts[0] ?? "";
@@ -137,9 +148,22 @@ export const HomeIntro = ({
         )}
       </h1>
 
+      {/* The one-line answer to "what do you do", taken from the bio. */}
+      {summary && (
+        <motion.p
+          custom={1}
+          initial={reduceMotion ? false : "hidden"}
+          animate="visible"
+          variants={rise}
+          className="hero-summary mt-4 text-[15px] leading-relaxed text-ink-body sm:mt-5 sm:text-base"
+        >
+          {summary}
+        </motion.p>
+      )}
+
       {/* Real figures, read from the projects the site already loads. */}
       <motion.dl
-        custom={1}
+        custom={2}
         initial={reduceMotion ? false : "hidden"}
         animate="visible"
         variants={rise}
