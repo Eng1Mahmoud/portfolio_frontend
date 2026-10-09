@@ -68,8 +68,8 @@ export default async function Home() {
         />
 
 
-        <div className="relative z-10 grid w-full items-center gap-6 py-6 lg:grid-cols-[1.1fr_1fr]">
-          <div>
+        <div className="hero-layout relative z-10 grid min-w-0 w-full items-center gap-4 py-4 md:gap-6 md:py-6">
+          <div className="min-w-0">
           <HomeIntro
             profileInfo={profileInfo as IuserInfo}
             projectCount={projectCount}
@@ -78,12 +78,13 @@ export default async function Home() {
 
           {/* Last beat: the actions arrive after the figures finish counting. */}
           <Reveal
-            delay={0.62}
-            className="mt-9 flex flex-wrap items-center gap-x-4 gap-y-4 pl-6 sm:pl-10"
+            delay={0.45}
+             trigger="mount"
+             className="hero-actions mt-6 grid grid-cols-2 items-center gap-3 pl-6 sm:mt-8 sm:pl-10"
           >
             <MagneticLink
               href="#projects"
-              className="group inline-flex items-center gap-2 rounded-full bg-sage px-6 py-3 text-sm font-medium text-surface-base transition-colors hover:bg-sage-bright focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base"
+              className="group inline-flex justify-center items-center gap-2 rounded-full bg-sage px-2 py-3 text-xs sm:px-5 sm:text-sm font-medium text-surface-base transition-colors hover:bg-sage-bright focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base"
             >
               View projects
               <FaArrowRight
@@ -97,19 +98,19 @@ export default async function Home() {
                 href={profileInfo.cv}
                 external
                 download
-                className="inline-flex items-center gap-2 rounded-full border border-parchment/15 px-6 py-3 text-sm font-medium text-ink-body transition-colors hover:border-sage/60 hover:text-ink-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+                className="inline-flex justify-center items-center gap-2 rounded-full border border-parchment/15 px-2 py-3 text-xs sm:px-5 sm:text-sm font-medium text-ink-body transition-colors hover:border-sage/60 hover:text-ink-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
               >
                 <FaDownload aria-hidden="true" className="h-3 w-3" />
                 Download CV
               </MagneticLink>
             )}
 
-            <div className="sm:ms-auto">
+            <div className="col-span-2">
               <SocialLinks profileInfo={profileInfo as IuserInfo} />
             </div>
           </Reveal>
           </div>
-          <div className="flex justify-center lg:justify-end">
+          <div className="hero-visual min-w-0 flex justify-center lg:justify-end">
             <SkillsOrbit skills={skills ?? []} />
           </div>
         </div>
@@ -125,13 +126,13 @@ export default async function Home() {
         <Title title="Skills" eyebrow="What I work with" count={skillCount} />
         <div className="skill-groups">{orderedCategories.map(category => {
           const items = (skills ?? []).filter(skill => (skill.category?.trim() || "Other") === category);
-          return <div key={category} className="skill-group"><SkillGroupHeading category={category} count={items.length} /><div className="skill-grid">{items.map((skill, i) => <SkillCard key={skill._id ?? skill.name} skill={skill} index={i} />)}</div></div>;
+          return <Reveal key={category} delay={0.04} className="skill-group"><SkillGroupHeading category={category} count={items.length} /><div className="skill-grid">{items.map((skill, i) => <SkillCard key={skill._id ?? skill.name} skill={skill} index={i} />)}</div></Reveal>;
         })}</div>
         </div>
       </section>
       <section id="projects" className="portfolio-section">
         <Title title="Projects" eyebrow="Selected work" count={projectCount} />
-        <ContentSlider label="Projects" variant="showcase">{(projects ?? []).map((project, i) => <ProjectCard key={project._id ?? project.title} project={project} index={i} />)}</ContentSlider>
+        <Reveal><ContentSlider label="Projects" variant="showcase">{(projects ?? []).map((project, i) => <ProjectCard key={project._id ?? project.title} project={project} index={i} />)}</ContentSlider></Reveal>
       </section>
 
       <section id="experience" className="portfolio-section">
@@ -143,7 +144,7 @@ export default async function Home() {
       </section>
       <section id="recommendations" className="portfolio-section">
         <Title title="Recommendations" eyebrow="What people say" count={(recommendations ?? []).length} />
-        <ContentSlider label="Recommendations" variant="quotes">{(recommendations ?? []).map((item, i) => <RecommendationCard key={item._id ?? item.name} recommendation={item} index={i} />)}</ContentSlider>
+        <Reveal><ContentSlider label="Recommendations" variant="quotes">{(recommendations ?? []).map((item, i) => <RecommendationCard key={item._id ?? item.name} recommendation={item} index={i} />)}</ContentSlider></Reveal>
       </section>
       <section id="contact-us" className="portfolio-section">
         <Title title="Get in touch" eyebrow="Contact" />

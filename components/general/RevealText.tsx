@@ -1,6 +1,7 @@
 "use client";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 /**
  * Text that arrives a word at a time, each word rising out of a clipping mask.

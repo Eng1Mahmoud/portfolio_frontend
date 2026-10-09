@@ -8,6 +8,7 @@ import { ISkill } from "@/types/general";
 interface Props {
   skills: ISkill[];
   lite: boolean;
+  paused?: boolean;
 }
 
 /** Ring tilt (x, z) and radius — skills are dealt round-robin onto these. */
@@ -172,7 +173,7 @@ const Core = ({ lite }: { lite: boolean }) => (
   </Float>
 );
 
-export default function SkillsOrbitScene({ skills, lite }: Props) {
+export default function SkillsOrbitScene({ skills, lite, paused = false }: Props) {
   const rings = useMemo(() => {
     const list = lite ? skills.slice(0, 10) : skills.slice(0, 21);
     const out: ISkill[][] = RINGS.map(() => []);
@@ -182,8 +183,9 @@ export default function SkillsOrbitScene({ skills, lite }: Props) {
 
   return (
     <Canvas
+      frameloop={paused ? "never" : "always"}
       dpr={lite ? [1, 1.25] : [1, 2]}
-      camera={{ position: [0, 1.2, 9.5], fov: 45 }}
+      camera={{ position: [0, 1.2, 13], fov: 45 }}
       gl={{ antialias: !lite, alpha: true }}
       style={{ touchAction: "pan-y" }}
     >

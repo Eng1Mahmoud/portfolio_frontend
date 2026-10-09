@@ -1,10 +1,10 @@
 "use client";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { IuserInfo } from "@/types/general";
 import {
   animate,
   motion,
   useMotionValue,
-  useReducedMotion,
   useTransform,
 } from "framer-motion";
 import { useEffect } from "react";
@@ -71,6 +71,7 @@ export const HomeIntro = ({
   projectCount,
   technologyCount,
 }: HomeIntroProps) => {
+  const reduceMotion = useReducedMotion();
   const name = profileInfo?.userName?.trim() ?? "";
   const role = profileInfo?.title?.trim() ?? "";
 
@@ -86,11 +87,11 @@ export const HomeIntro = ({
   ];
 
   return (
-    <div className="relative w-full max-w-4xl pl-6 text-start sm:pl-10">
+    <div className="hero-copy relative min-w-0 w-full max-w-4xl pl-6 text-start sm:pl-10">
       {/* A single hairline anchors the column. */}
       <motion.div
         aria-hidden="true"
-        initial={{ scaleY: 0 }}
+        initial={reduceMotion ? false : { scaleY: 0 }}
         animate={{ scaleY: 1 }}
         transition={{ duration: 0.9, ease: EASE }}
         style={{ transformOrigin: "top" }}
@@ -99,21 +100,21 @@ export const HomeIntro = ({
 
       {role && (
         <motion.p
-          initial={{ opacity: 0, x: -10 }}
+          initial={reduceMotion ? false : { opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.12, duration: 0.5, ease: EASE }}
-          className="mb-5 font-mono text-[11px] uppercase tracking-[0.28em] text-sage sm:text-xs"
+          className="hero-role mb-4 font-mono text-[11px] uppercase text-sage sm:mb-5 sm:text-xs"
         >
           {role}
         </motion.p>
       )}
 
       {/* One mask per line, so the halves of the name arrive in turn. */}
-      <h1 className="display-hero text-[2.6rem] sm:text-6xl lg:text-7xl xl:text-[5.5rem] leading-[0.92] text-ink-strong">
+      <h1 className="display-hero text-[2.6rem] sm:text-6xl lg:text-7xl xl:text-[5.5rem] leading-[1.02] break-words text-ink-strong">
         <span className="block overflow-hidden pb-[0.06em]">
           <motion.span
             custom={0}
-            initial="hidden"
+            initial={reduceMotion ? false : "hidden"}
             animate="visible"
             variants={lineUp}
             className="block"
@@ -125,7 +126,7 @@ export const HomeIntro = ({
           <span className="block overflow-hidden pb-[0.08em]">
             <motion.span
               custom={1}
-              initial="hidden"
+              initial={reduceMotion ? false : "hidden"}
               animate="visible"
               variants={lineUp}
               className="block text-ink-muted"
@@ -139,15 +140,15 @@ export const HomeIntro = ({
       {/* Real figures, read from the projects the site already loads. */}
       <motion.dl
         custom={1}
-        initial="hidden"
+        initial={reduceMotion ? false : "hidden"}
         animate="visible"
         variants={rise}
-        className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-parchment/10 pt-5 font-mono"
+        className="hero-figures mt-6 grid grid-cols-2 gap-4 border-t border-parchment/10 pt-4 font-mono sm:mt-8 sm:pt-5"
       >
         {/* dt before dd keeps the list valid; `order` flips them visually. */}
         {figures.map((figure, index) => (
-          <div key={figure.label} className="flex items-baseline gap-2">
-            <dt className="order-2 text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+          <div key={figure.label} className="min-w-0 flex flex-col gap-1">
+            <dt className="order-2 text-[10px] uppercase text-ink-muted sm:text-[11px]">
               {figure.label}
             </dt>
             <dd className="order-1 text-xl text-sage tabular-nums sm:text-2xl">

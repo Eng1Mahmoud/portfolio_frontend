@@ -1,8 +1,9 @@
 "use client";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 import { ISkill } from "@/types/general";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { handleSkillHover } from "@/utiles/analytics-events/events";
 
 export const SkillCard = ({ skill, index = 0 }: { skill: ISkill; index?: number }) => {

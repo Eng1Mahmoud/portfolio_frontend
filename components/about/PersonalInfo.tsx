@@ -1,6 +1,7 @@
 "use client";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { useState, useEffect } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { IuserInfo } from "@/types/general";
 import { handleDownloadCV } from "@/utiles/analytics-events/events";
 
@@ -69,8 +70,9 @@ export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
       </h2>
 
       <motion.p
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="mb-8 leading-relaxed text-ink-body"
       >
@@ -83,14 +85,15 @@ export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
         {personalDetails.map((detail, index) => (
           <motion.div
             key={detail.label}
-            initial={{ opacity: 0, x: -12 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={reduceMotion ? false : { opacity: 0, x: -12 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
             transition={{
               delay: 0.15 + index * 0.06,
               duration: 0.45,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="flex items-baseline gap-3 py-2.5"
+            className="grid grid-cols-[auto_minmax(0,1fr)_minmax(0,auto)] items-baseline gap-3 py-2.5"
           >
             <dt className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
               {detail.label}
@@ -99,7 +102,7 @@ export const PersonalInfo = ({ profileInfo }: { profileInfo: IuserInfo }) => {
               aria-hidden="true"
               className="h-px flex-1 translate-y-[-0.15em] bg-[repeating-linear-gradient(to_right,rgba(255,255,255,0.18)_0_1px,transparent_1px_5px)]"
             />
-            <dd className="text-sm text-ink-strong">{detail.value}</dd>
+            <dd className="min-w-0 break-words text-right text-sm text-ink-strong">{detail.value}</dd>
           </motion.div>
         ))}
       </dl>

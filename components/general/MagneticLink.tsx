@@ -46,7 +46,7 @@ export const MagneticLink = ({
   };
 
   return (
-    <motion.span style={{ x, y }} className="inline-block">
+    <motion.span style={{ x, y }} className="magnetic-link inline-block min-w-0">
       {external ? (
         <a
           {...shared}

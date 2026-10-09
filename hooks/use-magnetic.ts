@@ -1,8 +1,8 @@
 "use client";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 import {
   useMotionValue,
-  useReducedMotion,
   useSpring,
   useTransform,
 } from "framer-motion";
