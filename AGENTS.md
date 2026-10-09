@@ -2,7 +2,8 @@
 - Hero columns use zero-minimum grid tracks with a larger bounded visual track and an orbit that shrinks to its available width; section entrances respect reduced motion, so larger skills stay clear of text at every viewport.
 - Keep all public content on one scrolling page, with legacy section URLs redirecting to retained anchors, so existing links keep working.
 - Group career with education; preserve every data item through sliders or expandable timelines.
-- The full profile biography renders in the hero and there is no separate About section; the details that used to sit in a spec sheet stay as one compact line beside the figures, so nothing is lost while the page opens with the person.
+- The hero carries the person only: role, name, the full profile biography and the actions — no figures or spec-sheet detail rows — and the 3D skills visual is top-aligned with the text column, so the page opens with the description and the orbit reads from the same line.
+
 - Keep API actions, dashboard, tracking integrations and data models unchanged when redesigning presentation.
 - Use #page-scroll as the only public-page scroll root, with accessible seek and back-to-top controls; fixed navigation must leave its native scrollbar unobstructed.
 - Floating social actions use existing profile destinations and social-click tracking, expanding above the existing chat assistant; the assistant broadcasts its open state so floating controls cannot overlap its panel.

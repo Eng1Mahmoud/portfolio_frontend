@@ -1,19 +1,11 @@
 "use client";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { IuserInfo } from "@/types/general";
-import {
-  animate,
-  motion,
-  useMotionValue,
-  useTransform,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import clsx from "clsx";
-import { useEffect } from "react";
 
 interface HomeIntroProps {
   profileInfo: IuserInfo;
-  projectCount: number;
-  technologyCount: number;
 }
 
 // Every delay is a multiple of BEAT, so the hero shares one rhythm.
@@ -38,35 +30,6 @@ const lineUp = {
   }),
 };
 
-/** Real data, so the figures count rather than fade. */
-const Counter = ({ value, delay }: { value: number; delay: number }) => {
-  const reduceMotion = useReducedMotion();
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, (latest) => Math.round(latest));
-
-  useEffect(() => {
-    if (reduceMotion) {
-      count.set(value);
-      return;
-    }
-    const controls = animate(count, value, {
-      duration: 1.1,
-      delay,
-      ease: "easeOut",
-    });
-    return () => controls.stop();
-  }, [count, value, delay, reduceMotion]);
-
-  // The static value stays in the DOM for screen readers and for the moment
-  // before hydration; the animated one is decorative.
-  return (
-    <>
-      <motion.span aria-hidden="true">{rounded}</motion.span>
-      <span className="sr-only">{value}</span>
-    </>
-  );
-};
-
 /**
  * The biography arrives as one field of text: blank lines are paragraph
  * breaks, a single line break is just a wrap.
@@ -78,43 +41,16 @@ const toParagraphs = (bio: string) =>
     .map((part) => part.replace(/\s*\n\s*/g, " ").trim())
     .filter(Boolean);
 
-/** Years since the birth date, counted the way the old About spec sheet did. */
-const BIRTH_DATE = "2001-03-26";
-const yearsSince = (birthDate: string) => {
-  const dateOfBirth = new Date(birthDate);
-  const ageDate = new Date(Date.now() - dateOfBirth.getTime());
-  return Math.abs(ageDate.getUTCFullYear() - 1970);
-};
-
-export const HomeIntro = ({
-  profileInfo,
-  projectCount,
-  technologyCount,
-}: HomeIntroProps) => {
+export const HomeIntro = ({ profileInfo }: HomeIntroProps) => {
   const reduceMotion = useReducedMotion();
   const name = profileInfo?.userName?.trim() ?? "";
   const role = profileInfo?.title?.trim() ?? "";
   const paragraphs = toParagraphs(profileInfo?.bio ?? "");
 
-  // The details that used to sit in a spec sheet, kept as one quiet line.
-  // Name, address and CV already have their own places in the hero.
-  const facts = [
-    { label: "Age", value: `${yearsSince(BIRTH_DATE)}` },
-    { label: "Nationality", value: "Egyptian" },
-    { label: "Languages", value: "Arabic, English" },
-    { label: "Freelance", value: "Available" },
-  ];
-
   // "Mahmoud Mohamed" sets on two lines; a single-word name keeps one.
   const nameParts = name.split(" ");
   const firstName = nameParts[0] ?? "";
   const lastName = nameParts.slice(1).join(" ");
-
-  const figures = [
-    { value: projectCount, label: "projects shipped" },
-    // From the skills collection, so "used" would overstate it.
-    { value: technologyCount, label: "technologies" },
-  ];
 
   return (
     <div className="hero-copy relative min-w-0 w-full max-w-4xl pl-6 text-start sm:pl-10">
@@ -183,47 +119,6 @@ export const HomeIntro = ({
           {paragraph}
         </motion.p>
       ))}
-
-      {/* Real figures, read from the projects the site already loads. */}
-      <motion.dl
-        custom={1 + paragraphs.length}
-        initial={reduceMotion ? false : "hidden"}
-        animate="visible"
-        variants={rise}
-        className="hero-figures mt-6 grid grid-cols-2 gap-4 border-t border-parchment/10 pt-4 font-mono sm:mt-8 sm:pt-5"
-      >
-        {/* dt before dd keeps the list valid; `order` flips them visually. */}
-        {figures.map((figure, index) => (
-          <div key={figure.label} className="min-w-0 flex flex-col gap-1">
-            <dt className="order-2 text-[10px] uppercase text-ink-muted sm:text-[11px]">
-              {figure.label}
-            </dt>
-            <dd className="order-1 text-xl text-sage tabular-nums sm:text-2xl">
-              <Counter value={figure.value} delay={0.7 + index * 0.12} />
-            </dd>
-          </div>
-        ))}
-      </motion.dl>
-
-      {/* One quiet line of details, set as a definition list. */}
-      <motion.dl
-        custom={2 + paragraphs.length}
-        initial={reduceMotion ? false : "hidden"}
-        animate="visible"
-        variants={rise}
-        className="hero-facts mt-5 font-mono"
-      >
-        {facts.map((fact) => (
-          <div key={fact.label} className="hero-fact min-w-0">
-            <dt className="text-[10px] uppercase tracking-[0.16em] text-ink-muted">
-              {fact.label}
-            </dt>
-            <dd className="min-w-0 break-words text-[11px] text-ink-strong">
-              {fact.value}
-            </dd>
-          </div>
-        ))}
-      </motion.dl>
     </div>
   );
 };

@@ -6,8 +6,9 @@ import {
 
 /**
  * Home hero. Traces HomeIntro: the rail, the mono role line, a two-line name,
- * the biography, the two figures, the line of details, then the action row.
+ * the biography, then the action row.
  */
+
 export default function Loading() {
   return (
     <SkeletonScreen label="Loading home">
@@ -26,16 +27,6 @@ export default function Loading() {
             <SkeletonLine w="w-2/3" />
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-parchment/10 pt-5">
-            <SkeletonLine w="w-32" h="h-5" />
-            <SkeletonLine w="w-36" h="h-5" />
-          </div>
-
-          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
-            <SkeletonLine w="w-24" h="h-2.5" />
-            <SkeletonLine w="w-28" h="h-2.5" />
-            <SkeletonLine w="w-20" h="h-2.5" />
-          </div>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <SkeletonPill className="h-11 w-36" />

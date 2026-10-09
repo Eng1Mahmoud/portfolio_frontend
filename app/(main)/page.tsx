@@ -66,13 +66,11 @@ export default async function Home() {
         />
 
 
-        <div className="hero-layout relative z-10 grid min-w-0 w-full items-center gap-4 py-4 md:gap-6 md:py-6">
+        <div className="hero-layout relative z-10 grid min-w-0 w-full items-start gap-4 py-4 md:gap-6 md:py-6">
+
           <div className="min-w-0">
-          <HomeIntro
-            profileInfo={profileInfo as IuserInfo}
-            projectCount={projectCount}
-            technologyCount={skillCount}
-          />
+          <HomeIntro profileInfo={profileInfo as IuserInfo} />
+
 
           {/* Last beat: the actions arrive after the figures finish counting. */}
           <Reveal
