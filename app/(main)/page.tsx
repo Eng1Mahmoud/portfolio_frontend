@@ -160,8 +160,8 @@ export default async function Home() {
       >
         <div className="mx-auto max-w-4xl">
           <Title
-            title="My journey"
-            eyebrow="Experience & education"
+            title="Experience"
+            eyebrow="Where I have worked"
             count={(experiences ?? []).length}
           />
           <ExperienceTimeline experiences={(experiences ?? []).slice(0, 3)} />
