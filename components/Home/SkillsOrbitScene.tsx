@@ -42,7 +42,7 @@ function FloatingSkills({ skills, paused, badges }: { skills: ISkill[]; paused: 
   const shell = useRef<THREE.Group>(null);
   const { size, camera } = useThree();
   const projected = useMemo(() => new THREE.Vector3(), []);
-  const animation = useRef({ time: 0, yaw: 0.4, pitch: 0.08, velocity: 0, dragging: false, lastX: 0, pointerX: 0, pointerY: 0 });
+  const animation = useRef({ time: 0, yaw: 0.4, pitch: 0.28, velocity: 0, dragging: false, lastX: 0, pointerX: 0, pointerY: 0 });
 
   useEffect(() => {
     if (camera instanceof THREE.OrthographicCamera) {
@@ -57,11 +57,12 @@ function FloatingSkills({ skills, paused, badges }: { skills: ISkill[]; paused: 
     if (!paused) {
       a.time += dt;
       if (!a.dragging) {
-        a.velocity *= Math.exp(-3 * dt);
-        a.yaw += a.velocity * dt + 0.085 * dt;
+        // Ease any fling back to a calm constant spin.
+        a.velocity += (0.18 - a.velocity) * (1 - Math.exp(-1.5 * dt));
+        a.yaw += a.velocity * dt;
       }
-      a.pointerX += (state.pointer.x * 0.16 - a.pointerX) * (1 - Math.exp(-3 * dt));
-      a.pointerY += (state.pointer.y * 0.12 - a.pointerY) * (1 - Math.exp(-3 * dt));
+      a.pointerX += (state.pointer.x * 0.1 - a.pointerX) * (1 - Math.exp(-2 * dt));
+      a.pointerY += (state.pointer.y * 0.08 - a.pointerY) * (1 - Math.exp(-2 * dt));
     }
     const yaw = a.yaw + a.pointerX;
     const pitch = a.pitch + a.pointerY;
@@ -80,13 +81,18 @@ function FloatingSkills({ skills, paused, badges }: { skills: ISkill[]; paused: 
       // Tiles nearer the viewer sit larger, brighter and on top of the ones behind.
       const front = (position.z / layout.radius + 1) / 2;
       const edge = Math.min(size.width, size.height) * layout.badgeSize * (0.82 + 0.18 * front);
-      badge.style.left = `${x}px`;
-      badge.style.top = `${y}px`;
+      // GPU transform instead of left/top keeps the motion smooth.
+      badge.style.left = "0px";
+      badge.style.top = "0px";
+      badge.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) translate(-50%, -50%)`;
       badge.style.width = `${edge}px`;
       badge.style.padding = `${edge * 0.12}px`;
-      badge.style.opacity = `${0.45 + 0.55 * front}`;
+      // Tiles passing in front of the photo fade out so it always stays clear.
+      const screen = Math.hypot(position.x, position.y);
+      const clear = front > 0.5 ? THREE.MathUtils.smoothstep(screen, layout.portraitSize * 0.45, layout.portraitSize * 0.7) : 1;
+      badge.style.opacity = `${(0.35 + 0.65 * front) * clear}`;
       badge.style.zIndex = `${Math.round(10 + front * 40)}`;
-      badge.style.pointerEvents = front > 0.45 ? "auto" : "none";
+      badge.style.pointerEvents = front > 0.45 && clear > 0.5 ? "auto" : "none";
     });
   });
 
@@ -102,7 +108,7 @@ function FloatingSkills({ skills, paused, badges }: { skills: ISkill[]; paused: 
       onPointerDown={e => { const a = animation.current; a.dragging = true; a.lastX = e.clientX; if (e.target instanceof Element) e.target.setPointerCapture(e.pointerId); }}
       onPointerUp={e => { animation.current.dragging = false; if (e.target instanceof Element && e.target.hasPointerCapture(e.pointerId)) e.target.releasePointerCapture(e.pointerId); }}
       onPointerCancel={() => { animation.current.dragging = false; }}
-      onPointerMove={e => { const a = animation.current; if (!a.dragging || paused) return; a.velocity = THREE.MathUtils.clamp((e.clientX - a.lastX) * 0.06, -1.2, 1.2); a.yaw += (e.clientX - a.lastX) * 0.005; a.lastX = e.clientX; }}>
+      onPointerMove={e => { const a = animation.current; if (!a.dragging || paused) return; a.velocity = THREE.MathUtils.clamp((e.clientX - a.lastX) * 0.3, -1.5, 1.5); a.yaw += (e.clientX - a.lastX) * 0.004; a.lastX = e.clientX; }}>
       <circleGeometry args={[4.9, 48]} />
       <meshBasicMaterial transparent opacity={0} depthWrite={false} />
     </mesh>
