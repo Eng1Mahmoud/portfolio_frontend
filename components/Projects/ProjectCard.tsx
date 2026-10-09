@@ -104,27 +104,47 @@ export const ProjectCard = ({
       <article
         ref={faceRef}
         onMouseMove={trackPointer}
-        className="glass-card relative! isolate! [background:var(--glass-background)]! [border:var(--hairline-border)]! [backdrop-filter:blur(14px)_saturate(140%)]! [box-shadow:var(--glass-shadow)]! [transition:border-color_300ms,_box-shadow_300ms]! [border-radius:16px]! [&::before]:[content:'']! [&::before]:absolute! [&::before]:[inset:0]! [&::before]:[z-index:-1]! [&::before]:[border-radius:inherit]! [&::before]:pointer-events-none! [&::before]:[background:var(--glass-hover-shadow)]! [&::before]:[opacity:0.7]! [&::before]:[transition:opacity_300ms]! [&:hover]:[border-color:var(--glass-hover-border)]! [&:hover]:[box-shadow:var(--glass-corner-light)]! [&:hover::before]:[opacity:1]! group/card relative flex h-full flex-col overflow-hidden rounded-2xl border border-parchment/10 transition-colors duration-300 group-hover/pin:border-sage/30"
+        className="glass-card relative! isolate! [background:var(--glass-background)]! [border:var(--hairline-border)]! [backdrop-filter:blur(14px)_saturate(140%)]! [box-shadow:var(--glass-shadow)]! [transition:border-color_300ms,_box-shadow_300ms,_translate_500ms_cubic-bezier(0.22,_1,_0.36,_1)]! [border-radius:16px]! [&::before]:[content:'']! [&::before]:absolute! [&::before]:[inset:0]! [&::before]:[z-index:-1]! [&::before]:[border-radius:inherit]! [&::before]:pointer-events-none! [&::before]:[background:var(--glass-hover-shadow)]! [&::before]:[opacity:0.7]! [&::before]:[transition:opacity_300ms]! [&:hover]:[border-color:var(--glass-hover-border)]! [&:hover]:[box-shadow:var(--glass-corner-light)]! [&:hover::before]:[opacity:1]! group/card relative flex h-full min-h-[360px] flex-col overflow-hidden rounded-2xl border border-parchment/10 transition-colors duration-300 group-hover/pin:border-sage/30 hover:-translate-y-1.5 motion-reduce:hover:translate-y-0"
       >
-        <Spotlight />
-        <div className="relative h-[200px] shrink-0 overflow-hidden">
-          {/* The first row is above the fold and holds the page's largest
-              contentful paint, so those three load eagerly. */}
+        {/* The screenshot fills the whole card; the content plate sits on a
+            gradient scrim so the text stays readable. The first row is above
+            the fold and holds the page's largest contentful paint, so those
+            three load eagerly. */}
+        <div className="absolute inset-0 overflow-hidden">
           <ProjectShot
             src={project.imageUrl}
             alt={project.title}
             priority={index < 3}
           />
-          {/* Confined to the bottom third: a full-height fade washed out the
-              screenshot, which is what the visitor came to see. */}
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-[linear-gradient(to_top,color-mix(in_oklch,var(--color-surface-panel)_70%,transparent)_0%,transparent_38%)]"
+            className="absolute inset-0 bg-[linear-gradient(to_top,color-mix(in_oklch,var(--color-surface-panel)_96%,transparent)_0%,color-mix(in_oklch,var(--color-surface-panel)_82%,transparent)_38%,transparent_72%)]"
           />
         </div>
 
+        <Spotlight />
+
+        {/* Large outlined index floating over the screenshot, like Services. */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-2 -top-5 z-[5] font-display text-[110px] font-bold leading-none text-transparent opacity-30 transition-opacity duration-500 [-webkit-text-stroke:1px_var(--portfolio-accent-dim)] group-hover/card:opacity-60"
+        >
+          {String(index + 1).padStart(2, "0")}
+        </span>
+
+        {/* Orbiting "star" ring with a satellite dot, echoing the Services
+            icon treatment. */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute left-5 top-5 z-[5] size-12 motion-reduce:hidden"
+        >
+          <span className="absolute inset-0 animate-[spin_9s_linear_infinite] rounded-full border border-dashed border-sage/40">
+            <span className="absolute -top-1 left-1/2 size-2 -translate-x-1/2 rounded-full bg-sage shadow-[0_0_10px_var(--portfolio-accent)]" />
+          </span>
+        </span>
+
         {/* pin-lift floats the plate above the face while the card turns. */}
-        <div className="pin-lift [transform:translateZ(0)]! [transition:transform_0.35s_cubic-bezier(0.22,_1,_0.36,_1)]! motion-reduce:[transform:none]! relative z-10 flex flex-1 flex-col p-4 sm:p-5">
+        <div className="pin-lift [transform:translateZ(0)]! [transition:transform_0.35s_cubic-bezier(0.22,_1,_0.36,_1)]! motion-reduce:[transform:none]! relative z-10 mt-auto flex flex-col p-4 sm:p-5">
           <h3 className="display-card font-display! font-semibold! tracking-normal! mb-2 text-[1.15rem] text-ink-strong">
             {project.title.trim()}
           </h3>
