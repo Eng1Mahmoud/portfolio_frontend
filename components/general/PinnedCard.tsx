@@ -2,7 +2,6 @@
 
 import {
   motion,
-  useMotionTemplate,
   useMotionValue,
   useScroll,
   useSpring,
@@ -55,7 +54,7 @@ export const PinnedCard = ({
   children: ReactNode;
   className?: string;
 }) => {
-  const { ref, engaged, reduceMotion, handlers, sx, sy, rotateX, rotateY } =
+  const { ref, engaged, reduceMotion, handlers, rotateX, rotateY } =
     useTilt({ range: 3 });
   const compact = useMediaQuery(FLAT_BELOW);
   const container = usePageScrollContainer();
@@ -99,10 +98,6 @@ export const PinnedCard = ({
     [rotateX, leanSmooth],
     ([pointer, scroll]: number[]) => pointer + (leanActive ? scroll : 0),
   );
-
-  const sheenX = useTransform(sx, [-0.5, 0.5], ["8%", "92%"]);
-  const sheenY = useTransform(sy, [-0.5, 0.5], ["8%", "92%"]);
-  const sheen = useMotionTemplate`radial-gradient(22rem circle at ${sheenX} ${sheenY}, rgba(196,165,255,0.20), rgba(196,165,255,0.07) 28%, transparent 65%)`;
 
   const restAngle = compact ? 0 : REST_ANGLES[index % REST_ANGLES.length];
   const zero = useMotionValue(0);
