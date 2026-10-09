@@ -89,7 +89,6 @@ export const ServicesSection = () => {
             transition={{ duration: 0.7, delay: reduceMotion ? 0 : i * 0.15, ease: [0.22, 1, 0.36, 1] }}
             className={`group relative isolate flex flex-col overflow-hidden rounded-3xl p-6 pt-8 md:p-7 lg:p-8 [background:var(--glass-background)] [border:var(--hairline-border)] [backdrop-filter:blur(14px)_saturate(140%)] [box-shadow:var(--glass-shadow)] transition-[border-color,box-shadow,translate] duration-500 hover:-translate-y-2 hover:[border-color:var(--glass-hover-border)] hover:[box-shadow:var(--glass-corner-light)] before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:opacity-0 before:transition-opacity before:duration-500 before:[background:radial-gradient(320px_circle_at_var(--mx,50%)_var(--my,0%),color-mix(in_oklab,var(--portfolio-accent)_22%,transparent),transparent_70%)] hover:before:opacity-100 ${
               i === 1 ? "md:mt-10" : i === 2 ? "md:mt-20" : ""
-
             }`}
           >
             {/* Large outlined index sitting behind the content. */}
@@ -102,7 +101,6 @@ export const ServicesSection = () => {
 
             {/* Icon "star" with an orbiting ring and a satellite dot. */}
             <span className="relative mb-6 grid size-16 place-items-center">
-
               <span className="absolute inset-0 animate-[spin_9s_linear_infinite] rounded-full border border-dashed border-sage/40 motion-reduce:animate-none">
                 <span className="absolute -top-1 left-1/2 size-2 -translate-x-1/2 rounded-full bg-sage shadow-[0_0_10px_var(--portfolio-accent)]" />
               </span>
@@ -113,7 +111,6 @@ export const ServicesSection = () => {
 
             <h3 className="mb-3 font-display text-xl font-semibold text-ink-strong">{title}</h3>
             <p className="mb-4 text-sm leading-relaxed text-ink-muted">{text}</p>
-
 
             <ul className="mb-6 flex flex-wrap gap-1.5">
               {stack.map((item) => (
