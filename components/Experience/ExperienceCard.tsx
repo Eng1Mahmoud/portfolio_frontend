@@ -2,11 +2,16 @@
 import { IExperience } from "@/types/general";
 import { FaBriefcase } from "react-icons/fa";
 import Image from "next/image";
+import { Spotlight, trackPointer } from "@/components/general/Spotlight";
 
 /** The card face; the entry animation and rail node live in <TimelineEntry />. */
 export const ExperienceCard = ({ experience }: { experience: IExperience }) => {
   return (
-    <div className="glass-card relative! isolate! [background:var(--glass-background)]! [border:var(--hairline-border)]! [backdrop-filter:blur(14px)_saturate(140%)]! [box-shadow:var(--glass-shadow)]! [transition:border-color_300ms,_box-shadow_300ms]! [border-radius:16px]! [&::before]:[content:'']! [&::before]:absolute! [&::before]:[inset:0]! [&::before]:[z-index:-1]! [&::before]:[border-radius:inherit]! [&::before]:pointer-events-none! [&::before]:[background:var(--glass-hover-shadow)]! [&::before]:[opacity:0.7]! [&::before]:[transition:opacity_300ms]! [&:hover]:[border-color:var(--glass-hover-border)]! [&:hover]:[box-shadow:var(--glass-corner-light)]! [&:hover::before]:[opacity:1]! group relative overflow-hidden rounded-2xl p-5 md:p-7">
+    <div
+      onMouseMove={trackPointer}
+      className="glass-card relative! isolate! [background:var(--glass-background)]! [border:var(--hairline-border)]! [backdrop-filter:blur(14px)_saturate(140%)]! [box-shadow:var(--glass-shadow)]! [transition:border-color_300ms,_box-shadow_300ms,translate_500ms_cubic-bezier(0.22,1,0.36,1)]! [border-radius:16px]! [&::before]:[content:'']! [&::before]:absolute! [&::before]:[inset:0]! [&::before]:[z-index:-1]! [&::before]:[border-radius:inherit]! [&::before]:pointer-events-none! [&::before]:[background:var(--glass-hover-shadow)]! [&::before]:[opacity:0.7]! [&::before]:[transition:opacity_300ms]! [&:hover]:[border-color:var(--glass-hover-border)]! [&:hover]:[box-shadow:var(--glass-corner-light)]! [&:hover::before]:[opacity:1]! group relative overflow-hidden rounded-2xl p-5 md:p-7 hover:-translate-y-1.5"
+    >
+      <Spotlight />
       <div className="relative z-10">
         {/* Dates lead: on a rail, when is what you check first. */}
         <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.22em] text-sage">

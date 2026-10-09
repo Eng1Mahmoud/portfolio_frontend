@@ -15,6 +15,7 @@ import {
   type Origin,
 } from "@/components/Projects/ProjectDescriptionModal";
 import { PinnedCard, useCardProgress } from "@/components/general/PinnedCard";
+import { Spotlight, trackPointer } from "@/components/general/Spotlight";
 import {
   handleProjectExternalClick,
   handleViewProject,
@@ -102,8 +103,10 @@ export const ProjectCard = ({
           the action buttons line up along the bottom. */}
       <article
         ref={faceRef}
+        onMouseMove={trackPointer}
         className="glass-card relative! isolate! [background:var(--glass-background)]! [border:var(--hairline-border)]! [backdrop-filter:blur(14px)_saturate(140%)]! [box-shadow:var(--glass-shadow)]! [transition:border-color_300ms,_box-shadow_300ms]! [border-radius:16px]! [&::before]:[content:'']! [&::before]:absolute! [&::before]:[inset:0]! [&::before]:[z-index:-1]! [&::before]:[border-radius:inherit]! [&::before]:pointer-events-none! [&::before]:[background:var(--glass-hover-shadow)]! [&::before]:[opacity:0.7]! [&::before]:[transition:opacity_300ms]! [&:hover]:[border-color:var(--glass-hover-border)]! [&:hover]:[box-shadow:var(--glass-corner-light)]! [&:hover::before]:[opacity:1]! group/card relative flex h-full flex-col overflow-hidden rounded-2xl border border-parchment/10 transition-colors duration-300 group-hover/pin:border-sage/30"
       >
+        <Spotlight />
         <div className="relative h-[200px] shrink-0 overflow-hidden">
           {/* The first row is above the fold and holds the page's largest
               contentful paint, so those three load eagerly. */}
