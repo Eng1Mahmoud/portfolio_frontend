@@ -20,6 +20,7 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [menuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
@@ -42,11 +43,15 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
   useEffect(() => setOpen(false), [pathname]);
 
   useEffect(() => {
-    if (!open) return;
+    if (open) setMenuVisible(true);
+  }, [open]);
+
+  useEffect(() => {
+    if (!menuVisible) return;
     const root = document.getElementById("page-scroll");
     const previousOverflow = root?.style.overflowY;
     if (root) root.style.overflowY = "hidden";
-    menuRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
+    menuRef.current?.querySelector<HTMLAnchorElement>("a")?.focus({ preventScroll: true });
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
       if (e.key !== "Tab") return;
@@ -65,9 +70,9 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
       document.removeEventListener("keydown", onKey);
       desktop.removeEventListener("change", onResize);
       if (root) root.style.overflowY = previousOverflow ?? "";
-      toggleRef.current?.focus();
+      toggleRef.current?.focus({ preventScroll: true });
     };
-  }, [open]);
+  }, [menuVisible]);
 
   return (
     <>
@@ -166,7 +171,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
         </div>
       </motion.header>
 
-      <AnimatePresence>
+      <AnimatePresence onExitComplete={() => setMenuVisible(false)}>
         {open && (
           <motion.div
             ref={menuRef}
@@ -174,21 +179,20 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
             role="dialog"
             aria-modal="true"
             aria-label="Navigation menu"
-            initial={reduceMotion ? false : { clipPath: "circle(0% at calc(100% - 3rem) 2.5rem)" }}
-            animate={{ clipPath: "circle(150% at calc(100% - 3rem) 2.5rem)" }}
-            exit={{ clipPath: "circle(0% at calc(100% - 3rem) 2.5rem)" }}
-            transition={{ duration: reduceMotion ? 0 : 0.6, ease: EASE }}
-            className="portfolio-mobile-menu fixed inset-0 z-[999] flex flex-col bg-surface-well/95 backdrop-blur-2xl lg:hidden"
+            initial={reduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: reduceMotion ? 0 : 0.22, ease: EASE }}
+            className="portfolio-mobile-menu fixed inset-0 z-[999] flex flex-col bg-surface-well lg:hidden"
           >
             <div className="portfolio-mobile-menu-content">
             <ul className="relative space-y-1">
               {asideLinks.map((item, i) => (
                 <motion.li
                   key={item.path}
-                  initial={reduceMotion ? false : { opacity: 0, y: 30 }}
+                  initial={reduceMotion ? false : { opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ delay: reduceMotion ? 0 : 0.15 + i * 0.05, duration: reduceMotion ? 0 : 0.5, ease: EASE }}
+                  transition={{ delay: reduceMotion ? 0 : 0.06 + i * 0.035, duration: reduceMotion ? 0 : 0.28, ease: EASE }}
                 >
                   <Link
                     href={item.path}
@@ -211,9 +215,9 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
             </ul>
             {profileInfo?.cv && (
               <motion.a
-                initial={{ opacity: 0 }}
+                initial={reduceMotion ? false : { opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.6 }}
+                transition={{ delay: reduceMotion ? 0 : 0.24, duration: reduceMotion ? 0 : 0.2 }}
                 href={profileInfo.cv}
                 target="_blank"
                 download
