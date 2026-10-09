@@ -13,22 +13,22 @@ interface Props {
 
 /** Ring tilt (x, z) and radius — skills are dealt round-robin onto these. */
 const RINGS = [
-  { radius: 2.35, tilt: [0.35, 0.1], speed: 0.16 },
-  { radius: 3.1, tilt: [-0.45, -0.25], speed: -0.11 },
-  { radius: 3.8, tilt: [0.15, 0.55], speed: 0.07 },
+  { radius: 2.8, tilt: [0.35, 0.1], speed: 0.16 },
+  { radius: 3.6, tilt: [-0.45, -0.25], speed: -0.11 },
+  { radius: 4.4, tilt: [0.15, 0.55], speed: 0.07 },
 ] as const;
 
 const SkillBadge = ({ skill }: { skill: ISkill }) => {
   const [hover, setHover] = useState(false);
   return (
-    <Html center distanceFactor={7} zIndexRange={[20, 0]}>
+    <Html center distanceFactor={8} zIndexRange={[20, 0]}>
       <div
         onPointerEnter={() => setHover(true)}
         onPointerLeave={() => setHover(false)}
         className="group relative flex flex-col items-center select-none"
       >
-        <div
-          className={`flex h-14 w-14 items-center justify-center rounded-2xl border bg-surface-panel/80 p-2.5 backdrop-blur-md transition-all duration-300 ${
+          <div
+            className={`flex h-16 w-16 items-center justify-center rounded-2xl border bg-surface-panel/80 p-3 backdrop-blur-md transition-all duration-300 ${
             hover
               ? "scale-125 border-sage shadow-[0_0_28px_rgba(124,156,255,0.85)]"
               : "border-parchment/15 shadow-[0_0_14px_rgba(124,156,255,0.25)]"
@@ -139,7 +139,7 @@ const Rig = ({ children }: { children: React.ReactNode }) => {
     >
       {/* Invisible hit sphere so drags register anywhere on the system. */}
       <mesh>
-        <sphereGeometry args={[4.2, 16, 16]} />
+        <sphereGeometry args={[5, 16, 16]} />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
       {children}
@@ -159,7 +159,7 @@ export default function SkillsOrbitScene({ skills, lite, paused = false }: Props
     <Canvas
       frameloop={paused ? "never" : "always"}
       dpr={lite ? [1, 1.25] : [1, 2]}
-      camera={{ position: [0, 1.2, 13], fov: 45 }}
+      camera={{ position: [0, 1.4, 14.5], fov: 45 }}
       gl={{ antialias: !lite, alpha: true }}
       style={{ touchAction: "pan-y" }}
     >
