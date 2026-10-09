@@ -4,7 +4,7 @@ import { siteUrl } from "@/utiles/site";
 export const ogSize = { width: 1200, height: 630 };
 export const ogContentType = "image/png";
 export const ogAlt =
-  "Mahmoud Mohamed — Software Engineer (Frontend & Full-Stack)";
+  "Mahmoud Mohamed — Software Engineer";
 
 // Shared social card used by both opengraph-image and twitter-image.
 // Rendered by Satori, so keep to the CSS subset it supports (flex + solid
@@ -92,7 +92,7 @@ export function renderOgImage(profileImageUrl?: string) {
             marginTop: 18,
           }}
         >
-          Software Engineer · Frontend &amp; Full-Stack
+          Software Engineer
         </div>
 
         <div
