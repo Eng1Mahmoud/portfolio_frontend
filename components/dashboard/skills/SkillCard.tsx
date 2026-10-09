@@ -8,7 +8,7 @@ import { deleteSkillById } from "@/actions/deleteSkill";
 const SkillCard = ({ skill }: { skill: ISkill }) => {
   return (
     <DashCard>
-      <div className="flex-grow">
+      <div className="grow">
         <div className="relative mb-3 h-11 w-full">
           <Image
             src={skill.imageUrl}

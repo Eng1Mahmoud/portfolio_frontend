@@ -31,16 +31,16 @@ export const SkeletonLine = ({
   w?: string;
   h?: string;
   className?: string;
-}) => <div className={clsx("rounded bg-parchment/[0.07]", w, h, className)} />;
+}) => <div className={clsx("rounded-sm bg-parchment/[0.07]", w, h, className)} />;
 
 /** A solid area — an image, an avatar, a media well. */
 export const SkeletonBlock = ({ className }: { className?: string }) => (
-  <div className={clsx("rounded-lg bg-parchment/[0.05]", className)} />
+  <div className={clsx("rounded-lg bg-parchment/5", className)} />
 );
 
 /** A pill — a tag, a chip, a button. */
 export const SkeletonPill = ({ className }: { className?: string }) => (
-  <div className={clsx("rounded-full bg-parchment/[0.06]", className)} />
+  <div className={clsx("rounded-full bg-parchment/6", className)} />
 );
 
 /** Mirrors <Title />: rail, mono eyebrow, heading. */

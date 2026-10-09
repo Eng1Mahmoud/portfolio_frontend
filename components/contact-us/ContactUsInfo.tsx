@@ -15,7 +15,7 @@ const ContactItem = ({ icon, title, content, linkType = "none" }: ContactItemPro
     <div className="min-w-0">
       <h3 className="mb-2 text-sm text-ink-muted">{title}</h3>
       {content.filter(Boolean).map(item => (
-        <p key={item} className="break-words text-base font-medium text-ink-strong">
+        <p key={item} className="wrap-break-word text-base font-medium text-ink-strong">
           {linkType !== "none" ? <a href={`${linkType === "phone" ? "tel" : "mailto"}:${item}`} className="contact-detail-link">{item}</a> : item}
         </p>
       ))}

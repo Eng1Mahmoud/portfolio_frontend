@@ -36,7 +36,7 @@ export const EditLink = ({
 }) => (
   <Link
     href={href}
-    className="flex items-center rounded-md border border-parchment/15 px-2 py-1 font-medium text-ink-body transition-colors duration-150 hover:border-sage/50 hover:text-sage focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+    className="flex items-center rounded-md border border-parchment/15 px-2 py-1 font-medium text-ink-body transition-colors duration-150 hover:border-sage/50 hover:text-sage focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
   >
     <FaEdit className="mr-1 h-4 w-4" aria-hidden="true" />
     {label}

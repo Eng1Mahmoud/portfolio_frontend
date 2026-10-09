@@ -57,7 +57,7 @@ const ImageUploadInput = ({ name, label, className }: InputFieldProps) => {
             <button
               type="button"
               onClick={handleDelete}
-              className="absolute right-2 top-2 rounded-md border border-red-500/30 bg-red-500/15 px-2 py-1 text-xs font-medium text-red-200 backdrop-blur-sm transition-colors hover:bg-red-500/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+              className="absolute right-2 top-2 rounded-md border border-red-500/30 bg-red-500/15 px-2 py-1 text-xs font-medium text-red-200 backdrop-blur-xs transition-colors hover:bg-red-500/25 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-red-400"
             >
               Delete
             </button>

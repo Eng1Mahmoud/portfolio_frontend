@@ -27,7 +27,7 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
         >
           <div
             className={clsx(
-              "p-3 rounded-2xl text-sm leading-relaxed shadow-sm",
+              "p-3 rounded-2xl text-sm leading-relaxed shadow-xs",
               msg.sender === "user"
                 ? "bg-sage text-surface-base rounded-tr-none"
                 : "bg-parchment/5 text-ink-body border border-parchment/10 rounded-tl-none",

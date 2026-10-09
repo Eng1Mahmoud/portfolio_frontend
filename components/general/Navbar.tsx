@@ -80,12 +80,12 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: EASE }}
-        className="portfolio-navbar pointer-events-none fixed left-0 top-3 z-[1000] px-3 sm:top-4 sm:px-6"
+        className="portfolio-navbar pointer-events-none fixed left-0 top-3 z-1000 px-3 sm:top-4 sm:px-6"
       >
         <div className="pointer-events-auto mx-auto grid grid-cols-[minmax(0,1fr)_auto] lg:flex max-w-6xl items-center justify-between gap-2 lg:gap-4 rounded-full border border-parchment/10 bg-surface-base/60 py-2 pe-2 ps-2 shadow-lifted backdrop-blur-xl">
           <Link
             href="/"
-            className="group flex min-w-0 items-center gap-2.5 rounded-full pe-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+            className="group flex min-w-0 items-center gap-2.5 rounded-full pe-3 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
           >
             <span className="relative block h-9 w-9 shrink-0 overflow-hidden rounded-full ring-1 ring-sage/40 transition group-hover:ring-sage">
               {profileInfo?.avatar ? (
@@ -97,7 +97,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
                   className="object-cover"
                 />
               ) : (
-                <span className="flex h-full w-full items-center justify-center bg-gradient-to-br from-sage to-wheat font-display font-bold text-surface-base">
+                <span className="flex h-full w-full items-center justify-center bg-linear-to-br from-sage to-wheat font-display font-bold text-surface-base">
                   M
                 </span>
               )}
@@ -117,7 +117,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
                       onClick={() => setActive(item.path)}
                       aria-current={isActive(item.path) ? "page" : undefined}
                       className={clsx(
-                        "relative block rounded-full px-2.5 py-2 text-[0.8rem] font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage",
+                        "relative block rounded-full px-2.5 py-2 text-[0.8rem] font-medium transition-colors duration-200 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-sage",
                         isActive(item.path)
                           ? "text-surface-base"
                           : "text-ink-muted hover:text-ink-strong",
@@ -132,7 +132,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
                             stiffness: 420,
                             damping: 34,
                           }}
-                          className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-sage to-sage-bright shadow-accent"
+                          className="absolute inset-0 -z-10 rounded-full bg-linear-to-r from-sage to-sage-bright shadow-accent"
                         />
                       )}
                       {item.label}
@@ -150,7 +150,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
                 target="_blank"
                 download
                 onClick={handleDownloadCV}
-                className="hidden items-center gap-2 rounded-full border border-sage/40 px-4 py-2 text-sm font-medium text-ink-strong transition hover:border-sage hover:bg-sage/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage sm:inline-flex"
+                className="hidden items-center gap-2 rounded-full border border-sage/40 px-4 py-2 text-sm font-medium text-ink-strong transition hover:border-sage hover:bg-sage/10 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-sage sm:inline-flex"
               >
                 <FaDownload aria-hidden="true" className="h-3 w-3" />
                 CV
@@ -163,7 +163,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
               aria-label={open ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={open}
               aria-controls="mobile-navigation"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-sage text-surface-base transition hover:bg-sage-bright focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base lg:hidden"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-sage text-surface-base transition hover:bg-sage-bright focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base lg:hidden"
             >
               {open ? <FaTimes aria-hidden="true" /> : <FaBars aria-hidden="true" />}
             </button>
@@ -183,7 +183,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: reduceMotion ? 0 : 0.22, ease: EASE }}
-            className="portfolio-mobile-menu fixed inset-0 z-[999] flex flex-col bg-surface-well lg:hidden"
+            className="portfolio-mobile-menu fixed inset-0 z-999 flex flex-col bg-surface-well lg:hidden"
           >
             <div className="portfolio-mobile-menu-content">
             <ul className="relative space-y-1">
@@ -199,7 +199,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
                     onClick={() => { setActive(item.path); setOpen(false); }}
                     aria-current={isActive(item.path) ? "page" : undefined}
                     className={clsx(
-                      "portfolio-mobile-menu-link font-display font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage",
+                      "portfolio-mobile-menu-link font-display font-semibold transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-sage",
                       isActive(item.path)
                         ? "text-sage"
                         : "text-ink-strong hover:text-sage",
@@ -208,7 +208,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
                     <span className="font-mono text-xs font-normal text-ink-muted">
                       0{i + 1}
                     </span>
-                    <span className="min-w-0 break-words">{item.label}</span>
+                    <span className="min-w-0 wrap-break-word">{item.label}</span>
                   </Link>
                 </motion.li>
               ))}

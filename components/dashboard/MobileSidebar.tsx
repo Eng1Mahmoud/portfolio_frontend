@@ -15,7 +15,7 @@ export default function MobileSidebar({
       className={`fixed inset-0 z-40 flex md:hidden ${sidebarOpen ? "" : "pointer-events-none"}`}
     >
       <div
-        className={`fixed inset-0 bg-surface-well/85 backdrop-blur-sm transition-opacity duration-300 ease-in-out ${
+        className={`fixed inset-0 bg-surface-well/85 backdrop-blur-xs transition-opacity duration-300 ease-in-out ${
           sidebarOpen ? "opacity-100" : "opacity-0"
         }`}
         onClick={() => setSidebarOpen(false)}
@@ -23,12 +23,12 @@ export default function MobileSidebar({
 
       <div
         className={`relative flex w-full max-w-xs flex-1 transform flex-col border-r border-parchment/10 bg-surface-panel pb-4 pt-5 transition duration-300 ease-in-out ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-[110%]"
+          sidebarOpen ? "translate-x-0" : "translate-x-[-110%]"
         }`}
       >
         <div className="absolute right-0 top-0 -mr-12 pt-2">
           <button
-            className="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+            className="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
             onClick={() => setSidebarOpen(false)}
             aria-label="Close menu"
           >
@@ -36,10 +36,10 @@ export default function MobileSidebar({
           </button>
         </div>
 
-        <div className="flex flex-shrink-0 items-center gap-3 px-4">
+        <div className="flex shrink-0 items-center gap-3 px-4">
           <span
             aria-hidden="true"
-            className="h-5 w-px bg-gradient-to-b from-sage to-transparent"
+            className="h-5 w-px bg-linear-to-b from-sage to-transparent"
           />
           <span className="display-card py-3 text-xl text-ink-strong">
             Menu
@@ -50,7 +50,7 @@ export default function MobileSidebar({
           <NavLinks />
         </div>
       </div>
-      <div className="w-14 flex-shrink-0" aria-hidden="true"></div>
+      <div className="w-14 shrink-0" aria-hidden="true"></div>
     </div>
   );
 }

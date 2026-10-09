@@ -87,7 +87,7 @@ export const SocialLinks = ({ profileInfo }: { profileInfo: IuserInfo }) => {
                     : "whatsapp";
                 handleSocialClick(platform);
               }}
-              className="block rounded-full border border-parchment/10 p-3 transition-colors duration-300 hover:border-sage/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+              className="block rounded-full border border-parchment/10 p-3 transition-colors duration-300 hover:border-sage/50 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
             >
               <social.icon className="text-lg text-ink-muted transition-colors duration-300 group-hover:text-sage" />
             </Link>

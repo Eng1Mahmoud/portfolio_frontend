@@ -64,7 +64,7 @@ const FileUploadInput = ({
               <button
                 type="button"
                 onClick={handleDelete}
-                className="rounded-md border border-red-500/30 bg-red-500/10 px-2 py-1 text-xs font-medium text-red-300 transition-colors hover:bg-red-500/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+                className="rounded-md border border-red-500/30 bg-red-500/10 px-2 py-1 text-xs font-medium text-red-300 transition-colors hover:bg-red-500/20 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-red-400"
               >
                 Delete
               </button>

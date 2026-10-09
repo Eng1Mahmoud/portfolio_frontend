@@ -83,7 +83,7 @@ export const RecommendationModal = ({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
-      className="fixed inset-0 z-[1000] flex items-center justify-center bg-surface-well/85 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-1000 flex items-center justify-center bg-surface-well/85 p-4 backdrop-blur-xs"
     >
       <motion.div
         ref={panelRef}
@@ -101,7 +101,7 @@ export const RecommendationModal = ({
           damping: 30,
           opacity: { duration: 0.22 },
         }}
-        className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-parchment/10 bg-surface-card outline-none"
+        className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-parchment/10 bg-surface-card outline-hidden"
       >
         {/* Header stays put so the close button is always reachable while
             scrolling a long quote. */}
@@ -118,7 +118,7 @@ export const RecommendationModal = ({
             ) : (
               <span
                 aria-hidden="true"
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-parchment/[0.06] font-mono text-xs tracking-wider text-sage ring-1 ring-parchment/10"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-parchment/6 font-mono text-xs tracking-wider text-sage ring-1 ring-parchment/10"
               >
                 {initials(recommendation.name)}
               </span>
@@ -138,7 +138,7 @@ export const RecommendationModal = ({
             type="button"
             onClick={onClose}
             aria-label="Close testimonial"
-            className="shrink-0 rounded-md p-1 text-ink-muted transition-colors hover:bg-parchment/10 hover:text-ink-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+            className="shrink-0 rounded-md p-1 text-ink-muted transition-colors hover:bg-parchment/10 hover:text-ink-strong focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
           >
             <FaTimes size={20} aria-hidden="true" />
           </button>
@@ -156,7 +156,7 @@ export const RecommendationModal = ({
         </div>
 
         <div className="flex shrink-0 flex-wrap items-center gap-3 border-t border-parchment/10 px-6 py-4">
-          <span className="rounded-md border border-parchment/10 bg-parchment/[0.04] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-sage">
+          <span className="rounded-md border border-parchment/10 bg-parchment/4 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-sage">
             {recommendation.relation}
           </span>
           {written && (
@@ -169,7 +169,7 @@ export const RecommendationModal = ({
               href={recommendation.linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="ms-auto flex items-center gap-2 rounded-full border border-parchment/15 px-4 py-2 text-sm text-ink-body transition-colors hover:border-sage/60 hover:text-ink-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+              className="ms-auto flex items-center gap-2 rounded-full border border-parchment/15 px-4 py-2 text-sm text-ink-body transition-colors hover:border-sage/60 hover:text-ink-strong focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
             >
               <FaLinkedin aria-hidden="true" />
               LinkedIn

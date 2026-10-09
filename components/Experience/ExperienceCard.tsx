@@ -33,7 +33,7 @@ export const ExperienceCard = ({ experience }: { experience: IExperience }) => {
                 {experience.company}
               </span>
               {experience.workType && (
-                <span className="rounded-md border border-sage/20 bg-sage/[0.05] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted md:text-[11px]">
+                <span className="rounded-md border border-sage/20 bg-sage/5 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted md:text-[11px]">
                   {experience.workType}
                 </span>
               )}
@@ -50,7 +50,7 @@ export const ExperienceCard = ({ experience }: { experience: IExperience }) => {
             {experience.skills.map((skill) => (
               <li
                 key={skill}
-                className="rounded-full border border-sage/20 bg-sage/[0.05] px-3 py-1.5 font-mono text-[10px] text-ink-muted transition-colors hover:border-sage/50 hover:text-sage md:text-xs"
+                className="rounded-full border border-sage/20 bg-sage/5 px-3 py-1.5 font-mono text-[10px] text-ink-muted transition-colors hover:border-sage/50 hover:text-sage md:text-xs"
               >
                 {skill}
               </li>

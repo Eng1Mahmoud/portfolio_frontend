@@ -13,7 +13,7 @@ const RecommendationCard = ({
 }) => {
   return (
     <DashCard>
-      <div className="mb-4 flex-grow">
+      <div className="mb-4 grow">
         <div className="flex items-start justify-between gap-2">
           <div className="flex min-w-0 items-start gap-3">
             {recommendation.avatar && (
@@ -47,7 +47,7 @@ const RecommendationCard = ({
           </div>
 
           <div className="flex shrink-0 flex-col items-end gap-1">
-            <span className="rounded-md border border-parchment/10 bg-parchment/[0.04] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-sage">
+            <span className="rounded-md border border-parchment/10 bg-parchment/4 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-sage">
               {recommendation.relation}
             </span>
             {/* The list is sorted by this, so it has to be visible here —

@@ -141,7 +141,7 @@ export const RecommendationCard = ({
                 type="button"
                 onClick={openFull}
                 aria-label={`Read the full testimonial from ${recommendation.name}`}
-                className="mt-3 flex w-fit items-center gap-1.5 rounded text-sm text-sage transition-colors hover:text-sage-bright focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+                className="mt-3 flex w-fit items-center gap-1.5 rounded-sm text-sm text-sage transition-colors hover:text-sage-bright focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
               >
                 Read more
                 <FaChevronDown className="h-3 w-3" aria-hidden="true" />
@@ -161,7 +161,7 @@ export const RecommendationCard = ({
             ) : (
               <span
                 aria-hidden="true"
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-parchment/[0.06] font-mono text-xs tracking-wider text-sage ring-1 ring-parchment/10"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-parchment/6 font-mono text-xs tracking-wider text-sage ring-1 ring-parchment/10"
               >
                 {initials(recommendation.name)}
               </span>
@@ -183,7 +183,7 @@ export const RecommendationCard = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${recommendation.name} on LinkedIn`}
-                className="shrink-0 rounded-md p-1.5 text-ink-muted transition-colors hover:text-sage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+                className="shrink-0 rounded-md p-1.5 text-ink-muted transition-colors hover:text-sage focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
               >
                 <FaLinkedin />
               </a>
@@ -191,7 +191,7 @@ export const RecommendationCard = ({
           </footer>
 
           <div className="mt-3 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-muted">
-            <span className="rounded-md border border-parchment/10 bg-parchment/[0.04] px-2 py-1 text-sage">
+            <span className="rounded-md border border-parchment/10 bg-parchment/4 px-2 py-1 text-sage">
               {recommendation.relation}
             </span>
             {written && <span>{written}</span>}

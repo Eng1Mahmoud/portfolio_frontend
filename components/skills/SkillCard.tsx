@@ -18,7 +18,7 @@ export const SkillCard = ({ skill, index = 0 }: { skill: ISkill; index?: number 
       className="skill-tile"
     >
       <span className="skill-icon"><Image src={skill.imageUrl} alt="" width={40} height={40} className="h-8 w-8 object-contain" /></span>
-      <p className="min-w-0 break-words text-sm font-medium text-ink-strong">{skill.name}</p>
+      <p className="min-w-0 wrap-break-word text-sm font-medium text-ink-strong">{skill.name}</p>
     </motion.div>
   );
 };

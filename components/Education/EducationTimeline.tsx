@@ -56,7 +56,7 @@ export default function EducationTimeline({
                   {item.skills.map((skill) => (
                     <li
                       key={skill}
-                      className="rounded-full border border-sage/20 bg-sage/[0.05] px-3 py-1.5 font-mono text-[10px] text-ink-muted md:text-xs"
+                      className="rounded-full border border-sage/20 bg-sage/5 px-3 py-1.5 font-mono text-[10px] text-ink-muted md:text-xs"
                     >
                       {skill}
                     </li>

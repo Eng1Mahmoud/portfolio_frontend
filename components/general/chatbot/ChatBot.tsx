@@ -27,7 +27,7 @@ const ChatBot: React.FC = () => {
   }, [isOpen]);
 
   return (
-    <div className="portfolio-chat fixed z-[9999] font-sans">
+    <div className="portfolio-chat fixed z-9999 font-sans">
       <AnimatePresence>
         {isOpen && (
           <motion.div

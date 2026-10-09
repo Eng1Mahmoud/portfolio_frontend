@@ -50,7 +50,7 @@ export const SkillGroupHeading = ({
         }}
         transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
         style={{ transformOrigin: "left" }}
-        className="h-px flex-1 bg-gradient-to-r from-sage/40 to-parchment/10"
+        className="h-px flex-1 bg-linear-to-r from-sage/40 to-parchment/10"
       />
     </motion.div>
   );

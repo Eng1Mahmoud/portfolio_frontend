@@ -41,7 +41,7 @@ const ContactUsForm = () => {
       <div className="mt-4">
         <SubmitButton name={methods.formState.isSubmitting ? "Sending…" : "Send Message"} isPending={methods.formState.isSubmitting} variant="site" className="min-h-12 sm:w-auto sm:px-8" />
       </div>
-      {result && <p role={result.success ? "status" : "alert"} className="mt-4 text-sm leading-relaxed text-ink break-words">{result.message}</p>}
+      {result && <p role={result.success ? "status" : "alert"} className="mt-4 text-sm leading-relaxed text-ink wrap-break-word">{result.message}</p>}
     </form>
     </FormProvider>
   );

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-[100vh] bg-surface-base">
+    <div className="min-h-screen bg-surface-base">
       <HeaderContainer />
 
       {/* The rail is fixed, so it sits outside the flow and needs the header's

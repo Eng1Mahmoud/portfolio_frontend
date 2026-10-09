@@ -85,7 +85,7 @@ export const ProjectDescriptionModal = ({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
-      className="fixed inset-0 z-[1000] flex items-center justify-center bg-surface-well/85 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-1000 flex items-center justify-center bg-surface-well/85 p-4 backdrop-blur-xs"
     >
       <motion.div
         ref={panelRef}
@@ -104,7 +104,7 @@ export const ProjectDescriptionModal = ({
           damping: 30,
           opacity: { duration: 0.22 },
         }}
-        className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-parchment/10 bg-surface-card outline-none"
+        className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-parchment/10 bg-surface-card outline-hidden"
       >
         {/* Header stays put so the close button is always reachable while
             scrolling a long description. */}
@@ -116,7 +116,7 @@ export const ProjectDescriptionModal = ({
             type="button"
             onClick={onClose}
             aria-label="Close project details"
-            className="shrink-0 rounded-md p-1 text-ink-muted transition-colors hover:bg-parchment/10 hover:text-ink-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+            className="shrink-0 rounded-md p-1 text-ink-muted transition-colors hover:bg-parchment/10 hover:text-ink-strong focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
           >
             <FaTimes size={20} aria-hidden="true" />
           </button>
@@ -133,7 +133,7 @@ export const ProjectDescriptionModal = ({
                 {technologies.map((tech) => (
                   <li
                     key={tech}
-                    className="rounded-full border border-parchment/10 bg-parchment/[0.04] px-3 py-1 text-xs text-ink-body"
+                    className="rounded-full border border-parchment/10 bg-parchment/4 px-3 py-1 text-xs text-ink-body"
                   >
                     {tech}
                   </li>
@@ -155,7 +155,7 @@ export const ProjectDescriptionModal = ({
                 href={githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full border border-parchment/15 px-4 py-2 text-sm text-ink-body transition-colors hover:border-sage/60 hover:text-ink-strong focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+                className="flex items-center gap-2 rounded-full border border-parchment/15 px-4 py-2 text-sm text-ink-body transition-colors hover:border-sage/60 hover:text-ink-strong focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
               >
                 <FaGithub aria-hidden="true" />
                 GitHub
@@ -166,7 +166,7 @@ export const ProjectDescriptionModal = ({
                 href={demoLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full bg-sage px-4 py-2 text-sm font-medium text-surface-base transition-colors hover:bg-sage-bright focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+                className="flex items-center gap-2 rounded-full bg-sage px-4 py-2 text-sm font-medium text-surface-base transition-colors hover:bg-sage-bright focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
               >
                 <FaExternalLinkAlt aria-hidden="true" />
                 Live

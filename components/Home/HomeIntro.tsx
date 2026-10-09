@@ -61,7 +61,7 @@ export const HomeIntro = ({ profileInfo }: HomeIntroProps) => {
         animate={{ scaleY: 1 }}
         transition={{ duration: 0.9, ease: EASE }}
         style={{ transformOrigin: "top" }}
-        className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-sage via-parchment/12 to-transparent"
+        className="absolute left-0 top-0 h-full w-px bg-linear-to-b from-sage via-parchment/12 to-transparent"
       />
 
       {role && (
@@ -76,7 +76,7 @@ export const HomeIntro = ({ profileInfo }: HomeIntroProps) => {
       )}
 
       {/* One mask per line, so the halves of the name arrive in turn. */}
-      <h1 className="display-hero text-[2.6rem] sm:text-6xl lg:text-7xl xl:text-[5.5rem] leading-[1.02] break-words text-ink-strong">
+      <h1 className="display-hero text-[2.6rem] sm:text-6xl lg:text-7xl xl:text-[5.5rem] leading-[1.02] wrap-break-word text-ink-strong">
         <span className="block overflow-hidden pb-[0.06em]">
           <motion.span
             custom={0}

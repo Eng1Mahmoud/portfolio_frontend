@@ -20,7 +20,7 @@ const SubmitButton = ({
       type="submit"
       className={clsx(
         "flex w-full items-center justify-center rounded-md p-2 font-medium shadow-md transition-colors duration-300",
-        "focus:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base",
+        "focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base",
         VARIANTS[variant],
         isPending && "cursor-not-allowed opacity-50",
         className,

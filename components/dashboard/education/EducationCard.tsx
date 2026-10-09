@@ -10,7 +10,7 @@ const EducationCard = ({ education }: { education: IEducation }) => {
 
   return (
     <DashCard>
-      <div className="mb-4 flex-grow">
+      <div className="mb-4 grow">
         <div className="flex min-w-0 items-start gap-3">
           {education.image && (
             <Image
@@ -44,13 +44,13 @@ const EducationCard = ({ education }: { education: IEducation }) => {
             {skills.slice(0, 4).map((skill, idx) => (
               <span
                 key={idx}
-                className="rounded border border-parchment/10 bg-parchment/[0.04] px-2 py-0.5 text-[10px] text-ink-body"
+                className="rounded-sm border border-parchment/10 bg-parchment/4 px-2 py-0.5 text-[10px] text-ink-body"
               >
                 {skill}
               </span>
             ))}
             {skills.length > 4 && (
-              <span className="rounded border border-parchment/10 px-2 py-0.5 text-[10px] text-ink-muted">
+              <span className="rounded-sm border border-parchment/10 px-2 py-0.5 text-[10px] text-ink-muted">
                 +{skills.length - 4} more
               </span>
             )}

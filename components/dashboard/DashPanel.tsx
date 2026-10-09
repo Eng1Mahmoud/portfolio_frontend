@@ -52,12 +52,12 @@ export const DashEmpty = ({
   href?: string;
   cta?: string;
 }) => (
-  <div className="rounded-xl border border-dashed border-parchment/15 bg-parchment/[0.02] px-6 py-10 text-center">
+  <div className="rounded-xl border border-dashed border-parchment/15 bg-parchment/2 px-6 py-10 text-center">
     <p className="text-sm text-ink-muted">{message}</p>
     {href && cta && (
       <Link
         href={href}
-        className="mt-4 inline-flex items-center gap-2 rounded-full bg-sage px-5 py-2 text-sm font-medium text-surface-base transition-colors hover:bg-sage-bright focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
+        className="mt-4 inline-flex items-center gap-2 rounded-full bg-sage px-5 py-2 text-sm font-medium text-surface-base transition-colors hover:bg-sage-bright focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
       >
         <FaPlus className="h-3 w-3" aria-hidden="true" />
         {cta}

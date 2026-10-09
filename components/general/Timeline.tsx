@@ -58,7 +58,7 @@ export const Timeline = ({ children }: { children: ReactNode }) => {
       <span aria-hidden="true" className={`${RAIL_X} w-px`}>
         <motion.span
           style={{ top: glowY }}
-          className="absolute h-16 w-px bg-gradient-to-b from-sage to-transparent blur-[2px]"
+          className="absolute h-16 w-px bg-linear-to-b from-sage to-transparent blur-[2px]"
         />
       </span>
 
@@ -94,7 +94,7 @@ export const TimelineEntry = ({
       */}
       <span
         aria-hidden="true"
-        className="absolute -left-[22px] top-1 z-10 h-4 w-4 -translate-x-1/2 md:-left-[38px] md:h-5 md:w-5"
+        className="absolute left-[-22px] top-1 z-10 h-4 w-4 -translate-x-1/2 md:left-[-38px] md:h-5 md:w-5"
       >
         <motion.span
           initial={{ scale: 0.4, opacity: 0 }}

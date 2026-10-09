@@ -8,9 +8,9 @@ import clsx from "clsx";
 const tab = (active: boolean) =>
   clsx(
     "flex items-center rounded-full border px-4 py-2 text-sm font-medium transition-colors",
-    "focus:outline-none focus-visible:ring-2 focus-visible:ring-sage",
+    "focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage",
     active
-      ? "border-sage/40 bg-parchment/[0.06] text-ink-strong"
+      ? "border-sage/40 bg-parchment/6 text-ink-strong"
       : "border-parchment/10 text-ink-muted hover:border-sage/40 hover:text-ink-strong",
   );
 

@@ -22,7 +22,7 @@ export const DashScreen = ({
     <span className="sr-only">{label}…</span>
     {title && (
       <div className="mb-6 border-b border-parchment/10 pb-4">
-        <div className="h-7 w-56 rounded bg-parchment/10" />
+        <div className="h-7 w-56 rounded-sm bg-parchment/10" />
       </div>
     )}
     {children}
@@ -37,7 +37,7 @@ export const DashLine = ({
   w?: string;
   h?: string;
   className?: string;
-}) => <div className={clsx("rounded bg-parchment/10", w, h, className)} />;
+}) => <div className={clsx("rounded-sm bg-parchment/10", w, h, className)} />;
 
 export const DashBlock = ({ className }: { className?: string }) => (
   <div className={clsx("rounded-lg bg-parchment/10", className)} />
