@@ -42,6 +42,11 @@ const trackPointer = (e: MouseEvent<HTMLElement>) => {
   e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
 };
 
+/** Shortens a skill name for the pill; the full name stays in the hover tooltip. */
+const chipLabel = (item: string) =>
+  item.replace(/\s*\(.*?\)\s*$/, "").replace(/\s*&\s*lazy loading$/i, "");
+
+
 /**
  * Three "star" cards joined by a glowing constellation line that ties them to
  * the nebula backdrop. Cards step down like a staircase on wide screens, carry a
@@ -72,7 +77,8 @@ export const ServicesSection = () => {
         />
       </svg>
 
-      <div className="relative grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-6 lg:gap-8">
+      <div className="relative grid grid-cols-1 items-start gap-6 md:grid-cols-3 md:gap-6 lg:gap-8">
+
         {SERVICES.map(({ title, text, Icon, stack }, i) => (
           <motion.article
             key={title}
@@ -82,7 +88,8 @@ export const ServicesSection = () => {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, delay: reduceMotion ? 0 : i * 0.15, ease: [0.22, 1, 0.36, 1] }}
             className={`group relative isolate flex flex-col overflow-hidden rounded-3xl p-6 pt-8 md:p-7 lg:p-8 [background:var(--glass-background)] [border:var(--hairline-border)] [backdrop-filter:blur(14px)_saturate(140%)] [box-shadow:var(--glass-shadow)] transition-[border-color,box-shadow,translate] duration-500 hover:-translate-y-2 hover:[border-color:var(--glass-hover-border)] hover:[box-shadow:var(--glass-corner-light)] before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:opacity-0 before:transition-opacity before:duration-500 before:[background:radial-gradient(320px_circle_at_var(--mx,50%)_var(--my,0%),color-mix(in_oklab,var(--portfolio-accent)_22%,transparent),transparent_70%)] hover:before:opacity-100 ${
-              i === 1 ? "md:mt-12" : i === 2 ? "md:mt-24" : ""
+              i === 1 ? "md:mt-10" : i === 2 ? "md:mt-20" : ""
+
             }`}
           >
             {/* Large outlined index sitting behind the content. */}
@@ -94,7 +101,8 @@ export const ServicesSection = () => {
             </span>
 
             {/* Icon "star" with an orbiting ring and a satellite dot. */}
-            <span className="relative mb-7 grid size-16 place-items-center">
+            <span className="relative mb-6 grid size-16 place-items-center">
+
               <span className="absolute inset-0 animate-[spin_9s_linear_infinite] rounded-full border border-dashed border-sage/40 motion-reduce:animate-none">
                 <span className="absolute -top-1 left-1/2 size-2 -translate-x-1/2 rounded-full bg-sage shadow-[0_0_10px_var(--portfolio-accent)]" />
               </span>
@@ -104,18 +112,21 @@ export const ServicesSection = () => {
             </span>
 
             <h3 className="mb-3 font-display text-xl font-semibold text-ink-strong">{title}</h3>
-            <p className="mb-5 text-sm leading-relaxed text-ink-muted">{text}</p>
+            <p className="mb-4 text-sm leading-relaxed text-ink-muted">{text}</p>
 
-            <ul className="mb-7 flex grow flex-wrap content-start gap-2">
+
+            <ul className="mb-6 flex flex-wrap gap-1.5">
               {stack.map((item) => (
                 <li
                   key={item}
-                  className="rounded-full border border-parchment/10 px-3 py-1 font-mono text-[11px] tracking-wide text-ink-muted transition-colors duration-300 group-hover:border-sage/30 group-hover:text-ink-strong"
+                  title={item}
+                  className="shrink-0 rounded-full border border-parchment/10 px-2 py-[3px] font-mono text-[10px] leading-none tracking-wide text-ink-muted transition-colors duration-300 group-hover:border-sage/30 group-hover:text-ink-strong"
                 >
-                  {item}
+                  {chipLabel(item)}
                 </li>
               ))}
             </ul>
+
 
             <a
               href="#contact-us"
