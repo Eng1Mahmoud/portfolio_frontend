@@ -57,9 +57,10 @@ export const fallbackProfileImageUrl =
   "https://dev-mahmoud.sirv.com/portfolio/MAHMOUD.png";
 
 // Explicit leaf metadata prevents Next.js from dropping inherited share images.
-// Bump `v` whenever the photo changes so link-preview caches fetch it again.
-export const socialPortraitUrl =
-  "https://dev-mahmoud.sirv.com/portfolio/MAHMOUD.png?w=1200&h=630&scale.option=fit&canvas.width=1200&canvas.height=630&canvas.color=171A16&format=jpg&v=2";
+// Served from our own domain as a plain .jpg: LinkedIn rejects some CDN image
+// URLs (query strings, .png path serving JPEG) and then falls back to the
+// first icon on the page. Rename the file when the photo changes.
+export const socialPortraitUrl = `${siteUrl}/og/mahmoud-mohamed-v3.jpg`;
 
 export const getProfileImageUrl = (avatar?: string) =>
   avatar?.trim() || fallbackProfileImageUrl;
@@ -85,16 +86,26 @@ export const buildPublicPageMetadata = ({
     canonical: path,
   },
   openGraph: {
-    title: ogTitle ?? title,
+    // Absolute on "/" so the layout's title template isn't appended twice.
+    title: path === "/" ? { absolute: ogTitle ?? title } : ogTitle ?? title,
     description,
     url: path,
     type,
-    images: [{ url: socialPortraitUrl, width: 1200, height: 630, alt: "Mahmoud Mohamed — Software Engineer" }],
+    images: [
+      {
+        url: socialPortraitUrl,
+        secureUrl: socialPortraitUrl,
+        type: "image/jpeg",
+        width: 1200,
+        height: 630,
+        alt: "Mahmoud Mohamed — Software Engineer",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     images: [socialPortraitUrl],
-    title: ogTitle ?? title,
+    title: path === "/" ? { absolute: ogTitle ?? title } : ogTitle ?? title,
     description,
   },
 });
