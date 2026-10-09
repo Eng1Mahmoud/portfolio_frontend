@@ -109,7 +109,7 @@ export const HomeIntro = ({
       )}
 
       {/* One mask per line, so the halves of the name arrive in turn. */}
-      <h1 className="display-hero text-[clamp(2.6rem,9.5vw,5.5rem)] leading-[0.92] text-ink-strong">
+      <h1 className="display-hero text-[2.6rem] sm:text-6xl lg:text-7xl xl:text-[5.5rem] leading-[0.92] text-ink-strong">
         <span className="block overflow-hidden pb-[0.06em]">
           <motion.span
             custom={0}

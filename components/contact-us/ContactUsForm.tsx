@@ -10,19 +10,21 @@ const ContactUsForm = () => {
 
   return (
     <Form
+      className="contact-form"
       defaultValues={initialValues}
       schema={contactUsSchema}
       action={contactUs}
       buttonProps={{
         name: "Send Message",
         variant: "site",
+        className: "min-h-12 sm:w-auto sm:px-8",
       }}
     >
-      <div className="grid grid-cols-1 gap-6">
-        <InputField name="userName" label="Enter your name" type="text" />
-        <InputField name="email" label="Enter your email" type="email" />
-        <InputField name="phone" label="Enter your phone number" type="text" />
-        <TextArea name="message" label="Enter your message" rows={6} />
+      <div className="grid grid-cols-1 gap-5">
+        <InputField name="userName" label="Your name" type="text" showLabel />
+        <InputField name="email" label="Email address" type="email" showLabel />
+        <InputField name="phone" label="Phone number" type="tel" showLabel />
+        <TextArea name="message" label="Your message" rows={6} showLabel />
       </div>
     </Form>
   );

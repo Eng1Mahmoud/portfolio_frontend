@@ -115,11 +115,6 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="projects" className="portfolio-section">
-        <Title title="Projects" eyebrow="Selected work" count={projectCount} />
-        <ContentSlider label="Projects" variant="showcase">{(projects ?? []).map((project, i) => <ProjectCard key={project._id ?? project.title} project={project} index={i} />)}</ContentSlider>
-      </section>
-
       <section id="about" className="portfolio-section">
         <Title title="Behind the work" eyebrow="About me" />
         <div className={`grid items-start gap-10 ${profileInfo?.aboutImage ? "md:grid-cols-[0.8fr_1.2fr]" : "max-w-3xl"}`}>
@@ -128,12 +123,17 @@ export default async function Home() {
         </div>
         <div id="skills" className="mt-16 scroll-mt-28">
         <Title title="Skills" eyebrow="What I work with" count={skillCount} />
-        <div className="space-y-10">{orderedCategories.map(category => {
+        <div className="skill-groups">{orderedCategories.map(category => {
           const items = (skills ?? []).filter(skill => (skill.category?.trim() || "Other") === category);
-          return <div key={category}><SkillGroupHeading category={category} count={items.length} /><div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5">{items.map((skill, i) => <SkillCard key={skill._id ?? skill.name} skill={skill} index={i} />)}</div></div>;
+          return <div key={category} className="skill-group"><SkillGroupHeading category={category} count={items.length} /><div className="skill-grid">{items.map((skill, i) => <SkillCard key={skill._id ?? skill.name} skill={skill} index={i} />)}</div></div>;
         })}</div>
         </div>
       </section>
+      <section id="projects" className="portfolio-section">
+        <Title title="Projects" eyebrow="Selected work" count={projectCount} />
+        <ContentSlider label="Projects" variant="showcase">{(projects ?? []).map((project, i) => <ProjectCard key={project._id ?? project.title} project={project} index={i} />)}</ContentSlider>
+      </section>
+
       <section id="experience" className="portfolio-section">
         <div className="mx-auto max-w-4xl"><Title title="My journey" eyebrow="Experience & education" count={(experiences ?? []).length} /><ExperienceTimeline experiences={(experiences ?? []).slice(0, 3)} />{(experiences ?? []).length > 3 && <details className="journey-more"><summary>More experience ({(experiences ?? []).length - 3})</summary><ExperienceTimeline experiences={(experiences ?? []).slice(3)} /></details>}</div>
         <div id="education" className="mx-auto mt-14 max-w-4xl scroll-mt-28">
@@ -147,7 +147,7 @@ export default async function Home() {
       </section>
       <section id="contact-us" className="portfolio-section">
         <Title title="Get in touch" eyebrow="Contact" />
-        <div className="grid items-start gap-8 md:grid-cols-2"><Reveal delay={0.12}><ContactUsForm /></Reveal><Reveal delay={0.22}><ContactUsInfo profileInfo={profileInfo as IuserInfo} /></Reveal></div>
+        <div className="contact-layout"><Reveal delay={0.12} className="min-w-0"><ContactUsInfo profileInfo={profileInfo as IuserInfo} /></Reveal><Reveal delay={0.22} className="min-w-0"><ContactUsForm /></Reveal></div>
       </section>
 
       <script
