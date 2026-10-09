@@ -20,3 +20,5 @@
 - Mobile navigation animates only opacity over an opaque surface, never a clipped backdrop-filter layer; hold scroll locking through exit and focus without scrolling to avoid mobile compositor flashes and page jumps.
 - Contact submission uses its existing EmailJS action with shared client/server validation and persistent inline feedback; clear values only after the provider accepts delivery so failed attempts retain visitor input.
 - Share a deterministic count-based floating layout between animated and static hero skills; independent drift uses screen-space separation and portrait/edge bounds, while a shared DOM overlay outside Canvas avoids per-skill React roots and keeps every dashboard item visible on every viewport.
+- Keep global styles grouped under descriptive section headings and preserve override order; delete selectors only after checking dynamic and dashboard usages so cleanup cannot change the design.
+- Hide animated skill badges until their first positioned frame and reveal each icon after image decoding; animate transforms rather than layout properties to prevent first-load stacking and image flashes.
