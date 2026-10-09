@@ -32,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
       // The name alone is contested — several developers share it, so the role
       // is what makes this result identifiable in a list of them.
       default: siteTitle,
-      template: "%s | Mahmoud Mohamed — Frontend Engineer",
+      template: "%s | Mahmoud Mohamed — Software Engineer",
     },
     description: siteDescription,
     keywords: siteKeywords,
@@ -46,7 +46,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName,
       title: {
         default: siteTitle,
-        template: "%s | Mahmoud Mohamed — Frontend Engineer",
+        template: "%s | Mahmoud Mohamed — Software Engineer",
       },
       description: siteDescription,
       url: "/",
@@ -54,7 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [
         {
           url: "/opengraph-image",
-          alt: "Mahmoud Mohamed — Frontend Software Engineer",
+          alt: "Mahmoud Mohamed — Software Engineer",
         },
       ],
     },
@@ -62,7 +62,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: {
         default: siteTitle,
-        template: "%s | Mahmoud Mohamed — Frontend Engineer",
+        template: "%s | Mahmoud Mohamed — Software Engineer",
       },
       description: siteDescription,
       images: ["/twitter-image"],
@@ -113,7 +113,7 @@ const buildPersonJsonLd = (profile?: {
   ],
   // Trimmed: these come from free-text dashboard fields, and stray whitespace
   // ends up inside the structured data verbatim.
-  jobTitle: profile?.title?.trim() || "Frontend Software Engineer",
+  jobTitle: profile?.title?.trim() || "Software Engineer",
   ...(profile?.email && { email: profile.email.trim() }),
   ...(profile?.address && {
     address: {

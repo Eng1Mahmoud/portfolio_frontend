@@ -9,16 +9,16 @@ export const siteUrl =
 export const siteName = "Mahmoud Mohamed | Portfolio";
 
 /**
- * Leads with the role people actually search for. "Frontend Software Engineer"
- * and "Frontend Engineer" are both spelled out because they are different
+ * Leads with the role people actually search for. "Software Engineer" stays
+ * the headline; "Frontend" and "Full-Stack" follow because they are different
  * queries, and a description that only says "portfolio" matches neither.
  */
 export const siteDescription =
-  "Mahmoud Mohamed — Frontend Software Engineer from Egypt with 3+ years building scalable, responsive, SEO-friendly web applications with React.js, Next.js, TypeScript, Vue.js and TanStack Query.";
+  "Mahmoud Mohamed — Software Engineer from Egypt with 3+ years building scalable, responsive, SEO-friendly web applications. Frontend with React.js, Next.js, TypeScript and Vue.js; full-stack with Node.js, Express and MongoDB.";
 
 /** The name to beat in search is generic, so the title carries the role. */
 export const siteTitle =
-  "Mahmoud Mohamed | Frontend Software Engineer (React.js, Next.js)";
+  "Mahmoud Mohamed | Software Engineer";
 
 /**
  * Feeds both the `keywords` meta tag and the Person schema's `knowsAbout`.
@@ -27,14 +27,19 @@ export const siteTitle =
  */
 export const siteKeywords = [
   "Mahmoud Mohamed",
+  "Software Engineer",
+  "Full-Stack Developer",
+  "Full-Stack Engineer",
   "Frontend Software Engineer",
   "Frontend Engineer",
   "Frontend Developer",
-  "Software Engineer",
   "React Developer",
   "Next.js Developer",
   "React.js",
   "Next.js",
+  "Node.js",
+  "Express.js",
+  "MongoDB",
   "TypeScript",
   "JavaScript",
   "Vue.js",
@@ -43,12 +48,13 @@ export const siteKeywords = [
   "TanStack Query",
   "Tailwind CSS",
   "Web Developer Egypt",
-  "Frontend Engineer Egypt",
+  "Software Engineer Egypt",
   "portfolio",
 ];
 
 export const fallbackProfileImageUrl =
-  process.env.NEXT_PUBLIC_PROFILE_IMAGE_URL?.trim() || "";
+  process.env.NEXT_PUBLIC_PROFILE_IMAGE_URL?.trim() ||
+  "https://dev-mahmoud.sirv.com/portfolio/MAHMOUD.png";
 
 export const getProfileImageUrl = (avatar?: string) =>
   avatar?.trim() || fallbackProfileImageUrl;

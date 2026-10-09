@@ -132,7 +132,7 @@ export const buildExperienceJsonLd = (
   buildCollectionPageJsonLd({
     name: "Professional experience of Mahmoud Mohamed",
     description:
-      "Frontend Software Engineer roles and companies in Mahmoud Mohamed's career.",
+      "Software Engineer roles and companies in Mahmoud Mohamed's career.",
     path: "/experience",
     breadcrumbs: experienceBreadcrumbs,
     image,
