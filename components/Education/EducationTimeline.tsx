@@ -13,7 +13,7 @@ export default function EducationTimeline({
     <Timeline>
       {educations.map((item, index) => (
         <TimelineEntry key={item._id} index={index}>
-          <div className="glass-card group relative overflow-hidden rounded-2xl p-5 md:p-7">
+          <div className="glass-card relative! isolate! [background:var(--glass-background)]! [border:var(--hairline-border)]! [backdrop-filter:blur(14px)_saturate(140%)]! [box-shadow:var(--glass-shadow)]! [transition:border-color_300ms,_box-shadow_300ms]! [border-radius:16px]! [&::before]:[content:'']! [&::before]:absolute! [&::before]:[inset:0]! [&::before]:[z-index:-1]! [&::before]:[border-radius:inherit]! [&::before]:pointer-events-none! [&::before]:[background:var(--glass-hover-shadow)]! [&::before]:[opacity:0.7]! [&::before]:[transition:opacity_300ms]! [&:hover]:[border-color:var(--glass-hover-border)]! [&:hover]:[box-shadow:var(--glass-corner-light)]! [&:hover::before]:[opacity:1]! group relative overflow-hidden rounded-2xl p-5 md:p-7">
             <div className="relative z-10">
               <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.22em] text-sage">
                 {item.startDate} — {item.endDate}
@@ -30,7 +30,7 @@ export default function EducationTimeline({
                   />
                 )}
                 <div className="min-w-0">
-                  <h3 className="display-card flex items-center gap-2 text-lg text-ink-strong md:text-2xl">
+                  <h3 className="display-card font-display! font-semibold! tracking-normal! flex items-center gap-2 text-lg text-ink-strong md:text-2xl">
                     <FaGraduationCap
                       className="shrink-0 text-sage"
                       aria-hidden="true"

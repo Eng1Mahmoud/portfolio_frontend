@@ -16,7 +16,7 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({
   messagesEndRef,
 }) => {
   return (
-    <div className="scrollBar flex-1 overflow-y-auto p-4 space-y-4 bg-surface-base/60 antialiased font-sans">
+    <div className="scrollBar [scrollbar-width:auto]! [scrollbar-color:var(--portfolio-accent-dim)_var(--portfolio-well)]! [&::-webkit-scrollbar]:w-3! [&::-webkit-scrollbar-track]:bg-surface-well! [&::-webkit-scrollbar-thumb]:[background:var(--scrollbar-thumb)]! [&::-webkit-scrollbar-thumb]:[border-radius:9999px]! [&::-webkit-scrollbar-thumb]:[border:2px_solid_transparent]! [&::-webkit-scrollbar-thumb]:[background-clip:content-box]! [&::-webkit-scrollbar-thumb:hover]:[background:var(--scrollbar-thumb-hover)]! [&::-webkit-scrollbar-thumb:hover]:[background-clip:content-box]! flex-1 overflow-y-auto p-4 space-y-4 bg-surface-base/60 antialiased font-sans">
       {messages.map((msg) => (
         <div
           key={msg.id}

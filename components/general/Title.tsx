@@ -56,7 +56,7 @@ export const Title = ({ title, eyebrow, count }: TitleProps) => {
         text={title}
         trigger="scroll"
         delay={0.06}
-        className="display-title block text-3xl sm:text-4xl leading-[1.05] text-ink-strong"
+        className="display-title font-display! font-semibold! tracking-normal! block text-3xl sm:text-4xl leading-[1.05] text-ink-strong"
       />
     </div>
   );

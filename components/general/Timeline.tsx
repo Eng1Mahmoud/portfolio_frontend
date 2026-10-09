@@ -44,13 +44,16 @@ export const Timeline = ({ children }: { children: ReactNode }) => {
       */}
 
       {/* Track. */}
-      <span aria-hidden="true" className={`${RAIL_X} w-px timeline-rail`} />
+      <span
+        aria-hidden="true"
+        className={`${RAIL_X} w-px timeline-rail [background:var(--timeline-track)]!`}
+      />
 
       {/* Lit segment. */}
       <span aria-hidden="true" className={`${RAIL_X} w-px`}>
         <motion.span
           style={{ scaleY: fill, transformOrigin: "top" }}
-          className="block h-full w-full timeline-lit"
+          className="block h-full w-full timeline-lit [background:var(--timeline-fill)]!"
         />
       </span>
 
@@ -105,7 +108,7 @@ export const TimelineEntry = ({
             delay: Math.min(index, 4) * 0.08 + 0.1,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="timeline-node block h-full w-full rounded-full"
+          className="timeline-node [border:var(--timeline-border)]! [background:var(--timeline-background)]! [backdrop-filter:blur(6px)]! [box-shadow:var(--timeline-shadow)]! block h-full w-full rounded-full"
         />
       </span>
       {children}

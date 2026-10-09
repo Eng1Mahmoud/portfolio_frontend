@@ -24,7 +24,9 @@ export default function MainTemplate({
   useEffect(() => {
     const target = window.location.hash.slice(1);
     if (target) {
-      requestAnimationFrame(() => document.getElementById(target)?.scrollIntoView({ block: "start" }));
+      requestAnimationFrame(() =>
+        document.getElementById(target)?.scrollIntoView({ block: "start" }),
+      );
     } else document.getElementById("page-scroll")?.scrollTo({ top: 0 });
   }, [pathname]);
 

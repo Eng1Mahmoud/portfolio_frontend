@@ -54,8 +54,9 @@ export const PinnedCard = ({
   children: ReactNode;
   className?: string;
 }) => {
-  const { ref, engaged, reduceMotion, handlers, rotateX, rotateY } =
-    useTilt({ range: 3 });
+  const { ref, engaged, reduceMotion, handlers, rotateX, rotateY } = useTilt({
+    range: 3,
+  });
   const compact = useMediaQuery(FLAT_BELOW);
   const container = usePageScrollContainer();
 
@@ -108,7 +109,7 @@ export const PinnedCard = ({
         style={
           depthActive ? { scale: depthScale, opacity: depthFade } : undefined
         }
-        className={`pin-stage h-full ${className}`}
+        className={`pin-stage [perspective:1100px]! [perspective-origin:center]! motion-reduce:[perspective:none]! h-full ${className}`}
       >
         <motion.div
           ref={ref}
@@ -136,15 +137,16 @@ export const PinnedCard = ({
           }}
           // On whileHover rather than a second `animate` prop, which would
           // fight the entry transition for control of `rotate`.
-          whileHover={reduceMotion || compact ? undefined : { rotate: 0, scale: 1.005 }}
+          whileHover={
+            reduceMotion || compact ? undefined : { rotate: 0, scale: 1.005 }
+          }
           {...handlers}
           style={{ rotateX: tiltX, rotateY: leanActive ? zero : rotateY }}
-          className={`pin-card group/pin relative h-full rounded-2xl transition-shadow duration-300 ${
+          className={`pin-card [transform-style:preserve-3d]! [&:hover_.pin-lift]:[transform:translateZ(34px)]! group/pin relative h-full rounded-2xl transition-shadow duration-300 ${
             engaged ? "shadow-lifted" : "shadow-pinned"
           }`}
         >
           {children}
-
         </motion.div>
       </motion.div>
     </CardProgress.Provider>

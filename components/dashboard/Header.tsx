@@ -18,7 +18,7 @@ export default function Header({
             aria-hidden="true"
             className="h-5 w-px bg-linear-to-b from-sage to-transparent"
           />
-          <h1 className="display-card text-xl text-ink-strong sm:text-2xl">
+          <h1 className="display-card font-display! font-semibold! tracking-normal! text-xl text-ink-strong sm:text-2xl">
             Dashboard
           </h1>
         </div>

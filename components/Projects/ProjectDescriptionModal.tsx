@@ -123,7 +123,7 @@ export const ProjectDescriptionModal = ({
         </div>
 
         {/* Only this region scrolls. */}
-        <div className="scrollBar min-h-0 flex-1 overflow-y-auto px-6 py-5">
+        <div className="scrollBar [scrollbar-width:auto]! [scrollbar-color:var(--portfolio-accent-dim)_var(--portfolio-well)]! [&::-webkit-scrollbar]:w-3! [&::-webkit-scrollbar-track]:bg-surface-well! [&::-webkit-scrollbar-thumb]:[background:var(--scrollbar-thumb)]! [&::-webkit-scrollbar-thumb]:[border-radius:9999px]! [&::-webkit-scrollbar-thumb]:[border:2px_solid_transparent]! [&::-webkit-scrollbar-thumb]:[background-clip:content-box]! [&::-webkit-scrollbar-thumb:hover]:[background:var(--scrollbar-thumb-hover)]! [&::-webkit-scrollbar-thumb:hover]:[background-clip:content-box]! min-h-0 flex-1 overflow-y-auto px-6 py-5">
           {technologies && technologies.length > 0 && (
             <div className="mb-5">
               <h4 className="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted">

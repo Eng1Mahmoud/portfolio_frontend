@@ -53,7 +53,7 @@ export const HomeIntro = ({ profileInfo }: HomeIntroProps) => {
   const lastName = nameParts.slice(1).join(" ");
 
   return (
-    <div className="hero-copy relative min-w-0 w-full max-w-4xl pl-6 text-start sm:pl-10">
+    <div className="hero-copy [overflow-wrap:anywhere]! relative min-w-0 w-full max-w-4xl pl-6 text-start sm:pl-10">
       {/* A single hairline anchors the column. */}
       <motion.div
         aria-hidden="true"
@@ -69,14 +69,14 @@ export const HomeIntro = ({ profileInfo }: HomeIntroProps) => {
           initial={reduceMotion ? false : { opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.12, duration: 0.5, ease: EASE }}
-          className="hero-role mb-4 font-mono text-[11px] uppercase text-sage sm:mb-5 sm:text-xs"
+          className="hero-role tracking-normal! [line-height:1.6]!  mb-4 font-mono text-[11px] uppercase text-sage sm:mb-5 sm:text-xs"
         >
           {role}
         </motion.p>
       )}
 
       {/* One mask per line, so the halves of the name arrive in turn. */}
-      <h1 className="display-hero text-[2.6rem] sm:text-6xl lg:text-7xl xl:text-[5.5rem] leading-[1.02] wrap-break-word text-ink-strong">
+      <h1 className="display-hero font-display! font-bold! tracking-normal! [&_span_span]:[background-image:var(--hero-title)]! [&_span_span]:[-webkit-background-clip:text]! [&_span_span]:[background-clip:text]! [&_span_span]:[color:transparent]! text-[2.6rem] sm:text-6xl lg:text-7xl xl:text-[5.5rem] leading-[1.02] wrap-break-word text-ink-strong">
         <span className="block overflow-hidden pb-[0.06em]">
           <motion.span
             custom={0}
@@ -112,7 +112,7 @@ export const HomeIntro = ({ profileInfo }: HomeIntroProps) => {
           animate="visible"
           variants={rise}
           className={clsx(
-            "hero-bio text-[15px] leading-relaxed text-ink-body sm:text-base",
+            "hero-bio [max-width:54ch]! text-pretty! max-md:[font-size:14px]! max-md:[line-height:1.6]! text-[15px] leading-relaxed text-ink-body sm:text-base",
             index === 0 ? "mt-4 sm:mt-5" : "mt-3",
           )}
         >

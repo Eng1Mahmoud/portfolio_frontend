@@ -102,7 +102,7 @@ export const ProjectCard = ({
           the action buttons line up along the bottom. */}
       <article
         ref={faceRef}
-        className="glass-card group/card relative flex h-full flex-col overflow-hidden rounded-2xl border border-parchment/10 transition-colors duration-300 group-hover/pin:border-sage/30"
+        className="glass-card relative! isolate! [background:var(--glass-background)]! [border:var(--hairline-border)]! [backdrop-filter:blur(14px)_saturate(140%)]! [box-shadow:var(--glass-shadow)]! [transition:border-color_300ms,_box-shadow_300ms]! [border-radius:16px]! [&::before]:[content:'']! [&::before]:absolute! [&::before]:[inset:0]! [&::before]:[z-index:-1]! [&::before]:[border-radius:inherit]! [&::before]:pointer-events-none! [&::before]:[background:var(--glass-hover-shadow)]! [&::before]:[opacity:0.7]! [&::before]:[transition:opacity_300ms]! [&:hover]:[border-color:var(--glass-hover-border)]! [&:hover]:[box-shadow:var(--glass-corner-light)]! [&:hover::before]:[opacity:1]! group/card relative flex h-full flex-col overflow-hidden rounded-2xl border border-parchment/10 transition-colors duration-300 group-hover/pin:border-sage/30"
       >
         <div className="relative h-[200px] shrink-0 overflow-hidden">
           {/* The first row is above the fold and holds the page's largest
@@ -121,8 +121,8 @@ export const ProjectCard = ({
         </div>
 
         {/* pin-lift floats the plate above the face while the card turns. */}
-        <div className="pin-lift relative z-10 flex flex-1 flex-col p-4 sm:p-5">
-          <h3 className="display-card mb-2 text-[1.15rem] text-ink-strong">
+        <div className="pin-lift [transform:translateZ(0)]! [transition:transform_0.35s_cubic-bezier(0.22,_1,_0.36,_1)]! motion-reduce:[transform:none]! relative z-10 flex flex-1 flex-col p-4 sm:p-5">
+          <h3 className="display-card font-display! font-semibold! tracking-normal! mb-2 text-[1.15rem] text-ink-strong">
             {project.title.trim()}
           </h3>
 

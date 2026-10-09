@@ -18,7 +18,7 @@ export default function DashboardError({
 
   return (
     <DashPanel>
-      <h2 className="display-card mb-2 text-xl text-ink-strong sm:text-2xl">
+      <h2 className="display-card font-display! font-semibold! tracking-normal! mb-2 text-xl text-ink-strong sm:text-2xl">
         Something went wrong
       </h2>
       <p className="mb-6 text-sm text-ink-body">

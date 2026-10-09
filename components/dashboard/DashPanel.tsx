@@ -29,7 +29,7 @@ export const DashPanel = ({
   >
     {title && (
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-parchment/10 pb-4">
-        <h2 className="display-card text-xl text-ink-strong sm:text-2xl">
+        <h2 className="display-card font-display! font-semibold! tracking-normal! text-xl text-ink-strong sm:text-2xl">
           {title}
         </h2>
         {action}

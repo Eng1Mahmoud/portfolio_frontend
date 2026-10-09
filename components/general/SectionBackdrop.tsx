@@ -17,7 +17,10 @@ const TINTS: Record<string, [string, string]> = {
   skills: ["var(--portfolio-support)", "var(--portfolio-accent)"],
   projects: ["var(--portfolio-accent-dim)", "var(--portfolio-accent-bright)"],
   experience: ["var(--portfolio-accent)", "var(--portfolio-support-deep)"],
-  recommendations: ["var(--portfolio-support-deep)", "var(--portfolio-accent-dim)"],
+  recommendations: [
+    "var(--portfolio-support-deep)",
+    "var(--portfolio-accent-dim)",
+  ],
   "contact-us": ["var(--portfolio-accent-bright)", "var(--portfolio-support)"],
 };
 
@@ -29,17 +32,37 @@ const buildStarMap = () => {
   const rand = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
   const stars: Star[] = [];
   const lines: [Star, Star][] = [];
-  const hubs = [[220, 230], [520, 600], [880, 300], [1300, 180], [1180, 720], [260, 820]];
+  const hubs = [
+    [220, 230],
+    [520, 600],
+    [880, 300],
+    [1300, 180],
+    [1180, 720],
+    [260, 820],
+  ];
   for (const [cx, cy] of hubs) {
     const group: Star[] = [];
     for (let i = 0; i < 6; i++) {
-      const star = { x: cx + (rand() - 0.5) * 300, y: cy + (rand() - 0.5) * 240, r: 1.4 + rand() * 1.6, hub: i === 0, d: rand() * 6 };
+      const star = {
+        x: cx + (rand() - 0.5) * 300,
+        y: cy + (rand() - 0.5) * 240,
+        r: 1.4 + rand() * 1.6,
+        hub: i === 0,
+        d: rand() * 6,
+      };
       group.push(star);
       stars.push(star);
     }
     for (let i = 1; i < group.length; i++) lines.push([group[i - 1], group[i]]);
   }
-  for (let i = 0; i < 140; i++) stars.push({ x: rand() * 1600, y: rand() * 1000, r: 0.4 + rand() * 0.9, hub: false, d: rand() * 6 });
+  for (let i = 0; i < 140; i++)
+    stars.push({
+      x: rand() * 1600,
+      y: rand() * 1000,
+      r: 0.4 + rand() * 0.9,
+      hub: false,
+      d: rand() * 6,
+    });
   return { stars, lines };
 };
 
@@ -69,9 +92,15 @@ export const SectionBackdrop = () => {
       let closest = Number.POSITIVE_INFINITY;
       for (const section of sections) {
         const box = section.getBoundingClientRect();
-        if (box.top <= mid && box.bottom >= mid) { best = section; break; }
+        if (box.top <= mid && box.bottom >= mid) {
+          best = section;
+          break;
+        }
         const d = Math.abs(box.top + box.height / 2 - mid);
-        if (d < closest) { closest = d; best = section; }
+        if (d < closest) {
+          closest = d;
+          best = section;
+        }
       }
       if (!best) return;
       const box = best.getBoundingClientRect();
@@ -89,8 +118,12 @@ export const SectionBackdrop = () => {
     const tick = () => {
       current += (target - current) * 0.08;
       layer.style.setProperty("--lit-y", `${current.toFixed(1)}px`);
-      layer.style.setProperty("--star-shift", `${(-Math.min(scroller.scrollTop * 0.03, 140)).toFixed(1)}px`);
-      frame = Math.abs(target - current) > 0.4 ? requestAnimationFrame(tick) : 0;
+      layer.style.setProperty(
+        "--star-shift",
+        `${(-Math.min(scroller.scrollTop * 0.03, 140)).toFixed(1)}px`,
+      );
+      frame =
+        Math.abs(target - current) > 0.4 ? requestAnimationFrame(tick) : 0;
     };
     const queue = () => {
       measure();
@@ -108,8 +141,16 @@ export const SectionBackdrop = () => {
   }, [reduceMotion]);
 
   return (
-    <div ref={layerRef} aria-hidden="true" className="section-backdrop">
-      <svg className="section-backdrop-stars" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+    <div
+      ref={layerRef}
+      aria-hidden="true"
+      className="section-backdrop fixed! [inset:0]! [z-index:0]! pointer-events-none! overflow-hidden! [transition:--lit-a_1200ms_ease,_--lit-b_1200ms_ease]! motion-reduce:[transition:none]!"
+    >
+      <svg
+        className="section-backdrop-stars absolute! [inset:-2%_-2%_-16%]! [width:104%]! [height:118%]! [transform:translate3d(0,_var(--star-shift,_0px),_0)]! [will-change:transform]! [mask-image:var(--stars-mask)]! [&_.star-lines_line]:[stroke:var(--constellation-stroke)]! [&_.star-lines_line]:[stroke-width:0.7]! [&_.star]:[fill:var(--star-fill)]! [&_.star]:[opacity:0.55] [&_.star]:[animation:star-twinkle_6s_ease-in-out_infinite] [&_.star--hub]:fill-sage-bright! [&_.star--hub]:[opacity:0.9] [&_.star--hub]:[filter:var(--star-glow)]! motion-reduce:[&_.star]:[animation:none]!"
+        viewBox="0 0 1600 1000"
+        preserveAspectRatio="xMidYMid slice"
+      >
         <g className="star-lines">
           {map.lines.map(([a, b], i) => (
             <line key={i} x1={a.x} y1={a.y} x2={b.x} y2={b.y} />
@@ -126,11 +167,11 @@ export const SectionBackdrop = () => {
           />
         ))}
       </svg>
-      <div className="section-backdrop-drift section-backdrop-drift--one" />
-      <div className="section-backdrop-drift section-backdrop-drift--two" />
-      <div className="section-backdrop-light" />
-      <div className="section-backdrop-grain" />
-      <div className="section-backdrop-vignette" />
+      <div className="section-backdrop-drift absolute! [width:min(760px,_120vw)]! aspect-square! [border-radius:50%]! [filter:blur(60px)]! [opacity:0.26]! [will-change:transform]! motion-reduce:[animation:none]! section-backdrop-drift--one [left:-18%]! [top:-12%]! [background:var(--drift-support)]! [animation:backdrop-drift-one_38s_ease-in-out_infinite_alternate]!" />
+      <div className="section-backdrop-drift absolute! [width:min(760px,_120vw)]! aspect-square! [border-radius:50%]! [filter:blur(60px)]! [opacity:0.26]! [will-change:transform]! motion-reduce:[animation:none]! section-backdrop-drift--two [right:-20%]! [bottom:-18%]! [background:var(--drift-accent)]! [animation:backdrop-drift-two_46s_ease-in-out_infinite_alternate]!" />
+      <div className="section-backdrop-light absolute! [left:50%]! [top:0]! [width:min(1120px,_170vw)]! [height:min(720px,_88vh)]! [transform:translate3d(-50%,_calc(var(--lit-y,_42vh)_-_50%),_0)]! [background:var(--reading-light)]! [opacity:0.42]! [will-change:transform]!" />
+      <div className="section-backdrop-grain absolute! [inset:0]! [opacity:0.05]! [mix-blend-mode:overlay]! [background-image:var(--grain-image)]!" />
+      <div className="section-backdrop-vignette absolute! [inset:0]! [background:var(--vignette)]!" />
     </div>
   );
 };

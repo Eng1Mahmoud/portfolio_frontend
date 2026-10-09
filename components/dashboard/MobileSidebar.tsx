@@ -41,7 +41,7 @@ export default function MobileSidebar({
             aria-hidden="true"
             className="h-5 w-px bg-linear-to-b from-sage to-transparent"
           />
-          <span className="display-card py-3 text-xl text-ink-strong">
+          <span className="display-card font-display! font-semibold! tracking-normal! py-3 text-xl text-ink-strong">
             Menu
           </span>
         </div>

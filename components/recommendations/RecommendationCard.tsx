@@ -87,7 +87,7 @@ export const RecommendationCard = ({
   const written = formatDate(recommendation.date);
 
   return (
-    <div className="pin-stage h-full">
+    <div className="pin-stage [perspective:1100px]! [perspective-origin:center]! motion-reduce:[perspective:none]! h-full">
       <motion.article
         ref={ref}
         initial={{ opacity: 0, y: 18, scale: 0.96 }}
@@ -102,10 +102,8 @@ export const RecommendationCard = ({
         whileHover={reduceMotion ? undefined : { y: -6 }}
         {...handlers}
         style={{ rotateX, rotateY }}
-        className={`glass-card pin-card group relative flex h-full flex-col rounded-2xl border p-6 shadow-pinned transition-colors duration-300 md:p-7 ${
-          engaged
-            ? "border-sage/40"
-            : "border-parchment/10"
+        className={`glass-card relative! isolate! [background:var(--glass-background)]! [border:var(--hairline-border)]! [backdrop-filter:blur(14px)_saturate(140%)]! [box-shadow:var(--glass-shadow)]! [transition:border-color_300ms,_box-shadow_300ms]! [border-radius:16px]! [&::before]:[content:'']! [&::before]:absolute! [&::before]:[inset:0]! [&::before]:[z-index:-1]! [&::before]:[border-radius:inherit]! [&::before]:pointer-events-none! [&::before]:[background:var(--glass-hover-shadow)]! [&::before]:[opacity:0.7]! [&::before]:[transition:opacity_300ms]! [&:hover]:[border-color:var(--glass-hover-border)]! [&:hover]:[box-shadow:var(--glass-corner-light)]! [&:hover::before]:[opacity:1]! pin-card [transform-style:preserve-3d]! [&:hover_.pin-lift]:[transform:translateZ(34px)]! group relative flex h-full flex-col rounded-2xl border p-6 shadow-pinned transition-colors duration-300 md:p-7 ${
+          engaged ? "border-sage/40" : "border-parchment/10"
         }`}
       >
         <motion.span
