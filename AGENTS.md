@@ -1,9 +1,9 @@
 ## Portfolio presentation
 - Hero columns use zero-minimum grid tracks with a larger bounded visual track and an orbit that shrinks to its available width; section entrances respect reduced motion, so larger skills stay clear of text at every viewport.
 - Keep all public content on one scrolling page, with legacy section URLs redirecting to retained anchors, so existing links keep working.
-- Group biography with skills and career with education; preserve every data item through sliders or expandable timelines.
+- Group career with education; preserve every data item through sliders or expandable timelines.
+- The full profile biography renders in the hero and there is no separate About section; the details that used to sit in a spec sheet stay as one compact line beside the figures, so nothing is lost while the page opens with the person.
 - Keep API actions, dashboard, tracking integrations and data models unchanged when redesigning presentation.
-- Render the full profile biography only in About; the intro shows the name, role, counts and one short sentence taken from the start of the biography, so a visitor learns the role without reading the bio twice.
 - Use #page-scroll as the only public-page scroll root, with accessible seek and back-to-top controls; fixed navigation must leave its native scrollbar unobstructed.
 - Floating social actions use existing profile destinations and social-click tracking, expanding above the existing chat assistant; the assistant broadcasts its open state so floating controls cannot overlap its panel.
 - Render skills as compact category rows with stable icon tiles and contact as unframed details beside a labelled form, preserving the existing data and form actions.

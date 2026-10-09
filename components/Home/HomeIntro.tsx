@@ -7,6 +7,7 @@ import {
   useMotionValue,
   useTransform,
 } from "framer-motion";
+import clsx from "clsx";
 import { useEffect } from "react";
 
 interface HomeIntroProps {
@@ -66,6 +67,25 @@ const Counter = ({ value, delay }: { value: number; delay: number }) => {
   );
 };
 
+/**
+ * The biography arrives as one field of text: blank lines are paragraph
+ * breaks, a single line break is just a wrap.
+ */
+const toParagraphs = (bio: string) =>
+  bio
+    .replace(/\r/g, "")
+    .split(/\n{2,}/)
+    .map((part) => part.replace(/\s*\n\s*/g, " ").trim())
+    .filter(Boolean);
+
+/** Years since the birth date, counted the way the old About spec sheet did. */
+const BIRTH_DATE = "2001-03-26";
+const yearsSince = (birthDate: string) => {
+  const dateOfBirth = new Date(birthDate);
+  const ageDate = new Date(Date.now() - dateOfBirth.getTime());
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+};
+
 export const HomeIntro = ({
   profileInfo,
   projectCount,
@@ -74,17 +94,16 @@ export const HomeIntro = ({
   const reduceMotion = useReducedMotion();
   const name = profileInfo?.userName?.trim() ?? "";
   const role = profileInfo?.title?.trim() ?? "";
+  const paragraphs = toParagraphs(profileInfo?.bio ?? "");
 
-  // One sentence from the biography, so the hero introduces without repeating it.
-  const bio = (profileInfo?.bio ?? "").replace(/\s+/g, " ").trim();
-  const stop = bio.search(/[.!?](\s|$)/);
-  const firstSentence = stop > 0 ? bio.slice(0, stop + 1) : bio;
-  // A glance, not a paragraph: a long first sentence is cut at the last word.
-  const longCut = firstSentence.lastIndexOf(" ", 110);
-  const summary =
-    firstSentence.length > 110 && longCut > 0
-      ? `${firstSentence.slice(0, longCut)}…`
-      : firstSentence;
+  // The details that used to sit in a spec sheet, kept as one quiet line.
+  // Name, address and CV already have their own places in the hero.
+  const facts = [
+    { label: "Age", value: `${yearsSince(BIRTH_DATE)}` },
+    { label: "Nationality", value: "Egyptian" },
+    { label: "Languages", value: "Arabic, English" },
+    { label: "Freelance", value: "Available" },
+  ];
 
   // "Mahmoud Mohamed" sets on two lines; a single-word name keeps one.
   const nameParts = name.split(" ");
@@ -148,22 +167,26 @@ export const HomeIntro = ({
         )}
       </h1>
 
-      {/* The one-line answer to "what do you do", taken from the bio. */}
-      {summary && (
+      {/* The whole biography, so a visitor learns the person before scrolling. */}
+      {paragraphs.map((paragraph, index) => (
         <motion.p
-          custom={1}
+          key={index}
+          custom={1 + index}
           initial={reduceMotion ? false : "hidden"}
           animate="visible"
           variants={rise}
-          className="hero-summary mt-4 text-[15px] leading-relaxed text-ink-body sm:mt-5 sm:text-base"
+          className={clsx(
+            "hero-bio text-[15px] leading-relaxed text-ink-body sm:text-base",
+            index === 0 ? "mt-4 sm:mt-5" : "mt-3",
+          )}
         >
-          {summary}
+          {paragraph}
         </motion.p>
-      )}
+      ))}
 
       {/* Real figures, read from the projects the site already loads. */}
       <motion.dl
-        custom={2}
+        custom={1 + paragraphs.length}
         initial={reduceMotion ? false : "hidden"}
         animate="visible"
         variants={rise}
@@ -177,6 +200,26 @@ export const HomeIntro = ({
             </dt>
             <dd className="order-1 text-xl text-sage tabular-nums sm:text-2xl">
               <Counter value={figure.value} delay={0.7 + index * 0.12} />
+            </dd>
+          </div>
+        ))}
+      </motion.dl>
+
+      {/* One quiet line of details, set as a definition list. */}
+      <motion.dl
+        custom={2 + paragraphs.length}
+        initial={reduceMotion ? false : "hidden"}
+        animate="visible"
+        variants={rise}
+        className="hero-facts mt-5 font-mono"
+      >
+        {facts.map((fact) => (
+          <div key={fact.label} className="hero-fact min-w-0">
+            <dt className="text-[10px] uppercase tracking-[0.16em] text-ink-muted">
+              {fact.label}
+            </dt>
+            <dd className="min-w-0 break-words text-[11px] text-ink-strong">
+              {fact.value}
             </dd>
           </div>
         ))}

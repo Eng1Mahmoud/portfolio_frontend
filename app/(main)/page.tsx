@@ -12,8 +12,6 @@ import { ContentSlider } from "@/components/general/ContentSlider";
 import { Title } from "@/components/general/Title";
 import { ProjectCard } from "@/components/Projects/ProjectCard";
 import { RecommendationCard } from "@/components/recommendations/RecommendationCard";
-import { PersonalInfo } from "@/components/about/PersonalInfo";
-import { ProfileImage } from "@/components/about/ProfileImage";
 import { SkillCard } from "@/components/skills/SkillCard";
 import { SkillGroupHeading } from "@/components/skills/SkillGroupHeading";
 import ExperienceTimeline from "@/components/Experience/ExperienceTimeline";
@@ -116,19 +114,12 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="about" className="portfolio-section">
-        <Title title="Behind the work" eyebrow="About me" />
-        <div className={`grid items-start gap-10 ${profileInfo?.aboutImage ? "md:grid-cols-[0.8fr_1.2fr]" : "max-w-3xl"}`}>
-          <ProfileImage profileInfo={profileInfo as IuserInfo} />
-          <PersonalInfo profileInfo={profileInfo as IuserInfo} />
-        </div>
-        <div id="skills" className="mt-16 scroll-mt-28">
+      <section id="skills" className="portfolio-section">
         <Title title="Skills" eyebrow="What I work with" count={skillCount} />
         <div className="skill-groups">{orderedCategories.map(category => {
           const items = (skills ?? []).filter(skill => (skill.category?.trim() || "Other") === category);
           return <Reveal key={category} delay={0.04} className="skill-group"><SkillGroupHeading category={category} count={items.length} /><div className="skill-grid">{items.map((skill, i) => <SkillCard key={skill._id ?? skill.name} skill={skill} index={i} />)}</div></Reveal>;
         })}</div>
-        </div>
       </section>
       <section id="projects" className="portfolio-section">
         <Title title="Projects" eyebrow="Selected work" count={projectCount} />

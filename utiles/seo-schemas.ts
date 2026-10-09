@@ -265,7 +265,3 @@ export const contactBreadcrumbs = [
   { name: "Home", url: "/" },
   { name: "Contact", url: "/contact-us" },
 ];
-export const aboutBreadcrumbs = [
-  { name: "Home", url: "/" },
-  { name: "About", url: "/about" },
-];
