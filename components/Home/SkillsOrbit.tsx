@@ -2,7 +2,7 @@
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ISkill } from "@/types/general";
 import {
@@ -77,25 +77,58 @@ export const SkillsOrbit = ({
   const reduceMotion = useReducedMotion();
   const [mode, setMode] = useState<"pending" | "3d" | "static">("pending");
   const [lite, setLite] = useState(false);
+  const [onScreen, setOnScreen] = useState(true);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  // Stop the 3D loop while the globe is scrolled out of view.
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([entry]) =>
+      setOnScreen(entry.isIntersecting),
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     const mobile = window.matchMedia("(max-width: 767px)");
     const update = () => setLite(mobile.matches);
     update();
     mobile.addEventListener("change", update);
-    setMode(
+    const want3d =
       !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
-        hasWebGL()
-        ? "3d"
-        : "static",
-    );
-    return () => mobile.removeEventListener("change", update);
+      hasWebGL();
+    // Show the light static globe first; start WebGL only once the page
+    // has loaded and the main thread is idle, so first paint never freezes.
+    setMode("static");
+    let idleId = 0;
+    let timer = 0;
+    const start = () => {
+      const w = window as Window & {
+        requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
+      };
+      if (w.requestIdleCallback)
+        idleId = w.requestIdleCallback(() => setMode("3d"), { timeout: 2500 });
+      else timer = window.setTimeout(() => setMode("3d"), 1200);
+    };
+    if (want3d) {
+      if (document.readyState === "complete") start();
+      else window.addEventListener("load", start, { once: true });
+    }
+    return () => {
+      mobile.removeEventListener("change", update);
+      window.removeEventListener("load", start);
+      if (idleId) (window as Window & { cancelIdleCallback?: (id: number) => void }).cancelIdleCallback?.(idleId);
+      if (timer) clearTimeout(timer);
+    };
   }, []);
 
   const layout = getSphereLayout(skills.length);
 
   return (
     <motion.div
+      ref={rootRef}
       initial={reduceMotion ? false : { opacity: 0, scale: 0.94 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 0.3, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
@@ -109,7 +142,7 @@ export const SkillsOrbit = ({
             className={`absolute inset-0 ${reduceMotion ? "invisible" : ""}`}
             aria-hidden={reduceMotion}
           >
-            <Scene skills={skills} lite={lite} paused={reduceMotion} />
+            <Scene skills={skills} lite={lite} paused={reduceMotion || !onScreen} />
           </div>
           {reduceMotion && <StaticSkills skills={skills} />}
         </>
