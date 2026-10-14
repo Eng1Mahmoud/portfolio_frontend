@@ -126,8 +126,9 @@ export const SkillsOrbit = ({
             alt={name}
             fill
             priority
-            unoptimized
-            sizes="(max-width: 767px) 103px, 173px"
+            fetchPriority="high"
+            quality={80}
+            sizes="(max-width: 767px) 160px, 256px"
             className="object-cover"
           />
         </div>

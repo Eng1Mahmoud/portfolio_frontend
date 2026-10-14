@@ -112,7 +112,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
                   src={profileInfo.avatar}
                   alt=""
                   fill
-                  unoptimized
+                  sizes="36px"
                   className="object-cover"
                 />
               ) : (

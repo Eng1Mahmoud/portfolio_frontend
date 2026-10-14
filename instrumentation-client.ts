@@ -1,21 +1,36 @@
-import posthog from "posthog-js";
 import * as Sentry from "@sentry/nextjs";
 
 // Sentry (error tracing) — the DSN must be NEXT_PUBLIC_ to reach the browser.
-// A non-public var is `undefined` here, which silently puts the SDK in no-op mode.
+// Session replay is lazy-loaded after the page is idle so it never competes
+// with the first paint.
 Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-  integrations: [Sentry.replayIntegration()],
+  integrations: [],
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
-  tracesSampleRate: 1.0,
+  tracesSampleRate: 0.2,
   debug: false,
 });
 
-// PostHog (product analytics)
-if (typeof window !== "undefined") {
-  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-    api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
-    defaults: "2026-01-30",
+const whenIdle = (cb: () => void) => {
+  if (typeof window === "undefined") return;
+  const run = () =>
+    "requestIdleCallback" in window
+      ? window.requestIdleCallback(cb, { timeout: 4000 })
+      : setTimeout(cb, 2500);
+  if (document.readyState === "complete") run();
+  else window.addEventListener("load", run, { once: true });
+};
+
+whenIdle(() => {
+  Sentry.lazyLoadIntegration("replayIntegration")
+    .then((replay) => Sentry.addIntegration(replay()))
+    .catch(() => {});
+  // PostHog (product analytics), loaded off the critical path.
+  import("posthog-js").then(({ default: posthog }) => {
+    posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
+      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+      defaults: "2026-01-30",
+    });
   });
-}
+});
