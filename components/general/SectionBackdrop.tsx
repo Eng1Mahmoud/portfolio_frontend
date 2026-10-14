@@ -73,6 +73,19 @@ export const SectionBackdrop = () => {
 
   useEffect(() => {
     const layer = layerRef.current;
+    if (!layer || reduceMotion) return;
+    const live = () => layer.setAttribute("data-live", "");
+    if (document.readyState === "complete") {
+      const t = window.setTimeout(live, 800);
+      return () => clearTimeout(t);
+    }
+    const onLoad = () => window.setTimeout(live, 800);
+    window.addEventListener("load", onLoad, { once: true });
+    return () => window.removeEventListener("load", onLoad);
+  }, [reduceMotion]);
+
+  useEffect(() => {
+    const layer = layerRef.current;
     const scroller = document.getElementById("page-scroll");
     if (!layer || !scroller || reduceMotion) return;
 
@@ -144,10 +157,10 @@ export const SectionBackdrop = () => {
     <div
       ref={layerRef}
       aria-hidden="true"
-      className="section-backdrop fixed! [inset:0]! [z-index:0]! pointer-events-none! overflow-hidden! [transition:--lit-a_1200ms_ease,_--lit-b_1200ms_ease]! motion-reduce:[transition:none]!"
+      className="section-backdrop fixed! [inset:0]! [z-index:0]! pointer-events-none! overflow-hidden! [contain:strict]! [transition:--lit-a_1200ms_ease,_--lit-b_1200ms_ease]! motion-reduce:[transition:none]!"
     >
       <svg
-        className="section-backdrop-stars absolute! [inset:-2%_-2%_-16%]! [width:104%]! [height:118%]! [transform:translate3d(0,_var(--star-shift,_0px),_0)]! [will-change:transform]! [mask-image:var(--stars-mask)]! [&_.star-lines_line]:[stroke:var(--constellation-stroke)]! [&_.star-lines_line]:[stroke-width:0.7]! [&_.star]:[fill:var(--star-fill)]! [&_.star]:[opacity:0.55] [&_.star]:[animation:star-twinkle_6s_ease-in-out_infinite] [&_.star--hub]:fill-sage-bright! [&_.star--hub]:[opacity:0.9] [&_.star--hub]:[filter:var(--star-glow)]! motion-reduce:[&_.star]:[animation:none]!"
+        className="section-backdrop-stars absolute! [inset:-2%_-2%_-16%]! [width:104%]! [height:118%]! [transform:translate3d(0,_var(--star-shift,_0px),_0)]! [will-change:transform]! [mask-image:var(--stars-mask)]! [&_.star-lines_line]:[stroke:var(--constellation-stroke)]! [&_.star-lines_line]:[stroke-width:0.7]! [&_.star]:[fill:var(--star-fill)]! [&_.star]:[opacity:0.55] [&_.star--hub]:[animation:star-twinkle_6s_ease-in-out_infinite] [&_.star--hub]:fill-sage-bright! [&_.star--hub]:[opacity:0.9] [&_.star--hub]:[filter:var(--star-glow)]! motion-reduce:[&_.star]:[animation:none]!"
         viewBox="0 0 1600 1000"
         preserveAspectRatio="xMidYMid slice"
       >
@@ -163,12 +176,12 @@ export const SectionBackdrop = () => {
             cy={star.y}
             r={star.r}
             className={star.hub ? "star star--hub" : "star"}
-            style={{ animationDelay: `${star.d.toFixed(2)}s` }}
+            style={star.hub ? { animationDelay: `${star.d.toFixed(2)}s` } : undefined}
           />
         ))}
       </svg>
-      <div className="section-backdrop-drift absolute! [width:min(760px,_120vw)]! aspect-square! [border-radius:50%]! [filter:blur(60px)]! [opacity:0.26]! [will-change:transform]! motion-reduce:[animation:none]! section-backdrop-drift--one [left:-18%]! [top:-12%]! [background:var(--drift-support)]! [animation:backdrop-drift-one_38s_ease-in-out_infinite_alternate]!" />
-      <div className="section-backdrop-drift absolute! [width:min(760px,_120vw)]! aspect-square! [border-radius:50%]! [filter:blur(60px)]! [opacity:0.26]! [will-change:transform]! motion-reduce:[animation:none]! section-backdrop-drift--two [right:-20%]! [bottom:-18%]! [background:var(--drift-accent)]! [animation:backdrop-drift-two_46s_ease-in-out_infinite_alternate]!" />
+      <div className="section-backdrop-drift absolute! [width:min(760px,_120vw)]! aspect-square! [border-radius:50%]! [filter:blur(60px)]! [opacity:0.26]! [will-change:transform]! motion-reduce:[animation:none]! section-backdrop-drift--one [left:-18%]! [top:-12%]! [background:var(--drift-support)]! [.section-backdrop[data-live]_&]:[animation:backdrop-drift-one_38s_ease-in-out_infinite_alternate]!" />
+      <div className="section-backdrop-drift absolute! [width:min(760px,_120vw)]! aspect-square! [border-radius:50%]! [filter:blur(60px)]! [opacity:0.26]! [will-change:transform]! motion-reduce:[animation:none]! section-backdrop-drift--two [right:-20%]! [bottom:-18%]! [background:var(--drift-accent)]! [.section-backdrop[data-live]_&]:[animation:backdrop-drift-two_46s_ease-in-out_infinite_alternate]!" />
       <div className="section-backdrop-light absolute! [left:50%]! [top:0]! [width:min(1120px,_170vw)]! [height:min(720px,_88vh)]! [transform:translate3d(-50%,_calc(var(--lit-y,_42vh)_-_50%),_0)]! [background:var(--reading-light)]! [opacity:0.42]! [will-change:transform]!" />
       <div className="section-backdrop-grain absolute! [inset:0]! [opacity:0.05]! [mix-blend-mode:overlay]! [background-image:var(--grain-image)]!" />
       <div className="section-backdrop-vignette absolute! [inset:0]! [background:var(--vignette)]!" />
