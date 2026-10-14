@@ -47,8 +47,10 @@ const ProjectShot = ({
         alt={alt}
         width={1200}
         height={800}
-        sizes="(max-width: 768px) 100vw, 900px"
+        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 560px"
         priority={priority}
+        loading={priority ? undefined : "lazy"}
+        quality={70}
         draggable={false}
         className="block h-auto! w-full! max-w-full"
       />
@@ -102,7 +104,7 @@ export const ProjectCard = ({
           <ProjectShot
             src={project.imageUrl}
             alt={project.title}
-            priority={index < 3}
+            priority={false}
           />
           <div
             aria-hidden="true"
