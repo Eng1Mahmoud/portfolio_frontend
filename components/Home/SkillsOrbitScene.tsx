@@ -218,7 +218,7 @@ export default function SkillsOrbitScene({
             ref={(node) => {
               badges.current[i] = node;
             }}
-            className="orbit-skill-badge box-border! aspect-square! grid! place-items-center! [padding:16%] [border-radius:8px]! [border:var(--badge-border)]! [background:var(--badge-background)]! [box-shadow:var(--badge-shadow)]! [backdrop-filter:blur(10px)]! absolute select-none! [transition:border-color_200ms,_background_200ms]! [will-change:transform,_opacity]! invisible [&_img]:w-full! [&_img]:h-full! [&_img]:object-contain! [&_img]:[opacity:0]! [&_img]:[transition:opacity_200ms_ease]! [&_img[data-ready=true]]:[opacity:1]! [&:hover]:border-sage-bright! [&:hover]:bg-surface-raised! [&:hover_.orbit-skill-label]:[opacity:1]! [&:active_.orbit-skill-label]:[opacity:1]! pointer-events-auto"
+            className="orbit-skill-badge box-border! aspect-square! grid! place-items-center! [padding:16%] [border-radius:8px]! [border:var(--badge-border)]! [background:var(--badge-background)]! [box-shadow:var(--badge-shadow)]! absolute select-none! [transition:border-color_200ms,_background_200ms]! [will-change:transform,_opacity]! invisible [&_img]:w-full! [&_img]:h-full! [&_img]:object-contain! [&_img]:[opacity:0]! [&_img]:[transition:opacity_200ms_ease]! [&_img[data-ready=true]]:[opacity:1]! [&:hover]:border-sage-bright! [&:hover]:bg-surface-raised! [&:hover_.orbit-skill-label]:[opacity:1]! [&:active_.orbit-skill-label]:[opacity:1]! pointer-events-auto"
             title={skill.name}
             style={{ position: "absolute", transform: "translate(-50%, -50%)" }}
           >

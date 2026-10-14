@@ -26,7 +26,7 @@ const StaticSkills = ({ skills }: { skills: ISkill[] }) => {
           <div
             key={skill._id ?? `${skill.name}-${index}`}
             title={skill.name}
-            className="static-orbit-badge box-border! aspect-square! grid! place-items-center! [padding:1.3%]! [border-radius:8px]! [border:var(--badge-border)]! [background:var(--badge-background)]! [box-shadow:var(--badge-shadow)]! [backdrop-filter:blur(10px)]! absolute! [transform:translate(-50%,_-50%)]!"
+            className="static-orbit-badge box-border! aspect-square! grid! place-items-center! [padding:1.3%]! [border-radius:8px]! [border:var(--badge-border)]! [background:var(--badge-background)]! [box-shadow:var(--badge-shadow)]! absolute! [transform:translate(-50%,_-50%)]!"
             style={{
               width: `${layout.badgeSize * 100}%`,
               left: `${50 + position.x * 100}%`,
@@ -112,13 +112,37 @@ export const SkillsOrbit = ({
         idleId = w.requestIdleCallback(() => setMode("3d"), { timeout: 2500 });
       else timer = window.setTimeout(() => setMode("3d"), 1200);
     };
+    // Phones: the 3D engine is costly on slower CPUs, so wait for the first
+    // touch/scroll (or a few quiet seconds) before swapping it in.
+    const isPhone = mobile.matches;
+    const events = ["pointerdown", "touchstart", "wheel", "keydown"] as const;
+    const scroller = document.getElementById("page-scroll");
+    const onFirstInput = () => {
+      cleanupInput();
+      start();
+    };
+    const cleanupInput = () => {
+      events.forEach((e) => window.removeEventListener(e, onFirstInput));
+      scroller?.removeEventListener("scroll", onFirstInput);
+    };
+    let phoneTimer = 0;
+    const armPhone = () => {
+      events.forEach((e) =>
+        window.addEventListener(e, onFirstInput, { once: true, passive: true }),
+      );
+      scroller?.addEventListener("scroll", onFirstInput, { once: true, passive: true });
+      phoneTimer = window.setTimeout(onFirstInput, 8000);
+    };
+    const begin = isPhone ? armPhone : start;
     if (want3d) {
-      if (document.readyState === "complete") start();
-      else window.addEventListener("load", start, { once: true });
+      if (document.readyState === "complete") begin();
+      else window.addEventListener("load", begin, { once: true });
     }
     return () => {
       mobile.removeEventListener("change", update);
-      window.removeEventListener("load", start);
+      window.removeEventListener("load", begin);
+      cleanupInput();
+      if (phoneTimer) clearTimeout(phoneTimer);
       if (idleId) (window as Window & { cancelIdleCallback?: (id: number) => void }).cancelIdleCallback?.(idleId);
       if (timer) clearTimeout(timer);
     };
@@ -129,9 +153,9 @@ export const SkillsOrbit = ({
   return (
     <motion.div
       ref={rootRef}
-      initial={reduceMotion ? false : { opacity: 0, scale: 0.94 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.3, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+      initial={reduceMotion ? false : { scale: 0.97 }}
+      animate={{ scale: 1 }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className="skills-orbit max-w-120! overflow-hidden! isolate! md:max-w-160! max-md:[@media(max-height:700px)]:max-w-95! relative aspect-square min-w-0 w-full cursor-grab active:cursor-grabbing"
       aria-label={`${name}: ${skills.map((skill) => skill.name).join(", ")}`}
       role="img"

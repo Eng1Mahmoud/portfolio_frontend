@@ -33,8 +33,10 @@ export default function MainTemplate({
   return (
     <motion.div
       key={pathname}
-      initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
+      // No opacity fade: content must be visible in the server HTML so the
+      // first paint (and the hero photo) never waits for JavaScript.
+      initial={reduceMotion ? false : { y: 12 }}
+      animate={{ y: 0 }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}

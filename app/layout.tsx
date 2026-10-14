@@ -144,10 +144,25 @@ export default async function RootLayout({
         {/* Clash Display + Satoshi are Fontshare faces, not on Google Fonts. */}
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="" />
+        {/* Loaded without blocking first paint; fonts swap in when ready. */}
         <link
+          id="fontshare-css"
           rel="stylesheet"
+          media="print"
           href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap"
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){var l=document.getElementById('fontshare-css');if(!l)return;var on=function(){l.media='all'};if(l.sheet)on();else l.addEventListener('load',on);})();",
+          }}
+        />
+        <noscript>
+          <link
+            rel="stylesheet"
+            href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap"
+          />
+        </noscript>
       </head>
       <body
         suppressHydrationWarning={true}
@@ -159,7 +174,9 @@ export default async function RootLayout({
             __html: JSON.stringify(jsonld),
           }}
         />
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_GTAG as string} />
+        {process.env.NEXT_PUBLIC_GOOGLE_GTAG && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_GTAG} />
+        )}
         <ToastContainer
           position="top-right"
           autoClose={5000}
