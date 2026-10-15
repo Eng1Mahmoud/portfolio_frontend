@@ -74,14 +74,17 @@ export const SectionBackdrop = () => {
   useEffect(() => {
     const layer = layerRef.current;
     if (!layer || reduceMotion) return;
-    const live = () => layer.setAttribute("data-live", "");
-    if (document.readyState === "complete") {
-      const t = window.setTimeout(live, 800);
-      return () => clearTimeout(t);
-    }
-    const onLoad = () => window.setTimeout(live, 800);
-    window.addEventListener("load", onLoad, { once: true });
-    return () => window.removeEventListener("load", onLoad);
+    let timer: number | undefined;
+    const onLoad = () => {
+      timer = window.setTimeout(() => layer.setAttribute("data-live", ""), 800);
+    };
+    if (document.readyState === "complete") onLoad();
+    else window.addEventListener("load", onLoad, { once: true });
+    return () => {
+      window.removeEventListener("load", onLoad);
+      if (timer !== undefined) clearTimeout(timer);
+      layer.removeAttribute("data-live");
+    };
   }, [reduceMotion]);
 
   useEffect(() => {
@@ -98,6 +101,7 @@ export const SectionBackdrop = () => {
     let target = current;
     let activeId = "";
     let frame = 0;
+    let needsMeasure = true;
 
     const measure = () => {
       const mid = window.innerHeight / 2;
@@ -129,6 +133,10 @@ export const SectionBackdrop = () => {
     };
 
     const tick = () => {
+      if (needsMeasure) {
+        measure();
+        needsMeasure = false;
+      }
       current += (target - current) * 0.08;
       layer.style.setProperty("--lit-y", `${current.toFixed(1)}px`);
       layer.style.setProperty(
@@ -139,7 +147,7 @@ export const SectionBackdrop = () => {
         Math.abs(target - current) > 0.4 ? requestAnimationFrame(tick) : 0;
     };
     const queue = () => {
-      measure();
+      needsMeasure = true;
       if (!frame) frame = requestAnimationFrame(tick);
     };
 
@@ -176,7 +184,9 @@ export const SectionBackdrop = () => {
             cy={star.y}
             r={star.r}
             className={star.hub ? "star star--hub" : "star"}
-            style={star.hub ? { animationDelay: `${star.d.toFixed(2)}s` } : undefined}
+            style={
+              star.hub ? { animationDelay: `${star.d.toFixed(2)}s` } : undefined
+            }
           />
         ))}
       </svg>
