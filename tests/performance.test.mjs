@@ -8,10 +8,11 @@ import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 const require = createRequire(import.meta.url);
-function load(path, overrides = {}) {
+function load(path, overrides = {}, globals = {}) {
   const code = ts.transpileModule(readFileSync(path, "utf8"), {
     compilerOptions: {
       module: ts.ModuleKind.CommonJS,
+      target: ts.ScriptTarget.ES2020,
       jsx: ts.JsxEmit.ReactJSX,
       esModuleInterop: true,
     },
@@ -21,6 +22,7 @@ function load(path, overrides = {}) {
     exports,
     process: { env: { NEXT_PUBLIC_POSTHOG_KEY: "test-key" } },
     require: (name) => (name in overrides ? overrides[name]() : require(name)),
+    ...globals,
   });
   return exports;
 }
@@ -90,4 +92,71 @@ test("page template does not hide server-rendered content before hydration", () 
   );
   assert.match(html, /Visible immediately/);
   assert.doesNotMatch(html, /opacity:0|visibility:hidden/);
+});
+
+test("first interaction is shared once and removes all listeners", () => {
+  const events = new Map();
+  const window = {
+    addEventListener: (name, callback) => events.set(name, callback),
+    removeEventListener: (name) => events.delete(name),
+  };
+  const { afterFirstInteraction, hasInteracted } = load(
+    "utiles/first-interaction.ts",
+    {},
+    { window },
+  );
+  const calls = [];
+  const cancel = afterFirstInteraction(() => calls.push("cancelled"));
+  afterFirstInteraction(() => calls.push("active"));
+  assert.equal(events.size, 4);
+  assert.equal(hasInteracted(), false);
+  cancel();
+  events.get("scroll")();
+  assert.equal(hasInteracted(), true);
+  assert.equal(events.size, 0);
+  afterFirstInteraction(() => calls.push("late"));
+  assert.deepEqual(calls, ["active", "late"]);
+});
+
+test("core error capture stays immediate while replay loads once on error", async () => {
+  let beforeSend;
+  let loads = 0;
+  let added = 0;
+  let interaction;
+  const sdk = {
+    init: (options) => {
+      beforeSend = options.beforeSend;
+    },
+    lazyLoadIntegration: async () => {
+      loads++;
+      return () => ({ name: "Replay" });
+    },
+    addIntegration: () => {
+      added++;
+    },
+  };
+  load(
+    "instrumentation-client.ts",
+    {
+      "@sentry/nextjs": () => sdk,
+      "@/utiles/first-interaction": () => ({
+        afterFirstInteraction: (cb) => {
+          interaction = cb;
+        },
+      }),
+      "@/utiles/analytics-events/posthog-client": () => ({
+        getPostHog: async () => ({}),
+      }),
+    },
+    { process: { env: { NEXT_PUBLIC_SENTRY_DSN: "test-dsn" } } },
+  );
+  assert.equal(loads, 0);
+  assert.equal(typeof interaction, "function");
+  const event = { message: "test error" };
+  assert.equal(beforeSend(event), event);
+  assert.equal(beforeSend(event), event);
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(loads, 1);
+  assert.equal(added, 1);
 });
