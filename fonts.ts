@@ -3,6 +3,8 @@ import { JetBrains_Mono } from "next/font/google";
 
 // Prepared from official Fontshare URLs by predev/prebuild. Keep the font
 // binaries out of the public repository; see scripts/README.md.
+// On a slow first visit, keep the metric-adjusted fallback instead of a late
+// font swap that repaints the largest text. Cached fonts keep the same design.
 export const displayFont = localFont({
   src: [
     { path: "./.font-cache/clash-display-500.woff2", weight: "500" },
@@ -10,8 +12,8 @@ export const displayFont = localFont({
     { path: "./.font-cache/clash-display-700.woff2", weight: "700" },
   ],
   variable: "--display-font",
-  display: "swap",
-  preload: true,
+  display: "optional",
+  preload: false,
 });
 
 export const mainFont = localFont({
@@ -21,14 +23,14 @@ export const mainFont = localFont({
     { path: "./.font-cache/satoshi-700.woff2", weight: "700" },
   ],
   variable: "--main-font",
-  display: "swap",
+  display: "optional",
   preload: false,
 });
 
 export const monoFont = JetBrains_Mono({
   weight: ["400", "500"],
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
   variable: "--mono-font",
   preload: false,
 });

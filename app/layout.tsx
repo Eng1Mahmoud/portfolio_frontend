@@ -1,6 +1,4 @@
-import { ToastContainer } from "react-toastify";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import "react-toastify/dist/ReactToastify.css";
 import { displayFont, mainFont, monoFont } from "@/fonts";
 import { Metadata } from "next";
 import { Person, WithContext } from "schema-dts";
@@ -151,19 +149,6 @@ export default async function RootLayout({
           }}
         />
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_GTAG as string} />
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-          className="z[1000]"
-        />
         <MotionProvider>{children}</MotionProvider>
         <ChatBotWraper />
       </body>

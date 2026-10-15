@@ -232,6 +232,7 @@ export default function SkillsOrbitScene({
               width={64}
               height={64}
               sizes="64px"
+              fetchPriority="low"
               draggable={false}
               onLoad={async (e) => {
                 const image = e.currentTarget;
