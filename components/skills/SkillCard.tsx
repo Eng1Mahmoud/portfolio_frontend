@@ -29,6 +29,7 @@ export const SkillCard = ({
           alt=""
           width={40}
           height={40}
+          fetchPriority="low"
           className="h-8 w-8 object-contain"
         />
       </span>

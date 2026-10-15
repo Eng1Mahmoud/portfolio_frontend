@@ -1,3 +1,4 @@
+import Notifications from "@/components/general/Notifications";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,5 +13,10 @@ export default function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="min-h-screen bg-surface-base">{children}</div>;
+  return (
+    <div className="min-h-screen bg-surface-base">
+      <Notifications />
+      {children}
+    </div>
+  );
 }

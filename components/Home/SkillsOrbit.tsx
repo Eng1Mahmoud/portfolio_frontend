@@ -40,6 +40,7 @@ const StaticSkills = ({ skills }: { skills: ISkill[] }) => {
               width={64}
               height={64}
               sizes="64px"
+              fetchPriority="low"
               className="h-full w-full object-contain"
             />
           </div>
