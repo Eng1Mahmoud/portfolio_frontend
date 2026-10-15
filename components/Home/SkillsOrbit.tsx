@@ -75,15 +75,20 @@ export const SkillsOrbit = ({
   name: string;
 }) => {
   const reduceMotion = useReducedMotion();
-  const [mode, setMode] = useState<"pending" | "3d" | "static">("pending");
+  const [mode, setMode] = useState<"3d" | "static">("static");
   const [lite, setLite] = useState(false);
-  const [onScreen, setOnScreen] = useState(true);
+  const [onScreen, setOnScreen] = useState(false);
+  const [pageVisible, setPageVisible] = useState(true);
   const rootRef = useRef<HTMLDivElement>(null);
 
   // Stop the 3D loop while the globe is scrolled out of view.
   useEffect(() => {
     const el = rootRef.current;
-    if (!el || typeof IntersectionObserver === "undefined") return;
+    if (!el) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setOnScreen(true);
+      return;
+    }
     const io = new IntersectionObserver(([entry]) =>
       setOnScreen(entry.isIntersecting),
     );
@@ -96,33 +101,38 @@ export const SkillsOrbit = ({
     const update = () => setLite(mobile.matches);
     update();
     mobile.addEventListener("change", update);
-    const want3d =
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
-      hasWebGL();
-    // Show the light static globe first; start WebGL only once the page
-    // has loaded and the main thread is idle, so first paint never freezes.
-    setMode("static");
-    let idleId = 0;
-    let timer = 0;
-    const start = () => {
-      const w = window as Window & {
-        requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
-      };
-      if (w.requestIdleCallback)
-        idleId = w.requestIdleCallback(() => setMode("3d"), { timeout: 2500 });
-      else timer = window.setTimeout(() => setMode("3d"), 1200);
-    };
-    if (want3d) {
-      if (document.readyState === "complete") start();
-      else window.addEventListener("load", start, { once: true });
-    }
-    return () => {
-      mobile.removeEventListener("change", update);
-      window.removeEventListener("load", start);
-      if (idleId) (window as Window & { cancelIdleCallback?: (id: number) => void }).cancelIdleCallback?.(idleId);
-      if (timer) clearTimeout(timer);
-    };
+    return () => mobile.removeEventListener("change", update);
   }, []);
+
+  useEffect(() => {
+    const update = () => setPageVisible(!document.hidden);
+    update();
+    document.addEventListener("visibilitychange", update);
+    return () => document.removeEventListener("visibilitychange", update);
+  }, []);
+
+  useEffect(() => {
+    // Do not download or initialize the scene until it can actually be seen.
+    // Keep an already-mounted scene so returning to it preserves its state.
+    if (mode === "3d" || !onScreen || !pageVisible || reduceMotion) return;
+    let idleId: number | undefined;
+    let timer: number | undefined;
+    const activate = () => {
+      if (!document.hidden) setMode(hasWebGL() ? "3d" : "static");
+    };
+    const start = () => {
+      if (typeof window.requestIdleCallback === "function")
+        idleId = window.requestIdleCallback(activate, { timeout: 2500 });
+      else timer = window.setTimeout(activate, 1200);
+    };
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+    return () => {
+      window.removeEventListener("load", start);
+      if (idleId !== undefined) window.cancelIdleCallback(idleId);
+      if (timer !== undefined) clearTimeout(timer);
+    };
+  }, [mode, onScreen, pageVisible, reduceMotion]);
 
   const layout = getSphereLayout(skills.length);
 
@@ -142,7 +152,11 @@ export const SkillsOrbit = ({
             className={`absolute inset-0 ${reduceMotion ? "invisible" : ""}`}
             aria-hidden={reduceMotion}
           >
-            <Scene skills={skills} lite={lite} paused={reduceMotion || !onScreen} />
+            <Scene
+              skills={skills}
+              lite={lite}
+              paused={reduceMotion || !onScreen || !pageVisible}
+            />
           </div>
           {reduceMotion && <StaticSkills skills={skills} />}
         </>
