@@ -44,3 +44,6 @@ next-env.d.ts
 
 # Sentry Config File
 .env.sentry-build-plugin
+
+# Original Fontshare files are fetched for this site at build time.
+.font-cache/

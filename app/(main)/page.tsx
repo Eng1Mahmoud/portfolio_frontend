@@ -79,13 +79,9 @@ export default async function Home() {
             <HomeIntro profileInfo={profileInfo as IuserInfo} />
 
             {/* The hero closes with the social links; the CV stays in the navigation. */}
-            <Reveal
-              delay={0.45}
-              trigger="mount"
-              className="hero-actions max-md:[@media(max-height:700px)]:mt-5! mt-6 pl-6 sm:mt-8 sm:pl-10"
-            >
+            <div className="hero-actions max-md:[@media(max-height:700px)]:mt-5! mt-6 pl-6 sm:mt-8 sm:pl-10">
               <SocialLinks profileInfo={profileInfo as IuserInfo} />
-            </Reveal>
+            </div>
           </div>
           <div className="hero-visual max-md:[margin-top:-18px]! min-w-0 flex justify-center lg:justify-end">
             <SkillsOrbit
@@ -132,7 +128,10 @@ export default async function Home() {
           })}
         </div>
       </section>
-      <section id="services" className="portfolio-section relative! py-10 sm:py-11 md:py-14 [border-bottom:var(--section-border)]! [scroll-margin-top:12px]! [&:first-child]:pt-3! [&:first-child]:[border-bottom:0]! [&:last-of-type]:[border-bottom:0]! ">
+      <section
+        id="services"
+        className="portfolio-section relative! py-10 sm:py-11 md:py-14 [border-bottom:var(--section-border)]! [scroll-margin-top:12px]! [&:first-child]:pt-3! [&:first-child]:[border-bottom:0]! [&:last-of-type]:[border-bottom:0]! "
+      >
         <Title title="Services" eyebrow="What I can build for you" />
         <ServicesSection />
       </section>

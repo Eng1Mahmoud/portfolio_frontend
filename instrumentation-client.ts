@@ -1,3 +1,4 @@
+import { getPostHog } from "@/utiles/analytics-events/posthog-client";
 import * as Sentry from "@sentry/nextjs";
 
 // Sentry (error tracing) — the DSN must be NEXT_PUBLIC_ to reach the browser.
@@ -27,10 +28,5 @@ whenIdle(() => {
     .then((replay) => Sentry.addIntegration(replay()))
     .catch(() => {});
   // PostHog (product analytics), loaded off the critical path.
-  import("posthog-js").then(({ default: posthog }) => {
-    posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
-      defaults: "2026-01-30",
-    });
-  });
+  void getPostHog().catch(() => {});
 });

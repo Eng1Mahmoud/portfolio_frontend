@@ -34,10 +34,12 @@ const StaticSkills = ({ skills }: { skills: ISkill[] }) => {
               opacity: 0.45 + 0.55 * front,
             }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={skill.imageUrl}
               alt={skill.name}
+              width={64}
+              height={64}
+              sizes="64px"
               className="h-full w-full object-contain"
             />
           </div>
@@ -175,7 +177,7 @@ export const SkillsOrbit = ({
             priority
             fetchPriority="high"
             quality={80}
-            sizes="(max-width: 767px) 160px, 256px"
+            sizes="(max-width: 767px) 154px, 205px"
             className="object-cover"
           />
         </div>

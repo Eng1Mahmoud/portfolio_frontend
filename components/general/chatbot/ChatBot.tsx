@@ -4,7 +4,18 @@ import React, { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useChat } from "@/hooks/useChat";
 import { ChatHeader } from "./ChatHeader";
-import { ChatMessages } from "./ChatMessages";
+import dynamic from "next/dynamic";
+
+const ChatMessages = dynamic(
+  () => import("./ChatMessages").then((m) => m.ChatMessages),
+  {
+    loading: () => (
+      <div role="status" className="flex-1 p-4">
+        Loading messages…
+      </div>
+    ),
+  },
+);
 import { ChatInput } from "./ChatInput";
 import { ChatToggle } from "./ChatToggle";
 

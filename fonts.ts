@@ -1,21 +1,34 @@
+import localFont from "next/font/local";
 import { JetBrains_Mono } from "next/font/google";
 
-/**
- * Display (Clash Display) and body (Satoshi) come from Fontshare — they are
- * not on Google Fonts. The stylesheet is linked in app/layout.tsx and the
- * `.font-vars` class in globals.css maps them onto the same CSS variables the
- * rest of the code already reads (--display-font, --main-font), so nothing
- * downstream changes. The objects keep the `.variable` shape of next/font.
- */
-export const displayFont = { variable: "font-vars" };
+// Prepared from official Fontshare URLs by predev/prebuild. Keep the font
+// binaries out of the public repository; see scripts/README.md.
+export const displayFont = localFont({
+  src: [
+    { path: "./.font-cache/clash-display-500.woff2", weight: "500" },
+    { path: "./.font-cache/clash-display-600.woff2", weight: "600" },
+    { path: "./.font-cache/clash-display-700.woff2", weight: "700" },
+  ],
+  variable: "--display-font",
+  display: "swap",
+  preload: true,
+});
 
-/** Body: everything that is read rather than looked at. */
-export const mainFont = { variable: "font-vars" };
+export const mainFont = localFont({
+  src: [
+    { path: "./.font-cache/satoshi-400.woff2", weight: "400" },
+    { path: "./.font-cache/satoshi-500.woff2", weight: "500" },
+    { path: "./.font-cache/satoshi-700.woff2", weight: "700" },
+  ],
+  variable: "--main-font",
+  display: "swap",
+  preload: false,
+});
 
-/** Utility: eyebrows, figures, dates, technology names. */
 export const monoFont = JetBrains_Mono({
   weight: ["400", "500"],
   subsets: ["latin"],
   display: "swap",
   variable: "--mono-font",
+  preload: false,
 });
