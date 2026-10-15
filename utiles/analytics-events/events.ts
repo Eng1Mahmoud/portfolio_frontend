@@ -1,10 +1,10 @@
 import { sendGAEvent } from "@next/third-parties/google";
-import posthog from "posthog-js";
+import { captureEvent } from "./posthog-client";
 
 // add click event to the download cv link
 export const handleDownloadCV = () => {
   // PostHog
-  posthog.capture("cv_downloaded");
+  captureEvent("cv_downloaded");
 
   // Google Analytics
   sendGAEvent("event", "download_cv", {
@@ -16,7 +16,7 @@ export const handleDownloadCV = () => {
 };
 
 export const handleViewProject = (projectTitle: string) => {
-  posthog.capture("project_viewed", {
+  captureEvent("project_viewed", {
     project_title: projectTitle,
   });
 };
@@ -25,24 +25,24 @@ export const handleProjectExternalClick = (
   projectTitle: string,
   type: "github" | "live",
 ) => {
-  posthog.capture("project_external_link_clicked", {
+  captureEvent("project_external_link_clicked", {
     project_title: projectTitle,
     link_type: type,
   });
 };
 
 export const handleSocialClick = (platform: string) => {
-  posthog.capture("social_link_clicked", {
+  captureEvent("social_link_clicked", {
     platform: platform,
   });
 };
 
 export const handleChatBotInteraction = (action: "opened" | "message_sent") => {
-  posthog.capture(`chatbot_${action}`);
+  captureEvent(`chatbot_${action}`);
 };
 
 export const handleSkillHover = (skillName: string) => {
-  posthog.capture("skill_viewed", {
+  captureEvent("skill_viewed", {
     skill_name: skillName,
   });
 };

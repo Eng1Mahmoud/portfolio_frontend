@@ -97,13 +97,6 @@
       0 20px 48px -18px oklch(0.05 0.005 255 / 70%);
     --portfolio-shadow-accent: 0 4px 18px -6px oklch(0.76 0.12 245 / 35%);
   }
-  /* Fontshare faces (linked in app/layout.tsx) mapped onto the variables the
-     rest of the code reads. */
-  :root {
-    --display-font: "Clash Display";
-    --main-font: "Satoshi";
-  }
-
   ::selection {
     background: color-mix(in oklch, var(--portfolio-accent) 35%, transparent);
     color: var(--portfolio-strong);

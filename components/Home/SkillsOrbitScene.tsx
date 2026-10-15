@@ -2,6 +2,7 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
+import Image from "next/image";
 import { ISkill } from "@/types/general";
 import {
   createFloatingPositions,
@@ -90,6 +91,17 @@ function FloatingSkills({
     }
   }, [camera, size.width, size.height]);
 
+  useEffect(() => {
+    const edge = Math.min(size.width, size.height) * layout.badgeSize;
+    badges.current.forEach((badge) => {
+      if (!badge) return;
+      badge.style.width = `${edge}px`;
+      badge.style.padding = `${edge * 0.12}px`;
+      badge.style.left = "0px";
+      badge.style.top = "0px";
+    });
+  }, [size.width, size.height, layout.badgeSize, badges]);
+
   useFrame((state, rawDelta) => {
     const dt = Math.min(rawDelta, 0.05);
     const a = animation.current;
@@ -123,16 +135,8 @@ function FloatingSkills({
       const y = ((1 - projected.y) * size.height) / 2;
       // Tiles nearer the viewer sit larger, brighter and on top of the ones behind.
       const front = (position.z / layout.radius + 1) / 2;
-      const edge =
-        Math.min(size.width, size.height) *
-        layout.badgeSize *
-        (0.82 + 0.18 * front);
-      // GPU transform instead of left/top keeps the motion smooth.
-      badge.style.left = "0px";
-      badge.style.top = "0px";
-      badge.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) translate(-50%, -50%)`;
-      badge.style.width = `${edge}px`;
-      badge.style.padding = `${edge * 0.12}px`;
+      const scale = 0.82 + 0.18 * front;
+      badge.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) translate(-50%, -50%) scale(${scale})`;
       // Tiles passing in front of the photo fade out so it always stays clear.
       const screen = Math.hypot(position.x, position.y);
       const clear =
@@ -222,10 +226,12 @@ export default function SkillsOrbitScene({
             title={skill.name}
             style={{ position: "absolute", transform: "translate(-50%, -50%)" }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={skill.imageUrl}
               alt={skill.name}
+              width={64}
+              height={64}
+              sizes="64px"
               draggable={false}
               onLoad={async (e) => {
                 const image = e.currentTarget;

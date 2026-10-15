@@ -1,34 +1,9 @@
-"use client";
-import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { IuserInfo } from "@/types/general";
-import { motion } from "framer-motion";
 import clsx from "clsx";
 
 interface HomeIntroProps {
   profileInfo: IuserInfo;
 }
-
-// Every delay is a multiple of BEAT, so the hero shares one rhythm.
-const BEAT = 0.09;
-const EASE = [0.22, 1, 0.36, 1] as const;
-
-const rise = {
-  hidden: { opacity: 0, y: 14 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: 0.34 + i * BEAT, duration: 0.55, ease: EASE },
-  }),
-};
-
-/** A heading line that rises out of a clipping mask. */
-const lineUp = {
-  hidden: { y: "112%" },
-  visible: (i: number) => ({
-    y: "0%",
-    transition: { delay: 0.16 + i * 0.11, duration: 0.85, ease: EASE },
-  }),
-};
 
 /**
  * The biography arrives as one field of text: blank lines are paragraph
@@ -42,7 +17,6 @@ const toParagraphs = (bio: string) =>
     .filter(Boolean);
 
 export const HomeIntro = ({ profileInfo }: HomeIntroProps) => {
-  const reduceMotion = useReducedMotion();
   const name = profileInfo?.userName?.trim() ?? "";
   const role = profileInfo?.title?.trim() ?? "";
   const paragraphs = toParagraphs(profileInfo?.bio ?? "");
@@ -55,69 +29,40 @@ export const HomeIntro = ({ profileInfo }: HomeIntroProps) => {
   return (
     <div className="hero-copy [overflow-wrap:anywhere]! relative min-w-0 w-full max-w-4xl pl-6 text-start sm:pl-10">
       {/* A single hairline anchors the column. */}
-      <motion.div
+      <div
         aria-hidden="true"
-        initial={reduceMotion ? false : { scaleY: 0 }}
-        animate={{ scaleY: 1 }}
-        transition={{ duration: 0.9, ease: EASE }}
-        style={{ transformOrigin: "top" }}
         className="absolute left-0 top-0 h-full w-px bg-linear-to-b from-sage via-parchment/12 to-transparent"
       />
 
       {role && (
-        <motion.p
-          initial={reduceMotion ? false : { opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.12, duration: 0.5, ease: EASE }}
-          className="hero-role tracking-normal! [line-height:1.6]!  mb-4 font-mono text-[11px] uppercase text-sage sm:mb-5 sm:text-xs"
-        >
+        <p className="hero-role tracking-normal! [line-height:1.6]!  mb-4 font-mono text-[11px] uppercase text-sage sm:mb-5 sm:text-xs">
           {role}
-        </motion.p>
+        </p>
       )}
 
-      {/* One mask per line, so the halves of the name arrive in turn. */}
+      {/* Critical text is visible in server HTML without hydration. */}
       <h1 className="display-hero font-display! font-bold! tracking-normal! [&_span_span]:[background-image:var(--hero-title)]! [&_span_span]:[-webkit-background-clip:text]! [&_span_span]:[background-clip:text]! [&_span_span]:[color:transparent]! text-[2.6rem] sm:text-6xl lg:text-7xl xl:text-[5.5rem] leading-[1.02] wrap-break-word text-ink-strong">
         <span className="block overflow-hidden pb-[0.06em]">
-          <motion.span
-            custom={0}
-            initial={reduceMotion ? false : "hidden"}
-            animate="visible"
-            variants={lineUp}
-            className="block"
-          >
-            {firstName}
-          </motion.span>
+          <span className="block">{firstName}</span>
         </span>
         {lastName && (
           <span className="block overflow-hidden pb-[0.08em]">
-            <motion.span
-              custom={1}
-              initial={reduceMotion ? false : "hidden"}
-              animate="visible"
-              variants={lineUp}
-              className="block text-ink-muted"
-            >
-              {lastName}
-            </motion.span>
+            <span className="block text-ink-muted">{lastName}</span>
           </span>
         )}
       </h1>
 
       {/* The whole biography, so a visitor learns the person before scrolling. */}
       {paragraphs.map((paragraph, index) => (
-        <motion.p
+        <p
           key={index}
-          custom={1 + index}
-          initial={reduceMotion ? false : "hidden"}
-          animate="visible"
-          variants={rise}
           className={clsx(
             "hero-bio [max-width:54ch]! text-pretty! max-md:[font-size:14px]! max-md:[line-height:1.6]! text-[15px] leading-relaxed text-ink-body sm:text-base",
             index === 0 ? "mt-4 sm:mt-5" : "mt-3",
           )}
         >
           {paragraph}
-        </motion.p>
+        </p>
       ))}
     </div>
   );

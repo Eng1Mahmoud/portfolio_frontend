@@ -40,12 +40,21 @@ export const ContentSlider = ({
         end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 8,
       });
     };
-    measure();
-    el.addEventListener("scroll", measure, { passive: true });
-    const observer = new ResizeObserver(measure);
+    let frame = 0;
+    const queue = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        measure();
+      });
+    };
+    queue();
+    el.addEventListener("scroll", queue, { passive: true });
+    const observer = new ResizeObserver(queue);
     observer.observe(el);
     return () => {
-      el.removeEventListener("scroll", measure);
+      el.removeEventListener("scroll", queue);
+      if (frame) cancelAnimationFrame(frame);
       observer.disconnect();
     };
   }, [items.length]);
