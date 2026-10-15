@@ -33,12 +33,20 @@ export const ContentSlider = ({
           const rect = card.getBoundingClientRect();
           return rect.right > bounds.left + 24 && rect.left < bounds.right - 24;
         });
-      setPosition({
+      const next = {
         first: (visible[0]?.i ?? 0) + 1,
         last: (visible.at(-1)?.i ?? 0) + 1,
         start: el.scrollLeft < 8,
         end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 8,
-      });
+      };
+      setPosition((previous) =>
+        previous.first === next.first &&
+        previous.last === next.last &&
+        previous.start === next.start &&
+        previous.end === next.end
+          ? previous
+          : next,
+      );
     };
     let frame = 0;
     const queue = () => {

@@ -14,6 +14,7 @@ interface Props {
   skills: ISkill[];
   lite: boolean;
   paused?: boolean;
+  onReady?: () => void;
 }
 
 /** Normalized units (the display spans -0.5 to 0.5) to world units. */
@@ -59,9 +60,11 @@ function FloatingSkills({
   skills,
   paused,
   badges,
+  onReady,
 }: {
   skills: ISkill[];
   paused: boolean;
+  onReady?: () => void;
   badges: React.RefObject<(HTMLDivElement | null)[]>;
 }) {
   const layout = useMemo(() => getSphereLayout(skills.length), [skills.length]);
@@ -73,6 +76,7 @@ function FloatingSkills({
   const shell = useRef<THREE.Group>(null);
   const { size, camera } = useThree();
   const projected = useMemo(() => new THREE.Vector3(), []);
+  const notified = useRef(false);
   const animation = useRef({
     time: 0,
     yaw: 0.4,
@@ -153,6 +157,10 @@ function FloatingSkills({
       // Reveal only after the camera and badge geometry are ready.
       badge.style.visibility = "visible";
     });
+    if (!notified.current) {
+      notified.current = true;
+      onReady?.();
+    }
   });
 
   return (
@@ -211,6 +219,7 @@ export default function SkillsOrbitScene({
   skills,
   lite,
   paused = false,
+  onReady,
 }: Props) {
   const badges = useRef<(HTMLDivElement | null)[]>([]);
   return (
@@ -257,7 +266,12 @@ export default function SkillsOrbitScene({
         gl={{ antialias: !lite, alpha: true }}
         style={{ touchAction: "pan-y" }}
       >
-        <FloatingSkills skills={skills} paused={paused} badges={badges} />
+        <FloatingSkills
+          skills={skills}
+          paused={paused}
+          badges={badges}
+          onReady={onReady}
+        />
       </Canvas>
     </>
   );

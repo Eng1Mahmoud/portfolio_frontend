@@ -137,7 +137,7 @@ export default async function Home() {
       </section>
       <section
         id="projects"
-        className="portfolio-section relative! py-10 sm:py-11 md:py-14 [border-bottom:var(--section-border)]! [scroll-margin-top:12px]! [&:first-child]:pt-3! [&:first-child]:[border-bottom:0]! [&:last-of-type]:[border-bottom:0]! "
+        className="[content-visibility:auto] [contain-intrinsic-block-size:auto_900px] portfolio-section relative! py-10 sm:py-11 md:py-14 [border-bottom:var(--section-border)]! [scroll-margin-top:12px]! [&:first-child]:pt-3! [&:first-child]:[border-bottom:0]! [&:last-of-type]:[border-bottom:0]! "
       >
         <Title title="Projects" eyebrow="Selected work" count={projectCount} />
         <Reveal>
@@ -155,7 +155,7 @@ export default async function Home() {
 
       <section
         id="experience"
-        className="portfolio-section relative! py-10 sm:py-11 md:py-14 [border-bottom:var(--section-border)]! [scroll-margin-top:12px]! [&:first-child]:pt-3! [&:first-child]:[border-bottom:0]! [&:last-of-type]:[border-bottom:0]! "
+        className="[content-visibility:auto] [contain-intrinsic-block-size:auto_1200px] portfolio-section relative! py-10 sm:py-11 md:py-14 [border-bottom:var(--section-border)]! [scroll-margin-top:12px]! [&:first-child]:pt-3! [&:first-child]:[border-bottom:0]! [&:last-of-type]:[border-bottom:0]! "
       >
         <div className="mx-auto max-w-4xl">
           <Title
@@ -192,7 +192,7 @@ export default async function Home() {
       </section>
       <section
         id="recommendations"
-        className="portfolio-section relative! py-10 sm:py-11 md:py-14 [border-bottom:var(--section-border)]! [scroll-margin-top:12px]! [&:first-child]:pt-3! [&:first-child]:[border-bottom:0]! [&:last-of-type]:[border-bottom:0]! "
+        className="[content-visibility:auto] [contain-intrinsic-block-size:auto_700px] portfolio-section relative! py-10 sm:py-11 md:py-14 [border-bottom:var(--section-border)]! [scroll-margin-top:12px]! [&:first-child]:pt-3! [&:first-child]:[border-bottom:0]! [&:last-of-type]:[border-bottom:0]! "
       >
         <Title
           title="Testimonials"
