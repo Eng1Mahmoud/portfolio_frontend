@@ -1,5 +1,4 @@
 import localFont from "next/font/local";
-import { JetBrains_Mono } from "next/font/google";
 
 // Prepared from official Fontshare URLs by predev/prebuild. Keep the font
 // binaries out of the public repository; see scripts/README.md.
@@ -27,10 +26,6 @@ export const mainFont = localFont({
   preload: false,
 });
 
-export const monoFont = JetBrains_Mono({
-  weight: ["400", "500"],
-  subsets: ["latin"],
-  display: "optional",
-  variable: "--mono-font",
-  preload: false,
-});
+// Small utility labels do not need two more font files on the critical path.
+// Keep the export shape and the existing Tailwind font-mono utilities.
+export const monoFont = { variable: "[--mono-font:ui-monospace]" };
