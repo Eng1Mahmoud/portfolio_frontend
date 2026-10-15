@@ -57,7 +57,7 @@ export const HomeIntro = ({ profileInfo }: HomeIntroProps) => {
         <p
           key={index}
           className={clsx(
-            "hero-bio [max-width:54ch]! text-pretty! max-md:[font-size:14px]! max-md:[line-height:1.6]! text-[15px] leading-relaxed text-ink-body sm:text-base",
+            "hero-bio [max-width:54ch]! [text-wrap:wrap]! max-md:[font-size:14px]! max-md:[line-height:1.6]! text-[15px] leading-relaxed text-ink-body sm:text-base",
             index === 0 ? "mt-4 sm:mt-5" : "mt-3",
           )}
         >
