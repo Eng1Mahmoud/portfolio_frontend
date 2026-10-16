@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import { IuserInfo } from "@/types/general";
 import { handleSocialClick } from "@/utiles/analytics-events/events";
+import { scrollToSection } from "@/utiles/section-scroll";
 
 export const FloatingActions = ({
   profileInfo,
@@ -174,20 +175,15 @@ export const FloatingActions = ({
                 exit={{ opacity: 0, scale: 0.8 }}
                 onClick={() => {
                   const root = document.getElementById("page-scroll");
-                  if (!root) return;
+                  const home = document.getElementById("home");
+                  if (!root || !home) return;
                   setExpanded(false);
-                  root.scrollTo({
-                    top: 0,
-                    behavior: reduceMotion ? "instant" : "smooth",
-                  });
+                  scrollToSection(root, home, reduceMotion);
                   window.history.replaceState(
                     null,
                     "",
                     `${window.location.pathname}${window.location.search}#home`,
                   );
-                  document
-                    .getElementById("home")
-                    ?.focus({ preventScroll: true });
                 }}
               >
                 <FaArrowUp aria-hidden="true" />
