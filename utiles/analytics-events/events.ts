@@ -1,4 +1,4 @@
-import { sendGAEvent } from "@next/third-parties/google";
+import { sendGAEvent } from "./google-client";
 import { captureEvent } from "./posthog-client";
 
 // add click event to the download cv link
