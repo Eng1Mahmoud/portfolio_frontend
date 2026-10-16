@@ -1,4 +1,8 @@
-import { GoogleAnalytics } from "@next/third-parties/google";
+import {
+  GoogleAnalytics,
+  getGoogleAnalyticsInit,
+} from "@/components/general/GoogleAnalytics";
+import Script from "next/script";
 import { displayFont, mainFont, monoFont } from "@/fonts";
 import { Metadata } from "next";
 import { Person, WithContext } from "schema-dts";
@@ -135,6 +139,9 @@ export default async function RootLayout({
   // extra per request.
   const profileInfo = await getProfileInfo();
   const jsonld = buildPersonJsonLd(profileInfo);
+  const analyticsInit = getGoogleAnalyticsInit(
+    process.env.NEXT_PUBLIC_GOOGLE_GTAG,
+  );
 
   return (
     <html lang="en">
@@ -148,6 +155,13 @@ export default async function RootLayout({
             __html: JSON.stringify(jsonld),
           }}
         />
+        {analyticsInit && (
+          <Script
+            id="portfolio-ga-init"
+            strategy="beforeInteractive"
+            dangerouslySetInnerHTML={{ __html: analyticsInit }}
+          />
+        )}
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_GTAG as string} />
         <MotionProvider>{children}</MotionProvider>
         <ChatBotWraper />

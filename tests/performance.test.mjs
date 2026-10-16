@@ -160,3 +160,41 @@ test("core error capture stays immediate while replay loads once on error", asyn
   assert.equal(loads, 1);
   assert.equal(added, 1);
 });
+
+test("Google Analytics queues pageview and early clicks before its lazy SDK", () => {
+  const scripts = [];
+  const { GoogleAnalytics, getGoogleAnalyticsInit } = load(
+    "components/general/GoogleAnalytics.tsx",
+    {
+      "next/script": () => (props) => {
+        scripts.push(props);
+        return null;
+      },
+    },
+  );
+  renderToStaticMarkup(
+    React.createElement(GoogleAnalytics, { gaId: "G-TEST123" }),
+  );
+  assert.equal(scripts.length, 1);
+  assert.equal(scripts[0].strategy, "lazyOnload");
+  const window = {};
+  vm.runInNewContext(getGoogleAnalyticsInit("G-TEST123"), { window });
+  const { sendGAEvent } = load(
+    "utiles/analytics-events/google-client.ts",
+    {},
+    { window },
+  );
+  sendGAEvent("event", "download_cv", { event_label: "download_cv_link" });
+  const commands = window.dataLayer.map((command) => Array.from(command));
+  assert.equal(commands[0][0], "js");
+  assert.deepEqual(commands[1], ["config", "G-TEST123"]);
+  assert.deepEqual(commands[2], [
+    "event",
+    "download_cv",
+    { event_label: "download_cv_link" },
+  ]);
+  const { sendGAEvent: onServer } = load(
+    "utiles/analytics-events/google-client.ts",
+  );
+  assert.doesNotThrow(() => onServer("event", "download_cv"));
+});

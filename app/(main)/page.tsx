@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { SocialLinks } from "@/components/Home/SocialLinks";
 import { HomeIntro } from "@/components/Home/HomeIntro";
 import { Reveal } from "@/components/general/Reveal";
@@ -35,35 +36,27 @@ export const metadata: Metadata = buildPublicPageMetadata({
   path: "/",
 });
 
-export default async function Home() {
-  const [
-    profileInfo,
-    projects,
-    skills,
-    recommendations,
-    experiences,
-    educations,
-  ] = await Promise.all([
-    getProfileInfo(),
+function getPortfolioContent() {
+  return Promise.all([
     getAllProjects(),
-    getAllSkills(),
     getAllRecommendations(),
     getAllExperiences(),
     getAllEducations(),
   ]);
+}
 
-  // The technology count comes from the skills collection, not project tags:
-  // those contain duplicates and typos that would inflate a unique count.
-  const projectCount = (projects ?? []).length;
-  const skillCount = (skills ?? []).length;
+export default async function Home() {
+  // Start all requests together, but do not hold the introduction behind
+  // rendering every project, timeline and testimonial into one hidden stream.
+  const content = getPortfolioContent();
+  // Attach a handler now; PortfolioSections still rethrows this same rejection
+  // into the route error boundary when it awaits the result.
+  void content.catch(() => {});
+  const [profileInfo, skills] = await Promise.all([
+    getProfileInfo(),
+    getAllSkills(),
+  ]);
   const jsonld = buildHomePageJsonLd();
-  const categories = Array.from(
-    new Set((skills ?? []).map((skill) => skill.category?.trim() || "Other")),
-  );
-  const orderedCategories = [
-    ...SKILL_CATEGORIES.filter((c) => categories.includes(c)),
-    ...categories.filter((c) => !SKILL_CATEGORIES.some((known) => known === c)),
-  ];
 
   return (
     <>
@@ -97,6 +90,48 @@ export default async function Home() {
         </div>
       </section>
 
+      <Suspense fallback={null}>
+        <PortfolioSections
+          profileInfo={profileInfo}
+          skills={skills}
+          content={content}
+        />
+      </Suspense>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonld),
+        }}
+      />
+    </>
+  );
+}
+
+async function PortfolioSections({
+  profileInfo,
+  skills,
+  content,
+}: {
+  profileInfo: Awaited<ReturnType<typeof getProfileInfo>>;
+  skills: Awaited<ReturnType<typeof getAllSkills>>;
+  content: ReturnType<typeof getPortfolioContent>;
+}) {
+  const [projects, recommendations, experiences, educations] = await content;
+  // The technology count comes from the skills collection, not project tags:
+  // those contain duplicates and typos that would inflate a unique count.
+  const projectCount = (projects ?? []).length;
+  const skillCount = (skills ?? []).length;
+  const categories = Array.from(
+    new Set((skills ?? []).map((skill) => skill.category?.trim() || "Other")),
+  );
+  const orderedCategories = [
+    ...SKILL_CATEGORIES.filter((c) => categories.includes(c)),
+    ...categories.filter((c) => !SKILL_CATEGORIES.some((known) => known === c)),
+  ];
+
+  return (
+    <>
       <section
         id="skills"
         className="portfolio-section relative! py-10 sm:py-11 md:py-14 [border-bottom:var(--section-border)]! [scroll-margin-top:12px]! [&:first-child]:pt-3! [&:first-child]:[border-bottom:0]! [&:last-of-type]:[border-bottom:0]! "
@@ -225,13 +260,6 @@ export default async function Home() {
           </Reveal>
         </div>
       </section>
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(jsonld),
-        }}
-      />
     </>
   );
 }
