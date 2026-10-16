@@ -86,6 +86,10 @@ test("a failed SDK load does not break actions and can be retried", async () => 
 test("page template does not hide server-rendered content before hydration", () => {
   const { default: Template } = load("app/(main)/template.tsx", {
     "next/navigation": () => ({ usePathname: () => "/" }),
+    "@/utiles/first-interaction": () => ({
+      afterFirstInteraction: () => () => {},
+    }),
+    "@/utiles/section-scroll": () => ({ scrollToSection: () => {} }),
   });
   const html = renderToStaticMarkup(
     React.createElement(Template, null, "Visible immediately"),
@@ -197,4 +201,93 @@ test("Google Analytics queues pageview and early clicks before its lazy SDK", ()
     "utiles/analytics-events/google-client.ts",
   );
   assert.doesNotThrow(() => onServer("event", "download_cv"));
+});
+
+function scrollHarness(reduced = false) {
+  const frames = new Map();
+  const listeners = new Map();
+  let id = 0;
+  let focused = 0;
+  const root = {
+    scrollTop: 0,
+    scrollHeight: 20000,
+    clientHeight: 800,
+    setAttribute() {},
+    getBoundingClientRect: () => ({ top: 0 }),
+    scrollTo({ top }) {
+      this.scrollTop = top;
+    },
+  };
+  const target = {
+    getBoundingClientRect: () => ({ top: 12000 - root.scrollTop }),
+    getAttribute: () => null,
+    setAttribute() {},
+    removeAttribute() {},
+    focus: () => {
+      focused++;
+    },
+  };
+  const { scrollToSection } = load(
+    "utiles/section-scroll.ts",
+    {},
+    {
+      window: {
+        matchMedia: () => ({ matches: reduced }),
+        addEventListener: (name, callback) => listeners.set(name, callback),
+        removeEventListener: (name) => listeners.delete(name),
+      },
+      performance: { now: () => 0 },
+      getComputedStyle: () => ({
+        scrollPaddingTop: "100px",
+        scrollMarginTop: "12px",
+      }),
+      requestAnimationFrame: (callback) => {
+        frames.set(++id, callback);
+        return id;
+      },
+      cancelAnimationFrame: (key) => frames.delete(key),
+    },
+  );
+  return {
+    root,
+    target,
+    frames,
+    listeners,
+    scrollToSection,
+    focused: () => focused,
+    step(time) {
+      const callbacks = [...frames.values()];
+      frames.clear();
+      callbacks.forEach((cb) => cb(time));
+    },
+  };
+}
+
+test("distant section navigation finishes promptly, keeps offset and cleans up", () => {
+  const h = scrollHarness();
+  h.scrollToSection(h.root, h.target);
+  h.step(160);
+  assert.ok(h.root.scrollTop > 0 && h.root.scrollTop < 11888);
+  h.step(320);
+  assert.equal(h.root.scrollTop, 11888);
+  assert.equal(h.frames.size, 0);
+  assert.equal(h.listeners.size, 0);
+  assert.equal(h.focused(), 1);
+});
+
+test("manual input interrupts section navigation and reduced motion jumps directly", () => {
+  const h = scrollHarness();
+  h.scrollToSection(h.root, h.target);
+  h.step(80);
+  h.listeners.get("wheel")();
+  const stopped = h.root.scrollTop;
+  h.step(400);
+  assert.equal(h.root.scrollTop, stopped);
+  assert.equal(h.listeners.size, 0);
+  assert.equal(h.focused(), 0);
+  const quiet = scrollHarness(true);
+  quiet.scrollToSection(quiet.root, quiet.target);
+  assert.equal(quiet.root.scrollTop, 11888);
+  assert.equal(quiet.frames.size, 0);
+  assert.equal(quiet.focused(), 1);
 });
