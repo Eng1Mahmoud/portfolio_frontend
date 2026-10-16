@@ -1,0 +1,77 @@
+name: Production Lighthouse
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/workflows/lighthouse.yml
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        device: [mobile, desktop]
+    env:
+      DEVICE: ${{ matrix.device }}
+      CHROME_PATH: /usr/bin/google-chrome
+    steps:
+      # This tests the live deployment, not the PR preview. No application
+      # checkout, build credentials or analytics secrets are needed.
+      - name: Install pinned audit tool
+        run: npm install --prefix /tmp/audit --no-audit --no-fund lighthouse@13.5.0
+      - name: Audit production three times
+        run: |
+          mkdir -p reports
+          node --input-type=module <<'JS'
+          import { spawnSync } from 'node:child_process';
+          import { readFileSync, writeFileSync, appendFileSync } from 'node:fs';
+          const device = process.env.DEVICE;
+          const url = 'https://www.mahmoud-mohamed.dev/';
+          const rows = [];
+          for (let i = 1; i <= 3; i++) {
+            const output = `reports/${device}-${i}`;
+            const args = ['/tmp/audit/node_modules/lighthouse/cli/index.js', url,
+              '--chrome-flags=--headless --no-sandbox --disable-dev-shm-usage',
+              '--only-categories=performance,accessibility,best-practices,seo',
+              '--output=json', '--output=html', `--output-path=${output}`, '--quiet'];
+            if (device === 'desktop') args.push('--preset=desktop');
+            const result = spawnSync(process.execPath, args, { stdio: 'inherit' });
+            if (result.status !== 0) process.exit(result.status || 1);
+            const report = JSON.parse(readFileSync(`${output}.report.json`, 'utf8'));
+            if (report.runtimeError) throw new Error(JSON.stringify(report.runtimeError));
+            const metric = id => report.audits[id].numericValue;
+            const row = {
+              run: i, device, url: report.finalDisplayedUrl, time: report.fetchTime,
+              lighthouse: report.lighthouseVersion,
+              scores: Object.fromEntries(Object.entries(report.categories).map(([k,v]) => [k, Math.round(v.score * 100)])),
+              fcp: metric('first-contentful-paint'), lcp: metric('largest-contentful-paint'),
+              tbt: metric('total-blocking-time'), cls: metric('cumulative-layout-shift'),
+              speedIndex: metric('speed-index'), warnings: report.runWarnings,
+            };
+            rows.push(row);
+            console.log(JSON.stringify(row));
+          }
+          writeFileSync(`reports/${device}-summary.json`, JSON.stringify(rows, null, 2));
+          const median = key => rows.map(r => r[key]).sort((a,b) => a-b)[1];
+          const score = rows.map(r => r.scores.performance).sort((a,b) => a-b)[1];
+          const summary = `## ${device}: live production, three cold runs\n\n` +
+            `Median performance: **${score}/100**; FCP ${Math.round(median('fcp'))} ms; ` +
+            `LCP ${Math.round(median('lcp'))} ms; TBT ${Math.round(median('tbt'))} ms; CLS ${median('cls')}.\n\n` +
+            'Lab results only; these do not establish field INP or a Core Web Vitals pass.\n';
+          appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary);
+          console.log(summary);
+          JS
+      - name: Save complete reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: lighthouse-${{ matrix.device }}
+          path: reports/
+          retention-days: 7
+          if-no-files-found: warn
