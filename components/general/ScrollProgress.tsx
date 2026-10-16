@@ -7,19 +7,25 @@ export const ScrollProgress = () => {
   useEffect(() => {
     const root = document.getElementById("page-scroll");
     if (!root) return;
+    let frame = 0;
     const update = () => {
+      frame = 0;
       const range = root.scrollHeight - root.clientHeight;
       setProgress(range > 0 ? (root.scrollTop / range) * 100 : 0);
     };
+    const queue = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
     update();
-    const observer = new ResizeObserver(update);
+    const observer = new ResizeObserver(queue);
     observer.observe(root);
     const main = root.querySelector("main");
     if (main) observer.observe(main);
-    root.addEventListener("scroll", update, { passive: true });
+    root.addEventListener("scroll", queue, { passive: true });
     return () => {
+      cancelAnimationFrame(frame);
       observer.disconnect();
-      root.removeEventListener("scroll", update);
+      root.removeEventListener("scroll", queue);
     };
   }, []);
 
