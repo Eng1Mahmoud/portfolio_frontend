@@ -27,7 +27,12 @@ export function scrollToSection(
     const tabIndex = target.getAttribute("tabindex");
     if (tabIndex === null) target.setAttribute("tabindex", "-1");
     target.focus({ preventScroll: true });
-    if (tabIndex === null) target.removeAttribute("tabindex");
+    if (tabIndex === null)
+      target.addEventListener(
+        "blur",
+        () => target.removeAttribute("tabindex"),
+        { once: true },
+      );
   };
   if (
     immediate ||

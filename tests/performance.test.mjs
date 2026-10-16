@@ -221,6 +221,7 @@ function scrollHarness(reduced = false) {
   const target = {
     getBoundingClientRect: () => ({ top: 12000 - root.scrollTop }),
     getAttribute: () => null,
+    addEventListener() {},
     setAttribute() {},
     removeAttribute() {},
     focus: () => {
