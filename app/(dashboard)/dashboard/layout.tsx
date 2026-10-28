@@ -1,3 +1,4 @@
+import Notifications from "@/components/general/Notifications";
 import { type ReactNode } from "react";
 import { Metadata } from "next";
 import HeaderContainer from "@/components/dashboard/HeaderContainer";
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-surface-base">
+      <Notifications />
       <HeaderContainer />
 
       {/* The rail is fixed, so it sits outside the flow and needs the header's

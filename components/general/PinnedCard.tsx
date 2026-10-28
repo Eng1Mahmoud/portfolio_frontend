@@ -1,25 +1,16 @@
 "use client";
 
-import {
-  motion,
-  useMotionValue,
-  useScroll,
-  useSpring,
-  useTransform,
-  type MotionValue,
-} from "framer-motion";
-import { createContext, useContext, type ReactNode } from "react";
+import { motion } from "framer-motion";
+import { type ReactNode } from "react";
 import { useTilt } from "@/hooks/use-tilt";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { usePageScrollContainer } from "@/hooks/use-page-scroll";
 
 /**
  * The pinboard: project screenshots as prints pinned to a board.
  *
  * With a pointer, each print hangs slightly off square, straightens and lifts
- * toward the cursor, and a wheat sheen rakes across it. On touch there is no
- * cursor, so scrolling does the work — a card leans back as it rises, stands
- * upright at the middle, and tips away as it leaves.
+ * toward the cursor, and a wheat sheen rakes across it. Touch uses flat,
+ * native-scrolling cards without hidden scroll/spring subscriptions.
  */
 
 /**
@@ -35,16 +26,6 @@ const REST_ANGLES = [-0.6, 0.4, -0.3, 0.5, -0.4, 0.3];
  */
 const FLAT_BELOW = "(max-width: 767px)";
 
-/** Degrees a card leans as it crosses the screen. */
-const LEAN = 9;
-
-/**
- * The card's crossing, 0 entering to 1 leaving. Shared so the screenshot inside
- * can drift on the same clock rather than opening its own scroll subscription.
- */
-const CardProgress = createContext<MotionValue<number> | null>(null);
-export const useCardProgress = () => useContext(CardProgress);
-
 export const PinnedCard = ({
   index = 0,
   children,
@@ -58,97 +39,49 @@ export const PinnedCard = ({
     range: 3,
   });
   const compact = useMediaQuery(FLAT_BELOW);
-  const container = usePageScrollContainer();
-
-  const { scrollYProgress } = useScroll({
-    container,
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  // rotateX rather than a flat rotation: leaning in depth costs no horizontal
-  // room, where a z-rotation on a phone drives the corners into the overflow
-  // clip.
-  const lean = useTransform(scrollYProgress, [0, 0.5, 1], [LEAN, 0, -LEAN]);
-  const leanSmooth = useSpring(lean, {
-    stiffness: 70,
-    damping: 22,
-    restDelta: 0.01,
-  });
-
-  // Depth: cards away from the middle of the screen sit slightly back and
-  // dimmer, so the row you are actually reading is the one in focus. Derived
-  // from the same scroll subscription as the lean, so it costs nothing extra.
-  const depthScale = useTransform(
-    scrollYProgress,
-    [0, 0.25, 0.5, 0.75, 1],
-    [0.94, 0.99, 1, 0.99, 0.94],
-  );
-  const depthFade = useTransform(
-    scrollYProgress,
-    [0, 0.18, 0.5, 0.82, 1],
-    [0.55, 1, 1, 1, 0.55],
-  );
-
-  // Pointer and scroll write to the same axis, so they are summed rather than
-  // left to fight. Only one is ever non-zero: the pointer tilt ignores touch,
-  // and the lean is gated to compact widths.
-  const leanActive = false;
-  const depthActive = false;
-  const tiltX = useTransform<number, number>(
-    [rotateX, leanSmooth],
-    ([pointer, scroll]: number[]) => pointer + (leanActive ? scroll : 0),
-  );
-
   const restAngle = compact ? 0 : REST_ANGLES[index % REST_ANGLES.length];
-  const zero = useMotionValue(0);
 
   return (
-    <CardProgress.Provider value={scrollYProgress}>
+    <motion.div
+      className={`pin-stage [perspective:1100px]! [perspective-origin:center]! motion-reduce:[perspective:none]! h-full ${className}`}
+    >
       <motion.div
-        style={
-          depthActive ? { scale: depthScale, opacity: depthFade } : undefined
+        ref={ref}
+        initial={
+          reduceMotion ? { opacity: 0 } : { opacity: 0, y: 26, scale: 0.97 }
         }
-        className={`pin-stage [perspective:1100px]! [perspective-origin:center]! motion-reduce:[perspective:none]! h-full ${className}`}
+        // The entry overshoot is a keyframe pair, not a rotation in
+        // `initial`: framer-motion snapshots `initial` once on mount, before
+        // the media query that flattens the board has resolved, which left
+        // off-screen cards holding a desktop tilt at phone widths.
+        whileInView={{
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          rotate: reduceMotion ? restAngle : [restAngle * 2.2, restAngle],
+        }}
+        // Vertical-only margin. A single value insets all four sides, which
+        // at 390px narrows the trigger box enough to miss narrow elements
+        // near the left edge entirely.
+        viewport={{ once: true, margin: "-60px 0px" }}
+        transition={{
+          duration: 0.55,
+          delay: Math.min(index, 5) * 0.07,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+        // On whileHover rather than a second `animate` prop, which would
+        // fight the entry transition for control of `rotate`.
+        whileHover={
+          reduceMotion || compact ? undefined : { rotate: 0, scale: 1.005 }
+        }
+        {...handlers}
+        style={{ rotateX, rotateY }}
+        className={`pin-card [transform-style:preserve-3d]! [&:hover_.pin-lift]:[transform:translateZ(34px)]! group/pin relative h-full rounded-2xl transition-shadow duration-300 ${
+          engaged ? "shadow-lifted" : "shadow-pinned"
+        }`}
       >
-        <motion.div
-          ref={ref}
-          initial={
-            reduceMotion ? { opacity: 0 } : { opacity: 0, y: 26, scale: 0.97 }
-          }
-          // The entry overshoot is a keyframe pair, not a rotation in
-          // `initial`: framer-motion snapshots `initial` once on mount, before
-          // the media query that flattens the board has resolved, which left
-          // off-screen cards holding a desktop tilt at phone widths.
-          whileInView={{
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            rotate: reduceMotion ? restAngle : [restAngle * 2.2, restAngle],
-          }}
-          // Vertical-only margin. A single value insets all four sides, which
-          // at 390px narrows the trigger box enough to miss narrow elements
-          // near the left edge entirely.
-          viewport={{ once: true, margin: "-60px 0px" }}
-          transition={{
-            duration: 0.55,
-            delay: Math.min(index, 5) * 0.07,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          // On whileHover rather than a second `animate` prop, which would
-          // fight the entry transition for control of `rotate`.
-          whileHover={
-            reduceMotion || compact ? undefined : { rotate: 0, scale: 1.005 }
-          }
-          {...handlers}
-          style={{ rotateX: tiltX, rotateY: leanActive ? zero : rotateY }}
-          className={`pin-card [transform-style:preserve-3d]! [&:hover_.pin-lift]:[transform:translateZ(34px)]! group/pin relative h-full rounded-2xl transition-shadow duration-300 ${
-            engaged ? "shadow-lifted" : "shadow-pinned"
-          }`}
-        >
-          {children}
-        </motion.div>
+        {children}
       </motion.div>
-    </CardProgress.Provider>
+    </motion.div>
   );
 };

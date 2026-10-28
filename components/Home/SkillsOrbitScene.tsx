@@ -2,6 +2,7 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
+import Image from "next/image";
 import { ISkill } from "@/types/general";
 import {
   createFloatingPositions,
@@ -13,6 +14,7 @@ interface Props {
   skills: ISkill[];
   lite: boolean;
   paused?: boolean;
+  onReady?: () => void;
 }
 
 /** Normalized units (the display spans -0.5 to 0.5) to world units. */
@@ -58,9 +60,11 @@ function FloatingSkills({
   skills,
   paused,
   badges,
+  onReady,
 }: {
   skills: ISkill[];
   paused: boolean;
+  onReady?: () => void;
   badges: React.RefObject<(HTMLDivElement | null)[]>;
 }) {
   const layout = useMemo(() => getSphereLayout(skills.length), [skills.length]);
@@ -72,6 +76,7 @@ function FloatingSkills({
   const shell = useRef<THREE.Group>(null);
   const { size, camera } = useThree();
   const projected = useMemo(() => new THREE.Vector3(), []);
+  const notified = useRef(false);
   const animation = useRef({
     time: 0,
     yaw: 0.4,
@@ -89,6 +94,17 @@ function FloatingSkills({
       camera.updateProjectionMatrix();
     }
   }, [camera, size.width, size.height]);
+
+  useEffect(() => {
+    const edge = Math.min(size.width, size.height) * layout.badgeSize;
+    badges.current.forEach((badge) => {
+      if (!badge) return;
+      badge.style.width = `${edge}px`;
+      badge.style.padding = `${edge * 0.12}px`;
+      badge.style.left = "0px";
+      badge.style.top = "0px";
+    });
+  }, [size.width, size.height, layout.badgeSize, badges]);
 
   useFrame((state, rawDelta) => {
     const dt = Math.min(rawDelta, 0.05);
@@ -123,16 +139,8 @@ function FloatingSkills({
       const y = ((1 - projected.y) * size.height) / 2;
       // Tiles nearer the viewer sit larger, brighter and on top of the ones behind.
       const front = (position.z / layout.radius + 1) / 2;
-      const edge =
-        Math.min(size.width, size.height) *
-        layout.badgeSize *
-        (0.82 + 0.18 * front);
-      // GPU transform instead of left/top keeps the motion smooth.
-      badge.style.left = "0px";
-      badge.style.top = "0px";
-      badge.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) translate(-50%, -50%)`;
-      badge.style.width = `${edge}px`;
-      badge.style.padding = `${edge * 0.12}px`;
+      const scale = 0.82 + 0.18 * front;
+      badge.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) translate(-50%, -50%) scale(${scale})`;
       // Tiles passing in front of the photo fade out so it always stays clear.
       const screen = Math.hypot(position.x, position.y);
       const clear =
@@ -149,6 +157,10 @@ function FloatingSkills({
       // Reveal only after the camera and badge geometry are ready.
       badge.style.visibility = "visible";
     });
+    if (!notified.current) {
+      notified.current = true;
+      onReady?.();
+    }
   });
 
   return (
@@ -207,6 +219,7 @@ export default function SkillsOrbitScene({
   skills,
   lite,
   paused = false,
+  onReady,
 }: Props) {
   const badges = useRef<(HTMLDivElement | null)[]>([]);
   return (
@@ -222,10 +235,13 @@ export default function SkillsOrbitScene({
             title={skill.name}
             style={{ position: "absolute", transform: "translate(-50%, -50%)" }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={skill.imageUrl}
               alt={skill.name}
+              width={64}
+              height={64}
+              sizes="64px"
+              fetchPriority="low"
               draggable={false}
               onLoad={async (e) => {
                 const image = e.currentTarget;
@@ -250,7 +266,12 @@ export default function SkillsOrbitScene({
         gl={{ antialias: !lite, alpha: true }}
         style={{ touchAction: "pan-y" }}
       >
-        <FloatingSkills skills={skills} paused={paused} badges={badges} />
+        <FloatingSkills
+          skills={skills}
+          paused={paused}
+          badges={badges}
+          onReady={onReady}
+        />
       </Canvas>
     </>
   );

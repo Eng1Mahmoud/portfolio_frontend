@@ -74,14 +74,17 @@ export const SectionBackdrop = () => {
   useEffect(() => {
     const layer = layerRef.current;
     if (!layer || reduceMotion) return;
-    const live = () => layer.setAttribute("data-live", "");
-    if (document.readyState === "complete") {
-      const t = window.setTimeout(live, 800);
-      return () => clearTimeout(t);
-    }
-    const onLoad = () => window.setTimeout(live, 800);
-    window.addEventListener("load", onLoad, { once: true });
-    return () => window.removeEventListener("load", onLoad);
+    let timer: number | undefined;
+    const onLoad = () => {
+      timer = window.setTimeout(() => layer.setAttribute("data-live", ""), 800);
+    };
+    if (document.readyState === "complete") onLoad();
+    else window.addEventListener("load", onLoad, { once: true });
+    return () => {
+      window.removeEventListener("load", onLoad);
+      if (timer !== undefined) clearTimeout(timer);
+      layer.removeAttribute("data-live");
+    };
   }, [reduceMotion]);
 
   useEffect(() => {
@@ -98,6 +101,7 @@ export const SectionBackdrop = () => {
     let target = current;
     let activeId = "";
     let frame = 0;
+    let needsMeasure = true;
 
     const measure = () => {
       const mid = window.innerHeight / 2;
@@ -129,6 +133,10 @@ export const SectionBackdrop = () => {
     };
 
     const tick = () => {
+      if (needsMeasure) {
+        measure();
+        needsMeasure = false;
+      }
       current += (target - current) * 0.08;
       layer.style.setProperty("--lit-y", `${current.toFixed(1)}px`);
       layer.style.setProperty(
@@ -139,7 +147,7 @@ export const SectionBackdrop = () => {
         Math.abs(target - current) > 0.4 ? requestAnimationFrame(tick) : 0;
     };
     const queue = () => {
-      measure();
+      needsMeasure = true;
       if (!frame) frame = requestAnimationFrame(tick);
     };
 
@@ -176,12 +184,14 @@ export const SectionBackdrop = () => {
             cy={star.y}
             r={star.r}
             className={star.hub ? "star star--hub" : "star"}
-            style={star.hub ? { animationDelay: `${star.d.toFixed(2)}s` } : undefined}
+            style={
+              star.hub ? { animationDelay: `${star.d.toFixed(2)}s` } : undefined
+            }
           />
         ))}
       </svg>
-      <div className="section-backdrop-drift absolute! [width:min(760px,_120vw)]! aspect-square! [border-radius:50%]! [opacity:0.26]! [will-change:transform]! motion-reduce:[animation:none]! section-backdrop-drift--one [left:-18%]! [top:-12%]! [background:var(--drift-support)]! [.section-backdrop[data-live]_&]:[animation:backdrop-drift-one_38s_ease-in-out_infinite_alternate]!" />
-      <div className="section-backdrop-drift absolute! [width:min(760px,_120vw)]! aspect-square! [border-radius:50%]! [opacity:0.26]! [will-change:transform]! motion-reduce:[animation:none]! section-backdrop-drift--two [right:-20%]! [bottom:-18%]! [background:var(--drift-accent)]! [.section-backdrop[data-live]_&]:[animation:backdrop-drift-two_46s_ease-in-out_infinite_alternate]!" />
+      <div className="section-backdrop-drift absolute! [width:min(760px,_120vw)]! aspect-square! [border-radius:50%]! [filter:blur(60px)]! [opacity:0.26]! [will-change:transform]! motion-reduce:[animation:none]! section-backdrop-drift--one [left:-18%]! [top:-12%]! [background:var(--drift-support)]! [.section-backdrop[data-live]_&]:[animation:backdrop-drift-one_38s_ease-in-out_infinite_alternate]!" />
+      <div className="section-backdrop-drift absolute! [width:min(760px,_120vw)]! aspect-square! [border-radius:50%]! [filter:blur(60px)]! [opacity:0.26]! [will-change:transform]! motion-reduce:[animation:none]! section-backdrop-drift--two [right:-20%]! [bottom:-18%]! [background:var(--drift-accent)]! [.section-backdrop[data-live]_&]:[animation:backdrop-drift-two_46s_ease-in-out_infinite_alternate]!" />
       <div className="section-backdrop-light absolute! [left:50%]! [top:0]! [width:min(1120px,_170vw)]! [height:min(720px,_88vh)]! [transform:translate3d(-50%,_calc(var(--lit-y,_42vh)_-_50%),_0)]! [background:var(--reading-light)]! [opacity:0.42]! [will-change:transform]!" />
       <div className="section-backdrop-grain absolute! [inset:0]! [opacity:0.05]! [mix-blend-mode:overlay]! [background-image:var(--grain-image)]!" />
       <div className="section-backdrop-vignette absolute! [inset:0]! [background:var(--vignette)]!" />

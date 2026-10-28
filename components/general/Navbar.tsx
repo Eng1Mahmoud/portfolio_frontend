@@ -29,7 +29,9 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
   useEffect(() => {
     const root = document.getElementById("page-scroll");
     if (!root) return;
+    let frame = 0;
     const update = () => {
+      frame = 0;
       const line = root.getBoundingClientRect().top + 180;
       const sections = Array.from(
         document.querySelectorAll<HTMLElement>(
@@ -41,9 +43,15 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
         .at(-1);
       if (current) setActive(`/#${current.id}`);
     };
+    const queue = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
     update();
-    root.addEventListener("scroll", update, { passive: true });
-    return () => root.removeEventListener("scroll", update);
+    root.addEventListener("scroll", queue, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      root.removeEventListener("scroll", queue);
+    };
   }, [pathname]);
 
   useEffect(() => setOpen(false), [pathname]);
@@ -56,6 +64,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
     if (!menuVisible) return;
     const root = document.getElementById("page-scroll");
     const previousOverflow = root?.style.overflowY;
+    const toggle = toggleRef.current;
     if (root) root.style.overflowY = "hidden";
     menuRef.current
       ?.querySelector<HTMLAnchorElement>("a")
@@ -89,7 +98,7 @@ export const Navbar = ({ profileInfo }: { profileInfo?: IuserInfo }) => {
       document.removeEventListener("keydown", onKey);
       desktop.removeEventListener("change", onResize);
       if (root) root.style.overflowY = previousOverflow ?? "";
-      toggleRef.current?.focus({ preventScroll: true });
+      toggle?.focus({ preventScroll: true });
     };
   }, [menuVisible]);
 

@@ -2,7 +2,18 @@
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
+import {
+  afterFirstInteraction,
+  hasInteracted,
+  serverHasInteracted,
+} from "@/utiles/first-interaction";
 import { motion } from "framer-motion";
 import { ISkill } from "@/types/general";
 import {
@@ -26,7 +37,7 @@ const StaticSkills = ({ skills }: { skills: ISkill[] }) => {
           <div
             key={skill.id ?? `${skill.name}-${index}`}
             title={skill.name}
-            className="static-orbit-badge box-border! aspect-square! grid! place-items-center! [padding:1.3%]! [border-radius:8px]! [border:var(--badge-border)]! [background:var(--badge-background)]! [box-shadow:var(--badge-shadow)]! absolute! [transform:translate(-50%,_-50%)]!"
+            className="static-orbit-badge box-border! aspect-square! grid! place-items-center! [padding:1.3%]! [border-radius:8px]! [border:var(--badge-border)]! [background:var(--badge-background)]! [box-shadow:var(--badge-shadow)]! [backdrop-filter:blur(10px)]! absolute! [transform:translate(-50%,_-50%)]!"
             style={{
               width: `${layout.badgeSize * 100}%`,
               left: `${50 + position.x * 100}%`,
@@ -34,10 +45,13 @@ const StaticSkills = ({ skills }: { skills: ISkill[] }) => {
               opacity: 0.45 + 0.55 * front,
             }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={skill.imageUrl}
               alt={skill.name}
+              width={64}
+              height={64}
+              sizes="64px"
+              fetchPriority="low"
               className="h-full w-full object-contain"
             />
           </div>
@@ -75,15 +89,27 @@ export const SkillsOrbit = ({
   name: string;
 }) => {
   const reduceMotion = useReducedMotion();
-  const [mode, setMode] = useState<"pending" | "3d" | "static">("pending");
+  const interacted = useSyncExternalStore(
+    afterFirstInteraction,
+    hasInteracted,
+    serverHasInteracted,
+  );
+  const [sceneReady, setSceneReady] = useState(false);
+  const onSceneReady = useCallback(() => setSceneReady(true), []);
+  const [mode, setMode] = useState<"3d" | "static">("static");
   const [lite, setLite] = useState(false);
-  const [onScreen, setOnScreen] = useState(true);
+  const [onScreen, setOnScreen] = useState(false);
+  const [pageVisible, setPageVisible] = useState(true);
   const rootRef = useRef<HTMLDivElement>(null);
 
   // Stop the 3D loop while the globe is scrolled out of view.
   useEffect(() => {
     const el = rootRef.current;
-    if (!el || typeof IntersectionObserver === "undefined") return;
+    if (!el) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setOnScreen(true);
+      return;
+    }
     const io = new IntersectionObserver(([entry]) =>
       setOnScreen(entry.isIntersecting),
     );
@@ -96,75 +122,54 @@ export const SkillsOrbit = ({
     const update = () => setLite(mobile.matches);
     update();
     mobile.addEventListener("change", update);
-    const want3d =
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
-      hasWebGL();
-    // Show the light static globe first; start WebGL only once the page
-    // has loaded and the main thread is idle, so first paint never freezes.
-    setMode("static");
-    let idleId = 0;
-    let timer = 0;
-    const start = () => {
-      const w = window as Window & {
-        requestIdleCallback?: (
-          cb: () => void,
-          o?: { timeout: number },
-        ) => number;
-      };
-      if (w.requestIdleCallback)
-        idleId = w.requestIdleCallback(() => setMode("3d"), { timeout: 2500 });
-      else timer = window.setTimeout(() => setMode("3d"), 1200);
-    };
-    // Phones: the 3D engine is costly on slower CPUs, so wait for the first
-    // touch/scroll (or a few quiet seconds) before swapping it in.
-    const isPhone = mobile.matches;
-    const events = ["pointerdown", "touchstart", "wheel", "keydown"] as const;
-    const scroller = document.getElementById("page-scroll");
-    const onFirstInput = () => {
-      cleanupInput();
-      start();
-    };
-    const cleanupInput = () => {
-      events.forEach((e) => window.removeEventListener(e, onFirstInput));
-      scroller?.removeEventListener("scroll", onFirstInput);
-    };
-    let phoneTimer = 0;
-    const armPhone = () => {
-      events.forEach((e) =>
-        window.addEventListener(e, onFirstInput, { once: true, passive: true }),
-      );
-      scroller?.addEventListener("scroll", onFirstInput, {
-        once: true,
-        passive: true,
-      });
-      phoneTimer = window.setTimeout(onFirstInput, 8000);
-    };
-    const begin = isPhone ? armPhone : start;
-    if (want3d) {
-      if (document.readyState === "complete") begin();
-      else window.addEventListener("load", begin, { once: true });
-    }
-    return () => {
-      mobile.removeEventListener("change", update);
-      window.removeEventListener("load", begin);
-      cleanupInput();
-      if (phoneTimer) clearTimeout(phoneTimer);
-      if (idleId)
-        (
-          window as Window & { cancelIdleCallback?: (id: number) => void }
-        ).cancelIdleCallback?.(idleId);
-      if (timer) clearTimeout(timer);
-    };
+    return () => mobile.removeEventListener("change", update);
   }, []);
+
+  useEffect(() => {
+    const update = () => setPageVisible(!document.hidden);
+    update();
+    document.addEventListener("visibilitychange", update);
+    return () => document.removeEventListener("visibilitychange", update);
+  }, []);
+
+  useEffect(() => {
+    // Do not download or initialize the scene until it can actually be seen.
+    // Keep an already-mounted scene so returning to it preserves its state.
+    if (
+      mode === "3d" ||
+      !interacted ||
+      !onScreen ||
+      !pageVisible ||
+      reduceMotion
+    )
+      return;
+    let idleId: number | undefined;
+    let timer: number | undefined;
+    const activate = () => {
+      if (!document.hidden) setMode(hasWebGL() ? "3d" : "static");
+    };
+    const start = () => {
+      if (typeof window.requestIdleCallback === "function")
+        idleId = window.requestIdleCallback(activate, { timeout: 2500 });
+      else timer = window.setTimeout(activate, 1200);
+    };
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+    return () => {
+      window.removeEventListener("load", start);
+      if (idleId !== undefined) window.cancelIdleCallback(idleId);
+      if (timer !== undefined) clearTimeout(timer);
+    };
+  }, [mode, interacted, onScreen, pageVisible, reduceMotion]);
 
   const layout = getSphereLayout(skills.length);
 
   return (
     <motion.div
       ref={rootRef}
-      initial={reduceMotion ? false : { scale: 0.97 }}
-      animate={{ scale: 1 }}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      initial={false}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: 0.3, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
       className="skills-orbit max-w-120! overflow-hidden! isolate! md:max-w-160! max-md:[@media(max-height:700px)]:max-w-95! relative aspect-square min-w-0 w-full cursor-grab active:cursor-grabbing"
       aria-label={`${name}: ${skills.map((skill) => skill.name).join(", ")}`}
       role="img"
@@ -172,16 +177,17 @@ export const SkillsOrbit = ({
       {mode === "3d" ? (
         <>
           <div
-            className={`absolute inset-0 ${reduceMotion ? "invisible" : ""}`}
-            aria-hidden={reduceMotion}
+            className={`absolute inset-0 ${reduceMotion || !sceneReady ? "invisible" : ""}`}
+            aria-hidden={reduceMotion || !sceneReady}
           >
             <Scene
+              onReady={onSceneReady}
               skills={skills}
               lite={lite}
-              paused={reduceMotion || !onScreen}
+              paused={reduceMotion || !onScreen || !pageVisible}
             />
           </div>
-          {reduceMotion && <StaticSkills skills={skills} />}
+          {(reduceMotion || !sceneReady) && <StaticSkills skills={skills} />}
         </>
       ) : mode === "static" ? (
         <StaticSkills skills={skills} />
@@ -198,7 +204,7 @@ export const SkillsOrbit = ({
             priority
             fetchPriority="high"
             quality={80}
-            sizes="(max-width: 767px) 160px, 256px"
+            sizes="(max-width: 767px) 154px, 205px"
             className="object-cover"
           />
         </div>

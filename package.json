@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "formater": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "predev": "node scripts/prepare-fonts.mjs",
+    "prebuild": "node scripts/prepare-fonts.mjs"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

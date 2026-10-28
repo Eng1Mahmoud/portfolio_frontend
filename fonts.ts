@@ -1,21 +1,31 @@
-import { JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 
-/**
- * Display (Clash Display) and body (Satoshi) come from Fontshare — they are
- * not on Google Fonts. The stylesheet is linked in app/layout.tsx and the
- * `.font-vars` class in globals.css maps them onto the same CSS variables the
- * rest of the code already reads (--display-font, --main-font), so nothing
- * downstream changes. The objects keep the `.variable` shape of next/font.
- */
-export const displayFont = { variable: "font-vars" };
-
-/** Body: everything that is read rather than looked at. */
-export const mainFont = { variable: "font-vars" };
-
-/** Utility: eyebrows, figures, dates, technology names. */
-export const monoFont = JetBrains_Mono({
-  weight: ["400", "500"],
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--mono-font",
+// Prepared from official Fontshare URLs by predev/prebuild. Keep the font
+// binaries out of the public repository; see scripts/README.md.
+// On a slow first visit, keep the metric-adjusted fallback instead of a late
+// font swap that repaints the largest text. Cached fonts keep the same design.
+export const displayFont = localFont({
+  src: [
+    { path: "./.font-cache/clash-display-500.woff2", weight: "500" },
+    { path: "./.font-cache/clash-display-600.woff2", weight: "600" },
+    { path: "./.font-cache/clash-display-700.woff2", weight: "700" },
+  ],
+  variable: "--display-font",
+  display: "optional",
+  preload: false,
 });
+
+export const mainFont = localFont({
+  src: [
+    { path: "./.font-cache/satoshi-400.woff2", weight: "400" },
+    { path: "./.font-cache/satoshi-500.woff2", weight: "500" },
+    { path: "./.font-cache/satoshi-700.woff2", weight: "700" },
+  ],
+  variable: "--main-font",
+  display: "optional",
+  preload: false,
+});
+
+// Small utility labels do not need two more font files on the critical path.
+// Keep the export shape and the existing Tailwind font-mono utilities.
+export const monoFont = { variable: "[--mono-font:ui-monospace]" };

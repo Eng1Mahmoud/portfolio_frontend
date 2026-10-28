@@ -1,5 +1,9 @@
+import {
+  GoogleAnalytics,
+  getGoogleAnalyticsInit,
+} from "@/components/general/GoogleAnalytics";
+import Script from "next/script";
 import { ToastContainer } from "react-toastify";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import "react-toastify/dist/ReactToastify.css";
 import { displayFont, mainFont, monoFont } from "@/fonts";
 import { Metadata } from "next";
@@ -137,14 +141,15 @@ export default async function RootLayout({
   // extra per request.
   const profileInfo = await getProfileInfo();
   const jsonld = buildPersonJsonLd(profileInfo);
+  const analyticsInit = getGoogleAnalyticsInit(
+    process.env.NEXT_PUBLIC_GOOGLE_GTAG,
+  );
 
   return (
     <html lang="en">
       <head>
-        {/* Clash Display + Satoshi are Fontshare faces, not on Google Fonts. */}
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="" />
-        {/* Loaded without blocking first paint; fonts swap in when ready. */}
         <link
           id="fontshare-css"
           rel="stylesheet"
@@ -174,9 +179,14 @@ export default async function RootLayout({
             __html: JSON.stringify(jsonld),
           }}
         />
-        {process.env.NEXT_PUBLIC_GOOGLE_GTAG && (
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_GTAG} />
+        {analyticsInit && (
+          <Script
+            id="portfolio-ga-init"
+            strategy="beforeInteractive"
+            dangerouslySetInnerHTML={{ __html: analyticsInit }}
+          />
         )}
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_GTAG as string} />
         <ToastContainer
           position="top-right"
           autoClose={5000}
