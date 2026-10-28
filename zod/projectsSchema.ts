@@ -1,6 +1,6 @@
 import { z } from "zod";
 export const projectsSchema = z.object({
-  _id: z.string().optional(),
+  id: z.string().optional(),
   title: z.string().min(1, "project title required"),
   description: z.string().min(1, "project description required"),
   imageUrl: z.string().min(1, "image required").url("Invalid URL"),

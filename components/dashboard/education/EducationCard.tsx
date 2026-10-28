@@ -59,9 +59,9 @@ const EducationCard = ({ education }: { education: IEducation }) => {
       </div>
 
       <div className="mt-auto flex justify-center space-x-2 text-sm">
-        <EditLink href={`/dashboard/education/edit/${education._id}`} />
+        <EditLink href={`/dashboard/education/edit/${education.id}`} />
         <DeleteButton
-          itemId={education._id as string}
+          itemId={education.id as string}
           deleteAction={deleteEducationAction}
         />
       </div>

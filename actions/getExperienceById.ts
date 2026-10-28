@@ -3,10 +3,10 @@ import { Fetch } from "@/fetch/Fetch";
 import { ExperienceByIdResponse } from "./../types/apiResponses";
 import { IExperience } from "@/types/general";
 export async function getExperienceById(
-  _id: string,
+  id: string,
 ): Promise<IExperience | undefined> {
   const response = await Fetch<ExperienceByIdResponse, null>({
-    endpoint: `experience/${_id}`,
+    endpoint: `experience/${id}`,
     method: "GET",
     tags: ["experience"],
   });

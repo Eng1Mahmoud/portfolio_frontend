@@ -72,10 +72,10 @@ const RecommendationCard = ({
 
       <div className="mt-auto flex justify-center space-x-2 text-sm">
         <EditLink
-          href={`/dashboard/recommendations/edit/${recommendation._id}`}
+          href={`/dashboard/recommendations/edit/${recommendation.id}`}
         />
         <DeleteButton
-          itemId={recommendation._id as string}
+          itemId={recommendation.id as string}
           deleteAction={deleteRecommendationAction}
         />
       </div>

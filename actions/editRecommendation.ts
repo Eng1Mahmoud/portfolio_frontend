@@ -8,11 +8,11 @@ import { withNormalisedOrder } from "@/utiles/recommendation-order";
 
 export async function editRecommendationAction(
   _state: IactionState,
-  data: TrecommendationsSchema & { _id?: string },
+  data: TrecommendationsSchema & { id?: string },
 ) {
-  const { _id, ...body } = data;
+  const { id, ...body } = data;
   const response = await Fetch<GeneralResponse, TrecommendationsSchema>({
-    endpoint: `recommendations/${_id}`,
+    endpoint: `recommendations/${id}`,
     method: "PUT",
     body: withNormalisedOrder(body),
     requiresAuth: true,

@@ -152,7 +152,7 @@ async function PortfolioSections({
                 <div className="skill-grid grid! grid-cols-1 min-[360px]:grid-cols-2 lg:grid-cols-3 gap-2.5">
                   {items.map((skill, i) => (
                     <SkillCard
-                      key={skill._id ?? skill.name}
+                      key={skill.id ?? skill.name}
                       skill={skill}
                       index={i}
                     />
@@ -179,7 +179,7 @@ async function PortfolioSections({
           <ContentSlider label="Projects" variant="showcase">
             {(projects ?? []).map((project, i) => (
               <ProjectCard
-                key={project._id ?? project.title}
+                key={project.id ?? project.title}
                 project={project}
                 index={i}
               />
@@ -238,7 +238,7 @@ async function PortfolioSections({
           <ContentSlider label="Testimonials" variant="quotes">
             {(recommendations ?? []).map((item, i) => (
               <RecommendationCard
-                key={item._id ?? item.name}
+                key={item.id ?? item.name}
                 recommendation={item}
                 index={i}
               />

@@ -35,7 +35,7 @@ const StaticSkills = ({ skills }: { skills: ISkill[] }) => {
         const front = (position.z / layout.radius + 1) / 2;
         return (
           <div
-            key={skill._id ?? `${skill.name}-${index}`}
+            key={skill.id ?? `${skill.name}-${index}`}
             title={skill.name}
             className="static-orbit-badge box-border! aspect-square! grid! place-items-center! [padding:1.3%]! [border-radius:8px]! [border:var(--badge-border)]! [background:var(--badge-background)]! [box-shadow:var(--badge-shadow)]! [backdrop-filter:blur(10px)]! absolute! [transform:translate(-50%,_-50%)]!"
             style={{

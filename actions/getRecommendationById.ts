@@ -4,10 +4,10 @@ import { RecommendationByIdResponse } from "@/types/apiResponses";
 import { IRecommendation } from "@/types/general";
 
 export async function getRecommendationById(
-  _id: string,
+  id: string,
 ): Promise<IRecommendation | undefined> {
   const response = await Fetch<RecommendationByIdResponse, null>({
-    endpoint: `recommendations/${_id}`,
+    endpoint: `recommendations/${id}`,
     method: "GET",
     tags: ["recommendation"],
   });

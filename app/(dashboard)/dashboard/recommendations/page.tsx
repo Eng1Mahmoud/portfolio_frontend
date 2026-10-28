@@ -24,7 +24,7 @@ export default async function Recommendations() {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {recommendations.map((recommendation) => (
             <RecommendationCard
-              key={recommendation._id}
+              key={recommendation.id}
               recommendation={recommendation}
             />
           ))}

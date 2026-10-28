@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const experienceSchema = z.object({
-  _id: z.string().optional(),
+  id: z.string().optional(),
   role: z.string().min(1, "Role is required"),
   company: z.string().min(1, "Company is required"),
   startDate: z.string().min(1, "Start Date is required"),

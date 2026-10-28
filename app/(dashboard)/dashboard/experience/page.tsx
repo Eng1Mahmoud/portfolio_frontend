@@ -23,7 +23,7 @@ export default async function Experience() {
       ) : (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {experiences.map((experience) => (
-            <ExperienceCard key={experience._id} experience={experience} />
+            <ExperienceCard key={experience.id} experience={experience} />
           ))}
         </div>
       )}

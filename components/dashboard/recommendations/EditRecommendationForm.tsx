@@ -15,16 +15,16 @@ import { useFormContext } from "react-hook-form";
 
 const RecommendationIdField = ({ id }: { id?: string }) => {
   const { register } = useFormContext();
-  return <input type="hidden" {...register("_id")} defaultValue={id} />;
+  return <input type="hidden" {...register("id")} defaultValue={id} />;
 };
 
 const EditRecommendationForm = ({
   recommendation,
 }: {
-  recommendation: TrecommendationsSchema & { _id?: string };
+  recommendation: TrecommendationsSchema & { id?: string };
 }) => {
   const initialValues = {
-    _id: recommendation._id,
+    id: recommendation.id,
     name: recommendation.name,
     role: recommendation.role,
     company: recommendation.company || "",
@@ -48,7 +48,7 @@ const EditRecommendationForm = ({
       buttonProps={{ name: "Save Changes" }}
     >
       <div className="grid grid-cols-1 gap-6">
-        <RecommendationIdField id={recommendation._id} />
+        <RecommendationIdField id={recommendation.id} />
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <InputField name="name" label="Name" type="text" variant="light" />

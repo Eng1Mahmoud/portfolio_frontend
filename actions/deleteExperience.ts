@@ -4,12 +4,9 @@ import { Fetch } from "@/fetch/Fetch";
 import { revalidateTag } from "next/cache";
 import type { GeneralResponse } from "@/types/apiResponses";
 
-export async function deleteExperienceAction(
-  _state: IactionState,
-  _id: string,
-) {
+export async function deleteExperienceAction(_state: IactionState, id: string) {
   const response = await Fetch<GeneralResponse, null>({
-    endpoint: `experience/${_id}`,
+    endpoint: `experience/${id}`,
     method: "DELETE",
     requiresAuth: true,
   });

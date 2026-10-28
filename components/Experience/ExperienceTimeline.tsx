@@ -11,7 +11,7 @@ export default function ExperienceTimeline({
   return (
     <Timeline>
       {experiences.map((item, index) => (
-        <TimelineEntry key={item._id} index={index}>
+        <TimelineEntry key={item.id} index={index}>
           <ExperienceCard experience={item} />
         </TimelineEntry>
       ))}

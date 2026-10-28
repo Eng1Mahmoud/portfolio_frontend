@@ -9,16 +9,16 @@ import { useFormContext } from "react-hook-form";
 
 const ExperienceIdField = ({ id }: { id?: string }) => {
   const { register } = useFormContext();
-  return <input type="hidden" {...register("_id")} defaultValue={id} />;
+  return <input type="hidden" {...register("id")} defaultValue={id} />;
 };
 
 const EditExperienceForm = ({
   experience,
 }: {
-  experience: TexperienceSchema & { _id?: string };
+  experience: TexperienceSchema & { id?: string };
 }) => {
   const initialValues = {
-    _id: experience._id,
+    id: experience.id,
     role: experience.role,
     company: experience.company,
     startDate: experience.startDate,
@@ -42,7 +42,7 @@ const EditExperienceForm = ({
       }}
     >
       <div className="grid grid-cols-1 gap-6">
-        <ExperienceIdField id={experience._id} />
+        <ExperienceIdField id={experience.id} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <InputField
             name="role"

@@ -3,6 +3,8 @@ import {
   getGoogleAnalyticsInit,
 } from "@/components/general/GoogleAnalytics";
 import Script from "next/script";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { displayFont, mainFont, monoFont } from "@/fonts";
 import { Metadata } from "next";
 import { Person, WithContext } from "schema-dts";
@@ -145,6 +147,28 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://api.fontshare.com" />
+        <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="" />
+        <link
+          id="fontshare-css"
+          rel="stylesheet"
+          media="print"
+          href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){var l=document.getElementById('fontshare-css');if(!l)return;var on=function(){l.media='all'};if(l.sheet)on();else l.addEventListener('load',on);})();",
+          }}
+        />
+        <noscript>
+          <link
+            rel="stylesheet"
+            href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap"
+          />
+        </noscript>
+      </head>
       <body
         suppressHydrationWarning={true}
         className={`${displayFont.variable} ${mainFont.variable} ${monoFont.variable}`}
@@ -163,6 +187,19 @@ export default async function RootLayout({
           />
         )}
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_GTAG as string} />
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+          className="z[1000]"
+        />
         <MotionProvider>{children}</MotionProvider>
         <ChatBotWraper />
       </body>

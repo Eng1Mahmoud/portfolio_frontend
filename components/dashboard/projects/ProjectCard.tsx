@@ -59,9 +59,9 @@ const ProjectCard = ({ project }: { project: Iproject }) => {
         )}
 
         <div className="flex justify-center gap-2">
-          <EditLink href={`/dashboard/projects/edit/${project._id}`} />
+          <EditLink href={`/dashboard/projects/edit/${project.id}`} />
           <DeleteButton
-            itemId={project._id as string}
+            itemId={project.id as string}
             deleteAction={deleteProjectId}
           />
         </div>

@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { motion, useReducedMotion } from "framer-motion";
 import { afterFirstInteraction } from "@/utiles/first-interaction";
 import { scrollToSection } from "@/utiles/section-scroll";
 
@@ -12,6 +13,7 @@ export default function MainTemplate({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
   useEffect(() => {
     const root = document.getElementById("page-scroll");
     if (!root) return;
@@ -90,5 +92,14 @@ export default function MainTemplate({
       window.removeEventListener("hashchange", restore);
     };
   }, [pathname]);
-  return <div key={pathname}>{children}</div>;
+  return (
+    <motion.div
+      key={pathname}
+      initial={reduceMotion ? false : { y: 12 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
 }

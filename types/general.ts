@@ -16,7 +16,7 @@ export interface IactionState {
 }
 // skill interface
 export interface ISkill extends TskillsSchema {
-  _id?: string;
+  id?: string;
 }
 // user info interface
 export interface IuserInfo extends TuserInfoSchema {
@@ -24,17 +24,17 @@ export interface IuserInfo extends TuserInfoSchema {
 }
 
 export interface Iproject extends TprojectsSchema {
-  _id?: string;
+  id?: string;
 }
 
 export interface IExperience extends TexperienceSchema {
-  _id?: string;
+  id?: string;
 }
 
 export interface IEducation extends TeducationSchema {
-  _id?: string;
+  id?: string;
 }
 
 export interface IRecommendation extends TrecommendationsSchema {
-  _id?: string;
+  id?: string;
 }

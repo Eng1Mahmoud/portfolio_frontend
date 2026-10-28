@@ -13,7 +13,7 @@ export default function EducationTimeline({
   return (
     <Timeline>
       {educations.map((item, index) => (
-        <TimelineEntry key={item._id} index={index}>
+        <TimelineEntry key={item.id} index={index}>
           <div
             onMouseMove={trackPointer}
             className="glass-card relative! isolate! [background:var(--glass-background)]! [border:var(--hairline-border)]! [backdrop-filter:blur(14px)_saturate(140%)]! [box-shadow:var(--glass-shadow)]! [transition:border-color_300ms,_box-shadow_300ms,translate_500ms_cubic-bezier(0.22,1,0.36,1)]! [border-radius:16px]! [&::before]:[content:'']! [&::before]:absolute! [&::before]:[inset:0]! [&::before]:[z-index:-1]! [&::before]:[border-radius:inherit]! [&::before]:pointer-events-none! [&::before]:[background:var(--glass-hover-shadow)]! [&::before]:[opacity:0.7]! [&::before]:[transition:opacity_300ms]! [&:hover]:[border-color:var(--glass-hover-border)]! [&:hover]:[box-shadow:var(--glass-corner-light)]! [&:hover::before]:[opacity:1]! group relative overflow-hidden rounded-2xl p-5 md:p-7 hover:-translate-y-1.5"
