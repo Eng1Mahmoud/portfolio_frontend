@@ -26,7 +26,7 @@ export default function MobileSidebar({
           sidebarOpen ? "translate-x-0" : "translate-x-[-110%]"
         }`}
       >
-        <div className="absolute right-0 top-0 -mr-12 pt-2">
+        <div className="absolute right-3 top-3">
           <button
             className="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
             onClick={() => setSidebarOpen(false)}
@@ -50,7 +50,6 @@ export default function MobileSidebar({
           <NavLinks />
         </div>
       </div>
-      <div className="w-14 shrink-0" aria-hidden="true"></div>
     </div>
   );
 }

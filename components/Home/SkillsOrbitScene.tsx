@@ -214,7 +214,7 @@ export default function SkillsOrbitScene({
       <div className="pointer-events-none absolute inset-0 z-40">
         {skills.map((skill, i) => (
           <div
-            key={skill._id ?? `${skill.name}-${i}`}
+            key={skill.id ?? `${skill.name}-${i}`}
             ref={(node) => {
               badges.current[i] = node;
             }}

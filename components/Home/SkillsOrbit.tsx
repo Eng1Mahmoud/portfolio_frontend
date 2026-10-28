@@ -24,7 +24,7 @@ const StaticSkills = ({ skills }: { skills: ISkill[] }) => {
         const front = (position.z / layout.radius + 1) / 2;
         return (
           <div
-            key={skill._id ?? `${skill.name}-${index}`}
+            key={skill.id ?? `${skill.name}-${index}`}
             title={skill.name}
             className="static-orbit-badge box-border! aspect-square! grid! place-items-center! [padding:1.3%]! [border-radius:8px]! [border:var(--badge-border)]! [background:var(--badge-background)]! [box-shadow:var(--badge-shadow)]! absolute! [transform:translate(-50%,_-50%)]!"
             style={{
@@ -106,7 +106,10 @@ export const SkillsOrbit = ({
     let timer = 0;
     const start = () => {
       const w = window as Window & {
-        requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
+        requestIdleCallback?: (
+          cb: () => void,
+          o?: { timeout: number },
+        ) => number;
       };
       if (w.requestIdleCallback)
         idleId = w.requestIdleCallback(() => setMode("3d"), { timeout: 2500 });
@@ -130,7 +133,10 @@ export const SkillsOrbit = ({
       events.forEach((e) =>
         window.addEventListener(e, onFirstInput, { once: true, passive: true }),
       );
-      scroller?.addEventListener("scroll", onFirstInput, { once: true, passive: true });
+      scroller?.addEventListener("scroll", onFirstInput, {
+        once: true,
+        passive: true,
+      });
       phoneTimer = window.setTimeout(onFirstInput, 8000);
     };
     const begin = isPhone ? armPhone : start;
@@ -143,7 +149,10 @@ export const SkillsOrbit = ({
       window.removeEventListener("load", begin);
       cleanupInput();
       if (phoneTimer) clearTimeout(phoneTimer);
-      if (idleId) (window as Window & { cancelIdleCallback?: (id: number) => void }).cancelIdleCallback?.(idleId);
+      if (idleId)
+        (
+          window as Window & { cancelIdleCallback?: (id: number) => void }
+        ).cancelIdleCallback?.(idleId);
       if (timer) clearTimeout(timer);
     };
   }, []);
@@ -166,7 +175,11 @@ export const SkillsOrbit = ({
             className={`absolute inset-0 ${reduceMotion ? "invisible" : ""}`}
             aria-hidden={reduceMotion}
           >
-            <Scene skills={skills} lite={lite} paused={reduceMotion || !onScreen} />
+            <Scene
+              skills={skills}
+              lite={lite}
+              paused={reduceMotion || !onScreen}
+            />
           </div>
           {reduceMotion && <StaticSkills skills={skills} />}
         </>

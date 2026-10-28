@@ -6,9 +6,9 @@ import { revalidateTag } from "next/cache";
 import type { GeneralResponse } from "@/types/apiResponses";
 export async function editEducationAction(
   _state: IactionState,
-  data: TeducationSchema & { _id?: string },
+  data: TeducationSchema & { id?: string },
 ) {
-  const { _id, ...body } = data;
+  const { id, ...body } = data;
   const processedData = {
     ...body,
     skills:
@@ -20,7 +20,7 @@ export async function editEducationAction(
         : body.skills || [],
   };
   const response = await Fetch<GeneralResponse, TeducationSchema>({
-    endpoint: `education/${_id}`,
+    endpoint: `education/${id}`,
     method: "PUT",
     body: processedData,
     requiresAuth: true,

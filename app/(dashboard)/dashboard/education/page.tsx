@@ -23,7 +23,7 @@ export default async function Education() {
       ) : (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {educations.map((education) => (
-            <EducationCard key={education._id} education={education} />
+            <EducationCard key={education.id} education={education} />
           ))}
         </div>
       )}

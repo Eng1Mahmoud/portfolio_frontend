@@ -15,7 +15,7 @@ export default async function EditProject({
       <EditProjectForm
         initialValues={
           project ?? {
-            _id: "",
+            id: "",
             title: "",
             description: "",
             imageUrl: "",

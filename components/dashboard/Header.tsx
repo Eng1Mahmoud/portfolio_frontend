@@ -1,8 +1,7 @@
 "use client";
 
-import { FaBars, FaArrowLeft } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import { type Dispatch, type SetStateAction } from "react";
-import Link from "next/link";
 import LogoutButton from "./LogoutButton";
 
 export default function Header({
@@ -24,16 +23,6 @@ export default function Header({
         </div>
 
         <div className="flex items-center gap-1 sm:gap-2">
-          {/* Way back to the public site. The dashboard had no route out of
-              itself short of editing the URL. */}
-          <Link
-            href="/"
-            className="flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-ink-muted transition-colors hover:bg-parchment/6 hover:text-ink-strong focus:outline-hidden focus-visible:ring-2 focus-visible:ring-sage"
-          >
-            <FaArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-            <span className="hidden sm:inline">View site</span>
-            <span className="sr-only sm:hidden">View site</span>
-          </Link>
           <LogoutButton />
           <button
             onClick={() => setSidebarOpen(true)}

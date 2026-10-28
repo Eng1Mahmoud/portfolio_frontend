@@ -8,6 +8,7 @@ import {
   FaBriefcase,
   FaGraduationCap,
   FaQuoteLeft,
+  FaArrowLeft,
 } from "react-icons/fa";
 
 const NavLinks = () => {
@@ -44,9 +45,15 @@ const NavLinks = () => {
       label: "Recommendations",
       icon: <FaQuoteLeft size={20} />,
     },
+    {
+      href: "/",
+      label: "View site",
+      icon: <FaArrowLeft size={20} />,
+    },
   ];
 
   const isLinkActive = (href: string) => {
+    if (href === "/") return false;
     if (href === "/dashboard") {
       return pathname === href;
     }

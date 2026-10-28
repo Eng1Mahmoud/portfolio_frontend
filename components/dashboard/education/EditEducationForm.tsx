@@ -9,16 +9,16 @@ import { useFormContext } from "react-hook-form";
 
 const EducationIdField = ({ id }: { id?: string }) => {
   const { register } = useFormContext();
-  return <input type="hidden" {...register("_id")} defaultValue={id} />;
+  return <input type="hidden" {...register("id")} defaultValue={id} />;
 };
 
 const EditEducationForm = ({
   education,
 }: {
-  education: TeducationSchema & { _id?: string };
+  education: TeducationSchema & { id?: string };
 }) => {
   const initialValues = {
-    _id: education._id,
+    id: education.id,
     degree: education.degree,
     institution: education.institution,
     startDate: education.startDate,
@@ -41,7 +41,7 @@ const EditEducationForm = ({
       }}
     >
       <div className="grid grid-cols-1 gap-6">
-        <EducationIdField id={education._id} />
+        <EducationIdField id={education.id} />
         <InputField name="degree" label="Degree" type="text" variant="light" />
         <InputField
           name="institution"

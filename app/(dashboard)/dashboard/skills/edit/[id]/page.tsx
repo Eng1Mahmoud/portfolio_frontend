@@ -14,7 +14,7 @@ export default async function EditSkill({
     <DashPanel title="Edit Skill" className="mx-auto max-w-4xl">
       <EditSkillForm
         initialValues={
-          skill ?? { _id: "", name: "", imageUrl: "", category: "" }
+          skill ?? { id: "", name: "", imageUrl: "", category: "" }
         }
       />
     </DashPanel>

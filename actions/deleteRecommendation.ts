@@ -6,10 +6,10 @@ import type { GeneralResponse } from "@/types/apiResponses";
 
 export async function deleteRecommendationAction(
   _state: IactionState,
-  _id: string,
+  id: string,
 ) {
   const response = await Fetch<GeneralResponse, null>({
-    endpoint: `recommendations/${_id}`,
+    endpoint: `recommendations/${id}`,
     method: "DELETE",
     requiresAuth: true,
   });

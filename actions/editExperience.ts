@@ -6,9 +6,9 @@ import { revalidateTag } from "next/cache";
 import type { GeneralResponse } from "@/types/apiResponses";
 export async function editExperienceAction(
   _state: IactionState,
-  data: TexperienceSchema & { _id?: string },
+  data: TexperienceSchema & { id?: string },
 ) {
-  const { _id, ...body } = data;
+  const { id, ...body } = data;
   const processedData = {
     ...body,
     skills:
@@ -20,7 +20,7 @@ export async function editExperienceAction(
         : body.skills || [],
   };
   const response = await Fetch<GeneralResponse, TexperienceSchema>({
-    endpoint: `experience/${_id}`,
+    endpoint: `experience/${id}`,
     method: "PUT",
     body: processedData,
     requiresAuth: true,

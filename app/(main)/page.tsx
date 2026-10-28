@@ -121,7 +121,7 @@ export default async function Home() {
                 <div className="skill-grid grid! grid-cols-1 min-[360px]:grid-cols-2 lg:grid-cols-3 gap-2.5">
                   {items.map((skill, i) => (
                     <SkillCard
-                      key={skill._id ?? skill.name}
+                      key={skill.id ?? skill.name}
                       skill={skill}
                       index={i}
                     />
@@ -132,7 +132,10 @@ export default async function Home() {
           })}
         </div>
       </section>
-      <section id="services" className="portfolio-section relative! py-10 sm:py-11 md:py-14 [border-bottom:var(--section-border)]! [scroll-margin-top:12px]! [&:first-child]:pt-3! [&:first-child]:[border-bottom:0]! [&:last-of-type]:[border-bottom:0]! ">
+      <section
+        id="services"
+        className="portfolio-section relative! py-10 sm:py-11 md:py-14 [border-bottom:var(--section-border)]! [scroll-margin-top:12px]! [&:first-child]:pt-3! [&:first-child]:[border-bottom:0]! [&:last-of-type]:[border-bottom:0]! "
+      >
         <Title title="Services" eyebrow="What I can build for you" />
         <ServicesSection />
       </section>
@@ -145,7 +148,7 @@ export default async function Home() {
           <ContentSlider label="Projects" variant="showcase">
             {(projects ?? []).map((project, i) => (
               <ProjectCard
-                key={project._id ?? project.title}
+                key={project.id ?? project.title}
                 project={project}
                 index={i}
               />
@@ -204,7 +207,7 @@ export default async function Home() {
           <ContentSlider label="Testimonials" variant="quotes">
             {(recommendations ?? []).map((item, i) => (
               <RecommendationCard
-                key={item._id ?? item.name}
+                key={item.id ?? item.name}
                 recommendation={item}
                 index={i}
               />

@@ -28,9 +28,9 @@ const SkillCard = ({ skill }: { skill: ISkill }) => {
       </div>
 
       <div className="mt-auto flex justify-center space-x-2 text-sm">
-        <EditLink href={`/dashboard/skills/edit/${skill._id}`} />
+        <EditLink href={`/dashboard/skills/edit/${skill.id}`} />
         <DeleteButton
-          itemId={skill._id as string}
+          itemId={skill.id as string}
           deleteAction={deleteSkillById}
         />
       </div>

@@ -66,9 +66,9 @@ const ExperienceCard = ({ experience }: { experience: IExperience }) => {
       </div>
 
       <div className="mt-auto flex justify-center space-x-2 text-sm">
-        <EditLink href={`/dashboard/experience/edit/${experience._id}`} />
+        <EditLink href={`/dashboard/experience/edit/${experience.id}`} />
         <DeleteButton
-          itemId={experience._id as string}
+          itemId={experience.id as string}
           deleteAction={deleteExperienceAction}
         />
       </div>

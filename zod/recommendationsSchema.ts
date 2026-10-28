@@ -20,7 +20,7 @@ export const RECOMMENDATION_RELATIONS = [
 export type RecommendationRelation = (typeof RECOMMENDATION_RELATIONS)[number];
 
 export const recommendationsSchema = z.object({
-  _id: z.string().optional(),
+  id: z.string().optional(),
   name: z.string().min(1, "Name is required"),
   role: z.string().min(1, "Role is required"),
   /** Empty for college friends and most freelance clients. */
