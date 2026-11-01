@@ -16,6 +16,7 @@ const AddExperienceForm = () => {
     skills: "",
     image: "",
     description: "",
+    order: 0,
   };
   return (
     <Form
@@ -42,6 +43,12 @@ const AddExperienceForm = () => {
             variant="light"
           />
         </div>
+        <InputField
+          name="order"
+          label="Display Order"
+          type="number"
+          variant="light"
+        />
         <InputField
           name="company"
           label="Company"

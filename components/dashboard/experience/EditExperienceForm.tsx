@@ -30,6 +30,7 @@ const EditExperienceForm = ({
         : "",
     image: experience.image || "",
     description: experience.description || "",
+    order: experience.order ?? 0,
   };
   return (
     <Form
@@ -57,6 +58,12 @@ const EditExperienceForm = ({
             variant="light"
           />
         </div>
+        <InputField
+          name="order"
+          label="Display Order"
+          type="number"
+          variant="light"
+        />
         <InputField
           name="company"
           label="Company"
