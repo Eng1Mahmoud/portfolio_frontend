@@ -10,6 +10,7 @@ export const experienceSchema = z.object({
   skills: z.union([z.string(), z.array(z.string())]).optional(),
   image: z.string().optional(),
   description: z.string().optional(),
+  order: z.coerce.number().optional(),
 });
 
 export type TexperienceSchema = z.infer<typeof experienceSchema>;

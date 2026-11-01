@@ -27,6 +27,60 @@ function load(path, overrides = {}, globals = {}) {
   return exports;
 }
 
+test("dashboard and auth layouts each mount one notification container", async () => {
+  const { default: Notifications } = load(
+    "components/general/Notifications.tsx",
+    {
+      "react-toastify/dist/ReactToastify.css": () => ({}),
+    },
+  );
+  const empty = () => null;
+  const { default: RootLayout } = load("app/layout.tsx", {
+    "@/components/general/GoogleAnalytics": () => ({
+      GoogleAnalytics: empty,
+      getGoogleAnalyticsInit: () => undefined,
+    }),
+    "next/script": () => empty,
+    "react-toastify/dist/ReactToastify.css": () => ({}),
+    "@/fonts": () => ({
+      displayFont: {},
+      mainFont: {},
+      monoFont: {},
+    }),
+    "@/components/general/chatbot/ChatBotWraper": () => empty,
+    "@/app/providers/MotionProvider":
+      () =>
+      ({ children }) =>
+        children,
+    "@/actions/getProfileInfo": () => ({
+      getProfileInfo: async () => undefined,
+    }),
+    "@/utiles/site": () => ({
+      getProfileImageUrl: () => undefined,
+      siteKeywords: [],
+      siteUrl: "https://example.com",
+    }),
+    "./globals.css": () => ({}),
+  });
+  for (const path of [
+    "app/(dashboard)/dashboard/layout.tsx",
+    "app/(auth)/auth/layout.tsx",
+  ]) {
+    const { default: Layout } = load(path, {
+      "@/components/general/Notifications": () => Notifications,
+      "@/components/dashboard/HeaderContainer": () => empty,
+      "@/components/dashboard/NavLinks": () => empty,
+    });
+    const html = renderToStaticMarkup(
+      await RootLayout({
+        children: React.createElement(Layout, null, "Form content"),
+      }),
+    );
+    assert.equal((html.match(/class="Toastify"/g) || []).length, 1, path);
+    assert.match(html, /Form content/);
+  }
+});
+
 test("hero renders the full biography and name without JavaScript or hidden styles", () => {
   const { HomeIntro } = load("components/Home/HomeIntro.tsx");
   const html = renderToStaticMarkup(
